@@ -1,0 +1,168 @@
+/* general styling */
+
+.contentContainer {
+    margin: 0;
+    width: 100%;
+}
+
+h2 {
+    font-size: 30px;
+    margin-top: 20px;
+}
+
+/* Sidebar styling */
+
+.sideBarBlock {
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px #c9cccd;
+    margin-bottom: 20px;
+    margin-top: 25px;
+    padding: 15px;
+}
+
+.sideBarBlock h4 {
+    margin: 0 0 20px 0;
+    color: #363838;
+    font-size: 20px;
+}
+
+.sideBarBlock .line {
+    height: 1px;
+    line-height: 1px;
+    border-bottom: solid 1px #cfd5d7;
+}
+
+.sideBarBlock .categoryContainer {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.sideBarBlock ul {
+    margin: 0;
+    padding: 0;
+}
+
+.sideBarBlock li {
+    list-style: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    line-height: 35px; 
+}
+
+.sideBarBlock li a {
+    color: #363838;
+}
+
+.sideBarBlock li span {
+    margin-top: 7px;
+}
+
+/* Hot topics styling */
+
+.topic {
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px #c9cccd;
+    margin-bottom: 20px;
+    margin-top: 25px;
+    padding: 15px 0;
+    height: 165px;
+}
+
+.topic img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-left: 25px;
+    position: absolute;
+    left: 0;
+}
+
+.topic h3 {
+    color: #363838;
+    line-height: 25px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.topic p {
+    margin: 0 0 10px;
+    color: #989c9e;
+    font-size: 14px;
+    line-height: 25px;
+}
+
+.userImageContainer {
+    position: relative;
+    height: 100%;
+}
+
+.topicCategory {
+    position: absolute;
+    bottom: 0;
+    right: 25px;
+    font-style: italic;
+    color: #cfd5d7;
+    margin: 0 !important;
+}
+
+.topicContainer {
+    position: relative;
+    height: 100%;
+    border-right: 1px solid #cfd5d7;
+    padding-right: 25px !important;
+}
+
+.topicDescription {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+
+.topic .comments {
+    border-bottom: solid 1px #cfd5d7;
+    text-align: center;
+    padding: 18px 0 25px 0;
+}
+
+.topic .commentbg {
+    background: #bdc3c7;
+    border-radius: 2px;
+    display: inline-block;
+    padding: 10px 25px;
+    color: white;
+    font-size: 14px;
+    position: relative;
+}
+
+.topic .mark {
+    width: 11px;
+    height: 11px;
+    background: #bdc3c7;
+    position: absolute;
+    bottom: 0;
+    left: 43%;
+    margin-bottom: -5px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+}
+
+.topic .time {
+    color: #9da6aa;
+    font-size: 14px;
+    text-align: center;
+    line-height: 29px;
+}
+
+.topic .time .iconTitle {
+    color: #9da6aa;
+    font-size: 12px;
+    text-align: center;
+    line-height: 29px;
+    margin-top: 5px;
+}
