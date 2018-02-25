@@ -163,6 +163,118 @@ nav {
     color: rgb(33, 150, 243);
 }
 
+/* General header login */
+
+.generalNav,
+.generalNav a {
+    height: 70px;
+}
+
+.generalNav ul .logInTitle:hover {
+    background: rgb(33, 150, 243);
+    height: 70px;
+}
+
+.signUpTitle:hover {
+    background: rgb(33, 150, 243);
+    height: 100%;
+}
+
+/* Login modal styling */
+
+.modal {
+    width: 350px;
+    min-height: 75%;
+}
+
+.modal .modal-header {
+    border-bottom: 1px solid #cfd5d7;
+    margin-bottom: 25px;
+    height: 40px;
+}
+
+.modal .modal-header h4 {
+    color: #363838;
+    font-size: 20px;
+    margin: 0;
+}
+
+.modal .modal-header button {
+    top: -6px;
+    text-align: right;
+    padding-right: 0;
+    position: relative;
+}
+
+.modal .modal-header button:active {
+    background: none;
+}
+
+.modal .modal-header button:hover {
+    color: rgb(33, 150, 243);
+}
+
+.modal .socialButtons a {
+    width: 100%;
+    text-transform: initial;
+    margin-bottom: 15px;
+}
+
+.modal .socialButtons .btnFacebook {
+    background: #3f51b5;
+}
+
+.modal .socialButtons .btnTwitter {
+    background: #2196f3;
+}
+
+.modal .socialButtons .btnGoogle {
+    background: #c62828;
+}
+
+.modal .socialButtons .socialTitle {
+    text-align: left;
+}
+
+.modal .separateContainer {
+    margin-top: 25px;
+    position: relative;
+}
+
+.modal .separateLine {
+    border-bottom: 1px solid #cfd5d7;
+}
+
+.modal .separateContainer p {
+    position: absolute;
+    top: -25px;
+    text-align: center;
+    color: #363838;
+}
+
+.modal input[type="text"]:focus {
+    border-bottom: 1px solid rgb(33, 150, 243) !important;
+    box-shadow: 0 1px 0 0 rgb(33, 150, 243) !important;
+}
+
+.modal input[type=password]:focus {
+    border-bottom: 1px solid rgb(33, 150, 243) !important;
+    box-shadow: 0 1px 0 0 rgb(33, 150, 243) !important;
+}
+
+.modal input[type="checkbox"].filled-in:checked + label:after {
+    background: rgb(33, 150, 243);
+    border: 2px solid rgb(33, 150, 243);
+}
+
+.modal input[type="submit"] {
+    margin-top: 15px;
+}
+
+.modal .registerLink {
+    margin-bottom: 0;
+}
+
 /* footer styling */
 
 footer {
@@ -230,4 +342,25 @@ footer {
 
 .instagramIcon:hover {
     color: #c32aa3;
+}
+
+/* breadcrumb styling */
+
+.breadCrumb a {
+    font-size: 13px;
+    color: #363838;
+}
+
+.breadCrumb a:last-child {
+    font-size: 14px;
+}
+
+.breadCrumb a:hover {
+    color: rgb(33, 150, 243);
+}
+
+.breadCrumb i {
+    font-size: 15px;
+    position: relative;
+    top: 2px;
 }

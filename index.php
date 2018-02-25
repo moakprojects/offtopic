@@ -5,6 +5,12 @@
         case "home":
             $page = "home";
         break;
+        case "categories":
+            $page = "categories";
+        break;
+        case "test":
+            $page = "test";
+        break;
     }
 ?>
 <!DOCTYPE html>
@@ -26,7 +32,7 @@
     </head>
     <body>
         <?php
-            include("src/sections/header.php");
+            include("src/sections/headerGeneral.php");
             ?>
             <div class="sideSpace">
             <?php
@@ -41,5 +47,9 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+        <script src="js/main.js"></script>
+        <?php
+            echo "<script src='js/" . $page . ".js'></script>";
+        ?>
     </body>
 </html>

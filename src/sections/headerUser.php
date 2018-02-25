@@ -3,7 +3,7 @@
 </div>
 <header>
     <div class="sideSpace">
-        <img src="../../images/offtopicLogo.png" alt="Offtopic forum's logo" class="logo">
+        <a href="/home"><img src="../../images/offtopicLogo.png" alt="Offtopic forum's logo" class="logo"></a>
         <div class="separator"></div>
         <div class="titleContainer">
             <p>OffTopic</p>

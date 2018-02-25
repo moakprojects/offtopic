@@ -3,7 +3,7 @@
         <div class="container footerContainer">
             <div class="row noMargin">
                 <div class="col s4">
-                    <img src="../../images/offtopicLogo.png" alt="Offtopic forum's logo" class="logo">
+                    <a href="/home"><img src="../../images/offtopicLogo.png" alt="Offtopic forum's logo" class="logo"></a>
                     <div class="footerSeparator"></div>
                     <div class="titleContainer">
                         <p>OffTopic</p>
@@ -12,7 +12,7 @@
                 <div class="col s5">
                     <div class="col s1"></div>
                     <div class="footerLinkParent col s3">
-                        <a href="#">Home</a>
+                        <a href="/home">Home</a>
                     </div>
                     <div class="footerSubSeparator col s1"></div>
                     <div class="footerLinkParent col s3">
@@ -20,7 +20,7 @@
                     </div>
                     <div class="footerSubSeparator col s1"></div>
                     <div class="footerLinkParent col s3">
-                        <a href="#">Sign up</a>
+                        <a href="#">Terms</a>
                     </div>
                 </div>
                 <div class="col s3">
