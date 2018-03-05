@@ -1,0 +1,372 @@
+/* own font for the title*/
+@font-face {
+    src: url("../fonts/Arkhip_font.ttf");
+    font-family: "titleFont";
+}
+
+/* general styling */
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.sideSpace {
+    margin: 0 auto;
+    width: 80%;
+    height: 100%;
+}
+
+body {
+    background: #ecf0f1;
+    position: relative;
+    min-height: 100%;
+}
+
+html {
+    height: 100%;
+}
+
+.noMargin {
+    margin: 0 !important;
+}
+
+/* header styling */
+
+#headerImage {
+    height: 200px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background-image: url("../images/content/header.jpeg");
+    background-size: cover;
+    background-position: 100% 18%;
+    position: relative;
+    z-index: 1;
+}
+
+#headerImage > div {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+    background: rgba(0,0,0,0.35);
+}
+
+header {
+    width: 100%;
+    height: 70px;
+    background: #1d1f21;
+    -webkit-box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+}
+
+.logo {
+    vertical-align: middle;
+    height: 60px;
+    float: left;
+}
+
+.separator {
+    border-left: 1px solid #f8f8f8;
+    width: 0;
+    height: 73%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    float: left;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.titleContainer {
+    margin: 0;
+    padding: 0;
+    float: left;
+    height: 100%;
+    width: auto;
+}
+
+.titleContainer p {
+    color: white;
+    font-size: 40px;
+    font-family: 'titleFont';
+    margin: 5px 0;
+}
+
+nav {
+    background: none;
+    box-shadow: none;
+}
+
+/* users' header parts styling */
+
+.btnNewTopic {
+    margin: -5px 0;
+}
+
+/* search field in the header */
+
+.input-field label {
+    color: #fff;
+}
+
+.input-field input[type=text]:focus + label {
+    color: rgb(33, 150, 243) !important;
+}
+
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid rgb(33, 150, 243) !important;
+    box-shadow: 0 1px 0 0 rgb(33, 150, 243) !important;
+}
+
+.input-field input[type=text] {
+    border-bottom: 1px solid #fff !important;
+    box-shadow: 0 1px 0 0 #fff !important;
+    width: 200px;
+    margin-right: 25px;
+}
+
+.input-field .prefix.active {
+    color: #fff !important;
+}
+
+.searchIcon {
+    margin-top: 8.5px;
+    margin-bottom: 8.5px;
+}
+
+#searchField {
+    padding-left: 5px;
+}
+
+/* profile icon in the users' header */
+
+.profileDropdown img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-left: 25px;
+}
+
+.profileDropdown {
+    padding-left: 0px;
+}
+
+.profileDropdown i {
+    margin-left: 5px;
+    margin-top: 9px;
+}
+
+.profileDropdown:hover {
+    background: none;
+}
+
+.dropdownMenu {
+    top: 15px;
+}
+
+.dropdownMenu li>a {
+    color: rgb(33, 150, 243);
+}
+
+/* General header login */
+
+.generalNav,
+.generalNav a {
+    height: 70px;
+}
+
+.generalNav ul .logInTitle:hover {
+    background: rgb(33, 150, 243);
+    height: 70px;
+}
+
+.signUpTitle:hover {
+    background: rgb(33, 150, 243);
+    height: 100%;
+}
+
+/* Login modal styling */
+
+.modal {
+    width: 350px;
+    min-height: 75%;
+}
+
+.modal .modal-header {
+    border-bottom: 1px solid #cfd5d7;
+    margin-bottom: 25px;
+    height: 40px;
+}
+
+.modal .modal-header h4 {
+    color: #363838;
+    font-size: 20px;
+    margin: 0;
+}
+
+.modal .modal-header button {
+    top: -6px;
+    text-align: right;
+    padding-right: 0;
+    position: relative;
+}
+
+.modal .modal-header button:active {
+    background: none;
+}
+
+.modal .modal-header button:hover {
+    color: rgb(33, 150, 243);
+}
+
+.modal .socialButtons a {
+    width: 100%;
+    text-transform: initial;
+    margin-bottom: 15px;
+}
+
+.modal .socialButtons .btnFacebook {
+    background: #3f51b5;
+}
+
+.modal .socialButtons .btnTwitter {
+    background: #2196f3;
+}
+
+.modal .socialButtons .btnGoogle {
+    background: #c62828;
+}
+
+.modal .socialButtons .socialTitle {
+    text-align: left;
+}
+
+.modal .separateContainer {
+    margin-top: 25px;
+    position: relative;
+}
+
+.modal .separateLine {
+    border-bottom: 1px solid #cfd5d7;
+}
+
+.modal .separateContainer p {
+    position: absolute;
+    top: -25px;
+    text-align: center;
+    color: #363838;
+}
+
+.modal input[type="text"]:focus {
+    border-bottom: 1px solid rgb(33, 150, 243) !important;
+    box-shadow: 0 1px 0 0 rgb(33, 150, 243) !important;
+}
+
+.modal input[type=password]:focus {
+    border-bottom: 1px solid rgb(33, 150, 243) !important;
+    box-shadow: 0 1px 0 0 rgb(33, 150, 243) !important;
+}
+
+.modal input[type="checkbox"].filled-in:checked + label:after {
+    background: rgb(33, 150, 243);
+    border: 2px solid rgb(33, 150, 243);
+}
+
+.modal input[type="submit"] {
+    margin-top: 15px;
+}
+
+.modal .registerLink {
+    margin-bottom: 0;
+}
+
+/* footer styling */
+
+footer {
+    height: 70px;
+    width: 100%;
+    background: #1d1f21;
+    position: absolute;
+    bottom: 0;
+}
+
+.footerContainer {
+    margin: 0 !important;
+    width: 100%;
+}
+
+.footerSeparator {
+    width: 0;
+    height: 51px;
+    float: left;
+    border-left: 1px solid #f8f8f8;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.footerSubSeparator {
+    border-left: 1px solid #f8f8f8;
+    height: 51px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.footerLinkParent {
+    display: table;
+    height: 70px;
+}
+
+.footerLinkParent a {
+    display: table-cell;
+    text-align: left;
+    vertical-align: middle;
+    color: #908f8f;
+}
+
+.socialIconParent {
+    display: table;
+    height: 70px;
+}
+
+.socialIconParent a {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    color: #908f8f;
+}
+
+.facebookIcon:hover {
+    color: #3b5998;
+}
+
+.emailIcon:hover {
+    color: #ea4335;
+}
+
+.instagramIcon:hover {
+    color: #c32aa3;
+}
+
+/* breadcrumb styling */
+
+.breadCrumb a {
+    font-size: 13px;
+    color: #363838;
+}
+
+.breadCrumb a:last-child {
+    font-size: 14px;
+}
+
+.breadCrumb a:hover {
+    color: rgb(33, 150, 243);
+}
+
+.breadCrumb i {
+    font-size: 15px;
+    position: relative;
+    top: 2px;
+}

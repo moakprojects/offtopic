@@ -1,0 +1,346 @@
+/* general styling */
+
+.contentContainer {
+    margin: 0;
+    width: 100%;
+    margin-bottom: 150px;
+}
+
+h2 {
+    font-size: 30px;
+    margin-top: 20px;
+}
+
+/* Sidebar blocks styling */
+
+.sideBarBlock {
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px #c9cccd;
+    margin-bottom: 20px;
+    margin-top: 25px;
+    padding: 15px;
+}
+
+.sideBarBlock h4 {
+    margin: 0 0 20px 0;
+    color: #363838;
+    font-size: 20px;
+}
+
+.sideBarBlock .line {
+    height: 1px;
+    line-height: 1px;
+    border-bottom: solid 1px #cfd5d7;
+}
+
+/* Topic Category (in the sidebar) styling */
+
+.topicCategoriesTitle {
+    color: #363838;
+}
+
+.topicCategoriesTitle:hover {
+    color: #2196f3;
+}
+
+.sideBarBlock .categoryContainer {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.sideBarBlock .categoryContainer > a {
+    margin-top: 15px;
+    display: block;
+}
+
+.sideBarBlock .categoryContainer > a svg {
+    padding-top: 2px;
+}
+
+.sideBarBlock ul {
+    margin: 0;
+    padding: 0;
+}
+
+.sideBarBlock li {
+    list-style: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    line-height: 35px; 
+}
+
+.sideBarBlock li a {
+    color: #363838;
+}
+
+.sideBarBlock li span {
+    margin-top: 7px;
+}
+
+/* Hot and Latest Topics' container styling */
+
+.tabsContainer li a {
+    color: #697683 !important;
+}
+
+.tabsContainer li a.active {
+    color: #2196f3 !important;
+}
+
+.tabsContainer .indicator {
+    background-color: #2196f3 !important;
+}
+
+/* topic cards styling */
+
+.topic {
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px #c9cccd;
+    margin-bottom: 20px;
+    margin-top: 25px;
+    padding: 15px 0;
+    height: 190px;
+}
+
+.topic .userImageContainer {
+    position: relative;
+    height: 100%;
+}
+
+.topic .userImageContainer img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-left: 25px;
+    position: absolute;
+    left: 0;
+}
+
+.topicContainer {
+    position: relative;
+    height: 100%;
+    border-right: 1px solid #cfd5d7;
+    padding-right: 25px !important;
+}
+
+.topic .topicContainer h3 {
+    color: #363838;
+    line-height: 25px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.topic .topicContainer p {
+    margin: 0;
+    color: rgb(114, 114, 114);
+    font-size: 14px;
+    line-height: 25px;
+}
+
+.topicDescription {
+    /*overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis*/
+}
+
+.topicCategory {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    margin: 0 !important;
+    border-radius: 5px;
+    line-height: 29px;
+    background: none;
+    border: 1px solid #e4e4e4;
+    box-shadow: 1px 1px 1px #E4E4E3;
+}
+
+.topic .comments {
+    border-bottom: solid 1px #cfd5d7;
+    text-align: center;
+    padding: 18px 0 25px 0;
+}
+
+.topic .commentbg {
+    border-radius: 2px;
+    background: #2196f3;
+    display: inline-block;
+    padding: 10px 25px;
+    color: white;
+    font-size: 14px;
+    position: relative;
+}
+
+.topic .mark {
+    width: 11px;
+    height: 11px;
+    background: #2196f3;
+    position: absolute;
+    bottom: 0;
+    left: 43%;
+    margin-bottom: -5px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+}
+
+.topic .time {
+    color: #9da6aa;
+    font-size: 14px;
+    text-align: center;
+    line-height: 29px;
+}
+
+.topic .time .iconTitle {
+    color: #9da6aa;
+    font-size: 12px;
+    text-align: center;
+    line-height: 29px;
+    margin-top: 5px;
+}
+
+.topic .viewTopic {
+    float: right;
+    margin-top: 9px !important;
+}
+
+.topic .viewTopic svg {
+    padding-top: 2px;
+}
+
+/* latest post (in the sidebar) styling */
+
+.latestPostsContainer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    transition: all 0.5s linear;
+    top: 0;
+} 
+
+.latestPostsContainer ul:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 100%;
+    border: 1.5px dotted #989c9e;
+    position: absolute;
+    top: 0;
+    left: 70px;
+}
+
+.latestPostsContainer ul li {
+    margin: 20px 100px 60px;
+    position: relative;
+    padding: 10px 20px;
+    background: #E4E4E4;
+    color: #363838;
+    border-radius: 10px;
+    line-height: 20px;
+    width: 70%;
+}
+
+.latestPostsContainer ul li > span {
+    content: "";
+    display: block;
+    width: 0;
+    height: 100%;
+    border: 1.5px double #989c9e;
+    position: absolute;
+    top: 0;
+    left: -30px;
+}
+
+.latestPostsContainer ul li > span:before, .latestPostsContainer ul li > span:after {
+    content: "";
+    display: block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #2196f3;
+    border: 2px solid #2196f3;
+    position: absolute;
+    left: -7.5px;
+}
+
+.latestPostsContainer ul li > span:before {
+    top: -10px;
+}
+
+.latestPostsContainer ul li > span:after {
+    top: 95%;
+}
+
+.latestPostsContainer .title {
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #363838;
+}
+
+.latestPostsContainer .info:first-letter {
+    text-transform: capitalize;
+    line-height: 1.7;
+}
+
+.latestPostsContainer .name {
+    margin-top: 10px;
+    text-transform: capitalize;
+    font-style: italic;
+    text-align: right;
+}
+
+.latestPostsContainer .time span {
+    position: absolute;
+    left: -100px;
+    color: #363838;
+    font-size: 80%;
+    font-weight: bold;
+}
+
+.latestPostsContainer .time span:first-child {
+    top: -10px;
+}
+
+.latestPostsContainer .time span:last-child {
+    top: 90%;
+}
+
+/* login Container (in the sidebar) styling */
+
+.sideBarLoginContainer {
+    padding: 15px 0 0 0;
+}
+
+.sideBarLoginContainer input[type="text"] {
+    margin-bottom: 0;
+}
+
+.sideBarLoginContainer input[type="password"] {
+    margin-bottom: 5px;
+}
+
+.sideBarLoginContainer input[type="text"]:focus {
+    border-bottom: 1px solid rgb(33, 150, 243) !important;
+    box-shadow: 0 1px 0 0 rgb(33, 150, 243) !important;
+}
+
+.sideBarLoginContainer input[type=password]:focus {
+    border-bottom: 1px solid rgb(33, 150, 243) !important;
+    box-shadow: 0 1px 0 0 rgb(33, 150, 243) !important;
+}
+
+.sideBarLoginContainer input[type="checkbox"].filled-in:checked + label:after {
+    background: rgb(33, 150, 243);
+    border: 2px solid rgb(33, 150, 243);
+}
+
+.rememberMeContainer {
+    padding-left: 0 !important;
+}

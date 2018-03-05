@@ -1,0 +1,450 @@
+/* general styling */
+
+.contentContainer {
+    margin: 0;
+    width: 100%;
+    margin-bottom: 150px;
+}
+
+.titleSection h2 {
+    font-size: 30px;
+    margin-top: 20px;
+    margin-bottom: 12px;
+}
+
+strong {
+    font-weight: 900;
+}
+
+.hide {
+    display: none;
+}
+
+/* Sidebar styling */
+
+.sideBarBlock {
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px #c9cccd;
+    margin-bottom: 20px;
+    margin-top: 25px;
+    padding: 15px;
+}
+
+.sideBarBlock h4 {
+    margin: 0 0 20px 0;
+    color: #363838;
+    font-size: 20px;
+}
+
+.sideBarBlock .line {
+    height: 1px;
+    line-height: 1px;
+    border-bottom: solid 1px #cfd5d7;
+}
+
+.sideBarBlock .categoryContainer {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.sideBarBlock ul {
+    margin: 0;
+    padding: 0;
+}
+
+.sideBarBlock li {
+    list-style: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    line-height: 35px; 
+}
+
+.sideBarBlock li a {
+    color: #363838;
+}
+
+.sideBarBlock li span {
+    margin-top: 7px;
+}
+
+/* category container (in the sidebar) styling */
+
+.topicCategoriesTitle {
+    color: #363838;
+}
+
+.topicCategoriesTitle:hover {
+    color: #2196f3;
+}
+
+.sideBarBlock .categoryContainer {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.sideBarBlock .categoryContainer > a {
+    margin-top: 15px;
+    display: block;
+}
+
+.sideBarBlock .categoryContainer > a svg {
+    padding-top: 2px;
+}
+
+/* sideBar login Container */
+
+.sideBarLoginContainer {
+    padding: 15px 0 0 0;
+}
+
+.sideBarLoginContainer input[type="text"] {
+    margin-bottom: 0;
+}
+
+.sideBarLoginContainer input[type="password"] {
+    margin-bottom: 5px;
+}
+
+.sideBarLoginContainer input[type="text"]:focus {
+    border-bottom: 1px solid rgb(33, 150, 243) !important;
+    box-shadow: 0 1px 0 0 rgb(33, 150, 243) !important;
+}
+
+.sideBarLoginContainer input[type=password]:focus {
+    border-bottom: 1px solid rgb(33, 150, 243) !important;
+    box-shadow: 0 1px 0 0 rgb(33, 150, 243) !important;
+}
+
+.sideBarLoginContainer input[type="checkbox"].filled-in:checked + label:after {
+    background: rgb(33, 150, 243);
+    border: 2px solid rgb(33, 150, 243);
+}
+
+.rememberMeContainer {
+    padding-left: 0 !important;
+}
+
+/* discussion posts styling */
+
+.topic {
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px #c9cccd;
+    margin: 25px 0 20px 0;
+    padding: 15px 0;
+    min-height: 190px;
+    width: 100%;
+    position: relative;
+}
+
+.topic .row {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.topic .userImageContainer img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-left: 3px;
+}
+
+.userImageContainer {
+    position: relative;
+    height: 100%;
+}
+
+.topic .userImageContainer p {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.topic h3 {
+    color: #363838;
+    line-height: 25px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.topic p {
+    margin: 0 0 3px;
+    color: rgb(114, 114, 114);
+    font-size: 14px;
+    line-height: 25px;
+    height: 100%;
+}
+
+.topicContainer {
+    position: relative;
+    height: 100%;
+    padding-right: 25px !important;
+}
+
+.topicDescription {
+    /*overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis*/
+}
+
+.topicDetails {
+    height: 50px;
+    background: white;
+    border-top: 1px solid #cfd5d7;
+}
+
+.topicDetails .row {
+    margin-top: 20px;
+}
+
+.topicLikeButton {
+    position: absolute;
+    top: -30px;
+    right: 25px;
+}
+
+.topicLikeButton svg {
+    position: relative;
+    top: 2px;
+}
+
+.topicDetails .created {
+    color: #383636;
+    padding-left: 0px !important;
+}
+
+.topicDetails .created span {
+    font-size: 12px;
+}
+
+.topicDetails .fixed-action-btn.horizontal {
+    position: absolute !important;
+    display: inline-block;
+    right: 75px;
+    top: 0;
+}
+
+.topicDetails .fixed-action-btn.horizontal .shareIcon {
+    color: rgb(189, 189, 189);
+}
+
+.topicDetails .fixed-action-btn.horizontal ul {
+    right: 48px;
+}
+
+.topicDetails .fixed-action-btn.horizontal li {
+    margin-top: 0;
+    margin-right: 2px;
+}
+
+.topicDetails .fixed-action-btn.horizontal li a {
+    text-align: center;
+}
+
+.topicDetails .fixed-action-btn.horizontal li a.facebook{
+    background: #3b5998;
+}
+
+.topicDetails .fixed-action-btn.horizontal li a.twitter{
+    background: #55acee;
+}
+
+.topicDetails .fixed-action-btn.horizontal li a.google{
+    background: #dd4b39;
+}
+
+.topicDetails .fixed-action-btn.horizontal .shareBtn {
+    background: rgb(245, 247, 250);
+}
+
+.topicDetails .controlBtns {
+    position: relative;
+}
+
+.topicDetails .replyBtn {
+    position: absolute;
+    right: 25px;
+}
+
+/* regular post styling */
+
+.post .topicDescription {
+    margin-top: 10px;
+}
+
+.post .topicContainer {
+    padding-top: 8px !important;
+}
+
+.postedOnContainer {
+    margin-bottom: 0px;
+}
+
+.postedOn, .postedBy {
+    color: #383636;
+}
+
+.postedOn {
+    text-align: right;
+}
+
+.postedBy {
+    text-align: left;
+    padding-left: 0px !important;
+}
+
+.postedOn span {
+    font-size: 11px;
+}
+
+.postedBy a {
+    color: #363838;
+    font-size: 18px;
+}
+
+.postedBy a:hover {
+    color: rgb(33, 150, 243);
+}
+
+.postContent {
+    margin-bottom: 15px;
+}
+
+.likesContainer {
+    padding-left: 0 !important;
+}
+
+.likesContainer .row {
+    margin-top: 0px;
+}
+
+.likesContainer .row .likeBtnContainer {
+    padding-left: 0px !important;
+}
+
+.likesContainer .likeBtnContainer span,
+.likesContainer .dislikeBtnContainer span {
+    margin-left: 7px;
+    position: relative;
+    top: 4px;
+}
+
+.likesContainer .likeBtnContainer span {
+    color: rgb(26, 188, 156);
+}
+
+.likesContainer .dislikeBtnContainer span {
+    color: rgb(219, 122, 122);
+}
+
+.likesContainer .likeBtn {
+    background: rgb(245, 247, 250);
+    text-align: center;
+}
+
+.likesContainer .likeBtnContainer svg {
+    color: rgb(26, 188, 156);
+}
+
+.likesContainer .dislikeBtnContainer svg {
+    color: rgb(219, 122, 122);
+}
+
+.dislikeBtnContainer {
+    position: relative;
+    left: -35px !important;
+}
+
+.postCreator {
+    color: #363838;
+    font-weight: 900;
+}
+
+.postCreator:hover {
+    color: rgb(33, 150, 243);
+}
+
+.postIndex {
+    text-align: right;
+}
+
+.postIndex a {
+    color: #9e9e9e;
+    font-size: 14px;
+}
+
+.postIndex a:hover {
+    color: rgb(26, 188, 156);
+}
+
+.postIndexContainer {
+    margin: 0;
+}
+
+/* replyContent */
+
+.replyContent {
+    padding: 20px;
+    border: 1px dashed #cfd5d7;
+    margin: 10px 30px 0px;
+}
+
+.replyContent .postedBy,
+.replyContent .postedBy a {
+    font-size: 12px;
+}
+
+/* overwrite breadcrumb styling */
+
+.breadCrumb {
+    margin-top: 20px;
+}
+
+/* quill editor styling */
+
+.editorContainer {
+    box-shadow: 0 1px 2px #c9cccd;
+}
+
+.ql-editor {
+    min-height: 200px;
+    background: white;
+}
+
+.ql-toolbar {
+    background: #F5F7FA;
+}
+
+/* cmooent card styling */
+
+.commentCard {
+    padding: 23px 0;
+}
+
+.commentCard .postContent {
+    margin: 0px;
+}
+
+.commentCard .userImageContainer img {
+    margin: 0;
+}
+
+.commentCard .topicContainer .row {
+    margin: 15px 0 0 0;
+}
+
+/* Unlogged style: hide comment editor */
+
+.commentCardUnlogged {
+    min-height: initial;
+    height: 100px;
+}
+
+.commentCardUnlogged p {
+    text-align: center;
+    margin-top: 22px;
+}

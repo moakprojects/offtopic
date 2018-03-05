@@ -1,0 +1,185 @@
+/* general styling */
+
+.contentContainer {
+    margin: 0;
+    width: 100%;
+    margin-bottom: 150px;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+.hide {
+    display: none;
+}
+
+/* breadCrumb modify */
+
+.breadCrumbContainer {
+    margin: 0;
+}
+
+/* profileImage styling */
+
+.profileImageContainer {
+    position: absolute;
+    top: -70px;
+    width: 100%;
+}
+
+.profileImageContainer img {
+    width: 150px;
+    height: auto;
+}
+
+.profileImageContainer .image {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.profileImageContainer .fadeContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%
+}
+
+.profileImageContainer .image:hover .fadeContainer {
+    background: rgba(0,0,0,0.3);
+}
+
+.profileImageContainer .fadeContainer svg,
+.profileImageContainer .fadeContainer p {
+    color: white;
+}
+
+.profileImageContainer .fadeContainer svg {
+    margin-top: 38px;
+    display: none;
+}
+
+.profileImageContainer .fadeContainer p {
+    font-weight: 900;
+    margin: 5px 0 0 0;
+    display: none;
+}
+
+.profileContainer .image:hover .fadeContainer svg {
+    display: inline;
+}
+
+.profileContainer .image:hover .fadeContainer p {
+    display: block;
+}
+
+/* user name styling */
+
+.userName {
+    font-size: 30px;
+    font-weight: 900;
+    color: #363838;
+    margin-top: 0px;
+}
+
+/* profil card styling */
+
+.profileContainer {
+    width: 100%;
+    background: white;
+    position: relative;
+    top: 70px;
+    height: 500px;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px #c9cccd;
+    /* padding: 145px 15px 15px 15px; */
+    padding: 15px;
+}
+
+/* User counted informations styling */
+
+.countContainer {
+    color: #808080;
+}
+
+.countValue {
+    font-size: 40px;
+    margin: 3px 0;
+}
+
+.countTitle {
+    margin: 3px 0;
+}
+
+.countIcon {
+    margin-bottom: 0;
+}
+
+/* AvatarChange modal styling */
+
+#avatarChange {
+    width: 80%;
+    min-height: 405px;
+}
+
+.tmpAvatarTitle {
+    color: #363838;
+    font-size: 22px;
+    margin-top: 25px;
+}
+
+.fileUpload {
+    border-right: 1px solid #cfd5d7;
+}
+
+.tmpAvatarImage {
+    margin: 15px 0;
+}
+
+.tmpAvatarImage img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.formContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.builtIn {
+    position: relative;
+}
+
+.carousel {
+    position: absolute;
+    right: 0px;
+    top: -93px;
+}
+
+.carousel a {
+    height: 150px !important;
+    width: 150px !important;
+}
+
+.modalContent {
+    margin-top: 40px;
+    min-height: 250px;
+}
+
+.preloader-wrapper {
+    margin-top: 10px;
+}
+
+#errorMsg {
+    margin-top: 40px;
+    color: red;
+}
