@@ -1,1 +1,3 @@
-<i class="fab fa-jenkins fa-10x" style="color: black; display: block; margin-top: 50px;"></i>
+<?php
+phpinfo();
+?>

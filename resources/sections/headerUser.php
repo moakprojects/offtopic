@@ -23,7 +23,19 @@
                     <li><a class="waves-effect waves-light btn btnNewTopic blue">Start New Topic</a></li>
                     <li>
                     <a class="dropdown-button profileDropdown" href="#!" data-activates="dropdown1">
-                        <img src="http://webphp.pe.hu/szakd/jenkins.PNG" alt="profile picture">
+                        <?php
+
+                            require "database/selection.php";
+
+                            echo "<img src=\"";
+                            if($avatarFileName == 'defaultAvatar.png') {
+                                echo 'public/images/content/defaultAvatar.png';
+                            } else {
+                                echo "public/images/upload/$avatarFileName";
+                            }
+                            echo "\" class=\"newAvatarImg\" alt=\"profile picture\">";
+
+                        ?>
                         <i class="material-icons right">arrow_drop_down</i>
                     </a>
                     </li>

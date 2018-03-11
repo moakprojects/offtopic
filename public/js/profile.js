@@ -5,15 +5,35 @@ $(document).ready(function(){
 		$('.carousel').carousel('next');
 	});
 
+	$(document).on('click', '.carousel-item', function() {
+		$('#errorMsg').addClass('hide');
+		$('.preloader-wrapper').removeClass('hide');
+		$.post('database/upload.php', {avatarName: $(this).attr("id")}, function(returnData) {
+			var obj = jQuery.parseJSON(returnData);
+			$('.preloader-wrapper').addClass('hide');
+			if(obj.data_type == 0) {
+				$('#errorMsg').removeClass('hide');
+				$('#errorMsg').html(obj.data_value);
+			} else {
+				var aux = "public/images/upload/" + obj.data_value;
+				$('.newAvatarImg').attr('src', aux);
+			}
+		});
+
+	});
+
 	$(document).on('change', '#avatarImg', function() {
+		$('#errorMsg').addClass('hide');
 		var property = document.getElementById("avatarImg").files[0];
 		var imageName = property.name;
 		var imageExtension = imageName.split('.').pop().toLowerCase();
 		var imageSize = property.size;
 
 		if(jQuery.inArray(imageExtension, ['png', 'jpg', 'jpeg']) == -1) {
+			$('#errorMsg').removeClass('hide');
 			$('#errorMsg').html("Invalid file type");
 		} else if(imageSize > 4000000) {
+			$('#errorMsg').removeClass('hide');
 			$('#errorMsg').html("The size is too big");
 		} else {
 			var form_data = new FormData();
@@ -29,19 +49,16 @@ $(document).ready(function(){
 					$('.preloader-wrapper').removeClass('hide');
 				},
 				success: function(data) {
-					console.log(data);
 					$('.preloader-wrapper').addClass('hide');
 					var obj = jQuery.parseJSON(data);
-					console.log("obj", obj);
-					console.log("data_key_01", obj.data_type);
-					console.log("data_key_02", obj["data_type"]);
 					
-						if(obj.data_type == 0) {
-							$('#errorMsg').html(obj.data_value);
-						} else {
-							var aux = "public/images/upload/" + obj.data_value;
-							$('#newAvatarImg').attr('src', aux);
-						}
+					if(obj.data_type == 0) {
+						$('#errorMsg').removeClass('hide');
+						$('#errorMsg').html(obj.data_value);
+					} else {
+						var aux = "public/images/upload/" + obj.data_value;
+						$('.newAvatarImg').attr('src', aux);
+					}
 					
 				}
 			});

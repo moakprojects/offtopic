@@ -24,7 +24,7 @@
                     } else {
                         echo "public/images/upload/$avatarFileName";
                     }
-                    echo "\" alt=\"profile picture\">";
+                    echo "\" class=\"newAvatarImg\" alt=\"profile picture\">";
 
                     ?>
                     <div class="fadeContainer">

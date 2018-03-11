@@ -30,7 +30,7 @@
 
 .profileImageContainer img {
     width: 150px;
-    height: auto;
+    height: 150px;
     border-radius: 50%;
 }
 
@@ -126,13 +126,13 @@
 
 #avatarChange {
     width: 72%;
-    min-height: 487px;
+    min-height: 520px;
 }
 
 .tmpAvatarTitle {
     color: #363838;
     font-size: 22px;
-    margin-top: 25px;
+    margin: 0px; 
 }
 
 .fileUpload {
@@ -140,13 +140,22 @@
 }
 
 .tmpAvatarImage {
-    margin: 15px 0;
+    margin: 85px 0;
 }
 
 .tmpAvatarImage img {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
+    position: relative;
+    top: -16px;
+}
+
+.tmpAvatarHint {
+    font-size: 14px;
+    display: block;
+    margin-left: 80px;
+    margin-top: 2px;
 }
 
 .formContainer {
@@ -155,7 +164,7 @@
     flex-direction: row;
     justify-content: space-around;
     position: absolute;
-    top: 303px;
+    top: 292px;
     left: 0;
 }
 
@@ -175,7 +184,6 @@
 }
 
 .modalContent {
-    margin-top: 40px;
     min-height: 250px;
 }
 
