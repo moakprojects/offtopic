@@ -29,8 +29,20 @@ $(document).ready(function(){
 					$('.preloader-wrapper').removeClass('hide');
 				},
 				success: function(data) {
+					console.log(data);
 					$('.preloader-wrapper').addClass('hide');
-					$('#errorMsg').html(data);
+					var obj = jQuery.parseJSON(data);
+					console.log("obj", obj);
+					console.log("data_key_01", obj.data_type);
+					console.log("data_key_02", obj["data_type"]);
+					
+						if(obj.data_type == 0) {
+							$('#errorMsg').html(obj.data_value);
+						} else {
+							var aux = "public/images/upload/" + obj.data_value;
+							$('#newAvatarImg').attr('src', aux);
+						}
+					
 				}
 			});
 		}

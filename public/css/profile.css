@@ -31,6 +31,7 @@
 .profileImageContainer img {
     width: 150px;
     height: auto;
+    border-radius: 50%;
 }
 
 .profileImageContainer .image {
@@ -124,8 +125,8 @@
 /* AvatarChange modal styling */
 
 #avatarChange {
-    width: 80%;
-    min-height: 405px;
+    width: 72%;
+    min-height: 487px;
 }
 
 .tmpAvatarTitle {
@@ -153,6 +154,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    position: absolute;
+    top: 303px;
+    left: 0;
 }
 
 .builtIn {
@@ -182,4 +186,27 @@
 #errorMsg {
     margin-top: 40px;
     color: red;
+}
+
+.sepContainer {
+    position: absolute;
+    top: 235px;
+    left: 0;
+    width: 100%;
+}
+
+.sepLine {
+    border-bottom: 1px solid #cfd5d7;
+}
+
+.sepOrContainer {
+    position: relative;
+}
+
+.sepContainer p {
+    position: absolute;
+    top: -25px;
+    left: 40px;
+    text-align: center;
+    color: #363838;
 }

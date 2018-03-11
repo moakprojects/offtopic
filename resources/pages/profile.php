@@ -14,7 +14,19 @@
         <div class="profileImageContainer textCenter">    
             <div class="image">
                 <a href="#avatarChange" class="modal-trigger">
-                    <img src="public/images/content/profile.png" alt="profile picture">
+                    <?php
+
+                    require "database/selection.php";
+
+                    echo "<img src=\"";
+                    if($avatarFileName == 'defaultAvatar.png') {
+                        echo 'public/images/content/defaultAvatar.png';
+                    } else {
+                        echo "public/images/upload/$avatarFileName";
+                    }
+                    echo "\" alt=\"profile picture\">";
+
+                    ?>
                     <div class="fadeContainer">
                         <i class="far fa-images fa-3x"></i>
                         <p class="textCenter">Change picture</p>

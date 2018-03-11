@@ -23,7 +23,7 @@
                     <li><a class="waves-effect waves-light btn btnNewTopic blue">Start New Topic</a></li>
                     <li>
                     <a class="dropdown-button profileDropdown" href="#!" data-activates="dropdown1">
-                        <img src="public/images/content/profile.png" alt="profile picture">
+                        <img src="http://webphp.pe.hu/szakd/jenkins.PNG" alt="profile picture">
                         <i class="material-icons right">arrow_drop_down</i>
                     </a>
                     </li>
