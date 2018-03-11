@@ -4,6 +4,7 @@
 $userSelectionQuery = "SELECT * FROM user WHERE userID = 1";
 $userSelectionResult = $db->query($userSelectionQuery, PDO::FETCH_ASSOC);
 foreach($userSelectionResult as $row) {
+    $username = $row["username"];
     $avatarFileName = $row["profileImage"];
 }
 
@@ -21,11 +22,10 @@ foreach($defaultAvatarSelectionResult as $row) {
 
 /* get post datas from post table */
 $postSelectionQuery = "SELECT * FROM post WHERE topicID = 1";
+$postSelectionResult = $db->query($postSelectionQuery);
 
 $post = array();
-while($row = $postSelectionResult = $db->query($postSelectionQuery, PDO::FETCH_ASSOC)) {
+while($row = $postSelectionResult->fetch(PDO::FETCH_ASSOC)) {
     array_push($post, $row);
 }
-
-
 ?>

@@ -52,140 +52,99 @@
                 </div>
                 <a href="#" data-position="bottom" data-delay="50" data-tooltip="Add to favourites" class="btn-floating btn-large waves-effect waves-light blue topicLikeButton tooltipped"><i class="far fa-heart fa-lg"></i></a>
             </div>
-            <div class="topic container post">
-                <div class="row postContent">
-                    <div class="col s1 userImageContainer">   
-                        <img src="public/images/content/profile.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
-                    </div>
-                    <div class="col s11 topicContainer">
-                        <div class="row postedOnContainer">
-                            <div class="col s4 postedBy">
-                                <a href="#">Test User</a>
-                            </div>
-                            <div class="col s4 offset-s4 postedOn">
-                                <i class="far fa-clock fa-xs"></i>
-                                <span>Posted on: 02-01-2018 17:41</span>
-                            </div>
+            <?php
+
+            require "database/selection.php";
+            
+            for($i = 0; $i < count($post); $i++) {
+            ?>
+                <div class="topic container post">
+                    <div class="row postContent">
+                        <div class="col s1 userImageContainer">
+                            <?php
+                                echo "<img src='";
+                                if($avatarFileName == 'defaultAvatar.png') {
+                                    echo 'public/images/content/defaultAvatar.png';
+                                } else {
+                                    echo "public/images/upload/$avatarFileName";
+                                }
+                                echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='$username'>";
+                            ?>
                         </div>
-                        <p class="topicDescription">lorem ipsum dolor sit amet, hedte hsafdsf jds ldsdsdf ldjfsd sdéflsdfsd éjédsjfs lkjshljsh lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv </p>
-                        <div class="row postIndexContainer">
-                            <div class="col s12 postIndex">
-                                <a href="#">#13</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row topicDetails">
-                    <div class="col s11 offset-s1">
-                        <div class="row">
-                            <div class="col s4 likesContainer">
-                                <div class="row">
-                                    <div class="col s6 likeBtnContainer">
-                                        <a class="btn-floating waves-effect waves-light likeBtn">
-                                            <i class="far fa-thumbs-up fa-lg likeIcon"></i>
-                                        </a>
-                                        <span>42</span>
-                                    </div>
-                                    <div class="col s6 dislikeBtnContainer">
-                                        <a class="btn-floating waves-effect waves-light likeBtn">
-                                            <i class="far fa-thumbs-down fa-lg likeIcon"></i>
-                                        </a>
-                                        <span>42</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col s4"></div>
-                            <div class="controlBtns col s4">
-                                <div class="fixed-action-btn horizontal socialButttons">
-                                    <a class="btn-floating shareBtn">
-                                    <i class="material-icons shareIcon">share</i>
-                                    </a>
-                                    <ul>
-                                    <li><a class="btn-floating facebook"><i class="fab fa-facebook-f fa-lg"></i></a></li>
-                                    <li><a class="btn-floating twitter"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a class="btn-floating google"><i class="fab fa-google-plus-g"></i></a></li>
-                                    </ul>
-                                </div>
-                                <a href="#" class="btn-floating waves-effect waves-light blue replyBtn"><i class="material-icons">reply</i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="topic container post replyPost">
-                <div class="row postContent">
-                    <div class="col s1 userImageContainer">   
-                        <img src="public/images/content/profile.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
-                    </div>
-                    <div class="col s11 topicContainer">
-                        <div class="row postedOnContainer">
-                            <div class="col s4 postedBy">
-                                <a href="#">Test User</a>
-                            </div>
-                            <div class="col s4 offset-s4 postedOn">
-                                <i class="far fa-clock fa-xs"></i>
-                                <span>Posted on: 02-01-2018 17:41</span>
-                            </div>
-                        </div>
-                        <div class="replyContent">
+                        <div class="col s11 topicContainer">
                             <div class="row postedOnContainer">
-                                <div class="col s12 postedBy">
-                                    <span>Original Posted by - </span>
-                                    <a href="#">Previous Test User:</a>
+                                <div class="col s4 postedBy">
+                                    <a href="#"><?php echo $username; ?></a>
+                                </div>
+                                <div class="col s4 offset-s4 postedOn">
+                                    <i class="far fa-clock fa-xs"></i>
+                                    <span>Posted on: <?php echo $post[$i]["postedOn"]; ?></span>
                                 </div>
                             </div>
-                            <p class="topicDescription">lorem ipsum dolor sit amet, hedte hsafdsf jds ldsdsdf ldjfsd sdéflsdfsd éjédsjfs lkjshljsh lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv </p>
+                            <?php 
+                                if(isset($post[$i]["replyID"])) {
+                            ?>
+                                    <div class="replyContent">
+                                        <div class="row postedOnContainer">
+                                            <div class="col s12 postedBy">
+                                                <span>Original Posted by - </span>
+                                                <a href="#"><?php echo $username; ?>:</a>
+                                            </div>
+                                        </div>
+                                        <p class="topicDescription"><?php echo $post[$post[$i]["replyID"]-1]["text"]; ?></p>
+                                        <div class="row postIndexContainer">
+                                            <div class="col s12 postIndex">
+                                                <a href="#">#<?php echo $post[$i]["replyID"]; ?></a>
+                                            </div>
+                                        </div>
+                                    </div>      
+                            <?php } ?>
+                            <p class="topicDescription"><?php echo $post[$i]["text"]; ?></p>
                             <div class="row postIndexContainer">
                                 <div class="col s12 postIndex">
-                                    <a href="#">#11</a>
+                                    <a href="#">#<?php echo $i + 1; ?></a>
                                 </div>
                             </div>
                         </div>
-                        <p class="topicDescription">lorem ipsum dolor sit amet, hedte hsafdsf jds ldsdsdf ldjfsd sdéflsdfsd éjédsjfs lkjshljsh lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv </p>
-                        <div class="row postIndexContainer">
-                            <div class="col s12 postIndex">
-                                <a href="#">#12</a>
+                    </div>
+                    <div class="row topicDetails">
+                        <div class="col s11 offset-s1">
+                            <div class="row">
+                                <div class="col s4 likesContainer">
+                                    <div class="row">
+                                        <div class="col s6 likeBtnContainer">
+                                            <a class="btn-floating waves-effect waves-light likeBtn">
+                                                <i class="far fa-thumbs-up fa-lg likeIcon"></i>
+                                            </a>
+                                            <span><?php echo $post[$i]["numberOfLikes"]; ?></span>
+                                        </div>
+                                        <div class="col s6 dislikeBtnContainer">
+                                            <a class="btn-floating waves-effect waves-light likeBtn">
+                                                <i class="far fa-thumbs-down fa-lg likeIcon"></i>
+                                            </a>
+                                            <span><?php echo $post[$i]["numberOfDislikes"]; ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col s4"></div>
+                                <div class="controlBtns col s4">
+                                    <div class="fixed-action-btn horizontal socialButttons">
+                                        <a class="btn-floating shareBtn">
+                                        <i class="material-icons shareIcon">share</i>
+                                        </a>
+                                        <ul>
+                                        <li><a class="btn-floating facebook"><i class="fab fa-facebook-f fa-lg"></i></a></li>
+                                        <li><a class="btn-floating twitter"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a class="btn-floating google"><i class="fab fa-google-plus-g"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <a href="#" class="btn-floating waves-effect waves-light blue replyBtn"><i class="material-icons">reply</i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row topicDetails">
-                    <div class="col s11 offset-s1">
-                        <div class="row">
-                            <div class="col s4 likesContainer">
-                                <div class="row">
-                                    <div class="col s6 likeBtnContainer">
-                                        <a class="btn-floating waves-effect waves-light likeBtn">
-                                            <i class="far fa-thumbs-up fa-lg likeIcon"></i>
-                                        </a>
-                                        <span>42</span>
-                                    </div>
-                                    <div class="col s6 dislikeBtnContainer">
-                                        <a class="btn-floating waves-effect waves-light likeBtn">
-                                            <i class="far fa-thumbs-down fa-lg likeIcon"></i>
-                                        </a>
-                                        <span>42</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col s4"></div>
-                            <div class="controlBtns col s4">
-                                <div class="fixed-action-btn horizontal socialButttons">
-                                    <a class="btn-floating shareBtn">
-                                    <i class="material-icons shareIcon">share</i>
-                                    </a>
-                                    <ul>
-                                    <li><a class="btn-floating facebook"><i class="fab fa-facebook-f fa-lg"></i></a></li>
-                                    <li><a class="btn-floating twitter"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a class="btn-floating google"><i class="fab fa-google-plus-g"></i></a></li>
-                                    </ul>
-                                </div>
-                                <a href="#" class="btn-floating waves-effect waves-light blue replyBtn"><i class="material-icons">reply</i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
             <div class="topic commentCard">
                 <div class="row postContent">
                     <div class="col s1 userImageContainer">   
