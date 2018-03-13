@@ -52,9 +52,11 @@
                 </div>
                 <a href="#" data-position="bottom" data-delay="50" data-tooltip="Add to favourites" class="btn-floating btn-large waves-effect waves-light blue topicLikeButton tooltipped"><i class="far fa-heart fa-lg"></i></a>
             </div>
+            <div id="postContainer">
             <?php
 
             require "database/selection.php";
+            require "database/discussionFeatures.php";
             
             for($i = 0; $i < count($post); $i++) {
             ?>
@@ -91,7 +93,7 @@
                                                 <a href="#"><?php echo $username; ?>:</a>
                                             </div>
                                         </div>
-                                        <p class="topicDescription"><?php echo $post[$post[$i]["replyID"]-1]["text"]; ?></p>
+                                        <p class="topicDescription"><?php echo $post[$post[$i]["replyID"]-1]["text"];?></p>
                                         <div class="row postIndexContainer">
                                             <div class="col s12 postIndex">
                                                 <a href="#">#<?php echo $post[$i]["replyID"]; ?></a>
@@ -113,16 +115,36 @@
                                 <div class="col s4 likesContainer">
                                     <div class="row">
                                         <div class="col s6 likeBtnContainer">
-                                            <a class="btn-floating waves-effect waves-light likeBtn">
+                                            <a class="btn-floating waves-effect waves-light likeBtn 
+                                                <?php
+                                                    if(checkPostStatus(10, $post[$i]["postID"]) > 0) {
+                                                        echo " disabled disabledBtn";
+                                                    }
+                                                ?> 
+                                                likeFloatBtn<?php echo $post[$i]["postID"]; ?>" onclick="like(<?php echo $post[$i]["postID"]; ?>)">
                                                 <i class="far fa-thumbs-up fa-lg likeIcon"></i>
                                             </a>
-                                            <span><?php echo $post[$i]["numberOfLikes"]; ?></span>
+                                            <span class="likeValue<?php echo $post[$i]["postID"]; ?>">
+                                            <?php 
+                                                countLikes($post[$i]["postID"], "like");
+                                            ?>
+                                            </span>
                                         </div>
                                         <div class="col s6 dislikeBtnContainer">
-                                            <a class="btn-floating waves-effect waves-light likeBtn">
+                                            <a class="btn-floating waves-effect waves-light likeBtn
+                                                <?php 
+                                                    if(checkPostStatus(10, $post[$i]["postID"]) > 0) {
+                                                        echo " disabled disabledBtn";
+                                                    }
+                                                ?>
+                                                dislikeFloatBtn<?php echo $post[$i]["postID"]; ?>" onclick="dislike(<?php echo $post[$i]["postID"]; ?>)">
                                                 <i class="far fa-thumbs-down fa-lg likeIcon"></i>
                                             </a>
-                                            <span><?php echo $post[$i]["numberOfDislikes"]; ?></span>
+                                            <span class="dislikeValue<?php echo $post[$i]["postID"]; ?>">
+                                            <?php 
+                                                countLikes($post[$i]["postID"], "dislike");
+                                            ?>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -145,6 +167,7 @@
                     </div>
                 </div>
             <?php } ?>
+            </div>
             <div class="topic commentCard">
                 <div class="row postContent">
                     <div class="col s1 userImageContainer">   
@@ -155,7 +178,23 @@
                             <div id="editor"></div>
                         </div>
                         <div class="row">
-                            <a href="#" class="btn waves-effect waves-light blue col s2 offset-s10">Reply</a>
+                            <div class="col s3">
+                                <p id="errorMsg"></p>
+                            </div>
+                            <div class="col s1 offset-s6">
+                                <div class="preloader-wrapper small active hide replySpinner">
+                                    <div class="spinner-layer spinner-blue-only">
+                                        <div class="circle-clipper left">
+                                            <div class="circle"></div>
+                                        </div><div class="gap-patch">
+                                            <div class="circle"></div>
+                                        </div><div class="circle-clipper right">
+                                            <div class="circle"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="btn waves-effect waves-light blue col s2 postReplyBtn">Reply</a>
                         </div>  
                     </div>
                 </div>

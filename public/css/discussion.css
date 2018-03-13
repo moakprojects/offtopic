@@ -385,6 +385,10 @@ strong {
     margin: 0;
 }
 
+.disabledBtn svg {
+    color: rgb(245, 247, 250) !important;
+}
+
 /* replyContent */
 
 .replyContent {
@@ -417,6 +421,14 @@ strong {
 
 .ql-toolbar {
     background: #F5F7FA;
+}
+
+.ql-omega:after {
+    content: "Ω";
+}
+
+#errorMsg {
+    color: red;
 }
 
 /* cmooent card styling */

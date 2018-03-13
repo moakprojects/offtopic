@@ -1,5 +1,5 @@
 <?php
-require "../config/connection.php";
+/* require "../config/connection.php"; */
 require "selection.php";
 if(isset($_FILES["file"])) {
     

@@ -1,5 +1,5 @@
 <?php
-
+/* require "config/connection.php"; */
 /* get profileImage name from user table */
 $userSelectionQuery = "SELECT * FROM user WHERE userID = 1";
 $userSelectionResult = $db->query($userSelectionQuery, PDO::FETCH_ASSOC);
@@ -28,4 +28,10 @@ $post = array();
 while($row = $postSelectionResult->fetch(PDO::FETCH_ASSOC)) {
     array_push($post, $row);
 }
+
+/* select number of likes and dislikes of the posts depends on the topic */
+$numberOfLikesQuery = $db->prepare("SELECT count(isLike) as count FROM `like` WHERE islike = 1 AND postID = :postID");
+$numberOfDislikesQuery = $db->prepare("SELECT count(isDislike) as count FROM `like` WHERE isDislike = 1 AND postID = :postID");
+
+$inLikeTableQuery = $db->prepare("SELECT * FROM `like` WHERE userID = :userID AND postID = :postID");
 ?>
