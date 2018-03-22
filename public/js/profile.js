@@ -8,14 +8,16 @@ $(document).ready(function(){
 	$(document).on('click', '.carousel-item', function() {
 		$('#errorMsg').addClass('hide');
 		$('.preloader-wrapper').removeClass('hide');
-		$.post('database/upload.php', {avatarName: $(this).attr("id")}, function(returnData) {
+		console.log('dfd', $(this).attr("id"));
+		$.post('/database/upload.php', {avatarName: $(this).attr("id")}, function(returnData) {
+			console.log('returnDataDefaultKépen: ', returnData);
 			var obj = jQuery.parseJSON(returnData);
 			$('.preloader-wrapper').addClass('hide');
 			if(obj.data_type == 0) {
 				$('#errorMsg').removeClass('hide');
 				$('#errorMsg').html(obj.data_value);
 			} else {
-				var aux = "public/images/upload/" + obj.data_value;
+				var aux = "/public/images/upload/" + obj.data_value;
 				$('.newAvatarImg').attr('src', aux);
 			}
 		});
@@ -24,7 +26,7 @@ $(document).ready(function(){
 
 	$(document).on('change', '#avatarImg', function() {
 		$('#errorMsg').addClass('hide');
-		var property = document.getElementById("avatarImg").files[0];
+		var property = $("#avatarImg")[0].files[0];
 		var imageName = property.name;
 		var imageExtension = imageName.split('.').pop().toLowerCase();
 		var imageSize = property.size;
@@ -37,9 +39,11 @@ $(document).ready(function(){
 			$('#errorMsg').html("The size is too big");
 		} else {
 			var form_data = new FormData();
+			console.log("property", property);
 			form_data.append("file", property);
+			console.log('form_Data', form_data);
 			$.ajax({
-				url: 'database/upload.php',
+				url: '/database/upload.php',
 				method: 'POST',
 				data: form_data,
 				contentType: false,
@@ -49,6 +53,7 @@ $(document).ready(function(){
 					$('.preloader-wrapper').removeClass('hide');
 				},
 				success: function(data) {
+					console.log('returnDataFeltöltöttKépen: ', data);
 					$('.preloader-wrapper').addClass('hide');
 					var obj = jQuery.parseJSON(data);
 					
@@ -56,7 +61,7 @@ $(document).ready(function(){
 						$('#errorMsg').removeClass('hide');
 						$('#errorMsg').html(obj.data_value);
 					} else {
-						var aux = "public/images/upload/" + obj.data_value;
+						var aux = "/public/images/upload/" + obj.data_value;
 						$('.newAvatarImg').attr('src', aux);
 					}
 					

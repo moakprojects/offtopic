@@ -11,9 +11,9 @@
 
                 echo "<img src=\"";
                 if($avatarFileName == 'defaultAvatar.png') {
-                    echo 'public/images/content/defaultAvatar.png';
+                    echo '/public/images/content/defaultAvatar.png';
                 } else {
-                    echo "public/images/upload/$avatarFileName";
+                    echo "/public/images/upload/$avatarFileName";
                 }
                 echo "\" class=\"newAvatarImg\" alt=\"profile picture\">";
                 
@@ -25,7 +25,7 @@
                 <?php
 
                 foreach($defaultAvatarImages as $image) {
-                    echo "<a class='carousel-item' id='" . $image['fileName'] . "'><img src='public/images/defaultAvatars/" . $image['fileName'] . "'></a>";
+                    echo "<a class='carousel-item' id='" . $image['fileName'] . "'><img src='/public/images/defaultAvatars/" . $image['fileName'] . "'></a>";
                 }
         
                 ?>

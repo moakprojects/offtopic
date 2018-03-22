@@ -15,7 +15,7 @@
             <div class="topic container">
                 <div class="row">
                     <div class="col s1 userImageContainer">   
-                        <img src="public/images/content/profile.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
+                        <img src="/public/images/content/defaultAvatar.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
                     </div>
                     <div class="col s11 topicContainer">
                         <h3>Backend course - Sticky post</h3>
@@ -66,9 +66,9 @@
                             <?php
                                 echo "<img src='";
                                 if($avatarFileName == 'defaultAvatar.png') {
-                                    echo 'public/images/content/defaultAvatar.png';
+                                    echo '/public/images/content/defaultAvatar.png';
                                 } else {
-                                    echo "public/images/upload/$avatarFileName";
+                                    echo "/public/images/upload/$avatarFileName";
                                 }
                                 echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='$username'>";
                             ?>
@@ -102,6 +102,24 @@
                                     </div>      
                             <?php } ?>
                             <p class="topicDescription"><?php echo $post[$i]["text"]; ?></p>
+                            <ul class="postAttachFiles">
+                                <?php 
+                                    $attachFilesResult = [];
+                                    getAttachFiles($post[$i]["postID"]);
+
+                                    foreach($attachFilesResult as $file) {
+                                        $fileExtension = explode(".", $file["attachmentName"]);
+                                        if(in_array($fileExtension[1], array('png', 'jpg', 'jpeg'))) {
+                                            echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
+                                            echo '<a href="/public/files/upload/' . $file["attachmentName"] . '" data-lightbox="attachedImagePost' . $post[$i]["postID"] . '" data-title="' . $file["displayName"] . '"><img src="/public/files/upload/' . $file["attachmentName"] . '"></a>';
+                                            echo "<p>(To see the original size click on the name of the image)</p>";
+                                        } else {
+                                            echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
+                                        }
+                                    }
+
+                                ?>
+                            </ul>
                             <div class="row postIndexContainer">
                                 <div class="col s12 postIndex">
                                     <a href="#">#<?php echo $i + 1; ?></a>
@@ -171,17 +189,19 @@
             <div class="topic commentCard">
                 <div class="row postContent">
                     <div class="col s1 userImageContainer">   
-                        <img src="public/images/content/profile.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
+                        <img src="/public/images/content/defaultAvatar.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
                     </div>
                     <div class="col s11 topicContainer">
                         <div class="editorContainer">
                             <div id="editor"></div>
                         </div>
                         <div class="row">
-                            <div class="col s3">
+                            <div class="col s6">
                                 <p id="errorMsg"></p>
+                                <hr id="errorMsgSeparator" class="hide">
+                                <ul id="attachFiles"></ul>
                             </div>
-                            <div class="col s1 offset-s6">
+                            <div class="col s1 offset-s3">
                                 <div class="preloader-wrapper small active hide replySpinner">
                                     <div class="spinner-layer spinner-blue-only">
                                         <div class="circle-clipper left">
@@ -194,7 +214,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a class="btn waves-effect waves-light blue col s2 postReplyBtn">Reply</a>
+                            <a class="btn waves-effect waves-light blue col s2 postReplyBtn disabled">Reply</a>
                         </div>  
                     </div>
                 </div>

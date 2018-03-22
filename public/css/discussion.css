@@ -389,6 +389,37 @@ strong {
     color: rgb(245, 247, 250) !important;
 }
 
+.postAttachFiles {
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+
+.postAttachFiles li {
+    padding: 5px;
+    color: #363838;
+    list-style-image: url('/public/images/content/attachmentIcon.svg');
+    list-style-position: inside;
+}
+
+.postAttachFiles img {
+    max-width: 325px;
+}
+
+.postAttachFiles p {
+    font-size: 10px;
+}
+
+#postAttachFiles li span:first-child {
+    /*white-space: nowrap;
+    overflow: hidden;*/
+    display: block;
+    width: 270px;
+    /*text-overflow: ellipsis;*/
+    position: absolute;
+    top: 3px;
+    left: 25px;
+}
+
 /* replyContent */
 
 .replyContent {
@@ -423,15 +454,60 @@ strong {
     background: #F5F7FA;
 }
 
-.ql-omega:after {
-    content: "Ω";
+.ql-attachment:after {
+    content: url('../images/content/attachmentIcon.svg');
 }
 
 #errorMsg {
     color: red;
 }
 
-/* cmooent card styling */
+#attachFiles ul {
+    list-style-position: inside;
+}
+
+#attachFiles li {
+    list-style-image: url('/public/images/content/attachmentIcon.svg');
+    list-style-position: inside;
+    position: relative;
+    padding: 5px 5px 2px 5px;
+    color: #363838;
+}
+
+#attachFiles li:hover {
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+}
+
+#attachFiles li span:first-child {
+    /*white-space: nowrap;
+    overflow: hidden;*/
+    display: block;
+    width: 270px;
+    /*text-overflow: ellipsis;*/
+    position: absolute;
+    top: 3px;
+    left: 25px;
+}
+
+#attachFiles li span:last-child {
+    color: red;
+    position: absolute;
+    right: 5px;
+    top: 4px;
+    cursor: pointer;
+}
+
+#attachFiles li span:last-child i {
+    font-size: 17px;
+    position: relative;
+    top: 3px;
+}
+
+.replyBtn.disabled {
+    color: rgb(245, 247, 250) !important;
+}
+
+/* comment card styling */
 
 .commentCard {
     padding: 23px 0;

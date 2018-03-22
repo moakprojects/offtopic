@@ -20,9 +20,9 @@
 
                     echo "<img src=\"";
                     if($avatarFileName == 'defaultAvatar.png') {
-                        echo 'public/images/content/defaultAvatar.png';
+                        echo '/public/images/content/defaultAvatar.png';
                     } else {
-                        echo "public/images/upload/$avatarFileName";
+                        echo "/public/images/upload/$avatarFileName";
                     }
                     echo "\" class=\"newAvatarImg\" alt=\"profile picture\">";
 

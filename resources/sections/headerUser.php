@@ -3,7 +3,7 @@
 </div>
 <header>
     <div class="sideSpace">
-        <a href="/home"><img src="public/images/content/offtopicLogo.png" alt="Offtopic forum's logo" class="logo"></a>
+        <a href="/home"><img src="/public/images/content/offtopicLogo.png" alt="Offtopic forum's logo" class="logo"></a>
         <div class="separator"></div>
         <div class="titleContainer">
             <p>OffTopic</p>
@@ -29,9 +29,9 @@
 
                             echo "<img src=\"";
                             if($avatarFileName == 'defaultAvatar.png') {
-                                echo 'public/images/content/defaultAvatar.png';
+                                echo '/public/images/content/defaultAvatar.png';
                             } else {
-                                echo "public/images/upload/$avatarFileName";
+                                echo "/public/images/upload/$avatarFileName";
                             }
                             echo "\" class=\"newAvatarImg\" alt=\"profile picture\">";
 

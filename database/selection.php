@@ -29,9 +29,16 @@ while($row = $postSelectionResult->fetch(PDO::FETCH_ASSOC)) {
     array_push($post, $row);
 }
 
+/* get attached file from attechment table with postID */
+$attachFilesQuery = $db->prepare("SELECT * FROM attachment WHERE postID = :postID");
+
 /* select number of likes and dislikes of the posts depends on the topic */
 $numberOfLikesQuery = $db->prepare("SELECT count(isLike) as count FROM `like` WHERE islike = 1 AND postID = :postID");
 $numberOfDislikesQuery = $db->prepare("SELECT count(isDislike) as count FROM `like` WHERE isDislike = 1 AND postID = :postID");
 
 $inLikeTableQuery = $db->prepare("SELECT * FROM `like` WHERE userID = :userID AND postID = :postID");
+
+/* select users for registration */
+$checkUserEmailQuery = $db->prepare("SELECT * FROM user WHERE email = :email");
+$checkUsernameQuery = $db->prepare("SELECT * FROM user WHERE username = :username");
 ?>

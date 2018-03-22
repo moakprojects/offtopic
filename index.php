@@ -2,8 +2,11 @@
     session_start();
     //page switcher
     $page = "";
-    if(isset($_GET["page"])) {
-        switch($_GET['page']) {
+    if(isset($_GET["page"]) && !empty($_GET["page"])) {
+        //$queryString = htmlspecialchars(trim($_GET["page"]));
+        $queryString = $_GET["page"];
+        $queryStringParams = explode("/", $queryString);
+        switch($queryStringParams[0]) {
             case "home":
                 $page = "home";
             break;
@@ -50,26 +53,28 @@
         <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
         
         <!-- main css -->
-        <link href="public/css/main.css" rel="stylesheet">
+        <link href="/public/css/main.css" rel="stylesheet">
     
         <?php
             /* Dinamical css, depend on the page */
-            echo "<style>";
-            include("public/css/$page.css");
-            echo "</style>";
+            if(file_exists("public/css/$page.css")) {
+                echo "<link href='/public/css/$page.css' rel='stylesheet'>";
+            }
         ?>
 
         <!-- Shortcut icon -->
-        <link rel="shortcut icon" href="/images/offtopicLogo.png" type="image/x-icon">
+        <link rel="shortcut icon" href="/public/images/content/offtopicLogo.png" type="image/x-icon">
 
         <!-- Quill reach text editor -->
         <script src="//cdn.quilljs.com/1.3.5/quill.js"></script>
         <link href="//cdn.quilljs.com/1.3.5/quill.snow.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="/public/css/lightbox.min.css">
     </head>
     <body>
         <?php
             require ("config/connection.php");
-            $loggedIn = true;
+            $loggedIn = false;
 
             if($loggedIn) {
                 include("resources/sections/headerUser.php");
@@ -94,9 +99,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
         
         <!-- own scripts main and dinamic depends on the page -->
-        <script src="public/js/main.js"></script>
+        <script src="/public/js/main.js"></script>
+        <script src="/public/js/lightbox.min.js"></script>
         <?php
-            echo "<script src='public/js/" . $page . ".js'></script>";
+            if(file_exists("public/js/$page.js")) {
+                echo "<script src='/public/js/" . $page . ".js'></script>";
+            }
+            $db = null;
         ?>
     </body>
 </html>

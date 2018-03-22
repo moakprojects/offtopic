@@ -3,7 +3,7 @@
         <div class="container footerContainer">
             <div class="row noMargin">
                 <div class="col s4">
-                    <a href="/home"><img src="public/images/content/offtopicLogo.png" alt="Offtopic forum's logo" class="logo"></a>
+                    <a href="/home"><img src="/public/images/content/offtopicLogo.png" alt="Offtopic forum's logo" class="logo"></a>
                     <div class="footerSeparator"></div>
                     <div class="titleContainer">
                         <p>OffTopic</p>

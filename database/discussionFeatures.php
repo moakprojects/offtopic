@@ -66,6 +66,7 @@
     if(isset($_POST["replyContent"])) {
         require "../config/connection.php";
         require "insert.php";
+        //$text = htmlspecialchars(trim($_POST["replyContent"]));
         $replyQuery->bindParam(':text', $_POST["replyContent"]);
         $postedOn = date("Y-m-d H:i:s");
         $replyQuery->bindParam(':postedOn', $postedOn);
@@ -81,37 +82,53 @@
         header("Location: /discussion");
     }
 
-    if(isset($_FILES["file"])) {
+    if(count($_FILES) > 0) {
         require "../config/connection.php";
         require "insert.php";
 
-        if(!($_FILES["file"]["error"] > 0)) 
-        {
-            $fileName = time() . '_' . $_FILES["file"]["name"];
-            $location = "../public/files/upload/" . $fileName;
-
-            if(!$fileUploadQuery) {
-                $result["data_type"] = 0;
-                $result["data_value"] = "An error occured";
-                echo json_encode($result);
-            } else {
-                $postID = 1;
+        if(!$fileUploadQuery) {
+            $result["data_type"] = 0;
+            $result["data_value"] = "An error occured";
+        } else {
+            foreach($_FILES as $file) {
+                $fileName = time() . '_' . $file["name"];
+                $fileExtension = explode(".", $file["name"]);
+                $location = "../public/files/upload/" . $fileName;
+    
+                $displayedFileName = $file["name"];
+                if(strlen($file["name"]) > 38 - strlen($fileExtension[0])) {
+                  $cuttedFileName = substr($file["name"], 0, 39);
+                  $displayedFileName = $cuttedFileName . '....' . $fileExtension[1];
+                }
+                $postID = 49;
                 $fileUploadQuery->bindParam(':postID', $postID);
                 $fileUploadQuery->bindParam(':attachmentName', $fileName);
+                $fileUploadQuery->bindParam(':displayName', $displayedFileName);
 
                 $fileUploadQuery->execute();
         
-                copy($_FILES["file"]["tmp_name"], $location);
-                $result["data_type"] = 1;
-                $result["data_value"] = "Continue";
-                echo json_encode($result);
+                copy($file["tmp_name"], $location);   
             }
+            $result["data_type"] = 1;
+            $result["data_value"] = "Continue";
+        }
 
-        } else {
-            $result["data_type"] = 0;
-            $result["data_value"] = "An error occured";
-            echo json_encode($result);
-            // TODO_pro: Security log (Here we get a server error what we would like to log)
+        echo json_encode($result);
+    }
+
+    function getAttachFiles($postID) {
+        
+        global $attachFilesQuery;
+        global $attachFilesResult;
+
+        if($attachFilesQuery) {
+            $attachFilesQuery->bindParam(':postID', $postID);
+            $attachFilesQuery->execute();
+
+            $attachFilesResult = array();
+            while($row = $attachFilesQuery->fetch(PDO::FETCH_ASSOC)) {
+                array_push($attachFilesResult, $row);
+            }
         }
     }
 ?>

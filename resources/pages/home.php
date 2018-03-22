@@ -9,7 +9,7 @@
             <div id="hotTopic">
                 <div class="topic">
                     <div class="col s1 userImageContainer">
-                        <img src="public/images/content/profile.png" alt="profile picture">
+                        <img src="/public/images/content/defaultAvatar.png" alt="profile picture">
                     </div>
                     <div class="col s9 topicContainer">
                         <h3>First hot example</h3>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="topic">
                     <div class="col s1 userImageContainer">
-                        <img src="public/images/content/profile.png" alt="profile picture">
+                        <img src="/public/images/content/defaultAvatar.png" alt="profile picture">
                     </div>
                     <div class="col s9 topicContainer">
                         <h3>Lorem ipsum dolor sit</h3>
@@ -65,7 +65,7 @@
             <div id="latestTopic">
                 <div class="topic">
                     <div class="col s1 userImageContainer">
-                        <img src="public/images/content/profile.png" alt="profile picture">
+                        <img src="/public/images/content/defaultAvatar.png" alt="profile picture">
                     </div>
                     <div class="col s9 topicContainer">
                         <h3>First latest example</h3>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="topic">
                     <div class="col s1 userImageContainer">
-                        <img src="public/images/content/profile.png" alt="profile picture">
+                        <img src="/public/images/content/defaultAvatar.png" alt="profile picture">
                     </div>
                     <div class="col s9 topicContainer">
                         <h3>Lorem ipsum dolor sit</h3>

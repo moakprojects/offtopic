@@ -1,0 +1,6 @@
+/public/images/upload/
+/public/files/upload/
+
+/.vscode
+*.log
+/.htaccess

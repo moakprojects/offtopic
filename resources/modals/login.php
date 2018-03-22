@@ -39,10 +39,10 @@
                 <div class="col s5 separateLine"></div>
             </div>
             <div class="loginForm">
-                <form action="" method="post">
+                <form method="post">
                     <input type="text" name="userName" Placeholder="Username">    
                     <input type="password" name="password" Placeholder="Password">    
-                    <input type="checkbox" name="rememberMe" id="rememberMeModal" class="filled-in"><label for="rememberMeModal">Remember me</label>    
+                    <input type="checkbox" name="rememberMe" id="rememberMe" class="filled-in"><label for="rememberMe">Remember me</label>    
                     <br>
                     <div class="row">
                         <input type="submit" value="Login" class="btn wavew-effect waves-light blue col s4 offset-s8">

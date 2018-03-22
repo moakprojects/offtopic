@@ -17,7 +17,7 @@
                 <a href="/discussion">
                     <div class="col s1 userImageContainer">
                         <div class="row">    
-                            <img src="public/images/content/profile.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
+                            <img src="/public/images/content/defaultAvatar.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
                         </div>
                     </div>
                     <div class="col s9 topicContainer">
@@ -51,7 +51,7 @@
                 <a href="/discussion">    
                     <div class="col s1 userImageContainer">
                         <div class="row">    
-                            <img src="public/images/content/profile.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
+                            <img src="/public/images/content/defaultAvatar.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
                         </div>
                     </div>
                     <div class="col s9 topicContainer">
@@ -84,7 +84,7 @@
             <div class="topic">
                 <div class="col s1 userImageContainer">
                     <div class="row">    
-                        <img src="public/images/content/profile.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
+                        <img src="/public/images/content/defaultAvatar.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
                     </div>
                 </div>
                 <div class="col s9 topicContainer">

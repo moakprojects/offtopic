@@ -39,14 +39,17 @@
                 <div class="col s5 separateLine"></div>
             </div>
             <div class="loginForm">
-                <form action="" method="post">
-                    <input type="text" name="emailAddress" Placeholder="Email">   
-                    <input type="text" name="userName" Placeholder="Username">   
-                    <input type="password" name="password" Placeholder="Password">    
-                    <input type="password" name="passwordConfirm" Placeholder="Re-Password">    
+                <form method="post" id="regForm">
+                    <input type="text" name="emailAddress" class="email" Placeholder="Email">   
+                    <input type="text" name="userName" class="username" Placeholder="Username">   
+                    <input type="password" name="password" class="password" Placeholder="Password">    
+                    <input type="password" name="passwordConfirm" class="passwordConfirm" Placeholder="Re-Password">    
                     <br>
+                    <div class="row modalErrorMsg hide">
+                        <p></p>
+                    </div>
                     <div class="row">
-                        <input type="submit" value="Create" class="btn wavew-effect waves-light blue col s4 offset-s8">
+                        <input type="button" id="regBtn" value="Create" class="btn wavew-effect waves-light blue col s4 offset-s8">
                     </div>
                 </form>
             </div>
