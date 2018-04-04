@@ -288,6 +288,22 @@ nav {
     font-size: 14px;
 }
 
+/* successfulRegistrationModal styling */
+
+#successfulRegistrationModal {
+    width: 645px;
+    min-height: 30%;
+}
+
+#successfulRegistrationModal .modal-header {
+    border: none;
+}
+
+#successfulRegistrationModal svg {
+    margin-right: 12px;
+    color: #00a86b;
+}
+
 /* footer styling */
 
 footer {

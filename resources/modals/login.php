@@ -39,13 +39,16 @@
                 <div class="col s5 separateLine"></div>
             </div>
             <div class="loginForm">
-                <form method="post">
-                    <input type="text" name="userName" Placeholder="Username">    
-                    <input type="password" name="password" Placeholder="Password">    
-                    <input type="checkbox" name="rememberMe" id="rememberMe" class="filled-in"><label for="rememberMe">Remember me</label>    
+                <form method="post" id="logForm">
+                    <input type="text" name="username" class="loginID" Placeholder="Email or username">    
+                    <input type="password" name="password" class="password" Placeholder="Password">    
+                    <input type="checkbox" name="rememberMe" id="modalRememberMe" class="filled-in"><label for="modalRememberMe">Remember me</label>    
                     <br>
+                    <div class="row modalErrorMsg hide">
+                        <p></p>
+                    </div>
                     <div class="row">
-                        <input type="submit" value="Login" class="btn wavew-effect waves-light blue col s4 offset-s8">
+                        <input type="button" value="Login" id="logBtn" class="btn wavew-effect waves-light blue col s4 offset-s8">
                     </div>
                 </form>
             </div>

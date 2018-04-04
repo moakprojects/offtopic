@@ -1,19 +1,23 @@
 <?php
 
-$email = "ezamail@gmail.com";
-$saltText = "ActivationHashString";
-$concat = $email . $saltText;
-$activationCode = md5($concat, false);
+$regDate = new DateTime('2018-03-24 23:50:00');
 
-if(isset($_SESSION["verify_token"])) {
+$now = new DateTime('2018-03-30 19:35:15');
 
-    if($_SESSION["verify_token"] == md5($concat, false)) {
-        echo "Juhééééé";
-    } else {
-        echo "Nem juhé hanem a bárányé";
-    }
+$most = new DateTime('now');
 
-    unset($_SESSION["verify_token"]);
+$diff = $regDate->diff($most);
+
+$eltelt = $diff->h;
+
+echo $diff -> format('%R%a days');
+
+$hour = time("24:00:00");
+
+if($regDate > time() - (24 * 60 * 60)) {
+    echo "kisebb";
+} else {
+    echo "nagyobb";
 }
 
 ?>

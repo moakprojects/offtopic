@@ -100,7 +100,7 @@
                   $cuttedFileName = substr($file["name"], 0, 39);
                   $displayedFileName = $cuttedFileName . '....' . $fileExtension[1];
                 }
-                $postID = 49;
+                $postID = 50;
                 $fileUploadQuery->bindParam(':postID', $postID);
                 $fileUploadQuery->bindParam(':attachmentName', $fileName);
                 $fileUploadQuery->bindParam(':displayName', $displayedFileName);

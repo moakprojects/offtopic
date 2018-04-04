@@ -189,7 +189,7 @@
             <div class="topic commentCard">
                 <div class="row postContent">
                     <div class="col s1 userImageContainer">   
-                        <img src="/public/images/content/defaultAvatar.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
+                        <img src="/public/images/content/defaultAvatar.png" class="tooltipped" alt="profile picture" data-position="bottom" data-tooltip="Test User">
                     </div>
                     <div class="col s11 topicContainer">
                         <div class="editorContainer">
@@ -219,31 +219,31 @@
                     </div>
                 </div>
             </div>
-            <div class="topic commentCardUnlogged hide">
+            <div class="topic commentCardUnlogged">
                 <p>You must <a href="#login" class="modal-trigger">Log In</a> or <a href="#signup" class="modal-trigger">Sign Up</a> to reply.</p>
             </div>
         </div>
         <div class="col s4">
-            <div class="sideBarBlock">
+            <div class="sideBarBlock <?php if(isset($_SESSION["user"]) && $_SESSION["user"]["loggedIn"]) { echo 'hide'; } ?>">
                 <h4>Login Account</h4>
                 <div class="line"></div>
-                <form action="" method="post" class="sideBarLoginContainer">
+                <form action="" method="post" class="sideBarLoginContainer" id="sideBarLogForm">
                     <div class="row">
-                        <div class="col s1"></div>
-                        <input type="text" name="userName" Placeholder="Username" class="col s8">    
+                        <input type="text" name="userName" Placeholder="Email or username" class="loginID col s8 offset-s1">    
                     </div>
                     <div class="row">
-                        <div class="col s1"></div>
-                        <input type="password" name="password" Placeholder="Password" class="col s8">    
+                        <input type="password" name="password" Placeholder="Password" class="password col s8 offset-s1">    
                     </div>
                     <div class="row">
-                    <div class="col s1"></div>
-                        <div class="col s6 rememberMeContainer">
+                        <div class="col s6  offset-s1 rememberMeContainer">
                             <input type="checkbox" name="rememberMe" id="rememberMe" class="filled-in"><label for="rememberMe">Remember me</label>    
                         </div>
                     </div>
+                    <div class="row sideBarErrorMsg hide">
+                        <p class="col s10 offset-s1"></p>
+                    </div>
                     <div class="row">
-                        <input type="submit" value="Login" class="btn wavew-effect waves-light blue col s4 offset-s7">
+                        <input type="button" value="Login" id="sideBarLogBtn" class="btn wavew-effect waves-light blue col s4 offset-s7">
                     </div>
                 </form>
             </div>
@@ -262,7 +262,3 @@
         </div>
     </div>
 </div>
-<?php
-    include("resources/modals/login.php");
-    include("resources/modals/registration.php");
-?>

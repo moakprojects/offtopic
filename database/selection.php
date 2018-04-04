@@ -41,4 +41,13 @@ $inLikeTableQuery = $db->prepare("SELECT * FROM `like` WHERE userID = :userID AN
 /* select users for registration */
 $checkUserEmailQuery = $db->prepare("SELECT * FROM user WHERE email = :email");
 $checkUsernameQuery = $db->prepare("SELECT * FROM user WHERE username = :username");
+
+/* select user for verify email address */
+$verifyEmailQuery = $db->prepare("SELECT * FROM user WHERE md5(email) = :emailHash");
+
+/* select user for login */
+$loginQuery = $db -> prepare("SELECT * FROM user WHERE email = :logID OR username = :logID");
+
+/* select user for login by cookie */
+$cookieLoginQuery = $db -> prepare("SELECT * FROM user WHERE md5(email) = :logIDHash OR md5(username) = :logIDHash");
 ?>

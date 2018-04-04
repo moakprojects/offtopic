@@ -22,13 +22,24 @@
             case "profile":
                 $page = "profile";
             break;
-    
+            case "verify":
+                $page = "verify";
+                if(isset($queryStringParams[1]) && $queryStringParams[1] !== "") {
+                   $_SESSION["verifyCode"] = $queryStringParams[1];
+                }
+            break;
+            case "error":
+                $page = "error";
+            break;
+            case "logout":
+                $page = "logout";
+            break;
     
             case "test":
                 $page = "test";
             break;
             default:
-                $page = "home";
+                $page = "error";
         }
     } else {
         $page = "home";
@@ -74,9 +85,30 @@
     <body>
         <?php
             require ("config/connection.php");
-            $loggedIn = false;
 
-            if($loggedIn) {
+            /* we check that the user selected remember me option at the login, so is there a usr cookie in the browser or not. If it is then we save user data into session */
+            if(isset($_COOKIE["usr"])) {
+                if(!isset($_SESSION["user"])) {
+                    include("database/selection.php");
+
+                    if($cookieLoginQuery) {
+                        $logIDHash = htmlspecialchars(trim($_COOKIE["usr"]));
+                        $cookieLoginQuery->bindParam(':logIDHash', $logIDHash);
+                        $cookieLoginQuery->execute();
+                        $cookieLoginResult = $cookieLoginQuery->fetch(PDO::FETCH_ASSOC);
+
+                        $_SESSION["user"]["loggedIn"] = true;
+                        $_SESSION["user"]["username"] = $cookieLoginResult["username"];
+
+                        setcookie("usr", md5($cookieLoginResult["username"]), time() + 7890000);
+                    } else {
+                        header("Location: /error");
+                        exit;
+                    }
+                }
+            }
+
+            if(isset($_SESSION["user"]) && $_SESSION["user"]["loggedIn"]) {
                 include("resources/sections/headerUser.php");
             } else {
                 include("resources/sections/headerGeneral.php");
@@ -90,6 +122,10 @@
             </div>
             <?php
             include("resources/sections/footer.php");
+
+            include("resources/modals/login.php");
+            include("resources/modals/registration.php");
+            include("resources/modals/successfulRegistration.php");
         ?>
 
         <!--Import jQuery before materialize.js-->

@@ -132,6 +132,13 @@
     padding-left: 0 !important;
 }
 
+.sideBarErrorMsg p {
+    color: red;
+    font-size: 14px;
+    margin-top: 0px;
+    padding-left: 0px !important;
+}
+
 /* topic cards styling */
 
 .topic {

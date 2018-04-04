@@ -23,8 +23,4 @@
             </ul>
         </nav>
     </div>
-    <?php
-        include("resources/modals/login.php");
-        include("resources/modals/registration.php");
-    ?>
 </header>

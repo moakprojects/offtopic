@@ -11,7 +11,7 @@
         <ul id="dropdown1" class="dropdown-content dropdownMenu">
             <li><a href="/profile">My profile</a></li>
             <li class="divider"></li>
-            <li><a href="#!">Logout</a></li>
+            <li><a href="/logout">Logout</a></li>
         </ul>
         <nav>
             <div class="">

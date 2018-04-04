@@ -1,0 +1,86 @@
+/* general styling */
+
+h2 {
+    font-size: 30px;
+    margin-top: 20px;
+}
+
+/* login container */
+
+.loginContainer {
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px #c9cccd;
+    margin-bottom: 100px;
+    margin-top: 25px;
+    padding: 15px !important;
+}
+
+.loginContainer h4 {
+    margin: 0 0 20px 0;
+    color: #363838;
+    font-size: 20px;
+}
+
+.loginContainer .line {
+    height: 1px;
+    line-height: 1px;
+    border-bottom: solid 1px #cfd5d7;
+}
+
+.loginContainer ul {
+    margin: 0;
+    padding: 0;
+}
+
+.loginContainer li {
+    list-style: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    line-height: 35px; 
+}
+
+#verifyLogForm {
+    padding: 15px 0 0 0;
+}
+
+#verifyLogForm input[type="text"] {
+    margin-bottom: 0;
+}
+
+#verifyLogForm input[type="password"] {
+    margin-bottom: 5px;
+}
+
+#verifyLogForm input[type="text"]:focus {
+    border-bottom: 1px solid rgb(33, 150, 243) !important;
+    box-shadow: 0 1px 0 0 rgb(33, 150, 243) !important;
+}
+
+#verifyLogForm input[type=password]:focus {
+    border-bottom: 1px solid rgb(33, 150, 243) !important;
+    box-shadow: 0 1px 0 0 rgb(33, 150, 243) !important;
+}
+
+#verifyLogForm input[type="checkbox"].filled-in:checked + label:after {
+    background: rgb(33, 150, 243);
+    border: 2px solid rgb(33, 150, 243);
+}
+
+#verifyLogForm .rememberMeContainer {
+    padding-left: 0 !important;
+}
+
+#verifyLogForm .verifyErrorMsg p {
+    color: red;
+    font-size: 14px;
+    margin-top: 0px;
+    padding-left: 0px !important;
+}
+
+/* Verification failed styling */
+
+.verificationFailed h2 {
+    margin-top: 100px;
+}
