@@ -1,23 +1,12 @@
 <?php
 
-$regDate = new DateTime('2018-03-24 23:50:00');
+$stmt = $db -> prepare("SELECT * FROM user");
+$stmt->execute();
 
-$now = new DateTime('2018-03-30 19:35:15');
+$result = $stmt->fetchall(PDO::FETCH_ASSOC);
 
-$most = new DateTime('now');
+var_dump($result);
 
-$diff = $regDate->diff($most);
-
-$eltelt = $diff->h;
-
-echo $diff -> format('%R%a days');
-
-$hour = time("24:00:00");
-
-if($regDate > time() - (24 * 60 * 60)) {
-    echo "kisebb";
-} else {
-    echo "nagyobb";
-}
-
+$valami = strlen("Backend assignment problem Backend assignment problem");
+echo $valami;
 ?>

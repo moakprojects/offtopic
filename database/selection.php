@@ -50,4 +50,19 @@ $loginQuery = $db -> prepare("SELECT * FROM user WHERE email = :logID OR usernam
 
 /* select user for login by cookie */
 $cookieLoginQuery = $db -> prepare("SELECT * FROM user WHERE md5(email) = :logIDHash OR md5(username) = :logIDHash");
+
+/* select category informations */
+$categoryQuery = $db -> prepare("SELECT * FROM category");
+
+/* select topic informations */
+$topicQuery = $db -> prepare("SELECT topic.*, numberOfLikes, numberOfPosts, latestPost, username, profileImage, periodName FROM topic LEFT JOIN (SELECT topicID, count(*) as numberOfLikes FROM topiclike GROUP BY topicID) as likes ON likes.topicID = topic.topicID LEFT JOIN (SELECT topicID, count(*) as numberOfPosts, MAX(postedOn) as latestPost FROM post GROUP BY topicID) as posts ON posts.topicID = topic.topicID INNER JOIN (SELECT userID, username, profileImage FROM user) as users ON users.userID = topic.createdBy INNER JOIN (SELECT periodID, periodName FROM period) as periods ON periods.periodID = topic.semester ORDER BY topic.createdAt DESC");
+
+/* select who likes topics */
+$numberOfTopicLikesQuery = $db -> prepare("SELECT count(*) as numberOfLikes, topicID FROM topicLike GROUP BY topicID");
+
+/* select how many posts are in each topic */
+$numberOfPostsQuery = $db -> prepare("SELECT count(*) as numberOfPosts, topicID FROM post GROUP BY topicID");
+
+/* select last post in every topic */
+$lastCommentTimeDifferenceQuery = $db -> prepare("SELECT postedOn FROM post GROUP BY topicID ORDER BY postedOn");
 ?>

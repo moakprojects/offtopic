@@ -13,26 +13,45 @@
                 <h3>PBA Web Development</h3>
                 <hr>
             </div>
+            <?php 
+                $topicObj = new Topic();
+                $topics = $topicObj -> getTopicData();
+                
+                foreach($topics as $topic) {
+            ?>
             <div class="topic">
                 <a href="/discussion">
                     <div class="col s1 userImageContainer">
-                        <div class="row">    
-                            <img src="/public/images/content/defaultAvatar.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
+                        <div class="row">
+                        <?php
+                            echo "<img src=\"";
+                            if($topic["profileImage"] == 'defaultAvatar.png') {
+                                echo '/public/images/content/defaultAvatar.png';
+                            } else {
+                                echo "/public/images/upload/" . $topic["profileImage"] . "\"";
+                            }
+                            echo "\" class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip=" . $topic["username"] . ">";
+                        ?> 
                         </div>
                     </div>
                     <div class="col s9 topicContainer">
-                        <h3>1st Topic title</h3>
-                        <p class="topicDescription">lorem ipsum dolor sit amet, hedte hsafdsf jds ldsdsdf ldjfsd sdéflsdfsd éjédsjfs lkjshljsh  lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv </p>
+                        <h3><?php echo $topic["shortTopicName"]?></h3>
+                        <p class="topicDescription"><?php echo $topic["topicDescription"]; ?></p>
+                        <?php 
+                        if($topic["periodName"] !== "none") {
+                            echo "<img src='/public/images/content/semesterMarker/" . $topic['periodName'] . ".png' class='periodImage'>";
+                        }
+                        ?>
                         <p class="viewTopic"><a href="/discussion">View the topic <i class="fas fa-angle-double-right"></i></a></p>
-                        <div class="topicCreated">Created at: 14-01-2018 17:41</div>
+                        <div class="topicCreated">Created at: <?php echo $topic["createdAt"]?></div>
                     </div>
                     <div class="col s2">
                         <div class="likes">
-                            <span class="favourite col s6"><i class="fas fa-heart"></i> 42 likes</span>
+                            <span class="favourite col s6"><i class="fas fa-heart"></i> <?php echo ($topic["numberOfLikes"] ? $topic["numberOfLikes"] : "0"); ?> likes</span>
                         </div>
                         <div class="comments">
                             <div class="commentbg">
-                                <span>89</span>
+                                <span><?php echo ($topic["numberOfPosts"] ? $topic["numberOfPosts"] : "0"); ?></span>
                                 <div class="mark">
 
                                 </div>
@@ -42,77 +61,14 @@
                             <span class="iconTitle">Last comment</span>
                             <br>
                             <i class="far fa-clock fa-sm"></i>
-                            <span>15 min ago</span>
+                            <span><?php echo $topic["lastPostElapsedTime"]; ?> ago</span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="topic">
-                <a href="/discussion">    
-                    <div class="col s1 userImageContainer">
-                        <div class="row">    
-                            <img src="/public/images/content/defaultAvatar.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
-                        </div>
-                    </div>
-                    <div class="col s9 topicContainer">
-                        <h3>2nd Topic title</h3>
-                        <p class="topicDescription">lorem ipsum dolor sit amet, hedte hsafdsf jds ldsdsdf ldjfsd sdéflsdfsd éjédsjfs lkjshljsh  lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv </p>
-                        <p class="viewTopic"><a href="/discussion">View the topic <i class="fas fa-angle-double-right"></i></a></p>
-                        <div class="topicCreated">Created at: 14-01-2018 17:41</div>
-                    </div>
-                    <div class="col s2">
-                        <div class="likes">
-                            <span class="favourite col s6"><i class="fas fa-heart"></i> 42 likes</span>
-                        </div>
-                        <div class="comments">
-                            <div class="commentbg">
-                                <span>89</span>
-                                <div class="mark">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="time">
-                            <span class="iconTitle">Last comment</span>
-                            <br>
-                            <i class="far fa-clock fa-sm"></i>
-                            <span>15 min ago</span>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="topic">
-                <div class="col s1 userImageContainer">
-                    <div class="row">    
-                        <img src="/public/images/content/defaultAvatar.png" class="tooltipped" alt="profile picture" data-position="bottom" data-delay="50" data-tooltip="Test User">
-                    </div>
-                </div>
-                <div class="col s9 topicContainer">
-                    <h3>3rd Topic title</h3>
-                    <p class="topicDescription">lorem ipsum dolor sit amet, hedte hsafdsf jds ldsdsdf ldjfsd sdéflsdfsd éjédsjfs lkjshljsh  lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv </p>
-                    <p class="viewTopic"><a href="/discussion">View the topic <i class="fas fa-angle-double-right"></i></a></p>
-                    <div class="topicCreated">Created at: 14-01-2018 17:41</div>
-                </div>
-                <div class="col s2">
-                    <div class="likes">
-                        <span class="favourite col s6"><i class="fas fa-heart"></i> 42 likes</span>
-                    </div>
-                    <div class="comments">
-                        <div class="commentbg">
-                            <span>89</span>
-                            <div class="mark">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="time">
-                        <span class="iconTitle">Last comment</span>
-                        <br>
-                        <i class="far fa-clock fa-sm"></i>
-                        <span>15 min ago</span>
-                    </div>
-                </div>
-            </div>
+            <?php
+                }
+            ?>
         </div>
         <div class="col s4">
             <div class="sideBarBlock <?php if(isset($_SESSION["user"]) && $_SESSION["user"]["loggedIn"]) { echo 'hide'; } ?>">

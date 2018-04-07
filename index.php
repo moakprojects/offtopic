@@ -114,6 +114,10 @@
                 include("resources/sections/headerGeneral.php");
             }
 
+            spl_autoload_register(function ($class) {
+                include "resources/classes/$class.php";
+            });
+
             ?>
             <div class="sideSpace">
             <?php
@@ -141,6 +145,8 @@
             if(file_exists("public/js/$page.js")) {
                 echo "<script src='/public/js/" . $page . ".js'></script>";
             }
+
+            /* close database connection */
             $db = null;
         ?>
     </body>

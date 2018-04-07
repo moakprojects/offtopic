@@ -11,9 +11,19 @@ if(isset($_POST["regEmail"])) {
         $checkUserEmailQuery->bindParam(':email', $_POST["regEmail"]);
         $checkUserEmailQuery->execute();
         
+        /* We check if the email already exist in our database */
         if($checkUserEmailQuery->rowCount() > 0) {
+
+            $checkUserEmailResult = $checkUserEmailQuery->fetch(PDO::FETCH_ASSOC);
+
             $result["data_type"] = 0;
-            $result["data_value"] = "The email is already exist";    
+
+            /* We display error messages depending on the email is already verified or not */
+            if(intval($checkUserEmailResult["accessLevel"]) === 0) {
+                $result["data_value"] = "This email is waiting for verification";
+            } else {
+                $result["data_value"] = "The email is already exist";
+            }    
             
             echo json_encode($result);
         } else {
