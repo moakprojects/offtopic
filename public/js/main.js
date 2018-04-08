@@ -120,4 +120,12 @@ $(document).ready(function(){
             });
         }
     }
+
+    $(document).on('click', '#logOutBtn', function() {
+        console.log("eljut az ajaxig");
+        $.post('/resources/controllers/logoutController.php', {logout: true}, function(returnData) {
+            console.log("return");
+            window.location.assign('/home');
+        });
+    });
 });

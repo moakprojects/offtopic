@@ -1,3 +1,10 @@
+<?php
+    if(isset($_SESSION["selectedCategoryId"])) {
+        $topicObj = new Topic();
+        $categoryObj = new Category();
+        $topics = $topicObj -> getTopicData($_SESSION["selectedCategoryId"], $categoryObj);
+        $categoryName = $categoryObj -> getCategoryName();
+?>
 <div class="container contentContainer">
     <div class="row">
         <div class="col s8">
@@ -8,19 +15,18 @@
                     <i class="material-icons">chevron_right</i>
                     <a href="/categories">Categories</a>
                     <i class="material-icons">chevron_right</i>
-                    <a href="/topics">Topics</a>
+                    <?php echo "<a href='/categories/" . $_SESSION['selectedCategoryId'] . "'>$categoryName</a>"; ?>
                 </div>
-                <h3>PBA Web Development</h3>
+                <a href="#" data-position="bottom" data-delay="50" data-tooltip="Add to favourites" class="btn-floating btn-large waves-effect waves-light categoryLikeButton tooltipped <?php echo (!isset($_SESSION['user']) ? 'hide' : ''); ?>"><i class="far fa-heart fa-lg"></i></a>
+                <h3><?php echo $categoryName; ?></h3>
                 <hr>
             </div>
-            <?php 
-                $topicObj = new Topic();
-                $topics = $topicObj -> getTopicData();
+            <?php
                 
                 foreach($topics as $topic) {
             ?>
             <div class="topic">
-                <a href="/discussion">
+                <?php echo "<a href='/topics/" . $topic["topicID"] . "'>"; ?>
                     <div class="col s1 userImageContainer">
                         <div class="row">
                         <?php
@@ -71,41 +77,16 @@
             ?>
         </div>
         <div class="col s4">
-            <div class="sideBarBlock <?php if(isset($_SESSION["user"]) && $_SESSION["user"]["loggedIn"]) { echo 'hide'; } ?>">
-                <h4>Login Account</h4>
-                <div class="line"></div>
-                <form action="" method="post" class="sideBarLoginContainer" id="sideBarLogForm">
-                    <div class="row">
-                        <input type="text" name="userName" Placeholder="Email or username" class="loginID col s8 offset-s1">    
-                    </div>
-                    <div class="row">
-                        <input type="password" name="password" Placeholder="Password" class="password col s8 offset-s1">    
-                    </div>
-                    <div class="row">
-                        <div class="col s6  offset-s1 rememberMeContainer">
-                            <input type="checkbox" name="rememberMe" id="rememberMe" class="filled-in"><label for="rememberMe">Remember me</label>    
-                        </div>
-                    </div>
-                    <div class="row sideBarErrorMsg hide">
-                        <p class="col s10 offset-s1"></p>
-                    </div>
-                    <div class="row">
-                        <input type="button" value="Login" id="sideBarLogBtn" class="btn wavew-effect waves-light blue col s4 offset-s7">
-                    </div>
-                </form>
-            </div>
-            <div class="sideBarBlock">
-                <h4><a href="/categories" class="topicCategoriesTitle">Topic Categories</a></h4>
-                <div class="line"></div>
-                <div class="categoryContainer">
-                    <ul>
-                        <li><a href="#">PBA Web Development</a><span data-badge-caption="" class="new badge blue">4</span></li>
-                        <li><a href="#">Computer Science</a><span data-badge-caption="" class="new badge blue">25</span></li>
-                        <li><a href="#">Everyday life</a><span data-badge-caption="" class="new badge blue">18</span></li>
-                    </ul>
-                    <a href="/categories">View the categories <i class="fas fa-angle-double-right"></i></a>
-                </div>
-            </div>
+            <?php 
+                include "resources/sections/sideBarLoginBlock.php"; 
+                include "resources/sections/sideBarCategoryListBlock.php";
+            ?>
         </div>
     </div>
 </div>
+<?php
+    } else {
+        header("Location: /error");
+        exit;
+    }
+?>

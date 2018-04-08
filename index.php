@@ -11,13 +11,20 @@
                 $page = "home";
             break;
             case "categories":
-                $page = "categories";
+                if(isset($queryStringParams[1]) && $queryStringParams[1] !== "") {
+                    $_SESSION["selectedCategoryId"] = $queryStringParams[1];
+                    $page = "topics";
+                } else {
+                    $page = "categories";
+                }
             break;
             case "topics":
-                $page = "topics";
-            break;
-            case "discussion":
-                $page = "discussion";
+                if(isset($queryStringParams[1]) && $queryStringParams[1] !== "") {
+                    $_SESSION["selectedTopicId"] = $queryStringParams[1];
+                    $page = "discussion";
+                } else {
+                    $page = "error";
+                }
             break;
             case "profile":
                 $page = "profile";
@@ -30,9 +37,6 @@
             break;
             case "error":
                 $page = "error";
-            break;
-            case "logout":
-                $page = "logout";
             break;
     
             case "test":

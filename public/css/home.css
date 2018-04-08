@@ -75,6 +75,10 @@ h2 {
     color: #363838;
 }
 
+.sideBarBlock li a:hover {
+    color: #2196f3;
+}
+
 .sideBarBlock li span {
     margin-top: 7px;
 }

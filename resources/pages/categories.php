@@ -8,121 +8,44 @@
                 <a href="/categories">Categories</a>
             </div>
             <div class="categoryCardContainer">
+                <?php
+                    $categoryObj = new Category();
+                    $categories = $categoryObj -> getCategoryData();
+                    
+                    foreach($categories as $category) {
+                ?>
                 <div class="post-module col s5">
-                    <a href="/topics">
+                    <?php echo "<a href='/categories/" . $category["categoryID"] . "'>"; ?>
                         <!-- Thumbnail-->
                         <div class="thumbnail">
                             <div class="topicCounter">
-                            <div class="topicCounterValue">27</div>
-                            <div class="topicCounterTitle">Topics</div>
-                            </div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"/>
+                                <div class="topicCounterValue"><?php echo ($category["numberOfTopics"] ? $category["numberOfTopics"] : "0"); ?></div>
+                                <div class="topicCounterTitle">Topics</div>
+                            </div>
+                            <?php echo "<img src='/public/images/content/categoryThumbnail/" . $category["thumbnail"] . "'>"; ?>
                         </div>
                         <!-- Post Content-->
                         <div class="post-content">
-                            <h1 class="title">PBA Web Development</h1>
-                            <p class="description">Csak egy kis szöveg</p>
+                            <h1 class="title"><?php echo $category["categoryName"]; ?></h1>
+                            <p class="description"><?php echo $category["categoryDescription"]; ?></p>
                             <div class="post-meta row">
-                                <span class="comments col s6"><i class="fa fa-comments"></i> 8400 posts</span>
-                                <span class="favourite col s6"><i class="fas fa-heart"></i> 42 likes</span>
+                                <span class="comments col s6"><i class="fa fa-comments"></i> <?php echo ($category["numberOfPosts"] ? $category["numberOfPosts"] : "0") ; ?> posts</span>
+                                <span class="favourite col s6"><i class="fas fa-heart"></i> <?php echo ($category["numberOfLikes"] ? $category["numberOfLikes"] : "0"); ?> likes</span>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col s1"></div>
-                <div class="post-module col s5">
-                    <a href="/topics">
-                        <!-- Thumbnail-->
-                        <div class="thumbnail">
-                            <div class="topicCounter">
-                            <div class="topicCounterValue">27</div>
-                            <div class="topicCounterTitle">Topics</div>
-                            </div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"/>
-                        </div>
-                        <!-- Post Content-->
-                        <div class="post-content">
-                            <h1 class="title">Computer Science</h1>
-                            <p class="description">Csak egy kis szöveg</p>
-                            <div class="post-meta row">
-                                <span class="comments col s6"><i class="fa fa-comments"></i> 8400 posts</span>
-                                <span class="favourite col s6"><i class="fas fa-heart"></i> 42 likes</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col s1"></div>
-                <div class="post-module col s5">
-                    <!-- Thumbnail-->
-                    <div class="thumbnail">
-                        <div class="topicCounter">
-                        <div class="topicCounterValue">27</div>
-                        <div class="topicCounterTitle">Topics</div>
-                        </div><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/photo-1429043794791-eb8f26f44081.jpeg"/>
-                    </div>
-                    <!-- Post Content-->
-                    <div class="post-content">
-                        <h1 class="title">Everyday life</h1>
-                        <p class="description">Csak egy kis szöveg</p>
-                        <div class="post-meta row">
-                            <span class="comments col s6"><i class="fa fa-comments"></i> 8400 posts</span>
-                            <span class="favourite col s6"><i class="fas fa-heart"></i> 42 likes</span>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    }
+                ?>
             </div>
         </div>
         <div class="col s4">
-            <div class="sideBarBlock <?php if(isset($_SESSION["user"]) && $_SESSION["user"]["loggedIn"]) { echo 'hide'; } ?>">
-                <h4>Login Account</h4>
-                <div class="line"></div>
-                <form action="" method="post" class="sideBarLoginContainer" id="sideBarLogForm">
-                    <div class="row">
-                        <input type="text" name="userName" Placeholder="Email or username" class="loginID col s8 offset-s1">    
-                    </div>
-                    <div class="row">
-                        <input type="password" name="password" Placeholder="Password" class="password col s8 offset-s1">    
-                    </div>
-                    <div class="row">
-                        <div class="col s6  offset-s1 rememberMeContainer">
-                            <input type="checkbox" name="rememberMe" id="rememberMe" class="filled-in"><label for="rememberMe">Remember me</label>    
-                        </div>
-                    </div>
-                    <div class="row sideBarErrorMsg hide">
-                        <p class="col s10 offset-s1"></p>
-                    </div>
-                    <div class="row">
-                        <input type="button" value="Login" id="sideBarLogBtn" class="btn wavew-effect waves-light blue col s4 offset-s7">
-                    </div>
-                </form>
-            </div>
-            <div class="sideBarBlock">
-                <h4>Latest Posts</h4>
-                <div class="line"></div>
-                <div class="latestPostsContainer">
-                    <ul>
-                        <li>
-                            <span></span>
-                            <div class="title">Comment #01</div>
-                            <div class="info"> Random string Random string Random string Random string Random string Random string Random string Random string Random string Random string Random string</div>
-                            <div class="name">- Mukica 2 -</div>
-                            <div class="time"><span>June, 17<sup>th</sup></span><span>12:00am</span></div>
-                        </li>
-                        <li>
-                            <span></span>
-                            <div class="title">Comment #02</div>
-                            <div class="info"> Random string Random string Random string Random string Random string Random string Random string Random string</div>
-                            <div class="name">- Mukica 2 -</div>
-                            <div class="time"><span>June, 17<sup>th</sup></span><span>12:00am</span></div>
-                        </li>
-                        <li>
-                            <span></span>
-                            <div class="title">Comment #02</div>
-                            <div class="info"> Random string Random string Random string Random string Random string Random string Random string Random string Random string Random string Random string</div>
-                            <div class="name">- Mukica 2 -</div>
-                            <div class="time"><span>June, 17<sup>th</sup></span><span>12:00am</span></div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <?php 
+                include "resources/sections/sideBarLoginBlock.php"; 
+                include "resources/sections/sideBarLatestPostsBlock.php"; 
+            ?>
         </div>
     </div>
 </div>

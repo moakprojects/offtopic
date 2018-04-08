@@ -212,11 +212,16 @@ strong {
     position: absolute;
     top: -30px;
     right: 25px;
+    background: #fbb83a;
 }
 
 .topicLikeButton svg {
     position: relative;
     top: 2px;
+}
+
+.topicLikeButton:hover, .topicLikeButton:active, .topicLikeButton:visited {
+ background: #fbb83a;
 }
 
 .topicDetails .created {
@@ -385,7 +390,7 @@ strong {
 }
 
 .postIndex a:hover {
-    color: rgb(26, 188, 156);
+    color: rgb(33, 150, 243);
 }
 
 .postIndexContainer {
