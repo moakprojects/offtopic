@@ -1,27 +1,12 @@
 <?php
-/* require "config/connection.php"; */
-/* get profileImage name from user table */
-$userSelectionQuery = "SELECT * FROM user WHERE userID = 1";
-$userSelectionResult = $db->query($userSelectionQuery, PDO::FETCH_ASSOC);
-foreach($userSelectionResult as $row) {
-    $username = $row["username"];
-    $avatarFileName = $row["profileImage"];
-}
-
 /* get default avatar datas from defaultAvatar table */
-$defaultAvatarSelectionQuery = "SELECT * FROM defaultAvatar";
-$defaultAvatarSelectionResult = $db->query($defaultAvatarSelectionQuery, PDO::FETCH_ASSOC);
+$defaultAvatarsQuery = $db->prepare("SELECT * FROM defaultAvatar");
 
-$defaultAvatarImages = array();
-$auxArray = array("id" => 0, "fileName" => "");
-foreach($defaultAvatarSelectionResult as $row) {
-    $auxArray["id"] = $row['avatarID'];
-    $auxArray["fileName"] = $row['fileName'];
-    array_push($defaultAvatarImages, $auxArray);
-}
+/* get logged userdata from user table */
+$loggedUserQuery = $db->prepare("SELECT * FROM user WHERE userID = :userID");
 
 /* get post data from post table */
-$postQuery = $db->prepare("SELECT * FROM post WHERE topicID = :topicID");
+$postQuery = $db->prepare("SELECT post.*, user.username, user.profileImage FROM post INNER JOIN user ON post.userID = user.userID WHERE topicID = 1");
 
 /* get attached file from attechment table with postID */
 $attachFilesQuery = $db->prepare("SELECT * FROM attachment WHERE postID = :postID");
@@ -32,7 +17,7 @@ $numberOfDislikesQuery = $db->prepare("SELECT count(isDislike) as count FROM `li
 
 $inLikeTableQuery = $db->prepare("SELECT * FROM `like` WHERE userID = :userID AND postID = :postID");
 
-/* select users for registration */
+/* check users for registration */
 $checkUserEmailQuery = $db->prepare("SELECT * FROM user WHERE email = :email");
 $checkUsernameQuery = $db->prepare("SELECT * FROM user WHERE username = :username");
 

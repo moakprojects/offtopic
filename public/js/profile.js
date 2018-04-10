@@ -9,7 +9,7 @@ $(document).ready(function(){
 		$('#errorMsg').addClass('hide');
 		$('.preloader-wrapper').removeClass('hide');
 		console.log('dfd', $(this).attr("id"));
-		$.post('/database/upload.php', {avatarName: $(this).attr("id")}, function(returnData) {
+		$.post('/resources/controllers/userController.php', {avatarName: $(this).attr("id")}, function(returnData) {
 			console.log('returnDataDefaultKépen: ', returnData);
 			var obj = jQuery.parseJSON(returnData);
 			$('.preloader-wrapper').addClass('hide');
@@ -43,7 +43,7 @@ $(document).ready(function(){
 			form_data.append("file", property);
 			console.log('form_Data', form_data);
 			$.ajax({
-				url: '/database/upload.php',
+				url: '/resources/controllers/userController.php',
 				method: 'POST',
 				data: form_data,
 				contentType: false,

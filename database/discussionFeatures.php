@@ -2,7 +2,7 @@
 
     if(isset($_POST["postId"])) {
         require "../config/connection.php";
-        require "insert.php";
+        require "insertion.php";
         if($likeQuery) {
 
             if($_POST["mood"] == "like") {
@@ -65,7 +65,7 @@
 
     if(isset($_POST["replyContent"])) {
         require "../config/connection.php";
-        require "insert.php";
+        require "insertion.php";
         //$text = htmlspecialchars(trim($_POST["replyContent"]));
         $replyQuery->bindParam(':text', $_POST["replyContent"]);
         $postedOn = date("Y-m-d H:i:s");
@@ -84,7 +84,7 @@
 
     if(count($_FILES) > 0) {
         require "../config/connection.php";
-        require "insert.php";
+        require "insertion.php";
 
         if(!$fileUploadQuery) {
             $result["data_type"] = 0;
@@ -114,6 +114,7 @@
         }
 
         echo json_encode($result);
+        exit;
     }
 
     function getAttachFiles($postID) {

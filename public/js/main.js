@@ -39,9 +39,12 @@ $(document).ready(function(){
         } else {
             $('.modalErrorMsg').find('p').html('');
             $('.modalErrorMsg').addClass('hide');
-            $.post('database/userAccountFeatures.php', {regEmail: email["0"].value, regUsername: username["0"].value, regPassword: password["0"].value}, function(returnData) {
+            console.log("ittvan a küldés előtt");
+            $.post('resources/controllers/userController.php', {regEmail: email["0"].value, regUsername: username["0"].value, regPassword: password["0"].value}, function(returnData) {
+                console.log("visszajött adat");
+                console.log(returnData);
                 var obj = jQuery.parseJSON(returnData);
-					
+					console.log(obj);
                 if(obj.data_type == 0) {
                     $('.modalErrorMsg').removeClass('hide');
                     $('.modalErrorMsg').find('p').html(obj.data_value);
@@ -97,12 +100,14 @@ $(document).ready(function(){
         } else {
             $(errorMsg).find('p').html('');
             $(errorMsg).addClass('hide');
-            $.post('/database/userAccountFeatures.php', {logID: loginID, logPassword: password, rememberMe: rememberMe}, function(returnData) {
+            $.post('/resources/controllers/userController.php', {logID: loginID, logPassword: password, rememberMe: rememberMe}, function(returnData) {
 
                 console.log("return data");
                 console.log("rd", returnData);
 
                 var obj = jQuery.parseJSON(returnData);
+
+                console.log("obj", obj);
 
                 if(obj.data_type == 0) {
                     $(errorMsg).removeClass('hide');
@@ -116,6 +121,8 @@ $(document).ready(function(){
                     } else {
                         window.location.assign('/home');
                     }
+
+                    console.log("ittvanavégén");
                 }
             });
         }

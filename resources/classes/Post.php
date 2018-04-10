@@ -8,7 +8,7 @@ class Post {
 
     function getPostData($selectedTopicID) {
         global $db;
-        include "database/selection.php";
+        global $postQuery;
 
         if($postQuery) {
             $selectedTopicID = htmlspecialchars(trim($selectedTopicID));
@@ -35,7 +35,7 @@ class Post {
     
     function getLatestPosts() {
         global $db;
-        include "database/selection.php";
+        global $latestPostsQuery;
 
         if($latestPostsQuery) {
             $latestPostsQuery->execute();

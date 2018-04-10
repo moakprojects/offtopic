@@ -89,11 +89,13 @@
     <body>
         <?php
             require ("config/connection.php");
+            include "database/selection.php";
+            include "database/insertion.php";
+            include "database/modification.php";
 
             /* we check that the user selected remember me option at the login, so is there a usr cookie in the browser or not. If it is then we save user data into session */
             if(isset($_COOKIE["usr"])) {
                 if(!isset($_SESSION["user"])) {
-                    include("database/selection.php");
 
                     if($cookieLoginQuery) {
                         $logIDHash = htmlspecialchars(trim($_COOKIE["usr"]));
@@ -102,9 +104,10 @@
                         $cookieLoginResult = $cookieLoginQuery->fetch(PDO::FETCH_ASSOC);
 
                         $_SESSION["user"]["loggedIn"] = true;
-                        $_SESSION["user"]["username"] = $cookieLoginResult["username"];
+                        $_SESSION["user"]["userID"] = $cookieLoginResult["userID"];
 
                         setcookie("usr", md5($cookieLoginResult["username"]), time() + 7890000);
+
                     } else {
                         header("Location: /error");
                         exit;
@@ -112,15 +115,15 @@
                 }
             }
 
+            spl_autoload_register(function ($class) {
+                include "resources/classes/$class.php";
+            });
+
             if(isset($_SESSION["user"]) && $_SESSION["user"]["loggedIn"]) {
                 include("resources/sections/headerUser.php");
             } else {
                 include("resources/sections/headerGeneral.php");
             }
-
-            spl_autoload_register(function ($class) {
-                include "resources/classes/$class.php";
-            });
 
             ?>
             <div class="sideSpace">

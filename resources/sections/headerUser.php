@@ -25,16 +25,12 @@
                     <a class="dropdown-button profileDropdown" href="#!" data-activates="dropdown1">
                         <?php
 
-                            require "database/selection.php";
+                            $userObj = new User();
+                            $loggedUser = $userObj->loggedUser($_SESSION["user"]["userID"]);
 
-                            echo "<img src=\"";
-                            if($avatarFileName == 'defaultAvatar.png') {
-                                echo '/public/images/content/defaultAvatar.png';
-                            } else {
-                                echo "/public/images/upload/$avatarFileName";
-                            }
-                            echo "\" class=\"newAvatarImg\" alt=\"profile picture\">";
-
+                            echo "<img src='"; 
+                            echo ($loggedUser['profileImage'] === 'defaultAvatar.png' ?'/public/images/content/defaultAvatar.png' : '/public/images/upload/' . $loggedUser["profileImage"]);
+                            echo "' class='newAvatarImg' alt='profile picture'>";
                         ?>
                         <i class="material-icons right">arrow_drop_down</i>
                     </a>

@@ -16,7 +16,7 @@ class Category {
     function getCategoryData() {
 
         global $db;
-        include "database/selection.php";
+        global $categoryQuery;
 
         if($categoryQuery) {
             $categoryQuery->execute();
@@ -33,7 +33,7 @@ class Category {
     function getCategoryDataForSideBar() {
 
         global $db;
-        include "database/selection.php";
+        $sideBarCategoryQuery;
 
         if($sideBarCategoryQuery) {
             $sideBarCategoryQuery->execute();
@@ -49,7 +49,7 @@ class Category {
     function checkCategory($selectedCategoryID) {
         
         global $db;
-        include "database/selection.php";
+        global $checkCategoryQuery;
 
         if($checkCategoryQuery) {
             $selectedCategoryID = htmlspecialchars(trim($selectedCategoryID));

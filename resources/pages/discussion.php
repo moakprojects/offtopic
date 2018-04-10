@@ -75,19 +75,16 @@
                     <div class="row postContent">
                         <div class="col s1 userImageContainer">
                             <?php
-                                echo "<img src='";
-                                if($avatarFileName == 'defaultAvatar.png') {
-                                    echo '/public/images/content/defaultAvatar.png';
-                                } else {
-                                    echo "/public/images/upload/$avatarFileName";
-                                }
-                                echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='$username'>";
+
+                                echo "<img src='"; 
+                                echo ($posts[$i]['profileImage'] === 'defaultAvatar.png' ?'/public/images/content/defaultAvatar.png' : '/public/images/upload/' . $posts[$i]["profileImage"]);
+                                echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]['username'] . "'>";
                             ?>
                         </div>
                         <div class="col s11 topicContainer">
                             <div class="row postedOnContainer">
                                 <div class="col s4 postedBy">
-                                    <a href="#"><?php echo $username; ?></a>
+                                    <a href="#"><?php echo $posts[$i]['username']; ?></a>
                                 </div>
                                 <div class="col s4 offset-s4 postedOn">
                                     <i class="far fa-clock fa-xs"></i>
@@ -101,7 +98,7 @@
                                         <div class="row postedOnContainer">
                                             <div class="col s12 postedBy">
                                                 <span>Original Posted by - </span>
-                                                <a href="#"><?php echo $username; ?>:</a>
+                                                <a href="#"><?php echo $posts[$i]['username']; ?>:</a>
                                             </div>
                                         </div>
                                         <p class="topicDescription"><?php echo $posts[$posts[$i]["replyID"]-1]["text"];?></p>
@@ -199,8 +196,12 @@
             </div>
             <div class="topic commentCard  <?php echo (!isset($_SESSION["user"]) ? 'hide' : ""); ?>">
                 <div class="row postContent">
-                    <div class="col s1 userImageContainer">   
-                        <img src="/public/images/content/defaultAvatar.png" class="tooltipped" alt="profile picture" data-position="bottom" data-tooltip="Test User">
+                    <div class="col s1 userImageContainer">
+                    <?php
+                        echo "<img src='"; 
+                        echo ($loggedUser['profileImage'] === 'defaultAvatar.png' ?'/public/images/content/defaultAvatar.png' : '/public/images/upload/' . $loggedUser["profileImage"]);
+                        echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $loggedUser["username"] . "'>";
+                    ?>
                     </div>
                     <div class="col s11 topicContainer">
                         <div class="editorContainer">

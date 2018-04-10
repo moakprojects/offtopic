@@ -16,15 +16,9 @@
                 <a href="#avatarChange" class="modal-trigger">
                     <?php
 
-                    require "database/selection.php";
-
-                    echo "<img src=\"";
-                    if($avatarFileName == 'defaultAvatar.png') {
-                        echo '/public/images/content/defaultAvatar.png';
-                    } else {
-                        echo "/public/images/upload/$avatarFileName";
-                    }
-                    echo "\" class=\"newAvatarImg\" alt=\"profile picture\">";
+                    echo "<img src='"; 
+                    echo ($loggedUser['profileImage'] === 'defaultAvatar.png' ?'/public/images/content/defaultAvatar.png' : '/public/images/upload/' . $loggedUser["profileImage"]);
+                    echo "' class='newAvatarImg' alt='profile picture'>";
 
                     ?>
                     <div class="fadeContainer">

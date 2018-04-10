@@ -11,7 +11,7 @@ class Topic {
         if($categoryObj -> checkCategory($selectedCategoryId) > 0) {
             
             global $db;
-            include "database/selection.php";
+            global $topicQuery;
 
             if($topicQuery) {
                 $topicQuery -> bindParam(":categoryID", $selectedCategoryId);
@@ -78,7 +78,7 @@ class Topic {
 
     function getSelectedTopic($selectedTopicID) {
         global $db;
-        include "database/selection.php";
+        global $selectedTopicQuery;
 
         if($selectedTopicQuery) {
             $selectedTopicID = htmlspecialchars(trim($selectedTopicID));
@@ -94,7 +94,7 @@ class Topic {
 
     function getLatestTopics() {
         global $db;
-        include "database/selection.php";
+        global $latestTopicsQuery;
 
         if($latestTopicsQuery) {
             $latestTopicsQuery->execute();

@@ -7,15 +7,9 @@
             <div class="tmpAvatarImage">
                 <?php
 
-                require "database/selection.php";
-
-                echo "<img src=\"";
-                if($avatarFileName == 'defaultAvatar.png') {
-                    echo '/public/images/content/defaultAvatar.png';
-                } else {
-                    echo "/public/images/upload/$avatarFileName";
-                }
-                echo "\" class=\"newAvatarImg\" alt=\"profile picture\">";
+                echo "<img src='"; 
+                echo ($loggedUser['profileImage'] === 'defaultAvatar.png' ?'/public/images/content/defaultAvatar.png' : '/public/images/upload/' . $loggedUser["profileImage"]);
+                echo "' class='newAvatarImg' alt='profile picture'>";
                 
                 ?>
             </div>
@@ -24,8 +18,15 @@
             <div class="carousel">
                 <?php
 
-                foreach($defaultAvatarImages as $image) {
-                    echo "<a class='carousel-item' id='" . $image['fileName'] . "'><img src='/public/images/defaultAvatars/" . $image['fileName'] . "'></a>";
+                $defaultAvatarImages = $userObj->getDefaultAvatars();
+                if($defaultAvatarImages) {
+                    
+                    foreach($defaultAvatarImages as $image) {
+                        echo "<a class='carousel-item' id='" . $image['fileName'] . "'><img src='/public/images/defaultAvatars/" . $image['fileName'] . "'></a>";
+                    }
+                } else {
+                    header("Location: /error");
+                    exit;
                 }
         
                 ?>

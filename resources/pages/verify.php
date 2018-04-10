@@ -1,6 +1,5 @@
 <?php
     if(isset($_SESSION["verifyCode"])) {
-        include "database/selection.php";
 
         $verifyEmailHash = htmlspecialchars(trim($_SESSION["verifyCode"]));
         if(isset($verifyEmailQuery)) {
@@ -17,7 +16,6 @@
                     $diff = $regDate -> diff($now);
 
                     if($diff -> d < 1) {
-                        include "database/update.php";
 
                         if($modifyAccessLevelQuery) {
                             $modifyAccessLevelQuery->bindParam(':email', $verifyEmailResult["email"]);
