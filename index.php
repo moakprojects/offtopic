@@ -12,7 +12,7 @@
             break;
             case "categories":
                 if(isset($queryStringParams[1]) && $queryStringParams[1] !== "") {
-                    $_SESSION["selectedCategoryId"] = $queryStringParams[1];
+                    $_SESSION["selectedCategoryID"] = $queryStringParams[1];
                     $page = "topics";
                 } else {
                     $page = "categories";
@@ -20,7 +20,7 @@
             break;
             case "topics":
                 if(isset($queryStringParams[1]) && $queryStringParams[1] !== "") {
-                    $_SESSION["selectedTopicId"] = $queryStringParams[1];
+                    $_SESSION["selectedTopicID"] = $queryStringParams[1];
                     $page = "discussion";
                 } else {
                     $page = "error";

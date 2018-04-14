@@ -1,3 +1,11 @@
+<?php
+    $topicObj = new Topic();
+
+    if(isset($_SESSION["user"])) {
+        $favouriteTopics = $topicObj->getFavouriteTopics($_SESSION["user"]["userID"]);
+        $ownTopics = $topicObj->getOwnTopics($_SESSION["user"]["userID"]);
+    }
+?>
 <div class="container contentContainer">
     <div class="row">
         <div class="col s8"> 
@@ -5,22 +13,37 @@
             <ul class="tabs tabs-transparent tabsContainer">
                 <li class="tab"><a href="#hotTopic">Hot Topics</a></li>
                 <li class="tab"><a href="#latestTopic">What's new</a></li>
+                <?php echo (isset($favouriteTopics) && $favouriteTopics ? "<li class='tab'><a href='#favouriteTopic'>Favourite Topics</a></li>" : ""); ?>
+                <?php echo (isset($ownTopics) && $ownTopics ? "<li class='tab'><a href='#ownTopic'>Own Topics</a></li>" : ""); ?>
             </ul>
             <div id="hotTopic">
+                <?php
+                    $hotTopics = $topicObj->getHotTopics();
+
+                    foreach ($hotTopics as $hotTopic) {
+                ?>
                 <div class="topic">
                     <div class="col s1 userImageContainer">
-                        <img src="/public/images/content/defaultAvatar.png" alt="profile picture">
+                    <?php
+                            echo "<img src='";
+                            if($hotTopic["profileImage"] == 'defaultAvatar.png') {
+                                echo '/public/images/content/defaultAvatar.png';
+                            } else {
+                                echo "/public/images/upload/" . $hotTopic["profileImage"];
+                            }
+                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $hotTopic["username"] . "'>";
+                        ?>
                     </div>
                     <div class="col s9 topicContainer">
-                        <h3>First hot example</h3>
-                        <p class="topicDescription">lorem ipsum dolor sit amet, hedte hsafdsf jds ldsdsdf ldjfsd sdéflsdfsd éjédsjfs lkjshljsh  lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv </p>
-                        <p class="viewTopic"><a href="/discussion">View the topic <i class="fas fa-angle-double-right"></i></a></p>
-                        <div class="chip topicCategory">Computer Science</div>
+                        <h3><?php echo $hotTopic["shortTopicName"]; ?></h3>
+                        <p class="topicDescription"><?php echo $hotTopic["topicDescription"]; ?></p>
+                        <p class="viewTopic"><a href="/topics/<?php echo $hotTopic["topicID"]; ?>">View the topic <i class="fas fa-angle-double-right"></i></a></p>
+                        <a href="/categories/<?php echo $hotTopic["categoryID"]; ?>"><div class="chip topicCategory"><?php echo $hotTopic["categoryName"]; ?></div></a>
                     </div>
                     <div class="col s2">
                         <div class="comments">
                             <div class="commentbg">
-                                <span>89</span>
+                                <span><?php echo $hotTopic["numberOfPosts"]; ?></span>
                                 <div class="mark">
 
                                 </div>
@@ -30,41 +53,16 @@
                             <span class="iconTitle">Last comment</span>
                             <br>
                             <i class="far fa-clock fa-sm"></i>
-                            <span>15 min ago</span>
+                            <span><?php echo $hotTopic["latestPostElapsedTime"]; ?> ago</span>
                         </div>
                     </div>
                 </div>
-                <div class="topic">
-                    <div class="col s1 userImageContainer">
-                        <img src="/public/images/content/defaultAvatar.png" alt="profile picture">
-                    </div>
-                    <div class="col s9 topicContainer">
-                        <h3>Lorem ipsum dolor sit</h3>
-                        <p class="topicDescription">lorem ipsum dolor sit amet, hedte hsafdsf jds ldsdsdf ldjfsd sdéflsdfsd éjédsjfs lkjshljsh  lsakshflkjash lohhlk lkhlh ll klkélkhé fgdfg fdgdffg gdfgdfg gdgdg dsgdv </p>
-                        <p class="viewTopic"><a href="/discussion">View the topic <i class="fas fa-angle-double-right"></i></a></p>
-                        <div class="chip topicCategory">Computer Science</div>
-                    </div>
-                    <div class="col s2">
-                        <div class="comments">
-                            <div class="commentbg">
-                                <span>89</span>
-                                <div class="mark">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="time">
-                            <span class="iconTitle">Last comment</span>
-                            <br>
-                            <i class="far fa-clock fa-sm"></i>
-                            <span>15 min ago</span>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                    }
+                ?>
             </div>
             <div id="latestTopic">
                 <?php
-                    $topicObj = new Topic();
                     $latestTopics = $topicObj->getLatestTopics();
                 
                     foreach($latestTopics as $latestTopic) {
@@ -85,7 +83,7 @@
                         <h3><?php echo $latestTopic["shortTopicName"]; ?></h3>
                         <p class="topicDescription"><?php echo $latestTopic["topicDescription"]; ?></p>
                         <p class="viewTopic"><a href="/topics/<?php echo $latestTopic["topicID"]; ?>">View the topic <i class="fas fa-angle-double-right"></i></a></p>
-                        <div class="chip topicCategory"><?php echo $latestTopic["categoryName"]; ?></div>
+                        <a href="/categories/<?php echo $latestTopic["categoryID"]; ?>"><div class="chip topicCategory"><?php echo $latestTopic["categoryName"]; ?></div></a>
                     </div>
                     <div class="col s2">
                         <div class="comments">
@@ -107,7 +105,95 @@
                 <?php
                     }
                 ?>
-            </div>           
+            </div>
+            <div id="favouriteTopic" class="<?php echo (isset($favouriteTopics) && $favouriteTopics ? '' : 'hide'); ?>">
+                <?php
+                
+                    foreach($favouriteTopics as $favouriteTopic) {
+                ?>
+                <div class="topic">
+                    <div class="col s1 userImageContainer">
+                        <?php
+                            echo "<img src='";
+                            if($favouriteTopic["profileImage"] == 'defaultAvatar.png') {
+                                echo '/public/images/content/defaultAvatar.png';
+                            } else {
+                                echo "/public/images/upload/" . $favouriteTopic["profileImage"];
+                            }
+                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $favouriteTopic["username"] . "'>";
+                        ?>
+                    </div>
+                    <div class="col s9 topicContainer">
+                        <h3><?php echo $favouriteTopic["shortTopicName"]; ?></h3>
+                        <p class="topicDescription"><?php echo $favouriteTopic["topicDescription"]; ?></p>
+                        <p class="viewTopic"><a href="/topics/<?php echo $favouriteTopic["topicID"]; ?>">View the topic <i class="fas fa-angle-double-right"></i></a></p>
+                        <a href="/categories/<?php echo $favouriteTopic["categoryID"]; ?>"><div class="chip topicCategory"><?php echo $favouriteTopic["categoryName"]; ?></div></a>
+                    </div>
+                    <div class="col s2">
+                        <div class="comments">
+                            <div class="commentbg">
+                                <span><?php echo $favouriteTopic["numberOfPosts"]; ?></span>
+                                <div class="mark">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="time">
+                            <span class="iconTitle">Last comment</span>
+                            <br>
+                            <i class="far fa-clock fa-sm"></i>
+                            <span><?php echo $favouriteTopic["latestPostElapsedTime"]; ?> ago</span>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                    }
+                ?>
+            </div>
+            <div id="ownTopic" class="<?php echo (isset($ownTopics) && $ownTopics ? '' : 'hide'); ?>">
+                <?php
+                
+                    foreach($ownTopics as $ownTopic) {
+                ?>
+                <div class="topic">
+                    <div class="col s1 userImageContainer">
+                        <?php
+                            echo "<img src='";
+                            if($ownTopic["profileImage"] == 'defaultAvatar.png') {
+                                echo '/public/images/content/defaultAvatar.png';
+                            } else {
+                                echo "/public/images/upload/" . $ownTopic["profileImage"];
+                            }
+                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $ownTopic["username"] . "'>";
+                        ?>
+                    </div>
+                    <div class="col s9 topicContainer">
+                        <h3><?php echo $ownTopic["shortTopicName"]; ?></h3>
+                        <p class="topicDescription"><?php echo $ownTopic["topicDescription"]; ?></p>
+                        <p class="viewTopic"><a href="/topics/<?php echo $ownTopic["topicID"]; ?>">View the topic <i class="fas fa-angle-double-right"></i></a></p>
+                        <a href="/categories/<?php echo $ownTopic["categoryID"]; ?>"><div class="chip topicCategory"><?php echo $ownTopic["categoryName"]; ?></div></a>
+                    </div>
+                    <div class="col s2">
+                        <div class="comments">
+                            <div class="commentbg">
+                                <span><?php echo $ownTopic["numberOfPosts"]; ?></span>
+                                <div class="mark">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="time">
+                            <span class="iconTitle">Last comment</span>
+                            <br>
+                            <i class="far fa-clock fa-sm"></i>
+                            <span><?php echo $ownTopic["latestPostElapsedTime"]; ?> ago</span>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                    }
+                ?>
+            </div>
         </div>
         <div class="col s4">
             <?php 

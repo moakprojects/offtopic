@@ -537,6 +537,10 @@ strong {
     margin: 15px 0 0 0;
 }
 
+.commentCard .topicContainer .replyLabel {
+    margin-bottom: 10px; 
+}
+
 /* Unlogged style: hide comment editor */
 
 .commentCardUnlogged {

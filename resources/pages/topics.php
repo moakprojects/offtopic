@@ -1,8 +1,8 @@
 <?php
-    if(isset($_SESSION["selectedCategoryId"])) {
+    if(isset($_SESSION["selectedCategoryID"])) {
         $topicObj = new Topic();
         $categoryObj = new Category();
-        $topics = $topicObj -> getTopicData($_SESSION["selectedCategoryId"], $categoryObj);
+        $topics = $topicObj -> getTopicData($_SESSION["selectedCategoryID"], $categoryObj);
         $categoryName = $categoryObj -> getCategoryName();
 ?>
 <div class="container contentContainer">
@@ -15,9 +15,17 @@
                     <i class="material-icons">chevron_right</i>
                     <a href="/categories">Categories</a>
                     <i class="material-icons">chevron_right</i>
-                    <?php echo "<a href='/categories/" . $_SESSION['selectedCategoryId'] . "'>$categoryName</a>"; ?>
+                    <?php echo "<a href='/categories/" . $_SESSION['selectedCategoryID'] . "'>$categoryName</a>"; ?>
                 </div>
-                <a href="#" data-position="bottom" data-delay="50" data-tooltip="Add to favourites" class="btn-floating btn-large waves-effect waves-light categoryLikeButton tooltipped <?php echo (!isset($_SESSION['user']) ? 'hide' : ''); ?>"><i class="far fa-heart fa-lg"></i></a>
+                <div id="categoryLikeButtonContainer">
+                    <a data-position="bottom" data-delay="50" data-tooltip="Add to favourites" class="btn-floating btn-large waves-effect waves-light categoryLikeButton tooltipped <?php echo (!isset($_SESSION['user']) ? 'hide' : ''); ?>" 
+                    onclick="likeCategory(
+                    <?php echo $_SESSION["user"]["userID"] . ", " . $_SESSION['selectedCategoryID'] . ", " . 
+                    ($categoryObj->checkLikedCategories($_SESSION["user"]["userID"], $_SESSION["selectedCategoryID"]) > 0 
+                        ? "'remove')\"> <i class=\"fas "
+                        : "'add')\"> <i class=\"far "); 
+                    ?> fa-heart fa-lg"></i></a>
+                </div>
                 <h3><?php echo $categoryName; ?></h3>
                 <hr>
             </div>
@@ -48,7 +56,7 @@
                             echo "<img src='/public/images/content/semesterMarker/" . $topic['periodName'] . ".png' class='periodImage'>";
                         }
                         ?>
-                        <p class="viewTopic"><a href="/discussion">View the topic <i class="fas fa-angle-double-right"></i></a></p>
+                        <p class="viewTopic"><a href="/topics/<?php echo $topic["topicID"]; ?>">View the topic <i class="fas fa-angle-double-right"></i></a></p>
                         <div class="topicCreated">Created at: <?php echo $topic["createdAt"]?></div>
                     </div>
                     <div class="col s2">

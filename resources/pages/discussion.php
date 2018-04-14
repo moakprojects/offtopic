@@ -1,7 +1,7 @@
 <?php
-    if(isset($_SESSION["selectedTopicId"])) {
+    if(isset($_SESSION["selectedTopicID"])) {
         $topicObj = new Topic();
-        $selectedTopic = $topicObj -> getSelectedTopic($_SESSION["selectedTopicId"]);
+        $selectedTopic = $topicObj -> getSelectedTopic($_SESSION["selectedTopicID"]);
 ?>
 <div class="container contentContainer">
     <div class="row">
@@ -53,23 +53,29 @@
                                     <li><a class="btn-floating google"><i class="fab fa-google-plus-g"></i></a></li>
                                     </ul>
                                 </div>
-                                <a href="#" class="btn-floating waves-effect waves-light blue replyBtn"><i class="material-icons">reply</i></a>
+                                <a class="btn-floating waves-effect waves-light blue replyBtn" onclick="scrollToEditor()"><i class="material-icons">reply</i></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <a href="#" data-position="bottom" data-delay="50" data-tooltip="Add to favourites" class="btn-floating btn-large waves-effect waves-light topicLikeButton tooltipped <?php echo (!isset($_SESSION['user']) ? 'hide' : ''); ?>"><i class="far fa-heart fa-lg"></i></a>
+                <div id="topicLikeButtonContainer" class="<?php echo (!isset($_SESSION['user']) || $selectedTopic['createdBy'] === $_SESSION['user']['userID'] ? 'hide' : ''); ?>">
+                <a data-position="bottom" data-delay="50" data-tooltip="Add to favourites" class="btn-floating btn-large waves-effect waves-light topicLikeButton tooltipped" 
+                onclick="likeTopic(
+                    <?php echo $_SESSION["user"]["userID"] . ", " . $_SESSION['selectedTopicID'] . ", " . 
+                    ($topicObj->checkLikedTopics($_SESSION["user"]["userID"], $_SESSION["selectedTopicID"]) > 0 
+                        ? "'remove')\"> <i class=\"fas "
+                        : "'add')\"> <i class=\"far "); 
+                    ?> fa-heart fa-lg"></i></a>
+                </div>
             </div>
             <div id="postContainer">
             <?php
 
-            require "database/selection.php";
-            require "database/discussionFeatures.php";
-
             $postObj = new Post();
-            $posts = $postObj->getPostData($_SESSION["selectedTopicId"]);
+            $posts = $postObj->getPostData($_SESSION["selectedTopicID"]);
             
             for($i = 0; $i < count($posts); $i++) {
+            if(isset($_SESSION["user"])) { $postObj->checkPostLikeStatus($_SESSION["user"]["userID"], $posts[$i]["postID"]); }
             ?>
                 <div class="topic container post">
                     <div class="row postContent">
@@ -98,7 +104,7 @@
                                         <div class="row postedOnContainer">
                                             <div class="col s12 postedBy">
                                                 <span>Original Posted by - </span>
-                                                <a href="#"><?php echo $posts[$i]['username']; ?>:</a>
+                                                <a href="#"><?php echo $posts[$posts[$i]["replyID"]-1]['username']; ?>:</a>
                                             </div>
                                         </div>
                                         <p class="topicDescription"><?php echo $posts[$posts[$i]["replyID"]-1]["text"];?></p>
@@ -112,10 +118,9 @@
                             <p class="topicDescription"><?php echo $posts[$i]["text"]; ?></p>
                             <ul class="postAttachFiles">
                                 <?php 
-                                    $attachFilesResult = [];
-                                    getAttachFiles($posts[$i]["postID"]);
+                                    $attachedFiles = $postObj->getAttachedFiles($posts[$i]["attachedFilesCode"]);
 
-                                    foreach($attachFilesResult as $file) {
+                                    foreach($attachedFiles as $file) {
                                         $fileExtension = explode(".", $file["attachmentName"]);
                                         if(in_array($fileExtension[1], array('png', 'jpg', 'jpeg'))) {
                                             echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
@@ -143,32 +148,32 @@
                                         <div class="col s6 likeBtnContainer">
                                             <a class="btn-floating waves-effect waves-light likeBtn 
                                                 <?php
-                                                    if(checkPostStatus(10, $posts[$i]["postID"]) > 0) {
-                                                        echo " disabled disabledBtn";
-                                                    }
+                                                    echo ($postObj->isExistInPostLikeTable || $posts[$i]['userID'] === $_SESSION["user"]["userID"] ? " disabled disabledBtn" : "");
                                                 ?> 
-                                                likeFloatBtn<?php echo $posts[$i]["postID"]; ?>" onclick="like(<?php echo $posts[$i]["postID"]; ?>)">
+                                                likeFloatBtn<?php echo $posts[$i]["postID"]; ?>" <?php if (isset($_SESSION["user"])) {
+                                                    echo "onclick='likePost(" . $posts[$i]['postID'] . ")'";
+                                                } ?>>
                                                 <i class="far fa-thumbs-up fa-lg likeIcon"></i>
                                             </a>
                                             <span class="likeValue<?php echo $posts[$i]["postID"]; ?>">
                                             <?php 
-                                                countLikes($posts[$i]["postID"], "like");
-                                            ?>
+                                                echo ($posts[$i]["numberOfLikes"] ? $posts[$i]["numberOfLikes"] : "0"); ?>
                                             </span>
                                         </div>
                                         <div class="col s6 dislikeBtnContainer">
                                             <a class="btn-floating waves-effect waves-light likeBtn
                                                 <?php 
-                                                    if(checkPostStatus(10, $posts[$i]["postID"]) > 0) {
-                                                        echo " disabled disabledBtn";
-                                                    }
+                                                    echo ($postObj->isExistInPostLikeTable || $posts[$i]['userID'] === $_SESSION["user"]["userID"] ? " disabled disabledBtn" : "");
                                                 ?>
-                                                dislikeFloatBtn<?php echo $posts[$i]["postID"]; ?>" onclick="dislike(<?php echo $posts[$i]["postID"]; ?>)">
+                                                dislikeFloatBtn<?php echo $posts[$i]["postID"]; ?>"
+                                                <?php if (isset($_SESSION["user"])) {
+                                                    echo "onclick='dislikePost(" . $posts[$i]['postID'] . ")'";
+                                                } ?>>
                                                 <i class="far fa-thumbs-down fa-lg likeIcon"></i>
                                             </a>
                                             <span class="dislikeValue<?php echo $posts[$i]["postID"]; ?>">
                                             <?php 
-                                                countLikes($posts[$i]["postID"], "dislike");
+                                                echo ($posts[$i]['numberOfDislikes'] ? $posts[$i]['numberOfDislikes'] : '0');
                                             ?>
                                             </span>
                                         </div>
@@ -186,7 +191,7 @@
                                         <li><a class="btn-floating google"><i class="fab fa-google-plus-g"></i></a></li>
                                         </ul>
                                     </div>
-                                    <a href="#" class="btn-floating waves-effect waves-light blue replyBtn"><i class="material-icons">reply</i></a>
+                                    <a class="btn-floating waves-effect waves-light blue replyBtn"><i class="material-icons" onclick="replyPost(<?php echo $i + 1 . ", '" . $posts[$i]['username'] ."'"; ?>)">reply</i></a>
                                 </div>
                             </div>
                         </div>
@@ -203,7 +208,8 @@
                         echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $loggedUser["username"] . "'>";
                     ?>
                     </div>
-                    <div class="col s11 topicContainer">
+                    <div class="col s11 topicContainer editorTop">
+                        <p class="replyLabel hide">Reply to <strong id="originalPostID"></strong> written by <em id="replyTo"></em>:</p>
                         <div class="editorContainer">
                             <div id="editor"></div>
                         </div>

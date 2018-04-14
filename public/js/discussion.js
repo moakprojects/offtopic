@@ -119,43 +119,58 @@ function removeAttachFile(index) {
   validateAttachFile();
 }
 
-function like(postId) {
+function likePost(postId) {
   console.log("like id, ", postId);
 
-  $.post('/database/discussionFeatures.php', {userId: 10, postId: postId, mood: "like"}, function(returnData) {
-    if(returnData) {
-      $.post('/database/discussionFeatures.php', {reCount: postId, mood: "like"}, function(data) {
-        var aux = '.likeValue' + postId;
-        $(aux).html(data);
-        var likeBtn = '.likeFloatBtn' + postId;
-        var dislikeBtn = '.dislikeFloatBtn' + postId;
-        $(likeBtn).addClass('disabled');
-        $(likeBtn).children().css("color", "rgb(245, 247, 250)");
-        $(dislikeBtn).addClass('disabled');
-        $(dislikeBtn).children().css("color", "rgb(245, 247, 250)");
+  $.post('/resources/controllers/discussionController.php', {postId: postId, mood: "like"}, function(returnData) {
+
+    var obj = jQuery.parseJSON(returnData);
+    if(obj.data_type === 1) {
+
+      $.post('/resources/controllers/discussionController.php', {reCountID: postId}, function(data) {
+        var objRecount = jQuery.parseJSON(data);
+        if(objRecount.data_type === 1) {
+          var aux = '.likeValue' + postId;
+          console.log("like valu: ", objRecount);
+          $(aux).html(objRecount.data_value.numberOfLikes);
+          var likeBtn = '.likeFloatBtn' + postId;
+          var dislikeBtn = '.dislikeFloatBtn' + postId;
+          $(likeBtn).addClass('disabled');
+          $(likeBtn).children().css("color", "rgb(245, 247, 250)");
+          $(dislikeBtn).addClass('disabled');
+          $(dislikeBtn).children().css("color", "rgb(245, 247, 250)");
+        }
       });
     }
   });
 }
 
-function dislike(postId) {
+function dislikePost(postId) {
   console.log("dislike id, ", postId);
 
-  $.post('/database/discussionFeatures.php', {userId: 10, postId: postId, mood: "dislike"}, function(returnData) {
-    if(returnData) {
-      $.post('/database/discussionFeatures.php', {reCount: postId, mood: "dislike"}, function(data) {
-        var aux = '.dislikeValue' + postId;
-        $(aux).html(data);
-        var likeBtn = '.likeFloatBtn' + postId;
-        var dislikeBtn = '.dislikeFloatBtn' + postId;
-        $(likeBtn).addClass('disabled');
-        $(likeBtn).children().css("color", "rgb(245, 247, 250)");
-        $(dislikeBtn).addClass('disabled');
-        $(dislikeBtn).children().css("color", "rgb(245, 247, 250)");
+  $.post('/resources/controllers/discussionController.php', {postId: postId, mood: "dislike"}, function(returnData) {
+    
+    var obj = jQuery.parseJSON(returnData);
+    if(obj.data_type === 1) {
+      $.post('/resources/controllers/discussionController.php', {reCountID: postId}, function(data) {
+        var objRecount = jQuery.parseJSON(data);
+        if(objRecount.data_type === 1) {
+
+          var aux = '.dislikeValue' + postId;
+          $(aux).html(objRecount.data_value.numberOfDislikes);
+          var likeBtn = '.likeFloatBtn' + postId;
+          var dislikeBtn = '.dislikeFloatBtn' + postId;
+          $(likeBtn).addClass('disabled');
+          $(likeBtn).children().css("color", "rgb(245, 247, 250)");
+          $(dislikeBtn).addClass('disabled');
+          $(dislikeBtn).children().css("color", "rgb(245, 247, 250)");
+        }
       });
     }
   });
 }
+
+var replyId = null;
 
 $(document).on('click', '.postReplyBtn', function() {
 
@@ -166,47 +181,97 @@ $(document).on('click', '.postReplyBtn', function() {
 
 function uploadPost() {
   var replyContent = quill.root.innerHTML;
-  $.post('/database/discussionFeatures.php', {replyContent: replyContent, userId: 1, topicId: 1, }, function(returnData) {
-    if(currentFiles.length > 0) {
-    
-      var attachedFiles = new FormData();
-      $.each(currentFiles, function(i, file) {
-          attachedFiles.append('file-'+i, file);
-      });
-      
-      $.ajax({
-        url: '/database/discussionFeatures.php',
-        method: 'POST',
-        type: 'POST',
-        data: attachedFiles,
-        contentType: false,
-        cache: false,
-        processData: false,
-        success: function(data) {
-          var obj = jQuery.parseJSON(data);
+  $.post('/resources/controllers/discussionController.php', {replyContent: replyContent, replyID: replyId}, function(returnData) {
+    var obj = jQuery.parseJSON(returnData);
           
-          if(obj.data_type == 0) {
-            $('#errorMsg').removeClass('hide');
-            $('#errorMsg').html(obj.data_value);
-          } else {
-            $('#attachFiles').html("");
-            refreshPostContent();
-          }
-        }
-      });
+    if(obj.data_type == 0) {
+      $('#errorMsg').removeClass('hide');
+      $('#errorMsg').html(obj.data_value);
     } else {
-      refreshPostContent();
+      if(currentFiles.length > 0) {
+    
+        var attachedFiles = new FormData();
+        $.each(currentFiles, function(i, file) {
+            attachedFiles.append('file-'+i, file);
+        });
+        
+        $.ajax({
+          url: '/resources/controllers/discussionController.php',
+          method: 'POST',
+          type: 'POST',
+          data: attachedFiles,
+          contentType: false,
+          cache: false,
+          processData: false,
+          success: function(data) {
+            var fileObj = jQuery.parseJSON(data);
+            
+            if(fileObj.data_type == 0) {
+              $('#errorMsg').removeClass('hide');
+              $('#errorMsg').html(fileObj.data_value);
+            } else {
+              $('#attachFiles').html("");
+              refreshPostContent(obj.data_value);
+            }
+          }
+        });
+      } else {
+        refreshPostContent(obj.data_value);
+      } 
     }
   });
 }
 
-function refreshPostContent() {
+function refreshPostContent(selectedTopicID) {
+  
   quill.deleteText(0, quill.getLength());
-  $('#postContainer').load('/discussion #postContainer', function() {
+  
+  $('#originalPostID').eq(0).html("");
+  $('#replyTo').eq(0).html("");
+  $('.replyLabel').eq(0).addClass('hide');
+  
+  $('#postContainer').load('/topics/' + selectedTopicID + ' #postContainer', function() {
     currentFiles = [];
     $('#errorMsg').addClass('hide');    
     errorMsg = "";    
     $('#errorMsgSeparator').addClass('hide');
     $('.replySpinner').addClass('hide');
+  });
+}
+
+function replyPost(postId, username) {
+
+  $('#originalPostID').eq(0).html("#" + postId);
+  $('#replyTo').eq(0).html(username);
+  $('.replyLabel').eq(0).removeClass('hide');
+
+  replyId = postId;
+  scrollToEditor();
+
+}
+
+function scrollToEditor() {
+  $('html, body').animate({
+      scrollTop: $(".editorTop").offset().top
+  }, 1000);
+}
+
+function likeTopic(userId, topicId, action) {
+  $.post('/resources/controllers/topicController.php', {userId: userId, favouriteSelectedTopic: topicId, action: action}, function(data) {
+    console.log("data", data);
+    var obj = jQuery.parseJSON(data);
+    if(obj.data_type === 1) {
+      if(obj.data_value === "added") {
+        $('#topicLikeButtonContainer').load('/topics/' + topicId + ' #topicLikeButtonContainer', function() {
+          $('.topicLikeButton').children().removeClass('far').addClass('fas');
+        });
+      } else {
+        $('#topicLikeButtonContainer').load('/topics/' + topicId + ' #topicLikeButtonContainer', function() {
+          $('.topicLikeButton').children().removeClass('fas').addClass('far');
+        });
+      }
+
+      
+    }
   });
 }
