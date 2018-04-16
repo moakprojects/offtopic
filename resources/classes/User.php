@@ -136,5 +136,118 @@
                 return false;
             }
         }
+
+        function getSelectedUser($username) {
+            global $db;
+            global $userQuery;
+
+            if(isset($userQuery)) {
+
+                $userQuery->bindParam(':username', $username);
+                $userQuery->execute();
+
+                if($userQuery->rowCount() > 0) {
+                    return $userData = $userQuery->fetch(PDO::FETCH_ASSOC);
+                } else {
+                    header("Location: /error");
+                    exit;
+                }
+            } else {
+                header("Location: /error");
+                exit;
+            }
+        }
+
+        function getInformationForPostDistributionChart($username) {
+            global $db;
+            global $numberOfPostsInCategoriesQuery;
+
+            if(isset($numberOfPostsInCategoriesQuery)) {
+
+                $numberOfPostsInCategoriesQuery->bindParam(':username', $username);
+                $numberOfPostsInCategoriesQuery->execute();
+
+                return $numberOfPostsInCategoriesResult = $numberOfPostsInCategoriesQuery->fetchall(PDO::FETCH_ASSOC);
+            } else {
+                return false;
+            }
+        }
+
+        function getInformationForPostHistoryChart($startDate, $username) {
+            global $db;
+            global $numberOfPostsByMonthsQuery;
+
+            if(isset($numberOfPostsByMonthsQuery)) {
+
+                $numberOfPostsByMonthsQuery->bindParam(':startDate', $startDate);
+                $numberOfPostsByMonthsQuery->bindParam(':username', $username);
+                $numberOfPostsByMonthsQuery->execute();
+
+                return $numberOfPostsByMonthsResult = $numberOfPostsByMonthsQuery->fetchall(PDO::FETCH_ASSOC);
+            } else {
+                return false;
+            }
+        }
+
+        function getInformationForPostLikesChart($username) {
+            global $db;
+            global $numberOfLikesOfPostsQuery;
+
+            if(isset($numberOfLikesOfPostsQuery)) {
+
+                $numberOfLikesOfPostsQuery->bindParam(':username', $username);
+                $numberOfLikesOfPostsQuery->execute();
+
+                if($numberOfLikesOfPostsQuery->rowCount() > 0) {
+                    $numberOfLikesOfPostsResult = $numberOfLikesOfPostsQuery->fetch(PDO::FETCH_ASSOC);
+
+                    if(is_null($numberOfLikesOfPostsResult["numberOfLikes"])) {
+                        $numberOfLikesOfPostsResult["numberOfLikes"] = 0;
+                    }
+
+                    if(is_null($numberOfLikesOfPostsResult["numberOfDislikes"])) {
+                        $numberOfLikesOfPostsResult["numberOfDislikes"] = 0;
+                    }
+
+                    return $numberOfLikesOfPostsResult;
+                } else {
+                    return $numberOfLikesOfPostsResult = array("numberOfPosts"=>0,"numberOfLikes"=>0,"numberOfDislikes"=>0);
+                }
+
+            } else {
+                return false;
+            }
+        }
+
+        function getNumberOfVisitors($username) {
+            global $db;
+            global $numberOfVisitorsQuery;
+
+            if(isset($numberOfVisitorsQuery)) {
+
+                $numberOfVisitorsQuery->bindParam(':username', $username);
+                $numberOfVisitorsQuery->execute();
+
+                $numberOfVisitorsResult = $numberOfVisitorsQuery->fetch(PDO::FETCH_ASSOC);
+
+                if(is_null($numberOfVisitorsResult["visitors"])) {
+                    return array("visitors" => 0);
+                } else {
+                    return $numberOfVisitorsResult;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        function increaseNumberOfVisitors($username) {
+            global $db;
+            global $increaseNumberOfVisitors;
+
+            if(isset($increaseNumberOfVisitors)) {
+                $increaseNumberOfVisitors->bindParam(':username', $username);
+                $increaseNumberOfVisitors->execute();
+            }
+        }
     }
 ?>

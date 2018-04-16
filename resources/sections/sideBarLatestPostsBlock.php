@@ -13,7 +13,7 @@
                 <span></span>
                     <div class="title"><?php echo $latestPost["shortTopicName"];?></div>
                     <div class="info"><?php echo $latestPost["shortPostText"];?></div>
-                    <div class="name">- <?php echo "<a href='/profile'>" . $latestPost["username"] . "</a>";?> -</div>
+                    <div class="name">- <?php echo "<a href='/profile/" . $latestPost["username"] . "'>" . $latestPost["username"] . "</a>";?> -</div>
                 <div class="time"><span><?php echo $latestPost["monthDay"];?></span><span><?php echo $latestPost["time"];?></span></div>
             </li>
             <?php

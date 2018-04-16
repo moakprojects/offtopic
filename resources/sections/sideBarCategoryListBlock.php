@@ -25,6 +25,7 @@
         </ul>
         <?php
                 }
+            }
                 if($sideBarCategories) {
         ?>
         <p class="center-align" style="font-size: 15px;">Recommended Categories</p>
@@ -39,7 +40,6 @@
         </ul>
         <?php
                 }
-            }
         ?>
         <a href="/categories">View the categories <i class="fas fa-angle-double-right"></i></a>
     </div>

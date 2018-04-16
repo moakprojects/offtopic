@@ -5,33 +5,34 @@
         $favouriteTopics = $topicObj->getFavouriteTopics($_SESSION["user"]["userID"]);
         $ownTopics = $topicObj->getOwnTopics($_SESSION["user"]["userID"]);
     }
+
+    $hotTopics = $topicObj->getHotTopics();
 ?>
 <div class="container contentContainer">
     <div class="row">
         <div class="col s8"> 
             <h2>Dashboard</h2>
             <ul class="tabs tabs-transparent tabsContainer">
-                <li class="tab"><a href="#hotTopic">Hot Topics</a></li>
+                <?php echo (isset($hotTopics) && $hotTopics ? "<li class='tab'><a href='#hotTopic'>Hot Topics</a></li>" : ""); ?>
                 <li class="tab"><a href="#latestTopic">What's new</a></li>
                 <?php echo (isset($favouriteTopics) && $favouriteTopics ? "<li class='tab'><a href='#favouriteTopic'>Favourite Topics</a></li>" : ""); ?>
                 <?php echo (isset($ownTopics) && $ownTopics ? "<li class='tab'><a href='#ownTopic'>Own Topics</a></li>" : ""); ?>
             </ul>
             <div id="hotTopic">
                 <?php
-                    $hotTopics = $topicObj->getHotTopics();
-
+                    if($hotTopics) {
                     foreach ($hotTopics as $hotTopic) {
                 ?>
                 <div class="topic">
                     <div class="col s1 userImageContainer">
                     <?php
-                            echo "<img src='";
+                            echo "<a href='/profile/" . $hotTopic["username"] . "'><img src='";
                             if($hotTopic["profileImage"] == 'defaultAvatar.png') {
                                 echo '/public/images/content/defaultAvatar.png';
                             } else {
                                 echo "/public/images/upload/" . $hotTopic["profileImage"];
                             }
-                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $hotTopic["username"] . "'>";
+                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $hotTopic["username"] . "'></a>";
                         ?>
                     </div>
                     <div class="col s9 topicContainer">
@@ -59,6 +60,7 @@
                 </div>
                 <?php
                     }
+                }
                 ?>
             </div>
             <div id="latestTopic">
@@ -70,13 +72,13 @@
                 <div class="topic">
                     <div class="col s1 userImageContainer">
                         <?php
-                            echo "<img src='";
+                            echo "<a href='/profile/" . $latestTopic["username"] . "'><img src='";
                             if($latestTopic["profileImage"] == 'defaultAvatar.png') {
                                 echo '/public/images/content/defaultAvatar.png';
                             } else {
                                 echo "/public/images/upload/" . $latestTopic["profileImage"];
                             }
-                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $latestTopic["username"] . "'>";
+                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $latestTopic["username"] . "'></a>";
                         ?>
                     </div>
                     <div class="col s9 topicContainer">
@@ -108,19 +110,19 @@
             </div>
             <div id="favouriteTopic" class="<?php echo (isset($favouriteTopics) && $favouriteTopics ? '' : 'hide'); ?>">
                 <?php
-                
-                    foreach($favouriteTopics as $favouriteTopic) {
+                    if(isset($favouriteTopics)) {
+                        foreach($favouriteTopics as $favouriteTopic) {
                 ?>
                 <div class="topic">
                     <div class="col s1 userImageContainer">
                         <?php
-                            echo "<img src='";
+                            echo "<a href='/profile/" . $favouriteTopic["username"] . "'><img src='";
                             if($favouriteTopic["profileImage"] == 'defaultAvatar.png') {
                                 echo '/public/images/content/defaultAvatar.png';
                             } else {
                                 echo "/public/images/upload/" . $favouriteTopic["profileImage"];
                             }
-                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $favouriteTopic["username"] . "'>";
+                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $favouriteTopic["username"] . "'></a>";
                         ?>
                     </div>
                     <div class="col s9 topicContainer">
@@ -147,24 +149,26 @@
                     </div>
                 </div>
                 <?php
+                        }
                     }
                 ?>
             </div>
             <div id="ownTopic" class="<?php echo (isset($ownTopics) && $ownTopics ? '' : 'hide'); ?>">
                 <?php
                 
-                    foreach($ownTopics as $ownTopic) {
+                    if(isset($ownTopics)) {
+                        foreach($ownTopics as $ownTopic) {
                 ?>
                 <div class="topic">
                     <div class="col s1 userImageContainer">
                         <?php
-                            echo "<img src='";
+                            echo "<a href='/profile/" . $ownTopic["username"] . "'><img src='";
                             if($ownTopic["profileImage"] == 'defaultAvatar.png') {
                                 echo '/public/images/content/defaultAvatar.png';
                             } else {
                                 echo "/public/images/upload/" . $ownTopic["profileImage"];
                             }
-                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $ownTopic["username"] . "'>";
+                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $ownTopic["username"] . "'></a>";
                         ?>
                     </div>
                     <div class="col s9 topicContainer">
@@ -191,6 +195,7 @@
                     </div>
                 </div>
                 <?php
+                        }
                     }
                 ?>
             </div>

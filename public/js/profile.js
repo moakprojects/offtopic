@@ -169,3 +169,306 @@ $(document).ready(function(){
 	}
 	});
 });
+
+/* Activity chart */
+
+$(function () {
+
+	Highcharts.setOptions({
+		chart: {
+			style: {
+				fontFamily: 'Open Sans',
+				color: '#ccc'
+			}
+		}
+	});
+
+	$.post('/resources/controllers/userController.php', {requestPostDistributionChartData: true}, function(returnData) {
+
+		var obj = jQuery.parseJSON(returnData);
+
+		if(obj.data_type === 1) {
+			
+			var xAxisValues = [];
+			var dataValues = [];
+
+			for(var i = 0; i < obj.data_value.length; i++) {
+				xAxisValues.push(obj.data_value[i].categoryName);
+				dataValues.push(obj.data_value[i].numberOfPostsPercent);
+			}
+  
+			$('#activityChart').highcharts({
+					chart: {
+						type: 'column',
+						backgroundColor: '#152b39'
+					},
+					colors: ['#204d52'],
+					title: {
+						text: 'Distribution of posts by category',
+						style: {  
+						color: '#ccc'
+						}
+					},
+					xAxis: {
+						tickWidth: 0,
+						labels: {
+						style: {
+							color: '#ccc',
+							}
+						},
+						categories: xAxisValues
+					},
+					yAxis: {
+						gridLineWidth: .5,
+						max: 100,
+						gridLineDashStyle: 'dash',
+						gridLineColor: '#ccc',
+						title: {
+							text: '',
+							style: {
+							color: '#fff'
+							}
+						},
+						labels: {
+						formatter: function() {
+									return Highcharts.numberFormat(this.value, 0) + ' %';
+								},
+						style: {
+							color: '#ccc',
+							}
+						}
+					},
+					legend: {
+						enabled: false,
+					},
+					credits: {
+						enabled: false
+					},
+					tooltip: {
+						valueSuffix: ' %'
+					},
+					plotOptions: {
+						column: {
+							borderRadius: 2,
+						pointPadding: 0,
+							groupPadding: 0.1
+						} 
+						},
+					series: [{
+						name: 'Activity',
+						data: dataValues
+					}]
+				});
+		}
+	});
+
+	
+
+	$.post('/resources/controllers/userController.php', {requestPostHistoryChartData: true}, function(returnData) {
+		console.log(returnData);
+		
+		var obj = jQuery.parseJSON(returnData);
+
+		console.log(obj);
+
+		if(obj.data_type === 1) {
+			
+			var xAxisValues = [];
+			var dataValues = [];
+
+			for(var i = 0; i < obj.data_value.length; i++) {
+				xAxisValues.push(obj.data_value[i].monthName);
+
+				if(obj.data_value[i].numberOfPosts) {
+					dataValues.push(parseInt(obj.data_value[i].numberOfPosts));
+				} else {
+					dataValues.push(0);
+				}
+			}
+
+			Highcharts.chart('historyChart', {
+				chart: {
+					backgroundColor: '#152b39'
+				},
+				title: {
+					text: 'Number of posts',
+					style: {  
+						color: '#ccc'
+					}
+				},
+			
+				xAxis: {
+					labels: {
+						style: {  
+							color: '#ccc'
+							}
+					},
+					categories: xAxisValues
+				},
+				yAxis: {
+					minTickInterval: 1,
+					title: {
+						text: '',
+					},
+					labels: {
+						style: {
+							color: '#ccc',
+							}
+					}
+				},
+				legend: {
+					enabled: false,
+				},
+				credits: {
+					enabled: false
+				},
+				series: [{
+					name: 'Written posts',
+					type: 'area',
+					keys: ['y', 'selected'],
+					data: dataValues
+				}]
+			});
+		}
+	});
+  
+	var pieColors = (function () {
+		var colors = [],
+			base = Highcharts.getOptions().colors[0],
+			i;
+	
+		for (i = 0; i < 10; i += 1) {
+			// Start out with a darkened base color (negative brighten), and end
+			// up with a much brighter color
+			colors.push(Highcharts.Color(base).brighten((i - 3) / 7).get());
+		}
+		return colors;
+	}());
+  // Build the chart
+  Highcharts.chart('pieChart', {
+	colors: Highcharts.map(pieColors, function (color) {
+		return {
+		  radialGradient: {
+			cx: 0.5,
+			cy: 0.3,
+			r: 0.7
+		  },
+		  stops: [
+			[0, color],
+			[1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+		  ]
+		};
+	  }),
+	chart: {
+	  plotBackgroundColor: null,
+	  plotBorderWidth: null,
+	  plotShadow: false,
+	  type: 'pie'
+	},
+	title: {
+	  text: 'Shared posts'
+	},
+	tooltip: {
+	  pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	},
+	plotOptions: {
+	  pie: {
+		allowPointSelect: true,
+		cursor: 'pointer',
+		dataLabels: {
+		  enabled: true,
+		  format: '<b>{point.name}</b>: {point.percentage:.0f} %',
+		  style: {
+			color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+		  },
+		  connectorColor: 'silver'
+		}
+	  }
+	},
+	legend: {
+		enabled: false,
+	},
+	credits: {
+		enabled: false
+	},
+	series: [{
+	  name: 'Share',
+	  data: [
+		{ name: 'Facebook', y: 60 },
+		{ name: 'Twitter', y: 29 },
+		{ name: 'Google+', y: 11 }
+		]
+	}]
+  });
+
+  $.post('/resources/controllers/userController.php', {requestPostLikesChartData: true}, function(returnData) {
+	var obj = jQuery.parseJSON(returnData);
+
+	if(obj.data_type === 1) {
+
+		if(obj.data_value.numberOfLikes === 0 && obj.data_value.numberOfDislikes === 0) {
+			$('.noAcceptanceValue').removeClass('hide');
+		} else {
+			Highcharts.chart('donutChart', {
+				colors: Highcharts.map(pieColors, function (color) {
+					return {
+						radialGradient: {
+						cx: 0.5,
+						cy: 0.3,
+						r: 0.7
+						},
+						stops: [
+						[0, color],
+						[1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+						]
+					};
+					}),
+				chart: {
+					type: 'pie',
+					options3d: {
+					enabled: true,
+					alpha: 45
+					}
+				},
+				title: {
+					text: 'Distribution of likes on posts'
+				},
+				tooltip: {
+					pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+					},
+				plotOptions: {
+					pie: {
+					innerSize: 100,
+					depth: 45,
+					dataLabels: {
+						enabled: true,
+						format: '<b>{point.name}</b>: {point.percentage:.0f} %',
+						connectorColor: 'silver'
+					},
+					style: {
+						color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+						},
+					}
+				},
+				legend: {
+					enabled: false,
+				},
+				credits: {
+					enabled: false
+				},
+				series: [{
+					name: 'Amount',
+					data: [
+					['Like', parseInt(obj.data_value.numberOfLikes)],
+					['Dislike', parseInt(obj.data_value.numberOfDislikes)]
+					]
+				}]
+				});
+		}
+		
+		var averagePostLikes = Math.round(obj.data_value.numberOfLikes / obj.data_value.numberOfPosts);
+		
+	}
+  });
+
+});

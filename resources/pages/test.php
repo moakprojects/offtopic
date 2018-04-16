@@ -1,13 +1,17 @@
 <?php
+$tomb = [];
 
-$stmt = $db -> prepare("SELECT * FROM user");
-$stmt->execute();
 
-$result = $stmt->fetchall(PDO::FETCH_ASSOC);
+$start    = (new DateTime(date('Y-m-d H:i:s', strtotime('-6 months'))))->modify('first day of this month');
+$end      = (new DateTime('now'))->modify('first day of this month');
+$interval = DateInterval::createFromDateString('1 month');
+$period   = new DatePeriod($start, $interval, $end);
 
-var_dump($result);
+var_dump($start);
 
-$valami = strlen("Comment #01 Comment");
-$v2 = strlen("Random string Random string Random string Random string Random string Random string Random string Random string Random string Random string Random string Random string Random string Random string Random string Random str");
-echo $valami;
+foreach ($period as $dt) {
+    array_push($tomb, $dt->format("M"));
+}
+
+$valami2 = date('Y-m-d H:i:s', strtotime('first day of january ' . date('Y')));
 ?>

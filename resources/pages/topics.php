@@ -2,7 +2,8 @@
     if(isset($_SESSION["selectedCategoryID"])) {
         $topicObj = new Topic();
         $categoryObj = new Category();
-        $topics = $topicObj -> getTopicData($_SESSION["selectedCategoryID"], $categoryObj);
+        $categoryID = htmlspecialchars(trim($_SESSION["selectedCategoryID"]));
+        $topics = $topicObj -> getTopicData($categoryID, $categoryObj);
         $categoryName = $categoryObj -> getCategoryName();
 ?>
 <div class="container contentContainer">
@@ -38,13 +39,13 @@
                     <div class="col s1 userImageContainer">
                         <div class="row">
                         <?php
-                            echo "<img src=\"";
+                            echo "<a href='/profile/" . $topic["username"] . "'><img src=\"";
                             if($topic["profileImage"] == 'defaultAvatar.png') {
                                 echo '/public/images/content/defaultAvatar.png';
                             } else {
                                 echo "/public/images/upload/" . $topic["profileImage"] . "\"";
                             }
-                            echo "\" class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip=" . $topic["username"] . ">";
+                            echo "\" class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip=" . $topic["username"] . "></a>";
                         ?> 
                         </div>
                     </div>

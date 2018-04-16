@@ -27,7 +27,12 @@
                 }
             break;
             case "profile":
-                $page = "profile";
+                if(isset($queryStringParams[1]) && $queryStringParams[1] !== "") {
+                    $_SESSION["selectedUsername"] = $queryStringParams[1];
+                    $page = "profile";
+                } else {
+                    $page = "error";
+                }
             break;
             case "verify":
                 $page = "verify";
@@ -142,6 +147,9 @@
         <!--Import jQuery before materialize.js-->
         <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- chart maker api -->
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-3d.js"></script>
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
         

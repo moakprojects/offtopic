@@ -5,6 +5,9 @@ $defaultAvatarsQuery = $db->prepare("SELECT * FROM defaultAvatar");
 /* get logged userdata from user table */
 $loggedUserQuery = $db->prepare("SELECT * FROM user WHERE userID = :userID");
 
+/* get userdata from user table with username */
+$userQuery = $db->prepare("SELECT user.*, numberOfFollowers, numberOfTopics, numberOfPosts, numberOfPostLikes FROM user LEFT JOIN (SELECT topic.createdBy, sum(numberOfFavourites) as numberOfFollowers, count(topic.topicID) as numberOfTopics FROM topic LEFT JOIN (SELECT topicID, count(*) as numberOfFavourites FROM favouritetopic GROUP BY topicID) as favourites ON favourites.topicID = topic.topicID GROUP BY topic.createdBy) as topicInformation ON topicInformation.createdBy = user.userID LEFT JOIN (SELECT post.userID, sum(numberOfLikes) as numberOfPostLikes, count(post.postID) as numberOfPosts FROM post LEFT JOIN (SELECT postID, sum(isLike) as numberOfLikes FROM postLike GROUP BY postID) as likes ON likes.postID = post.postID GROUP BY post.userID) as postInformation ON postInformation.userID = user.userID WHERE username = :username");
+
 /* get post data from post table */
 $postQuery = $db->prepare("SELECT post.*, user.username, user.profileImage, numberOfLikes, numberOfDislikes
 FROM post 
@@ -76,4 +79,16 @@ $latestTopicsQuery = $db->prepare("SELECT topic.*, categoryName, numberOfPosts, 
 
  /* get own topics */
  $ownTopicsQuery = $db->prepare("SELECT topic.*, username, profileImage, categoryName, numberOfPosts, latestPost FROM topic INNER JOIN (SELECT userID, username, profileImage FROM user) as creator ON creator.userID = topic.createdBy INNER JOIN (SELECT categoryID, categoryName FROM category) as category ON category.categoryID = topic.categoryID INNER JOIN (SELECT topicID, count(*) as numberOfPosts, MAX(postedOn) as latestPost FROM post GROUP BY topicID) as numberOfPosts ON numberOfPosts.topicID = topic.topicID WHERE creator.userID = :userID ORDER BY latestPost DESC");
+
+ /* get post activity for Distribution of posts by category chart */
+ $numberOfPostsInCategoriesQuery = $db->prepare("SELECT category.categoryName, sum(posts) as numberOfPosts FROM topic INNER JOIN ( SELECT post.userID, user.username, topicID, count(*) as posts FROM post INNER JOIN user ON user.userID = post.userID WHERE user.username = :username GROUP BY post.userID, topicID) as numberOfPostsByTopic ON numberOfPostsByTopic.topicID = topic.topicID RIGHT JOIN category ON topic.categoryID = category.categoryID GROUP BY category.categoryName");
+
+ /* get post history for Written post history chart */
+ $numberOfPostsByMonthsQuery = $db->prepare("SELECT count(*) as numberOfPosts, MONTH(postedOn) as month FROM post INNER JOIN user ON user.userID = post.userID WHERE postedOn > :startDate AND user.username = :username GROUP BY month");
+
+ /* get like information for Distribution of likes on posts chart */
+ $numberOfLikesOfPostsQuery = $db->prepare("SELECT count(post.postID) as numberOfPosts, sum(likes) as numberOfLikes, sum(dislikes) as numberOfDislikes FROM post LEFT JOIN ( SELECT postID, sum(isLike) as likes, sum(isDislike) as dislikes FROM postlike GROUP BY postID) as likes ON likes.postID = post.postID INNER JOIN user ON user.userID = post.userID WHERE user.username = :username GROUP BY user.username");
+
+ /* get number of visitors */
+ $numberOfVisitorsQuery = $db->prepare("SELECT visitors FROM user WHERE username = :username");
 ?>

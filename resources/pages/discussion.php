@@ -1,7 +1,8 @@
 <?php
     if(isset($_SESSION["selectedTopicID"])) {
         $topicObj = new Topic();
-        $selectedTopic = $topicObj -> getSelectedTopic($_SESSION["selectedTopicID"]);
+        $topicID = htmlspecialchars(trim($_SESSION["selectedTopicID"]));
+        $selectedTopic = $topicObj -> getSelectedTopic($topicID);
 ?>
 <div class="container contentContainer">
     <div class="row">
@@ -21,13 +22,13 @@
                 <div class="row">
                     <div class="col s1 userImageContainer">
                         <?php
-                            echo "<img src=\"";
+                            echo "<a href='/profile/" . $selectedTopic["username"] . "'><img src=\"";
                             if($selectedTopic["profileImage"] == 'defaultAvatar.png') {
                                 echo '/public/images/content/defaultAvatar.png';
                             } else {
                                 echo "/public/images/upload/" . $selectedTopic["profileImage"] . "\"";
                             }
-                            echo "\" class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip=" . $selectedTopic["username"] . ">";
+                            echo "\" class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip=" . $selectedTopic["username"] . "></a>";
                         ?>
                     </div>
                     <div class="col s11 topicContainer">
@@ -82,9 +83,9 @@
                         <div class="col s1 userImageContainer">
                             <?php
 
-                                echo "<img src='"; 
+                                echo "<a href='/profile/" . $posts[$i]["username"] . "'><img src='"; 
                                 echo ($posts[$i]['profileImage'] === 'defaultAvatar.png' ?'/public/images/content/defaultAvatar.png' : '/public/images/upload/' . $posts[$i]["profileImage"]);
-                                echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]['username'] . "'>";
+                                echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]['username'] . "'></a>";
                             ?>
                         </div>
                         <div class="col s11 topicContainer">
@@ -147,12 +148,12 @@
                                     <div class="row">
                                         <div class="col s6 likeBtnContainer">
                                             <a class="btn-floating waves-effect waves-light likeBtn 
-                                                <?php
-                                                    echo ($postObj->isExistInPostLikeTable || $posts[$i]['userID'] === $_SESSION["user"]["userID"] ? " disabled disabledBtn" : "");
-                                                ?> 
-                                                likeFloatBtn<?php echo $posts[$i]["postID"]; ?>" <?php if (isset($_SESSION["user"])) {
+                                                likeFloatBtn<?php echo $posts[$i]["postID"];
+                                                 if (isset($_SESSION["user"])) {
+                                                 echo ($postObj->isExistInPostLikeTable || $posts[$i]['userID'] === $_SESSION["user"]["userID"] ? " disabled disabledBtn" : "");
+                                                ?>" <?php                                                
                                                     echo "onclick='likePost(" . $posts[$i]['postID'] . ")'";
-                                                } ?>>
+                                                } else { echo '"'; } ?>>
                                                 <i class="far fa-thumbs-up fa-lg likeIcon"></i>
                                             </a>
                                             <span class="likeValue<?php echo $posts[$i]["postID"]; ?>">
@@ -162,13 +163,12 @@
                                         </div>
                                         <div class="col s6 dislikeBtnContainer">
                                             <a class="btn-floating waves-effect waves-light likeBtn
-                                                <?php 
-                                                    echo ($postObj->isExistInPostLikeTable || $posts[$i]['userID'] === $_SESSION["user"]["userID"] ? " disabled disabledBtn" : "");
-                                                ?>
-                                                dislikeFloatBtn<?php echo $posts[$i]["postID"]; ?>"
-                                                <?php if (isset($_SESSION["user"])) {
+                                                dislikeFloatBtn<?php echo $posts[$i]["postID"];
+                                                if (isset($_SESSION["user"])) {
+                                                echo ($postObj->isExistInPostLikeTable || $posts[$i]['userID'] === $_SESSION["user"]["userID"] ? " disabled disabledBtn" : "");
+                                                ?>" <?php
                                                     echo "onclick='dislikePost(" . $posts[$i]['postID'] . ")'";
-                                                } ?>>
+                                                } else { echo '"'; } ?>>
                                                 <i class="far fa-thumbs-down fa-lg likeIcon"></i>
                                             </a>
                                             <span class="dislikeValue<?php echo $posts[$i]["postID"]; ?>">

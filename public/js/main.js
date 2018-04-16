@@ -24,6 +24,9 @@ $(document).ready(function(){
         } else if (!username["0"].value) {
             $('.modalErrorMsg').removeClass('hide');
             $('.modalErrorMsg').find('p').html('Please fill the username field');
+        } else if ((username["0"].value.length > 16)) {
+            $('.modalErrorMsg').removeClass('hide');
+            $('.modalErrorMsg').find('p').html('Username must be lower than 16 character');
         } else if (!password["0"].value) {
             $('.modalErrorMsg').removeClass('hide');
             $('.modalErrorMsg').find('p').html('Please fill the password field');

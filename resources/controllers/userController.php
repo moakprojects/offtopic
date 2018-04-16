@@ -198,4 +198,102 @@ function uploadProfileImage($filename, $tmpLocation) {
 
 }
 
+if(isset($_POST["requestPostDistributionChartData"])) {
+
+    $activiyData = $userObj->getInformationForPostDistributionChart($_SESSION["selectedUsername"]);
+    if($activiyData) {
+
+        $numberOfPosts = 0;
+        foreach($activiyData as $data) {
+            $numberOfPosts += $data["numberOfPosts"];
+        }
+
+        for($i = 0; $i<count($activiyData); $i++) {
+            if($numberOfPosts !== 0) {
+                $numberOfPostsPercent = round($activiyData[$i]["numberOfPosts"] / $numberOfPosts * 100, 1);
+            } else {
+                $numberOfPostsPercent = 0;
+            }
+            
+            $activiyData[$i]["numberOfPostsPercent"] = $numberOfPostsPercent;
+        }
+
+        $result["data_type"] = 1;
+        $result["data_value"] = $activiyData;
+
+        echo json_encode($result);
+        exit;
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+        exit;
+    }
+}
+
+if(isset($_POST["requestPostHistoryChartData"])) {
+
+    $startDate = date('Y-m-d', strtotime('first day of ', strtotime('-6 months')));
+    $historyData = $userObj->getInformationForPostHistoryChart($startDate, $_SESSION["selectedUsername"]);
+    if($historyData) {
+
+        $monthsData = [];
+
+        $start    = date('Y-m', strtotime('first day of ', strtotime('-6 months')));
+        $end      = date('Y-m', strtotime('first day of this month'));
+        
+        while($start <= $end){
+            $monthName = date('F', strtotime($start));
+            $monthID = date('n', strtotime($start));
+            array_push($monthsData, array( "monthID" => $monthID, "monthName" => $monthName));
+
+            if(substr($start, 5, 2) == "12") {
+                $start = (date("Y", strtotime($start)) + 1)."-01";
+            } else {
+                $start++;
+            }
+        }
+
+        for($i = 0; $i < count($monthsData); $i++) {
+            for($j = 0; $j < count($historyData); $j++) {
+                if($monthsData[$i]["monthID"] === $historyData[$j]["month"]) {
+                    $monthsData[$i]["numberOfPosts"] = $historyData[$j]["numberOfPosts"];
+                }
+            }
+        }
+
+        $result["data_type"] = 1;
+        $result["data_value"] = $monthsData;
+
+        echo json_encode($result);
+        exit;
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+        exit;
+    }
+}
+
+if(isset($_POST["requestPostLikesChartData"])) {
+
+    $postLikesData = $userObj->getInformationForPostLikesChart($_SESSION["selectedUsername"]);
+    if($postLikesData) {
+
+        $result["data_type"] = 1;
+        $result["data_value"] = $postLikesData;
+
+        echo json_encode($result);
+        exit;
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+        exit;
+    }
+}
+
 ?>

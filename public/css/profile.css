@@ -14,6 +14,18 @@
     display: none;
 }
 
+.noMargin {
+    margin: 0;
+}
+
+.noBottomMargin {
+    margin-bottom: 0px;
+}
+
+.noRightPadding {
+    padding-right: 0 !important;
+}
+
 /* breadCrumb modify */
 
 .breadCrumbContainer {
@@ -40,7 +52,6 @@
     height: 150px;
     margin-left: auto;
     margin-right: auto;
-    cursor: pointer;
 }
 
 .profileImageContainer .fadeContainer {
@@ -52,8 +63,9 @@
     border-radius: 50%
 }
 
-.profileImageContainer .image:hover .fadeContainer {
+.profileImageContainer .changeAvatar:hover .fadeContainer {
     background: rgba(0,0,0,0.3);
+    cursor: pointer;
 }
 
 .profileImageContainer .fadeContainer svg,
@@ -72,11 +84,11 @@
     display: none;
 }
 
-.profileContainer .image:hover .fadeContainer svg {
+.profileContainer .changeAvatar:hover .fadeContainer svg {
     display: inline;
 }
 
-.profileContainer .image:hover .fadeContainer p {
+.profileContainer .changeAvatar:hover .fadeContainer p {
     display: block;
 }
 
@@ -87,6 +99,10 @@
     font-weight: 900;
     color: #363838;
     margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 260px;
+    word-wrap: break-word;
 }
 
 /* profil card styling */
@@ -96,7 +112,6 @@
     background: white;
     position: relative;
     top: 70px;
-    height: 500px;
     border-radius: 2px;
     box-shadow: 0 1px 2px #c9cccd;
     /* padding: 145px 15px 15px 15px; */
@@ -217,4 +232,149 @@
     left: 40px;
     text-align: center;
     color: #363838;
+}
+
+/* tabs menu styling */
+
+.tabsContainer {
+    margin: 0 30px;
+}
+
+.tabList {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.tabsContainer ul li a {
+    color: #697683 !important;
+}
+
+.tabsContainer il li a.active {
+    color: #2196f3 !important;
+}
+
+.tabsContainer ul .indicator {
+    background-color: #2196f3 !important;
+}
+
+/* User statistics */
+
+.chartTitle {
+    color: #363838;
+    font-size: 25px;
+}
+
+.lessMargin {
+    margin: 10px 0;
+}
+
+.lessTopMargin {
+    margin-top: 20px;
+}
+
+/* US - activity chart */
+
+#userStatistics {
+    margin-top: 30px;
+}
+
+.activityChartContainer {
+    color: #ccc;
+    padding-top: 10px !important;
+}
+
+.activityChartContainer p {
+    margin-top: 0px;
+}
+
+#activityChart {
+    width: 100%;
+    height: 400px;
+}
+
+/* US - history chart */
+
+.historyChartContainer {
+    color: #ccc;
+    padding-top: 10px !important;
+}
+
+#historyChart {
+    width: 100%;
+    height: 400px;
+}
+
+@import 'https://code.highcharts.com/css/highcharts.css';
+
+#gradient-0 stop {
+	stop-color: #50e2c3;
+}
+#gradient-0 stop[offset="0"] {
+	stop-opacity: 0.5;
+}
+#gradient-0 stop[offset="1"] {
+	stop-opacity: 0;
+}
+
+.highcharts-color-0 .highcharts-area {
+	fill-opacity: 1;
+	fill: url(#gradient-0);
+}
+
+/* US - pie chart */
+
+.pieChartContainer {
+    color: #ccc;
+    padding-top: 10px !important;
+}
+
+#pieChart {
+    width: 100%;
+    height: 400px;
+}
+
+/* US - donut */
+
+.noAcceptanceValue {
+    position: relative;
+    top: 180px;
+}
+
+/* US - traffic */
+
+.reputationChartContainer {
+    color: #ccc;
+}
+
+#reputationChart {
+    height: 400px;
+    background: #152B39;
+}
+
+#reputationChart .firstRow {
+    margin-top: 33px;
+}
+
+.reputationCard {
+    background: rgba(80, 226, 195, 0.3);
+    background: linear-gradient(rgba(80, 226, 195, 0.8), rgba(80, 226, 195, 0));
+    height: 150px;
+}
+
+.iconContainer {
+    position: relative;
+    top: 40px;
+}
+
+.lastIconContainer {
+    top: 50px;
+}
+
+.reputationLabel {
+    font-weight: bold;
+}
+
+.reputationValue {
+    font-size: 25px;
 }

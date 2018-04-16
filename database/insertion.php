@@ -7,7 +7,7 @@
     $fileUploadQuery = $db->prepare("INSERT INTO `attachment` VALUES (NULL, :attachmentName, :displayName, :attachedFileCode)");
 
     /* create user into registration table */
-    $createUserQuery = $db->prepare("INSERT INTO user VALUES (NULL, :email, :username, :passwordHash, NULL, 'defaultAvatar.png', 1, 0, :regDate)");
+    $createUserQuery = $db->prepare("INSERT INTO user VALUES (NULL, :email, :username, :passwordHash, NULL, 'defaultAvatar.png', 1, 0, :regDate, 0)");
 
     /* put like information favouriteTopic table */
     $likeTopicQuery = $db->prepare("INSERT INTO `favouriteTopic` VALUES (:userID, :topicID)");

@@ -85,7 +85,12 @@ class Topic {
             $selectedTopicQuery->bindParam(":topicID", $selectedTopicID);
             $selectedTopicQuery->execute();
 
-            return $selectedTopicData = $selectedTopicQuery->fetch(PDO::FETCH_ASSOC);
+            if($selectedTopicQuery->rowCount() > 0) {
+                return $selectedTopicData = $selectedTopicQuery->fetch(PDO::FETCH_ASSOC);
+            } else {
+                header("Location: /error");
+                exit;
+            }
         } else {
             header("Location: /error");
             exit;
@@ -175,17 +180,21 @@ class Topic {
             $hotTopicsQuery->bindParam(":selectionDate", $selectionDate);
             $hotTopicsQuery ->execute();
 
-            $hotTopicsData = $hotTopicsQuery->fetchall(PDO::FETCH_ASSOC);
+            if($hotTopicsQuery->rowCount() > 0) {
+                $hotTopicsData = $hotTopicsQuery->fetchall(PDO::FETCH_ASSOC);
 
-            for($i = 0; $i < count($hotTopicsData); $i++) {
-                
-                $hotTopicsData[$i]["topicDescription"] = $this->textTrimmer($hotTopicsData[$i]["topicText"], 162);
-                $hotTopicsData[$i]["shortTopicName"] = $this->textTrimmer($hotTopicsData[$i]["topicName"], 53);
+                for($i = 0; $i < count($hotTopicsData); $i++) {
+                    
+                    $hotTopicsData[$i]["topicDescription"] = $this->textTrimmer($hotTopicsData[$i]["topicText"], 162);
+                    $hotTopicsData[$i]["shortTopicName"] = $this->textTrimmer($hotTopicsData[$i]["topicName"], 53);
 
-                $hotTopicsData[$i]["latestPostElapsedTime"] = $this->calculateTimeDifferences($hotTopicsData[$i]["latestPost"]);
+                    $hotTopicsData[$i]["latestPostElapsedTime"] = $this->calculateTimeDifferences($hotTopicsData[$i]["latestPost"]);
+                }
+
+                return $hotTopicsData;
+            } else {
+                return false;
             }
-
-            return $hotTopicsData;
         } else {
             header("Location: /error");
             exit;
