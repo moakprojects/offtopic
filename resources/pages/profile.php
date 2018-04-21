@@ -1,8 +1,10 @@
 <?php
     if(isset($_SESSION["selectedUsername"])) {
         $userObj = new User();
+        $categoryObj = new Category();
+        $topicObj = new Topic();
+        $postObj = new Post();
         $selectedUsername = htmlspecialchars(trim($_SESSION["selectedUsername"]));
-        $selectedUserData = $userObj -> getSelectedUser($selectedUsername);
         if(isset($loggedUser) && $loggedUser["username"] === $selectedUsername) {
             $myprofile = true;
             include("resources/modals/avatarChange.php");
@@ -10,7 +12,12 @@
             $myprofile = false;
             $userObj->increaseNumberOfVisitors($_SESSION["selectedUsername"]);
         }
-        $visitors = $userObj->getNumberOfVisitors($_SESSION["selectedUsername"]);
+        $selectedUserData = $userObj -> getSelectedUser($selectedUsername);
+        $favouriteCategories = $categoryObj->getFavouriteCategoryData($selectedUserData["userID"]);
+        $favouriteTopics = $topicObj->getFavouriteTopics($selectedUserData["userID"]);
+        $likedPosts = $postObj->getLikedPosts($_SESSION["selectedUsername"]);
+        $createdTopics = $topicObj->getCreatedTopics($_SESSION["selectedUsername"]);
+        $createdPosts = $postObj->getCreatedPosts($_SESSION["selectedUsername"]);
 ?>
 <div class="container contentContainer">
     <div class="row breadCrumbContainer">
@@ -80,8 +87,8 @@
             <div class="tabsContainer">
                 <ul class="tabs tabs-transparent tabList">
                     <li class="tab"><a href="#userStatistics">User Statistics</a></li>
-                    <li class="tab"><a href="#fav">Favourites</a></li>
-                    <li class="tab"><a href="#fav">My own things</a></li>
+                    <?php echo (!$favouriteCategories && !$favouriteTopics && !$likedPosts ? "" : "<li class='tab'><a href='#favourites'>Favourites</a></li>");  ?>
+                    <li class="tab"><a href="#ownThings">My own things</a></li>
                     <li class="tab"><a href="#stat">General informations</a></li>
                     <li class="tab"><a href="#set">Settings</a></li>
                 </ul>
@@ -134,7 +141,7 @@
                                                     </div>
                                                     <div class="row noMargin">
                                                         <div class="col s12">
-                                                            <p class="noBottomMargin reputationValue reputationLikePosts center-align"><?php echo (isset($selectedUserData["numberOfPosts"]) && isset($selectedUserData["numberOfPostLikes"]) ? Round($selectedUserData["numberOfPostLikes"] / $selectedUserData["numberOfPosts"]) : "0"); ?></p>
+                                                            <p class="noBottomMargin reputationValue reputationValueFirstLine reputationLikePosts center-align"><?php echo (isset($selectedUserData["numberOfPosts"]) && isset($selectedUserData["numberOfPostLikes"]) ? Round($selectedUserData["numberOfPostLikes"] / $selectedUserData["numberOfPosts"], 1) : "0"); ?></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -153,7 +160,7 @@
                                                     </div>
                                                     <div class="row noMargin">
                                                         <div class="col s12">
-                                                            <p class="noBottomMargin reputationValue reputationTopicPopularity center-align"><?php echo (isset($selectedUserData["numberOfFollowers"]) && isset($selectedUserData["numberOfTopics"]) ? $selectedUserData["numberOfFollowers"] / $selectedUserData["numberOfTopics"] : "0"); ?></p>
+                                                            <p class="noBottomMargin reputationValue reputationValueFirstLine reputationTopicPopularity center-align"><?php echo (isset($selectedUserData["numberOfFollowers"]) && isset($selectedUserData["numberOfTopics"]) ? Round($selectedUserData["numberOfFollowers"] / $selectedUserData["numberOfTopics"], 1) : "0"); ?></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -174,7 +181,7 @@
                                                     </div>
                                                     <div class="row noMargin">
                                                         <div class="col s12">
-                                                            <p class="noBottomMargin reputationValue reputationProfileVisitor center-align"><?php echo $visitors["visitors"]; ?></p>
+                                                            <p class="noBottomMargin reputationValue reputationProfileVisitor center-align"><?php echo $selectedUserData["visitors"]; ?></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -186,8 +193,292 @@
                         </div>
                     </div>
                 </div>
-                <div id="stat"><h1>itt lennének a statok</h1></div>
-                <div id="fav"><h1>itt lennének a favoritok</h1></div>
+                <div id="favourites">
+                    <?php
+                        if(isset($favouriteCategories) && $favouriteCategories) {
+                    ?>
+                    <div class="row noBottomMargin">
+                        <div class="col s12">
+                            <p class="favouriteTitle">Favourite Categories</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <?php
+                            foreach($favouriteCategories as $favouriteCategory) {
+                                ?>
+                                    <div class="col s3">
+                                        <a href="/categories/<?php echo $favouriteCategory["categoryID"]; ?>">
+                                        <div class="card categoryCard">
+                                            <div class="card-image">
+                                                <img src="/public/images/content/categoryThumbnail/<?php echo $favouriteCategory["thumbnail"]; ?>" alt="category image">
+                                                <div class="fade"></div>
+                                            </div>
+                                            <div class="card-content">
+                                                <span class="card-title grey-text text-darken-4"><?php echo $favouriteCategory["categoryName"]; ?></span>
+                                            </div>
+                                        </div>
+                                        </a>
+                                    </div>
+                                <?php
+                            }
+                        ?>
+                    </div>
+                    <?php
+                        }
+                    ?>
+                    <div class="row noBottomMargin">
+                        <?php
+                            if(isset($favouriteTopics) && $favouriteTopics) {
+                        ?>
+                        <div class="col s7">
+                            <p class="favouriteTitle">Followed Topics</p>
+                        </div>
+                        <?php
+                            }
+
+                            if(isset($likedPosts) && $likedPosts) {
+                        ?>
+                        <div class="col s5">
+                            <p class="favouriteTitle">Liked Posts</p>
+                        </div>
+                        <?php
+                            }
+                        ?>
+                    </div>
+                    <div class="row">
+                        <?php
+                            if(isset($favouriteTopics) && $favouriteTopics) {
+                        ?>
+                        <div class="col s7">
+                        <?php
+                                foreach($favouriteTopics as $favouriteTopic) {
+                            ?>
+                            <div class="contentCard favouriteTopicCard">
+                                <div class="col s1 createdByContainer">
+                                    <?php
+                                        echo "<a href='/profile/" . $favouriteTopic["username"] . "'><img src='";
+                                        if($favouriteTopic["profileImage"] == 'defaultAvatar.png') {
+                                            echo '/public/images/content/defaultAvatar.png';
+                                        } else {
+                                            echo "/public/images/upload/" . $favouriteTopic["profileImage"];
+                                        }
+                                        echo "' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $favouriteTopic["username"] . "'></a>";
+                                    ?>
+                                </div>
+                                <div class="col s11 contentCardBody">
+                                    <h3><?php echo $favouriteTopic["shortTopicName"]; ?></h3>
+                                    <p><?php echo $favouriteTopic["topicDescription"]; ?></p>
+                                    <p class="redirectLink"><a href="/topics/<?php echo $favouriteTopic["topicID"]; ?>">View the topic <i class="fas fa-angle-double-right"></i></a></p>
+                                    <div class="clear"></div>
+                                    <div class="row">
+                                        <div class="col s4">
+                                            <a href="/categories/<?php echo $favouriteTopic["categoryID"]; ?>"><div class="chip topicCategory"><?php echo $favouriteTopic["categoryName"]; ?></div></a>
+                                        </div>
+                                        <div class="col s6 offset-s2">
+                                            <p class="right-align createdAt"><em>Created at: <?php echo $favouriteTopic["createdAt"]; ?></em></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                                    }
+                        ?>
+                        </div>
+                        <?php
+                            }
+                            
+                            if(isset($likedPosts) && $likedPosts) {
+                        ?>
+                        <div class="col s5">
+                            <div class="latestPostsContainer">
+                            <ul>
+                                <?php
+                                    foreach($likedPosts as $likedPost) {
+                                ?>
+                                <li>
+                                    <span></span>
+                                        <div class="title"><?php echo $likedPost["shortTopicName"];?></div>
+                                        <div class="info"><?php echo $likedPost["shortPostText"];?></div>
+                                    <div class="time"><span><?php echo $likedPost["monthDay"];?></span><span><?php echo $likedPost["time"];?></span></div>
+                                </li>
+                                <?php
+                                    }
+                                ?>
+                            </ul>
+                            </div>
+                        </div>
+                        <?php
+                            }
+                        ?>
+                    </div>
+                </div>
+                <div id="ownThings">
+                    <div class="row noBottomMargin">
+                        <div id="animationWindow"></div>
+                    </div>
+                    <div class="row noBottomMargin">
+                        <div class="col s6">
+                            <p class="ownTitle noMargin">Created Topics</p>
+                        </div>
+                    </div>
+                    <div class="row createdTopics">
+                        <div class="col s10 offset-s1">
+                            <?php
+                                if($createdTopics) {
+                                    foreach($createdTopics as $createdTopic) {
+                            ?>
+                                    <div class="contentCard ownTopicCard">
+                                        <div class="col s10 ownTopicContainer contentCardBody">
+                                            <h3><?php echo $createdTopic["shortTopicName"]; ?></h3>
+                                            <p><?php echo $createdTopic["topicDescription"]; ?></p>
+                                            <p class="redirectLink"><a href="/topics/<?php echo $createdTopic["topicID"]; ?>">View the topic <i class="fas fa-angle-double-right"></i></a></p>
+                                            <div class="clear"></div>
+                                            <div class="row ownTopicBottomSection">
+                                                <div class="col s4">
+                                                    <a href="/categories/<?php echo $createdTopic["categoryID"]; ?>"><div class="chip ownTopicCategory topicCategory"><?php echo $createdTopic["categoryName"]; ?></div></a>
+                                                </div>
+                                                <div class="col s6 offset-s2">
+                                                    <p class="right-align ownCreatedAt"><em>Created at: <?php echo $createdTopic["createdAt"]; ?></em></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col s2">
+                                            <div class="comments">
+                                                <div class="commentbg">
+                                                    <span><?php echo $createdTopic["numberOfPosts"]; ?></span>
+                                                    <div class="mark">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="time">
+                                                <div class="row heartContainer noBottomMargin">
+                                                    <div class="col s12">
+                                                        <i class="fas fa-heart fa-2x center-align"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="row noBottomMargin">
+                                                    <div class="col s12">
+                                                        <p class="noMargin"><?php echo $createdTopic["numberOfFollowers"]; ?> Followers</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            <?php
+                                    }
+                                }
+                            ?>
+                        </div>
+                    </div>
+                    <div class="row createdPosts hide">
+                        <div class="col s10 offset-s1">
+                            <div class="row noMargin">
+                                <div class="contentCard col s10 offset-s1 noBottomMargin ownPostTopicCard">
+                                    <div class="col s12 ownPostTopicContainer contentCardBody">
+                                        <h3>,bmbmbmb,b,</h3>
+                                        <p class="redirectLink"><a href="/topics/1">View the topic <i class="fas fa-angle-double-right"></i></a></p>
+                                        <div class="clear"></div>
+                                        <div class="row ownPostTopicBottomSection">
+                                            <div class="col s4">
+                                                <a href="/categories/1"><div class="chip ownTopicCategory topicCategory">Everyday life</div></a>
+                                            </div>
+                                            <div class="col s6 offset-s2">
+                                                <p class="right-align ownCreatedAt"><em>Created at: 2018-04-12 12:15:17</em></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row noMargin">
+                                <div class="threeDot col s12 center-align"></div>
+                            </div>
+                            <div class="row noMargin">
+                                <div class="contentCard noMargin col s12 ownPostCard">
+                                    <div class="col s10 ownPostContainer contentCardBody">
+                                        <p class="ownPostText">jkdsgfjks skjldjg sdljf jldgjs dsljfkdgkfjgsd sdljgf k sdfgksjd sds jdsjgs skjg ldsgf dkjg lgkjlsdg </p>
+                                        <div class="clear"></div>
+                                        <div class="row ownPostBottomSection valign-wrapper">
+                                            <div class="col s4">
+                                                <p class="left-align ownCreatedAt"><em>Created at: 2018-04-12 12:15:17</em></p>
+                                            </div>
+                                            <div class="col s6 offset-s2">
+                                                <p class="viewPost right-align"><a href="/topics/1">View the post <i class="fas fa-angle-double-right"></i></a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col s2 valign-wrapper ownPostRightSection">
+                                        <div>
+                                            <div class="comments center-align">
+                                                <div class="commentbg">
+                                                    <span>89</span>
+                                                    <div class="mark">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="time center-align">
+                                                <div class="row heartContainer noBottomMargin">
+                                                    <div class="col s12">
+                                                        <i class="fas fa-heart fa-2x center-align"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="row noBottomMargin">
+                                                    <div class="col s12">
+                                                        <p class="noMargin">34 Followers</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row noMargin">
+                                <div class="threeDot col s12 center-align"></div>
+                            </div>
+                            <div class="row noMargin">
+                                <div class="contentCard noMargin col s12 ownPostCard">
+                                    <div class="col s10 ownPostContainer contentCardBody">
+                                        <p class="ownPostText">jkdsgfjks skjldjg sdljf jldgjs dsljfkdgkfjgsd sdljgf k sdfgksjd sds jdsjgs skjg ldsgf dkjg lgkjlsdg </p>
+                                        <div class="clear"></div>
+                                        <div class="row ownPostBottomSection valign-wrapper">
+                                            <div class="col s4">
+                                                <p class="left-align ownCreatedAt"><em>Created at: 2018-04-12 12:15:17</em></p>
+                                            </div>
+                                            <div class="col s6 offset-s2">
+                                                <p class="viewPost right-align"><a href="/topics/1">View the post <i class="fas fa-angle-double-right"></i></a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col s2 valign-wrapper ownPostRightSection">
+                                        <div>
+                                            <div class="comments center-align">
+                                                <div class="commentbg">
+                                                    <span>89</span>
+                                                    <div class="mark">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="time center-align">
+                                                <div class="row heartContainer noBottomMargin">
+                                                    <div class="col s12">
+                                                        <i class="fas fa-heart fa-2x center-align"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="row noBottomMargin">
+                                                    <div class="col s12">
+                                                        <p class="noMargin">34 Followers</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="set"><h1>itt lennének a settingek</h1></div>
             </div>
         </div>

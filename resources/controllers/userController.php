@@ -236,7 +236,7 @@ if(isset($_POST["requestPostHistoryChartData"])) {
 
     $startDate = date('Y-m-d', strtotime('first day of ', strtotime('-6 months')));
     $historyData = $userObj->getInformationForPostHistoryChart($startDate, $_SESSION["selectedUsername"]);
-    if($historyData) {
+    
 
         $monthsData = [];
 
@@ -268,13 +268,6 @@ if(isset($_POST["requestPostHistoryChartData"])) {
 
         echo json_encode($result);
         exit;
-    } else {
-        $result["data_type"] = 0;
-        $result["data_value"] = "An error occured";
-
-        echo json_encode($result);
-        exit;
-    }
 }
 
 if(isset($_POST["requestPostLikesChartData"])) {

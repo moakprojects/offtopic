@@ -42,7 +42,24 @@ $loginQuery = $db -> prepare("SELECT * FROM user WHERE email = :logID OR usernam
 $cookieLoginQuery = $db -> prepare("SELECT * FROM user WHERE md5(email) = :logIDHash OR md5(username) = :logIDHash");
 
 /* select information for the category page */
-$categoryQuery = $db -> prepare("SELECT category.*, numberOfTopics, numberOfPosts, numberOfLikes FROM category LEFT JOIN (SELECT categoryID, count(*) as numberOfTopics, topicID FROM topic GROUP BY categoryID) as topics ON topics.categoryID = category.categoryID LEFT JOIN ( SELECT topic.categoryID, topic.topicID, sum(postQuantity) as numberOfPosts FROM `topic` LEFT JOIN (SELECT topicID, count(*) as postQuantity FROM post GROUP BY topicID) as countPost ON countPost.topicID = topic.topicID GROUP BY topic.categoryID ) as posts ON posts.topicID = topics.topicID LEFT JOIN (SELECT categoryID, count(*) as numberOfLikes FROM favouriteCategory GROUP BY categoryID) as likes ON likes.categoryID = category.categoryID");
+$categoryQuery = $db -> prepare("SELECT category.*, numberOfTopics, numberOfPosts, numberOfLikes 
+    FROM category 
+    LEFT JOIN (
+        SELECT categoryID, count(*) as numberOfTopics, topicID 
+        FROM topic 
+        GROUP BY categoryID) as topics ON topics.categoryID = category.categoryID 
+    LEFT JOIN (
+        SELECT topic.categoryID, topic.topicID, sum(postQuantity) as numberOfPosts 
+        FROM `topic` 
+        LEFT JOIN (
+            SELECT topicID, count(*) as postQuantity 
+            FROM post 
+            GROUP BY topicID) as countPost ON countPost.topicID = topic.topicID 
+        GROUP BY topic.categoryID ) as posts ON posts.topicID = topics.topicID 
+    LEFT JOIN (
+        SELECT categoryID, count(*) as numberOfLikes 
+        FROM favouriteCategory 
+        GROUP BY categoryID) as likes ON likes.categoryID = category.categoryID");
 
 /* get categories for sidebar category block */
 $sideBarCategoriesQuery = $db->prepare("SELECT category.categoryName, category.categoryID, numberOfTopics FROM category LEFT JOIN (SELECT categoryID, count(*) as numberOfTopics, topicID FROM topic GROUP BY categoryID) as topics ON topics.categoryID = category.categoryID WHERE category.categoryID NOT IN (SELECT categoryID FROM favouritecategory WHERE userID = :userID) LIMIT 5");
@@ -51,7 +68,7 @@ $sideBarCategoriesQuery = $db->prepare("SELECT category.categoryName, category.c
 $checkCategoryQuery = $db -> prepare("SELECT * FROM category WHERE categoryID = :categoryID");
 
 /* select favourite categories */
-$sideBarFavouriteCategoriesQuery = $db->prepare("SELECT category.categoryName, category.categoryID, count(topic.topicID) as numberOfTopics FROM category LEFT JOIN topic ON category.categoryID = topic.categoryID INNER JOIN favouritecategory ON favouritecategory.categoryID = category.categoryID WHERE favouritecategory.userID = :userID GROUP BY category.categoryID ORDER BY count(topic.topicID) DESC LIMIT 5");
+$sideBarFavouriteCategoriesQuery = $db->prepare("SELECT category.categoryName, category.categoryID, category.thumbnail, count(topic.topicID) as numberOfTopics FROM category LEFT JOIN topic ON category.categoryID = topic.categoryID INNER JOIN favouritecategory ON favouritecategory.categoryID = category.categoryID WHERE favouritecategory.userID = :userID GROUP BY category.categoryID ORDER BY count(topic.topicID) DESC");
 
 /* select general topic information based on categoryID */
 $topicQuery = $db -> prepare("SELECT topic.*, numberOfLikes, numberOfPosts, latestPost, username, profileImage, periodName FROM topic LEFT JOIN (SELECT topicID, count(*) as numberOfLikes FROM favouriteTopic GROUP BY topicID) as likes ON likes.topicID = topic.topicID LEFT JOIN (SELECT topicID, count(*) as numberOfPosts, MAX(postedOn) as latestPost FROM post GROUP BY topicID) as posts ON posts.topicID = topic.topicID INNER JOIN (SELECT userID, username, profileImage FROM user) as users ON users.userID = topic.createdBy INNER JOIN (SELECT periodID, periodName FROM period) as periods ON periods.periodID = topic.semester WHERE topic.categoryID = :categoryID ORDER BY topic.createdAt DESC");
@@ -89,6 +106,12 @@ $latestTopicsQuery = $db->prepare("SELECT topic.*, categoryName, numberOfPosts, 
  /* get like information for Distribution of likes on posts chart */
  $numberOfLikesOfPostsQuery = $db->prepare("SELECT count(post.postID) as numberOfPosts, sum(likes) as numberOfLikes, sum(dislikes) as numberOfDislikes FROM post LEFT JOIN ( SELECT postID, sum(isLike) as likes, sum(isDislike) as dislikes FROM postlike GROUP BY postID) as likes ON likes.postID = post.postID INNER JOIN user ON user.userID = post.userID WHERE user.username = :username GROUP BY user.username");
 
- /* get number of visitors */
- $numberOfVisitorsQuery = $db->prepare("SELECT visitors FROM user WHERE username = :username");
+ /* get post like information for profile page favourite section */
+ $likedPostQuery = $db->prepare("SELECT topic.topicName, post.* FROM postlike INNER JOIN post ON post.postID = postlike.postID INNER JOIN user ON user.userID = postlike.userID INNER JOIN topic ON topic.topicID = post.topicID WHERE user.username = :username AND postlike.isLike = 1 ORDER BY post.postedOn DESC");
+
+ /* get topics what the user created */
+ $createdTopicsQuery = $db->prepare("SELECT user.username, topic.topicID, topic.topicName, topic.topicText, topic.createdAt, category.categoryID, category.categoryName, numberOfPosts, numberOfFollowers FROM topic INNER JOIN user ON user.userID = topic.createdBy INNER JOIN category ON category.categoryID = topic.categoryID LEFT JOIN (SELECT topicID, count(*) as numberOfPosts FROM post GROUP BY topicID) as posts ON posts.topicID = topic.topicID LEFT JOIN (SELECT topicID, count(*) as numberOfFollowers FROM favouritetopic GROUP BY topicID) as followers ON followers.topicID = topic.topicID WHERE user.username = :username");
+
+ /* get created posts */
+ $createdPostsQuery = $db->prepare("SELECT user.username, post.postID, post.text, post.postedOn, post.topicID, numberOfLikes, numberOfDislikes, topic.topicName, topic.createdAt, category.categoryID, category.categoryName FROM post INNER JOIN user ON user.userID = post.userID LEFT JOIN (SELECT postID, sum(isLike) as numberOfLikes, sum(isDislike) as numberOfDislikes FROM postlike GROUP BY postID) as likes ON likes.postID = post.postID INNER JOIN topic ON topic.topicID = post.topicID INNER JOIN category ON category.categoryID = topic.categoryID WHERE user.username = :username");
 ?>

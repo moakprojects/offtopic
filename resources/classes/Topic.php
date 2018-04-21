@@ -260,4 +260,32 @@ class Topic {
             exit;
         }
     }
+
+    function getCreatedTopics($username) {
+        global $db;
+        global $createdTopicsQuery;
+
+        if(isset($createdTopicsQuery)) {
+
+            $createdTopicsQuery->bindParam(':username', $username);
+            $createdTopicsQuery->execute();
+
+            if($createdTopicsQuery->rowCount() > 0) {
+                $createdTopicsData = $createdTopicsQuery->fetchall(PDO::FETCH_ASSOC);
+            
+                for($i = 0; $i < count($createdTopicsData); $i++) {
+                
+                    $createdTopicsData[$i]["topicDescription"] = $this->textTrimmer($createdTopicsData[$i]["topicText"], 200);
+                    $createdTopicsData[$i]["shortTopicName"] = $this->textTrimmer($createdTopicsData[$i]["topicName"], 53);
+    
+                }
+
+                return $createdTopicsData;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

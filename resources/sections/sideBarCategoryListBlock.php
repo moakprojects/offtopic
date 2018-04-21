@@ -9,9 +9,10 @@
                 $sideBarCategories = $sideBarCategoryObj -> getCategoryData();
             } else {
                 $sideBarCategories = $sideBarCategoryObj -> getCategoryDataForSideBar($_SESSION["user"]["userID"]);
-                $sideBarFavouriteCategories = $sideBarCategoryObj -> getFavouriteCategoryDataForSideBar($_SESSION["user"]["userID"]);
+                $sideBarFavouriteCategories = $sideBarCategoryObj -> getFavouriteCategoryData($_SESSION["user"]["userID"]);
 
                 if($sideBarFavouriteCategories) {
+                    $sideBarFavouriteCategories = array_slice($sideBarFavouriteCategories, 0, 5, true);
         ?>
         <p class="center-align" style="font-size: 15px;">Favourite Categories</p>
         <ul>

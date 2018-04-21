@@ -156,6 +156,9 @@
         <!-- own scripts main and dinamic depends on the page -->
         <script src="/public/js/main.js"></script>
         <script src="/public/js/lightbox.min.js"></script>
+        <!-- this is for Egg Toggle in profile page My own things section -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/4.13.0/bodymovin.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
         <?php
             if(file_exists("public/js/$page.js")) {
                 echo "<script src='/public/js/" . $page . ".js'></script>";

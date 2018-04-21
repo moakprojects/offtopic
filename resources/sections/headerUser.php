@@ -1,3 +1,7 @@
+<?php
+    $userObj = new User();
+    $loggedUser = $userObj->loggedUser($_SESSION["user"]["userID"]);
+?>
 <div id="headerImage">
     <div></div>
 </div>
@@ -9,7 +13,7 @@
             <p>OffTopic</p>
         </div>
         <ul id="dropdown1" class="dropdown-content dropdownMenu">
-            <li><a href="/profile">My profile</a></li>
+            <li><a href="/profile/<?php echo $loggedUser["username"]; ?>">My profile</a></li>
             <li class="divider"></li>
             <li><a id="logOutBtn">Logout</a></li>
         </ul>
@@ -24,9 +28,6 @@
                     <li>
                     <a class="dropdown-button profileDropdown" href="#!" data-activates="dropdown1">
                         <?php
-
-                            $userObj = new User();
-                            $loggedUser = $userObj->loggedUser($_SESSION["user"]["userID"]);
 
                             echo "<img src='"; 
                             echo ($loggedUser['profileImage'] === 'defaultAvatar.png' ?'/public/images/content/defaultAvatar.png' : '/public/images/upload/' . $loggedUser["profileImage"]);

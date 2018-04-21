@@ -219,27 +219,6 @@
             }
         }
 
-        function getNumberOfVisitors($username) {
-            global $db;
-            global $numberOfVisitorsQuery;
-
-            if(isset($numberOfVisitorsQuery)) {
-
-                $numberOfVisitorsQuery->bindParam(':username', $username);
-                $numberOfVisitorsQuery->execute();
-
-                $numberOfVisitorsResult = $numberOfVisitorsQuery->fetch(PDO::FETCH_ASSOC);
-
-                if(is_null($numberOfVisitorsResult["visitors"])) {
-                    return array("visitors" => 0);
-                } else {
-                    return $numberOfVisitorsResult;
-                }
-            } else {
-                return false;
-            }
-        }
-
         function increaseNumberOfVisitors($username) {
             global $db;
             global $increaseNumberOfVisitors;

@@ -56,7 +56,6 @@ class Post {
                 $postedOn = new DateTime($latestPostsData[$i]["postedOn"]);
                 $latestPostsData[$i]["monthDay"] = $postedOn -> format('M, j') . "<sup>" . $postedOn -> format('S') . "</sup>";
                 $latestPostsData[$i]["time"] = $postedOn -> format('h:ia');
-                $valami = "";
             }
 
             return $latestPostsData;
@@ -175,6 +174,60 @@ class Post {
             }
         } else {
             return false;
+        }
+    }
+
+    function getLikedPosts($username) {
+        global $db;
+        global $likedPostQuery;
+
+        if($likedPostQuery) {
+            $likedPostQuery -> bindParam(":username", $username);
+            $likedPostQuery->execute();
+
+            $likedPostData = $likedPostQuery->fetchall(PDO::FETCH_ASSOC);
+
+            for($i = 0; $i < count($likedPostData); $i++) {
+
+                $likedPostData[$i]["shortTopicName"] = $this->textTrimmer($likedPostData[$i]["topicName"], 18); 
+                $likedPostData[$i]["shortPostText"] = $this->textTrimmer($likedPostData[$i]["text"], 218); 
+
+                $postedOn = new DateTime($likedPostData[$i]["postedOn"]);
+                $likedPostData[$i]["monthDay"] = $postedOn -> format('M, j') . "<sup>" . $postedOn -> format('S') . "</sup>";
+                $likedPostData[$i]["time"] = $postedOn -> format('h:ia');
+            }
+
+            return $likedPostData;
+        }
+    }
+
+    function getcreatedPosts($username) {
+        global $db;
+        global $createdPostsQuery;
+
+        if($createdPostsQuery) {
+            $createdPostsQuery->bindParam(":username", $username);
+            $createdPostsQuery->execute();
+
+            $createdPostsData = $createdPostsQuery->fetchall(PDO::FETCH_ASSOC);
+
+            $data = array();
+            foreach ($createdPostsData as $item) {
+                $key = $item['topicID']; // or $item['info_id']
+                if (!isset($data[$key])) {
+                    $data[$key] = array();
+                    $data[$key]["topicID"] = $item["topicID"];
+                    $data[$key]["topicName"] = $item["topicName"];
+                    $data[$key]["categoryName"] = $item["categoryName"];
+                    $data[$key]["createdAt"] = $item["createdAt"];
+                    $data[$key]["posts"] = array();
+                }
+
+                $insideArray = array("postID" => $item["postID"], "text" => $item["text"], "postedOn" => $item["postedOn"], "numberOfLikes" => $item["numberOfLikes"], "numberOfDislikes" => $item["numberOfDislikes"]);
+                array_push($data[$key]["posts"], $insideArray);
+            }
+
+            return $data;
         }
     }
 }

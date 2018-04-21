@@ -14,16 +14,28 @@
     display: none;
 }
 
+.clear {
+    clear: both;
+}
+
 .noMargin {
     margin: 0;
 }
 
 .noBottomMargin {
-    margin-bottom: 0px;
+    margin-bottom: 0px !important;
+}
+
+.noTopMargin {
+    margin-top: 0px !important;
 }
 
 .noRightPadding {
     padding-right: 0 !important;
+}
+
+.noLeftPadding {
+    padding-left: 0 !important;
 }
 
 /* breadCrumb modify */
@@ -32,12 +44,12 @@
     margin: 0;
 }
 
-/* profileImage styling */
+/* profileImage (at the center of the page) styling */
 
 .profileImageContainer {
     position: absolute;
     top: -70px;
-    width: 100%;
+    width: calc(100% - 30px);
 }
 
 .profileImageContainer img {
@@ -114,11 +126,10 @@
     top: 70px;
     border-radius: 2px;
     box-shadow: 0 1px 2px #c9cccd;
-    /* padding: 145px 15px 15px 15px; */
     padding: 15px;
 }
 
-/* User counted informations styling */
+/* User counted informations styling (next to the profile picture) */
 
 .countContainer {
     color: #808080;
@@ -377,4 +388,382 @@
 
 .reputationValue {
     font-size: 25px;
+}
+
+.reputationValueFirstLine {
+    position: relative;
+    top: -15px;
+}
+
+/* Favourite section */
+
+.favouriteTitle {
+    color: #363838;
+    font-size: 25px;
+}
+
+.categoryCard {
+    height: 300px;
+}
+
+.categoryCard .card-image, .categoryCard .card-image img {
+    height: 220px;
+}
+
+.categoryCard .card-image {
+    position: relative;
+    z-index: 1;
+}
+
+.categoryCard .fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.categoryCard:hover .fade {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.categoryCard:hover {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* favourite topics styling */
+
+.favouriteTopicCard .contentCardBody {
+    border-right: none;
+}
+
+.favouriteTopicCard {
+    box-shadow: 2px 2px 9px #c9cccd !important;
+}
+
+.favouriteTopicCard img {
+    margin-left: 15px !important;
+}
+
+/* topic cards styling */
+
+.contentCard {
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px #c9cccd;
+    margin-bottom: 20px;
+    margin-top: 25px;
+    padding: 15px 0;
+    height: 190px;
+}
+
+.contentCard .createdByContainer {
+    position: relative;
+    height: 100%;
+}
+
+.contentCard .createdByContainer img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-top: 10px;
+    margin-left: 25px;
+    position: absolute;
+    left: 0;
+}
+
+.contentCardBody {
+    position: relative;
+    height: 100%;
+    border-right: 1px solid #cfd5d7;
+    padding-right: 25px !important;
+}
+
+.contentCard .contentCardBody h3 {
+    color: #363838;
+    line-height: 25px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.contentCard .contentCardBody p {
+    margin: 0;
+    color: rgb(114, 114, 114);
+    font-size: 14px;
+    line-height: 25px;
+}
+
+.topicCategory {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    margin: 0 !important;
+    border-radius: 5px;
+    line-height: 29px;
+    background: none;
+    border: 1px solid #e4e4e4;
+    box-shadow: 1px 1px 1px #E4E4E3;
+}
+
+.contentCard .comments {
+    border-bottom: solid 1px #cfd5d7;
+    text-align: center;
+    padding: 18px 0 25px 0;
+}
+
+.contentCard .commentbg {
+    border-radius: 2px;
+    background: #2196f3;
+    display: inline-block;
+    padding: 10px 25px;
+    color: white;
+    font-size: 14px;
+    position: relative;
+}
+
+.contentCard .mark {
+    width: 11px;
+    height: 11px;
+    background: #2196f3;
+    position: absolute;
+    bottom: 0;
+    left: 43%;
+    margin-bottom: -5px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+}
+
+.contentCard .time {
+    color: #9da6aa;
+    font-size: 14px;
+    text-align: center;
+    line-height: 29px;
+}
+
+.contentCard .time .iconTitle {
+    color: #9da6aa;
+    font-size: 12px;
+    text-align: center;
+    line-height: 29px;
+    margin-top: 5px;
+}
+
+.contentCard .redirectLink {
+    float: right;
+    margin-top: 9px !important;
+}
+
+.contentCard .redirectLink svg {
+    padding-top: 2px;
+}
+
+/* latest post (in the sidebar) styling */
+
+.latestPostsContainer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    transition: all 0.5s linear;
+    top: 0;
+} 
+
+.latestPostsContainer ul:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 100%;
+    border: 1.5px dotted #989c9e;
+    position: absolute;
+    top: 0;
+    left: 70px;
+}
+
+.latestPostsContainer ul li {
+    margin: 20px 100px 60px;
+    position: relative;
+    padding: 10px 20px;
+    background: #E4E4E4;
+    color: #363838;
+    border-radius: 10px;
+    line-height: 20px;
+    width: 70%;
+}
+
+.latestPostsContainer ul li > span {
+    content: "";
+    display: block;
+    width: 0;
+    height: 100%;
+    border: 1.5px double #989c9e;
+    position: absolute;
+    top: 0;
+    left: -30px;
+}
+
+.latestPostsContainer ul li > span:before, .latestPostsContainer ul li > span:after {
+    content: "";
+    display: block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #2196f3;
+    border: 2px solid #2196f3;
+    position: absolute;
+    left: -7.5px;
+}
+
+.latestPostsContainer ul li > span:before {
+    top: -10px;
+}
+
+.latestPostsContainer ul li > span:after {
+    top: 95%;
+}
+
+.latestPostsContainer .title {
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #363838;
+}
+
+.latestPostsContainer .info:first-letter {
+    text-transform: capitalize;
+    line-height: 1.7;
+}
+
+.latestPostsContainer .name {
+    margin-top: 10px;
+    text-transform: capitalize;
+    font-style: italic;
+    text-align: right;
+}
+
+.latestPostsContainer .time span {
+    position: absolute;
+    left: -100px;
+    color: #363838;
+    font-size: 80%;
+    font-weight: bold;
+}
+
+.latestPostsContainer .time span:first-child {
+    top: -10px;
+}
+
+.latestPostsContainer .time span:last-child {
+    top: 90%;
+}
+
+/* Profile page own Things section styling */
+
+#animationWindow {
+    width: 10%;
+    -webkit-tap-highlight-color:transparent;
+    margin: 15px auto 0;
+   
+    cursor:pointer;
+}
+
+.eggPath0 {
+    fill: #152b39;
+}
+
+.eggPath1 {
+    fill: white;
+}
+
+.ownTitle {
+    color: #363838;
+    font-size: 25px;
+}
+
+.ownTopicContainer {
+    padding-left: 24px !important;
+    position: relative;
+}
+
+.ownTopicCard {
+    box-shadow: 2px 2px 9px #c9cccd;
+}
+
+.ownTopicBottomSection {
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 24px);
+    margin-bottom: 0;
+}
+
+.ownCreatedAt {
+    bottom: 0;
+    position: relative;
+}
+
+.contentCard .createdAt {
+    position: relative;
+    top: 10px;
+}
+
+.heartContainer {
+    margin-top: 16px;
+}
+
+/* profile page own things Own post */
+
+.ownPostTopicCard {
+    height: 135px;
+    box-shadow: 2px 2px 9px #c9cccd;
+}
+
+.ownPostTopicContainer {
+    border-right: none;
+    padding-left: 24px !important;
+    position: relative;
+}
+
+.ownPostTopicBottomSection {
+    position: absolute;
+    bottom: 10px;
+    width: calc(100% - 24px);
+    margin-bottom: 0;
+}
+
+.ownPostText {
+    color:rgb(114, 114, 114);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 25px;
+}
+
+.ownPostCard {
+    height: 135px;
+    box-shadow: 2px 2px 9px #c9cccd;
+    min-height: 190px !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+}
+
+.ownPostBottomSection {
+    position: absolute;
+    bottom: 5px;
+    width: calc(100% - 24px);
+    margin-bottom: 0;
+}
+
+.ownPostRightSection {
+    display: block;
+}
+
+/* three dots */
+
+.threeDot:after {
+    content: '\2807';
+    font-size: 30px;
+    color: #9da6aa;
+    font-weight: 100;
+    text-shadow: 2px 2px 6px #9da6aa;
 }

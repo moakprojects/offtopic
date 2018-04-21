@@ -11,6 +11,18 @@ h2 {
     margin-top: 20px;
 }
 
+.clear {
+    clear: both;
+}
+
+.noBottomMargin {
+    margin-bottom: 0px;
+}
+
+.noMargin {
+    margin: 0;
+}
+
 /* Sidebar blocks styling */
 
 .sideBarBlock {
@@ -354,4 +366,23 @@ h2 {
     font-size: 14px;
     margin-top: 0px;
     padding-left: 0px !important;
+}
+
+/* own Topic styling */
+
+.ownTopicContainer {
+    padding-left: 24px !important;
+}
+
+.ownTopicCategory {
+    left: 23px;
+}
+
+.topic .createdAt {
+    position: relative;
+    top: 10px;
+}
+
+.heartContainer {
+    margin-top: 16px;
 }

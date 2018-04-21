@@ -47,7 +47,7 @@ class Category {
         }
     }
 
-    function getFavouriteCategoryDataForSideBar($userID) {
+    function getFavouriteCategoryData($userID) {
 
         global $db;
         global $sideBarFavouriteCategoriesQuery;
