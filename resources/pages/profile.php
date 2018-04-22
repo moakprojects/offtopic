@@ -539,7 +539,7 @@
                     </div>
                                 
                 </div>
-                <div id="set"><h1>itt lennének a settingek</h1></div>
+                <div id="set"><p>In progress</p></div>
             </div>
         </div>
     </div>
