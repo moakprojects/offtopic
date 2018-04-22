@@ -2,17 +2,13 @@
 
 class Category {
 
-    public $categoryName;   
+    public $categoryName;
 
-    function __construct() {
-        
+    function __get($name) {
+        return $this->$name;
     }
 
-    function getCategoryName() {
-        $categoryName = $this->categoryName;
-        return $categoryName;
-    }
-
+    // request categories data from database
     function getCategoryData() {
 
         global $db;
@@ -30,6 +26,7 @@ class Category {
         }
     }
 
+    // request category data for the sidebar from database
     function getCategoryDataForSideBar($userID) {
 
         global $db;
@@ -47,6 +44,7 @@ class Category {
         }
     }
 
+    // request favourite categories data from database
     function getFavouriteCategoryData($userID) {
 
         global $db;
@@ -69,6 +67,7 @@ class Category {
         }
     }
 
+    //check selected data to avoid errors
     function checkCategory($selectedCategoryID) {
         
         global $db;
@@ -89,6 +88,7 @@ class Category {
         }
     }
 
+    // bind category data to modify favourite category table
     function likeCategory($userID, $categoryID) {
         global $db;
         global $likeCategoryQuery ;
@@ -105,6 +105,7 @@ class Category {
         }
     }
 
+    // bind category data to modify favourite category table
     function dislikeCategory($userID, $categoryID) {
         global $db;
         global $dislikeCategoryQuery;
@@ -121,6 +122,7 @@ class Category {
         }
     }
 
+    // check that the user added to favourite the category or not to change the appearance 
     function checkLikedCategories($userID, $categoryID) {
         global $db;
         global $checkFavouriteCategoryQuery;

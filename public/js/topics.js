@@ -1,13 +1,4 @@
-$(document).ready(function(){
-    $('.tooltipped').tooltip({delay: 50});
-
-    $(document).on('click', '.categoryLikeButton', function() {
-        $.post('/resources/controllers/categoryController.php', {}, function(returnData) {
-
-        });
-    });
-});
-
+// send data to modify category table when user add it to favourite
 function likeCategory(userId, categoryId, action) {
     $.post('/resources/controllers/categoryController.php', {userId: userId, favouriteSelectedCategory: categoryId, action: action}, function(data) {
       var obj = jQuery.parseJSON(data);

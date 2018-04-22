@@ -1,4 +1,5 @@
 <?php
+    //if the user wants to logout we destroy the session and delete all set user cookies
     if(isset($_POST["logout"]) && $_POST["logout"] === "true") {
         session_start();
         

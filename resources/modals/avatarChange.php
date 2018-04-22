@@ -7,6 +7,7 @@
             <div class="tmpAvatarImage">
                 <?php
 
+                //display current avatar image
                 echo "<img src='"; 
                 echo ($loggedUser['profileImage'] === 'defaultAvatar.png' ?'/public/images/content/defaultAvatar.png' : '/public/images/upload/' . $loggedUser["profileImage"]);
                 echo "' class='newAvatarImg' alt='profile picture'>";
@@ -18,6 +19,7 @@
             <div class="carousel">
                 <?php
 
+                //display default avatars
                 $defaultAvatarImages = $userObj->getDefaultAvatars();
                 if($defaultAvatarImages) {
                     

@@ -4,14 +4,11 @@ class Post {
 
     private $isExistInPostLikeTable;
 
-    function __construct() {
-        
-    }
-
     function __get($var) {
         return $this->$var;
     }
 
+    // request posts data from database
     function getPostData($selectedTopicID) {
         global $db;
         global $postQuery;
@@ -30,6 +27,7 @@ class Post {
         }
     }
 
+    // trim the long text depending on parameters
     function textTrimmer($longText, $length) {
         if(strlen($longText) > $length) {
                         
@@ -39,6 +37,7 @@ class Post {
         }
     }
     
+    // get the latest 5 posts from database
     function getLatestPosts() {
         global $db;
         global $latestPostsQuery;
@@ -65,6 +64,7 @@ class Post {
         }
     }
 
+    // upload a new post into database
     function createPost($content, $replyID, $userID, $topicID, $attachedFilesCode) {
 
         global $db;
@@ -89,6 +89,7 @@ class Post {
         }
     }
 
+    // upload attached file information into database
     function uploadFiles($filename, $displayname, $attachedFileCode) {
 
         global $db;
@@ -107,6 +108,7 @@ class Post {
         }
     }
 
+    //request attached files information
     function getAttachedFiles($attachedFileCode) {
         
         global $db;
@@ -122,6 +124,7 @@ class Post {
         }
     }
 
+    // modify postlike table 
     function likePost($userID, $postID, $like, $dislike) {
             
         global $db;
@@ -141,6 +144,7 @@ class Post {
         }
     }
 
+    // check that the user liked the post or not to change the appearance 
     function checkPostLikeStatus($userID, $postID) {
         
         global $db;
@@ -157,6 +161,7 @@ class Post {
         }
     }
 
+    // request the new value of numberOflikes/dislikes on changed post
     function refreshPostLikeValues($postID) {
 
         global $db;
@@ -174,30 +179,6 @@ class Post {
             }
         } else {
             return false;
-        }
-    }
-
-    function getLikedPosts($username) {
-        global $db;
-        global $likedPostQuery;
-
-        if($likedPostQuery) {
-            $likedPostQuery -> bindParam(":username", $username);
-            $likedPostQuery->execute();
-
-            $likedPostData = $likedPostQuery->fetchall(PDO::FETCH_ASSOC);
-
-            for($i = 0; $i < count($likedPostData); $i++) {
-
-                $likedPostData[$i]["shortTopicName"] = $this->textTrimmer($likedPostData[$i]["topicName"], 18); 
-                $likedPostData[$i]["shortPostText"] = $this->textTrimmer($likedPostData[$i]["text"], 218); 
-
-                $postedOn = new DateTime($likedPostData[$i]["postedOn"]);
-                $likedPostData[$i]["monthDay"] = $postedOn -> format('M, j') . "<sup>" . $postedOn -> format('S') . "</sup>";
-                $likedPostData[$i]["time"] = $postedOn -> format('h:ia');
-            }
-
-            return $likedPostData;
         }
     }
 }

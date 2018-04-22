@@ -14,8 +14,8 @@
         }
         $selectedUserData = $userObj -> getSelectedUser($selectedUsername);
         $favouriteCategories = $categoryObj->getFavouriteCategoryData($selectedUserData["userID"]);
-        $favouriteTopics = $topicObj->getFavouriteTopics($selectedUserData["userID"]);
-        $likedPosts = $postObj->getLikedPosts($selectedUsername);
+        $favouriteTopics = $userObj->getFavouriteTopics($selectedUserData["userID"]);
+        $likedPosts = $userObj->getLikedPosts($selectedUsername);
         $createdTopics = $userObj->getCreatedTopics($selectedUsername);
 ?>
 <div class="container contentContainer">

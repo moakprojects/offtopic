@@ -1,3 +1,4 @@
+/* customization of quill.js for discussion page */
 var toolbarOptions = [
   [{ 'size': ['small', false, 'large', 'huge'] }, 'bold', 'italic', 'underline', 'strike'],
   [ 'link', 'blockquote', 'attachment'],
@@ -7,11 +8,7 @@ var toolbarOptions = [
   ['clean'],
 ];
 
-/*$('.ql-bold').children().addClass('tooltipped');
-$('.ql-bold').children().addAttr('data-position','bottom');
-$('.ql-bold').children().addAttr('data-delay','50');
-$('.ql-bold').children().addAttr('data-tooltip','I am a tooltip');*/
-
+/* inicialize quill.js */
 var quill = new Quill('#editor', {
   modules: {
     toolbar: {
@@ -58,10 +55,7 @@ customButton.addEventListener('click', function() {
     }
 });
 
-$(document).on('change', '.ql-editor', function() {
-  
-});
-
+/* set the reply button availability */
 quill.on("text-change", function(delta, oldDelta, source) {
   if(quill.getLength() > 1) {
     $('.postReplyBtn').removeClass('disabled');
@@ -70,6 +64,7 @@ quill.on("text-change", function(delta, oldDelta, source) {
   }
 })
 
+/* validate the attached files */
 function validateAttachFile() {
   $('#attachFiles').html("");
   
@@ -98,6 +93,7 @@ function validateAttachFile() {
   }
 }
 
+/* remove selected attached file from the list of current files */ 
 function removeAttachFile(index) {
   
   currentFiles.splice(index, 1);
@@ -105,6 +101,7 @@ function removeAttachFile(index) {
   validateAttachFile();
 }
 
+/* send data to backend to increase number of likes of selected post */
 function likePost(postId) {
   $.post('/resources/controllers/discussionController.php', {postId: postId, mood: "like"}, function(returnData) {
 
@@ -128,6 +125,7 @@ function likePost(postId) {
   });
 }
 
+/* send data to backend to increase number of dislikes of selected post */
 function dislikePost(postId) {
   $.post('/resources/controllers/discussionController.php', {postId: postId, mood: "dislike"}, function(returnData) {
     
@@ -153,6 +151,7 @@ function dislikePost(postId) {
 
 var replyId = null;
 
+/* start a spinner during backend call and call uploadPost function */
 $(document).on('click', '.postReplyBtn', function() {
 
   $('.replySpinner').removeClass('hide');
@@ -160,6 +159,7 @@ $(document).on('click', '.postReplyBtn', function() {
   uploadPost();
 });
 
+/* upload a post and attached files into the database and storage */ 
 function uploadPost() {
   var replyContent = quill.root.innerHTML;
   $.post('/resources/controllers/discussionController.php', {replyContent: replyContent, replyID: replyId}, function(returnData) {
@@ -203,6 +203,7 @@ function uploadPost() {
   });
 }
 
+/* refresh posts after backend response to display the new post immediately */
 function refreshPostContent(selectedTopicID) {
   
   quill.deleteText(0, quill.getLength());
@@ -220,6 +221,7 @@ function refreshPostContent(selectedTopicID) {
   });
 }
 
+/* display original post for what the user answer */ 
 function replyPost(postId, username) {
 
   $('#originalPostID').eq(0).html("#" + postId);
@@ -231,12 +233,14 @@ function replyPost(postId, username) {
 
 }
 
+/* scroll down to quill editor */
 function scrollToEditor() {
   $('html, body').animate({
       scrollTop: $(".editorTop").offset().top
   }, 1000);
 }
 
+/* backend request after user's topic like */
 function likeTopic(userId, topicId, action) {
   $.post('/resources/controllers/topicController.php', {userId: userId, favouriteSelectedTopic: topicId, action: action}, function(data) {
     

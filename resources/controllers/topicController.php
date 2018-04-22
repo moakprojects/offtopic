@@ -8,6 +8,7 @@ include "../../database/modification.php";
 include "../classes/Topic.php";
 $topicObj = new Topic();
 
+//depending on the action (add or remove) call the right function from persistence layer (what is add or remove the topic from favourites)
 if(isset($_POST["favouriteSelectedTopic"])) {
 
     if($_POST["action"] === "add") {

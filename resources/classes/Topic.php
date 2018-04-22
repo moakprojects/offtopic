@@ -6,6 +6,7 @@ class Topic {
 
     }
 
+    // request topic data from database
     function getTopicData($selectedCategoryId, $categoryObj) {
 
         if($categoryObj -> checkCategory($selectedCategoryId) > 0) {
@@ -39,6 +40,7 @@ class Topic {
         }
     }
 
+    // trim the long text depending on parameters
     function textTrimmer($longText, $length) {
         if(strlen($longText) > $length) {
                         
@@ -48,6 +50,7 @@ class Topic {
         }
     }
 
+    // calculate time difference between a specific time and now 
     function calculateTimeDifferences($latest) {
         $latestTime = new DateTime($latest);
         $now = new DateTime('now');
@@ -76,6 +79,7 @@ class Topic {
         }
     }
 
+    // request selected topic information
     function getSelectedTopic($selectedTopicID) {
         global $db;
         global $selectedTopicQuery;
@@ -97,6 +101,7 @@ class Topic {
         }
     }
 
+    // request latest topic information for what's new
     function getLatestTopics() {
         global $db;
         global $latestTopicsQuery;
@@ -121,6 +126,7 @@ class Topic {
         }
     }
 
+    //modify favouritetopic table 
     function likeTopic($userID, $topicID) {
         global $db;
         global $likeTopicQuery ;
@@ -137,6 +143,7 @@ class Topic {
         }
     }
 
+    //modify favouritelike table
     function dislikeTopic($userID, $topicID) {
         global $db;
         global $dislikeTopicQuery ;
@@ -153,6 +160,7 @@ class Topic {
         }
     }
 
+    // check that the user liked the topic or not to change the appearance 
     function checkLikedTopics($userID, $topicID) {
         global $db;
         global $checkFavouriteTopicQuery;
@@ -169,6 +177,7 @@ class Topic {
         }
     }
 
+    // request hot topic information
     function getHotTopics() {
         global $db;
         global $hotTopicsQuery;
@@ -192,66 +201,6 @@ class Topic {
                 }
 
                 return $hotTopicsData;
-            } else {
-                return false;
-            }
-        } else {
-            header("Location: /error");
-            exit;
-        }
-    }
-
-    function getFavouriteTopics($userID) {
-        global $db;
-        global $favouriteTopicsQuery;
-
-        if(isset($favouriteTopicsQuery)) {
-            
-            $favouriteTopicsQuery->bindParam(":userID", $userID);
-            $favouriteTopicsQuery->execute();
-
-            if($favouriteTopicsQuery->rowCount() > 0) {
-                $favouriteTopicsData = $favouriteTopicsQuery->fetchall(PDO::FETCH_ASSOC);
-            
-                for($i = 0; $i < count($favouriteTopicsData); $i++) {
-                
-                    $favouriteTopicsData[$i]["topicDescription"] = $this->textTrimmer($favouriteTopicsData[$i]["topicText"], 162);
-                    $favouriteTopicsData[$i]["shortTopicName"] = $this->textTrimmer($favouriteTopicsData[$i]["topicName"], 53);
-    
-                    $favouriteTopicsData[$i]["latestPostElapsedTime"] = $this->calculateTimeDifferences($favouriteTopicsData[$i]["latestPost"]);
-                }
-
-                return $favouriteTopicsData;
-            } else {
-                return false;
-            }
-        } else {
-            header("Location: /error");
-            exit;
-        }
-    }
-
-    function getOwnTopics($userID) {
-        global $db;
-        global $ownTopicsQuery;
-
-        if(isset($ownTopicsQuery)) {
-            
-            $ownTopicsQuery->bindParam(":userID", $userID);
-            $ownTopicsQuery->execute();
-
-            if($ownTopicsQuery->rowCount() > 0) {
-                $ownTopicsData = $ownTopicsQuery->fetchall(PDO::FETCH_ASSOC);
-            
-                for($i = 0; $i < count($ownTopicsData); $i++) {
-                
-                    $ownTopicsData[$i]["topicDescription"] = $this->textTrimmer($ownTopicsData[$i]["topicText"], 162);
-                    $ownTopicsData[$i]["shortTopicName"] = $this->textTrimmer($ownTopicsData[$i]["topicName"], 53);
-    
-                    $ownTopicsData[$i]["latestPostElapsedTime"] = $this->calculateTimeDifferences($ownTopicsData[$i]["latestPost"]);
-                }
-
-                return $ownTopicsData;
             } else {
                 return false;
             }

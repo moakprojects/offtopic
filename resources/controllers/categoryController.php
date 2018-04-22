@@ -8,6 +8,7 @@ include "../../database/modification.php";
 include "../classes/Category.php";
 $categoryObj = new Category();
 
+//depending on the action (add or remove) call the right function from persistence layer (what is add or remove the category from favourites)
 if(isset($_POST["favouriteSelectedCategory"])) {
 
     if($_POST["action"] === "add") {

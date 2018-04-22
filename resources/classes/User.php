@@ -1,29 +1,8 @@
 <?php
 
     class User {
-        
-        private $userCreation = array();
 
-        function __construct() {
-
-        }
-
-        function getOwn() {
-            return $this->userCreation;
-        }
-
-        function setOwn($value) {
-            $this->userCreation = $value;
-        }
-
-        public function __get($name) {
-            return $this->$name;
-        }
-
-        public function __set($name, $value) {
-            $this->name = $value;
-        }
-
+        // check the email that is exist in usertable or not for registration
         function checkUserEmail($regEmail) {
 
             global $db;
@@ -46,7 +25,8 @@
             }
         }
 
-        function checkUserName($regUsername) {
+        // check the username that is exist in usertable or not for registration
+        function checkUsername($regUsername) {
 
             global $db;
             global $checkUsernameQuery;
@@ -67,6 +47,7 @@
             }
         }
 
+         // create a new user in the database
         function createUser($regEmail, $regUsername, $passwordHash) {
 
             global $db;
@@ -88,6 +69,7 @@
             }
         }
 
+        // check userID for login
         function loginUser($logID) {
 
             global $db;
@@ -108,6 +90,7 @@
             }
         }
 
+        // check that the user is already logged in or not
         function loggedUser($userID) {
 
             global $db;
@@ -125,6 +108,7 @@
 
         }
 
+        // upload new profli image into database
         function uploadProfileImage($imagename, $userID) {
             global $db;
             global $profileImageUploadQuery;
@@ -142,6 +126,7 @@
 
         }
 
+        // request default avatars for carousel
         function getDefaultAvatars() {
             global $db;
             global $defaultAvatarsQuery;
@@ -155,6 +140,7 @@
             }
         }
 
+        // get selected user information from database
         function getSelectedUser($username) {
             global $db;
             global $userQuery;
@@ -176,6 +162,7 @@
             }
         }
 
+        // get information for post distribution chart
         function getInformationForPostDistributionChart($username) {
             global $db;
             global $numberOfPostsInCategoriesQuery;
@@ -191,6 +178,7 @@
             }
         }
 
+        //get information for post history chart
         function getInformationForPostHistoryChart($startDate, $username) {
             global $db;
             global $numberOfPostsByMonthsQuery;
@@ -207,6 +195,7 @@
             }
         }
 
+        // get information for post likes chart
         function getInformationForPostLikesChart($username) {
             global $db;
             global $numberOfLikesOfPostsQuery;
@@ -237,6 +226,7 @@
             }
         }
 
+        // increase number of visitors in database
         function increaseNumberOfVisitors($username) {
             global $db;
             global $increaseNumberOfVisitors;
@@ -247,6 +237,7 @@
             }
         }
 
+        // request created posts from database for profile page
         function getCreatedPosts($username) {
             global $db;
             global $createdPostsQuery;
@@ -278,6 +269,7 @@
             }
         }
 
+        // trim the long texts
         function textTrimmer($longText, $length) {
             if(strlen($longText) > $length) {
                             
@@ -287,6 +279,7 @@
             }
         }
 
+        // request created topics from database for profile page
         function getCreatedTopics($username) {
             global $db;
             global $createdTopicsQuery;
@@ -312,6 +305,122 @@
                 }
             } else {
                 return false;
+            }
+        }
+
+        //request own topics from database for home page
+        function getOwnTopics($userID) {
+            global $db;
+            global $ownTopicsQuery;
+    
+            if(isset($ownTopicsQuery)) {
+                
+                $ownTopicsQuery->bindParam(":userID", $userID);
+                $ownTopicsQuery->execute();
+    
+                if($ownTopicsQuery->rowCount() > 0) {
+                    $ownTopicsData = $ownTopicsQuery->fetchall(PDO::FETCH_ASSOC);
+                
+                    for($i = 0; $i < count($ownTopicsData); $i++) {
+                    
+                        $ownTopicsData[$i]["topicDescription"] = $this->textTrimmer($ownTopicsData[$i]["topicText"], 162);
+                        $ownTopicsData[$i]["shortTopicName"] = $this->textTrimmer($ownTopicsData[$i]["topicName"], 53);
+        
+                        $ownTopicsData[$i]["latestPostElapsedTime"] = $this->calculateTimeDifferences($ownTopicsData[$i]["latestPost"]);
+                    }
+    
+                    return $ownTopicsData;
+                } else {
+                    return false;
+                }
+            } else {
+                header("Location: /error");
+                exit;
+            }
+        }
+
+        // request liked posts from database for profile page
+        function getLikedPosts($username) {
+            global $db;
+            global $likedPostQuery;
+    
+            if($likedPostQuery) {
+                $likedPostQuery -> bindParam(":username", $username);
+                $likedPostQuery->execute();
+    
+                $likedPostData = $likedPostQuery->fetchall(PDO::FETCH_ASSOC);
+    
+                for($i = 0; $i < count($likedPostData); $i++) {
+    
+                    $likedPostData[$i]["shortTopicName"] = $this->textTrimmer($likedPostData[$i]["topicName"], 18); 
+                    $likedPostData[$i]["shortPostText"] = $this->textTrimmer($likedPostData[$i]["text"], 218); 
+    
+                    $postedOn = new DateTime($likedPostData[$i]["postedOn"]);
+                    $likedPostData[$i]["monthDay"] = $postedOn -> format('M, j') . "<sup>" . $postedOn -> format('S') . "</sup>";
+                    $likedPostData[$i]["time"] = $postedOn -> format('h:ia');
+                }
+    
+                return $likedPostData;
+            }
+        }
+
+        // calculate time difference between a specific time and now 
+        function calculateTimeDifferences($latest) {
+            $latestTime = new DateTime($latest);
+            $now = new DateTime('now');
+            $diff = $latestTime -> diff($now);
+
+            if($diff -> y > 1 ) {
+                return $difference = $diff -> y . " years";
+            } else if ($diff -> y == 1 ){
+                return $difference =  $diff -> y . " year";
+            } else if ($diff -> m > 1 ){
+                return $difference =  $diff -> m . " months";
+            } else if ($diff -> m == 1 ){
+                return $difference =  $diff -> m . " month";
+            } else if ($diff -> d > 1 ){
+                return $difference =  $diff -> d . " days";
+            } else if ($diff -> d == 1 ){
+                return $difference =  $diff -> d . " day";
+            } else if ($diff -> h > 1 ){
+                return $difference =  $diff -> h . " hours";
+            } else if ($diff -> h == 1 ){
+                return $difference =  $diff -> h . " hour";
+            } else if ($diff -> i > 1 ){
+                return $difference =  $diff -> i . " mins";
+            } else {
+                return $difference =  "1 min";
+            }
+        }
+
+        // request favourite topics information from database
+        function getFavouriteTopics($userID) {
+            global $db;
+            global $favouriteTopicsQuery;
+
+            if(isset($favouriteTopicsQuery)) {
+                
+                $favouriteTopicsQuery->bindParam(":userID", $userID);
+                $favouriteTopicsQuery->execute();
+
+                if($favouriteTopicsQuery->rowCount() > 0) {
+                    $favouriteTopicsData = $favouriteTopicsQuery->fetchall(PDO::FETCH_ASSOC);
+                
+                    for($i = 0; $i < count($favouriteTopicsData); $i++) {
+                    
+                        $favouriteTopicsData[$i]["topicDescription"] = $this->textTrimmer($favouriteTopicsData[$i]["topicText"], 162);
+                        $favouriteTopicsData[$i]["shortTopicName"] = $this->textTrimmer($favouriteTopicsData[$i]["topicName"], 53);
+        
+                        $favouriteTopicsData[$i]["latestPostElapsedTime"] = $this->calculateTimeDifferences($favouriteTopicsData[$i]["latestPost"]);
+                    }
+
+                    return $favouriteTopicsData;
+                } else {
+                    return false;
+                }
+            } else {
+                header("Location: /error");
+                exit;
             }
         }
 

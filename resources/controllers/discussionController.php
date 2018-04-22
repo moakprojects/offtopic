@@ -7,10 +7,12 @@ include "../../database/modification.php";
 include "../classes/Post.php";
 $postObj = new Post();
 
+// if the user send a post call createpost from persistence layer
 if(isset($_POST["replyContent"])) {
 
     $attachedFileCode = "Att" . time();
     
+    //if the user reply for a specific comment, then set the id of the original post as replyID, otherwise the replyID is null
     $replyID = null;
     if($_POST["replyID"] > 0) {
         $replyID = $_POST["replyID"];
@@ -18,6 +20,7 @@ if(isset($_POST["replyContent"])) {
     
     if($postObj->createPost($_POST["replyContent"], $replyID, $_SESSION["user"]["userID"], $_SESSION["selectedTopicID"], $attachedFileCode)) {
         
+        //create session variable for attachedfilecode to upload attached files information into database with this ID
         $_SESSION["attachedFileCode"] = $attachedFileCode;
         
         $result["data_type"] = 1;
@@ -34,6 +37,7 @@ if(isset($_POST["replyContent"])) {
     }
 }
 
+// if the user wants to upload files we upload the files information to the database with the attachedfilecode what the user got when the postupload function ran, then we copy the file to the storage
 if(count($_FILES) > 0) {
 
     foreach($_FILES as $file) {
@@ -69,7 +73,7 @@ if(count($_FILES) > 0) {
     exit;
 }
 
-/* if the user like one of the posts we send postid and the "mood" if the gesture is like or dislike*/
+/* if the user like one of the posts we send postid and the "mood" to the persistence layer depends on the gesture is like or dislike*/
 if(isset($_POST["postId"])) {
     if($_POST["mood"] == "like") {
         $like = 1;
@@ -92,6 +96,7 @@ if(isset($_POST["postId"])) {
     }
 }
 
+// if the user like or dislike a post we recount the numberOfLikes or dislikes and for it we call the refreshPostLikeValues from persistence layer
 if(isset($_POST["reCountID"])) {
 
     $postLikeValue = $postObj->refreshPostLikeValues($_POST["reCountID"]);

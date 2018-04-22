@@ -1,9 +1,10 @@
 <?php
     $topicObj = new Topic();
+    $userObj = new User();
 
     if(isset($_SESSION["user"])) {
-        $favouriteTopics = $topicObj->getFavouriteTopics($_SESSION["user"]["userID"]);
-        $ownTopics = $topicObj->getOwnTopics($_SESSION["user"]["userID"]);
+        $favouriteTopics = $userObj->getFavouriteTopics($_SESSION["user"]["userID"]);
+        $ownTopics = $userObj->getOwnTopics($_SESSION["user"]["userID"]);
     }
 
     $hotTopics = $topicObj->getHotTopics();
@@ -44,7 +45,7 @@
                     <div class="col s2">
                         <div class="comments">
                             <div class="commentbg">
-                                <span><?php echo $hotTopic["numberOfPosts"]; ?></span>
+                                <span><?php echo ($hotTopic["numberOfPosts"] ? $hotTopic["numberOfPosts"] : "0"); ?></span>
                                 <div class="mark">
 
                                 </div>
@@ -90,7 +91,7 @@
                     <div class="col s2">
                         <div class="comments">
                             <div class="commentbg">
-                                <span><?php echo $latestTopic["numberOfPosts"]; ?></span>
+                                <span><?php echo ($latestTopic["numberOfPosts"] ? $latestTopic["numberOfPosts"] : "0"); ?></span>
                                 <div class="mark">
 
                                 </div>
@@ -134,7 +135,7 @@
                     <div class="col s2">
                         <div class="comments">
                             <div class="commentbg">
-                                <span><?php echo $favouriteTopic["numberOfPosts"]; ?></span>
+                                <span><?php echo ($favouriteTopic["numberOfPosts"] ? $favouriteTopic["numberOfPosts"] : "0"); ?></span>
                                 <div class="mark">
 
                                 </div>
@@ -177,7 +178,7 @@
                     <div class="col s2">
                         <div class="comments">
                             <div class="commentbg">
-                                <span><?php echo $ownTopic["numberOfPosts"]; ?></span>
+                                <span><?php echo ($ownTopic["numberOfPosts"] ? $ownTopic["numberOfPosts"] : "0"); ?></span>
                                 <div class="mark">
 
                                 </div>

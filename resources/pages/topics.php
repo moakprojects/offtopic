@@ -4,7 +4,7 @@
         $categoryObj = new Category();
         $categoryID = htmlspecialchars(trim($_SESSION["selectedCategoryID"]));
         $topics = $topicObj -> getTopicData($categoryID, $categoryObj);
-        $categoryName = $categoryObj -> getCategoryName();
+        $categoryName = $categoryObj->categoryName;
 ?>
 <div class="container contentContainer">
     <div class="row">

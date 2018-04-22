@@ -1,10 +1,12 @@
 $(document).ready(function(){
 
+	/* initialize carousel for default avatars */
 	$('.modal-trigger').click(function() {
 		$('.carousel').carousel();
 		$('.carousel').carousel('next');
 	});
 
+	/* send selected avatar image information from carousel */
 	$(document).on('click', '.carousel-item', function() {
 		$('#errorMsg').addClass('hide');
 		$('.preloader-wrapper').removeClass('hide');
@@ -23,6 +25,7 @@ $(document).ready(function(){
 
 	});
 
+	/* check and send uploaded avatar image */
 	$(document).on('change', '#avatarImg', function() {
 		$('#errorMsg').addClass('hide');
 		var property = $("#avatarImg")[0].files[0];
@@ -68,6 +71,7 @@ $(document).ready(function(){
 		}
 	});
 
+	/* user profile counter for statistics */
 	(function ($) {
 		$.fn.countTo = function (options) {
 			options = options || {};
@@ -168,10 +172,9 @@ $(document).ready(function(){
 	});
 });
 
-/* Activity chart */
-
 $(function () {
 
+	// initialize highcharts
 	Highcharts.setOptions({
 		chart: {
 			style: {
@@ -181,6 +184,7 @@ $(function () {
 		}
 	});
 
+	// get data from database to create Post distribution chart
 	$.post('/resources/controllers/userController.php', {requestPostDistributionChartData: true}, function(returnData) {
 
 		var obj = jQuery.parseJSON(returnData);
@@ -261,7 +265,7 @@ $(function () {
 	});
 
 	
-
+	// get data from database to create History chart
 	$.post('/resources/controllers/userController.php', {requestPostHistoryChartData: true}, function(returnData) {
 
 		var obj = jQuery.parseJSON(returnData);
@@ -327,6 +331,7 @@ $(function () {
 		}
 	});
   
+	// initialize colors for piechart
 	var pieColors = (function () {
 		var colors = [],
 			base = Highcharts.getOptions().colors[0],
@@ -339,7 +344,8 @@ $(function () {
 		}
 		return colors;
 	}());
-  // Build the chart
+	
+  // Build the piechart with static data
   Highcharts.chart('pieChart', {
 	colors: Highcharts.map(pieColors, function (color) {
 		return {
@@ -396,6 +402,7 @@ $(function () {
 	}]
   });
 
+  // get data from database to create Likes chart
   $.post('/resources/controllers/userController.php', {requestPostLikesChartData: true}, function(returnData) {
 	var obj = jQuery.parseJSON(returnData);
 
@@ -468,8 +475,7 @@ $(function () {
 
 });
 
-/* Togle menu for own things */
-
+/* Toggle menu for own things */
 var select = function(s) {
     return document.querySelector(s);
   },
@@ -524,6 +530,7 @@ function onDOMLoaded(e){
 	});
 }
 
+//get and display written post data and all related information
 function getOwnData(username) {
 	
 	$.post('/resources/controllers/userController.php', {requestOwnPosts: true}, function(returnData) {

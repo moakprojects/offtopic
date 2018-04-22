@@ -7,6 +7,7 @@ include "../../database/modification.php";
 include "../classes/User.php";
 $userObj = new User();
 
+//if a user wants to registrate we check the email and the username if it is already exist or not, if not we call create user function from persistence layer and we send a verification email
 if(isset($_POST["regEmail"])) {
 
     $regEmail = htmlspecialchars(trim($_POST["regEmail"]));
@@ -23,7 +24,7 @@ if(isset($_POST["regEmail"])) {
     } else if ($userDataByEmail == "not exist") {
 
         $regUsername = htmlspecialchars(trim($_POST["regUsername"]));
-        $userDataByUsername = $userObj->checkUserEmail($regUsername);
+        $userDataByUsername = $userObj->checkUsername($regUsername);
 
         if($userDataByUsername === "error") {
 
@@ -44,7 +45,8 @@ if(isset($_POST["regEmail"])) {
                 $emailTemplate = file_get_contents("../templates/verifyEmailTemplate.html");
 
                 $emailHash = md5($regEmail);
-                $verifyEmail = "http://offtopic.dev/verify/" . $emailHash;
+                $hostname = $_SERVER['HTTP_HOST'];
+                $verifyEmail = $hostname . "/verify/" . $emailHash;
 
                 $emailTemplate = str_replace("{{username}}", $regUsername, $emailTemplate);
                 $emailTemplate = str_replace("{{verify_url}}", $verifyEmail, $emailTemplate);
@@ -53,7 +55,7 @@ if(isset($_POST["regEmail"])) {
                 $headers .= "MIME-Version: 1.0" . "\r\n";
                 $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
 
-                //mail($regEmail, "Verify email address for OffTopic", $emailTemplate, $headers);
+                mail($regEmail, "Verify email address for OffTopic", $emailTemplate, $headers);
 
                 $result["data_type"] = 1;
                 $result["data_value"] = "Registration finished";
@@ -87,8 +89,9 @@ if(isset($_POST["regEmail"])) {
         echo json_encode($result);
         exit;
     }
-} 
+}
 
+//if a user wants to log in we check the given email and password
 if(isset($_POST["logID"])) {
 
     $logID = htmlspecialchars(trim($_POST["logID"]));
@@ -138,10 +141,11 @@ if(isset($_POST["logID"])) {
                 echo json_encode($result);
                 exit;
             }
-        } //intval
-    } //not exist else if
+        }
+    }
 }
 
+//if the user wants to change his or her avatar, depending on this is an uploaded image or default we call uploadProfileImage function
 if(isset($_FILES["file"])) {
     
     if(!($_FILES["file"]["error"] > 0)) 
@@ -163,6 +167,7 @@ if(isset($_FILES["file"])) {
 
 }
 
+//add a uniqui id for the image and upload it to database and copy to the storage
 function uploadProfileImage($filename, $tmpLocation) {
 
     global $userObj;
@@ -172,6 +177,7 @@ function uploadProfileImage($filename, $tmpLocation) {
 
     $loggedUser = $userObj->loggedUser($_SESSION["user"]["userID"]);
 
+    //if the user had own profile image we delete it from storage
     if($loggedUser["profileImage"] != "defaultAvatar.png") {
         $previousLocation = "../../public/images/upload/" . $loggedUser["profileImage"];
     }
@@ -198,6 +204,7 @@ function uploadProfileImage($filename, $tmpLocation) {
 
 }
 
+//if the user check the profile page we request data for user statistics
 if(isset($_POST["requestPostDistributionChartData"])) {
 
     $activiyData = $userObj->getInformationForPostDistributionChart($_SESSION["selectedUsername"]);
@@ -232,6 +239,7 @@ if(isset($_POST["requestPostDistributionChartData"])) {
     }
 }
 
+//if the user check the profile page we request data for user statistics
 if(isset($_POST["requestPostHistoryChartData"])) {
 
     $startDate = date('Y-m-d', strtotime('first day of ', strtotime('-6 months')));
@@ -270,6 +278,7 @@ if(isset($_POST["requestPostHistoryChartData"])) {
         exit;
 }
 
+//if the user check the profile page we request data for user statistics
 if(isset($_POST["requestPostLikesChartData"])) {
 
     $postLikesData = $userObj->getInformationForPostLikesChart($_SESSION["selectedUsername"]);
@@ -289,6 +298,7 @@ if(isset($_POST["requestPostLikesChartData"])) {
     }
 }
 
+//if the user check the profile page we request data for own posts
 if(isset($_POST["requestOwnPosts"])) {
     $createdPostsInTopicsData = $userObj->getCreatedPosts($_SESSION["selectedUsername"]);
     if($createdPostsInTopicsData) {

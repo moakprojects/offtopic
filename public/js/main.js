@@ -1,15 +1,14 @@
 $(document).ready(function(){
-    /* modal trigger */
-    // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+    /* initialize modals */
     $('.modal').modal();
     
+    /* registration process */
     $(document).on('click', '#regBtn', function() {
         var email = $('#regForm').find('.email');
         var username = $('#regForm').find('.username');
         var password = $('#regForm').find('.password');
         var passwordConfirm = $('#regForm').find('.passwordConfirm');
 
-        //var emailRegex = new RegExp("/^[a-zA-Z0-9_-]+([.][a-zA-Z0-9]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_-]+)*[.][a-zA-Z]{2,4}$/");
         var EMAIL_REGEXP = new RegExp('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$', 'i');
 
         if(!email["0"].value) {
@@ -54,6 +53,7 @@ $(document).ready(function(){
         }
     });
 
+    /* ask data from modal for the login */
     $(document).on('click', '#logBtn', function() {
         var loginID = $('#logForm').find('.loginID');
         var password = $('#logForm').find('.password');
@@ -62,6 +62,7 @@ $(document).ready(function(){
         userLogin(loginID["0"].value, password["0"].value, rememberMe["0"].checked, '.modalErrorMsg', 'modal');
     });
 
+    /* ask data from sidebar login form for the login */
     $(document).on('click', '#sideBarLogBtn', function() {
         var loginID = $('#sideBarLogForm').find('.loginID');
         var password = $('#sideBarLogForm').find('.password');
@@ -70,6 +71,7 @@ $(document).ready(function(){
         userLogin(loginID["0"].value, password["0"].value, rememberMe["0"].checked, '.sideBarErrorMsg', 'sideBar');
     });
 
+    /* ask data from verify page login form for the login */
     $(document).on('click', '#verifyLogBtn', function() {
         var loginID = $('#verifyLogForm').find('.loginID');
         var password = $('#verifyLogForm').find('.password');
@@ -78,7 +80,7 @@ $(document).ready(function(){
         userLogin(loginID["0"].value, password["0"].value, rememberMe["0"].checked, '.verifyErrorMsg', 'verifyPage');
     });
 
-    /* login function what we call if user click on Login button in the sidebar or in the login modal */
+    /* login function what we call if user click on Login button in the sidebar or in the login modal or in the verify page */
     function userLogin(loginID, password, rememberMe, errorMsg, location) {
 
         if (!loginID) {
@@ -111,6 +113,7 @@ $(document).ready(function(){
         }
     }
 
+    /* send request for logout */
     $(document).on('click', '#logOutBtn', function() {
         $.post('/resources/controllers/logoutController.php', {logout: true}, function(returnData) {
             window.location.assign('/home');
