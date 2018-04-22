@@ -1,5 +1,5 @@
 <div class="container contentContainer">
-    <div class="row">
+    <div class="row noBottomMargin">
         <div class="col s8"> 
             <h2>Explore Categories</h2>
             <div class="breadCrumb">

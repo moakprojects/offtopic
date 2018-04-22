@@ -7,7 +7,7 @@
         $categoryName = $categoryObj->categoryName;
 ?>
 <div class="container contentContainer">
-    <div class="row">
+    <div class="row noBottomMargin">
         <div class="col s8">
             <div class="titleSection">
                 <h2>Explore Topics</h2>
