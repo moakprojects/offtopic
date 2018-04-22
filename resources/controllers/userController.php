@@ -300,7 +300,8 @@ if(isset($_POST["requestPostLikesChartData"])) {
 
 //if the user check the profile page we request data for own posts
 if(isset($_POST["requestOwnPosts"])) {
-    $createdPostsInTopicsData = $userObj->getCreatedPosts($_SESSION["selectedUsername"]);
+    $selectedUsername = htmlspecialchars(trim($_SESSION["selectedUsername"]));
+    $createdPostsInTopicsData = $userObj->getCreatedPosts($selectedUsername);
     if($createdPostsInTopicsData) {
 
         $createdPostsInTopics = array();

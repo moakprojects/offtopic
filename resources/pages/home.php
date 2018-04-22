@@ -192,7 +192,7 @@
                             </div>
                             <div class="row noBottomMargin">
                                 <div class="col s12">
-                                    <p class="noMargin">34 Followers</p>
+                                    <p class="noMargin">4 Followers</p>
                                 </div>
                             </div>
                         </div>

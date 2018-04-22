@@ -199,6 +199,7 @@ function uploadPost() {
       } else {
         refreshPostContent(obj.data_value);
       } 
+      replyId = null;
     }
   });
 }

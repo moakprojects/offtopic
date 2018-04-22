@@ -345,7 +345,7 @@
                                         <div class="col s2">
                                             <div class="comments">
                                                 <div class="commentbg">
-                                                    <span><?php echo $createdTopic["numberOfPosts"]; ?></span>
+                                                    <span><?php echo ($createdTopic["numberOfPosts"] ? $createdTopic["numberOfPosts"] : '0'); ?></span>
                                                     <div class="mark">
 
                                                     </div>
@@ -359,7 +359,7 @@
                                                 </div>
                                                 <div class="row noBottomMargin">
                                                     <div class="col s12">
-                                                        <p class="noMargin"><?php echo $createdTopic["numberOfFollowers"]; ?> Followers</p>
+                                                        <p class="noMargin"><?php echo ($createdTopic["numberOfFollowers"] ? $createdTopic["numberOfFollowers"] : '0'); ?> Followers</p>
                                                     </div>
                                                 </div>
                                             </div>
