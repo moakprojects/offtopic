@@ -2,8 +2,26 @@
 
     class User {
         
+        private $userCreation = array();
+
         function __construct() {
 
+        }
+
+        function getOwn() {
+            return $this->userCreation;
+        }
+
+        function setOwn($value) {
+            $this->userCreation = $value;
+        }
+
+        public function __get($name) {
+            return $this->$name;
+        }
+
+        public function __set($name, $value) {
+            $this->name = $value;
         }
 
         function checkUserEmail($regEmail) {
@@ -228,5 +246,74 @@
                 $increaseNumberOfVisitors->execute();
             }
         }
+
+        function getCreatedPosts($username) {
+            global $db;
+            global $createdPostsQuery;
+    
+            if($createdPostsQuery) {
+                $createdPostsQuery->bindParam(":username", $username);
+                $createdPostsQuery->execute();
+    
+                return $createdPostsData = $createdPostsQuery->fetchall(PDO::FETCH_ASSOC);
+
+                $createdPostsInTopics = array();
+                foreach($createdPostsData as $createdPostInTopic) {
+                    $topicID = $createdPostInTopic['topicID'];
+                    if(!isset($createdPostsInTopicsData[$topicID])) {
+                        $createdPostsInTopics[$topicID] = array();
+                        $createdPostsInTopics[$topicID]["topicID"] = $createdPostInTopic["topicID"];
+                        $createdPostsInTopics[$topicID]["topicName"] = $createdPostInTopic["topicName"];
+                        $createdPostsInTopics[$topicID]["categoryID"] = $createdPostInTopic["categoryID"];
+                        $createdPostsInTopics[$topicID]["categoryName"] = $createdPostInTopic["categoryName"];
+                        $createdPostsInTopics[$topicID]["createdAt"] = $createdPostInTopic["createdAt"];
+                        $createdPostsInTopics[$topicID]["posts"] = array(); 
+                    }
+        
+                    $aux = array("postID" => $createdPostInTopic["postID"], "text" => $createdPostInTopic["text"], "postedOn" => $createdPostInTopic["postedOn"], "numberOfLikes" => $createdPostInTopic["numberOfLikes"], "numberOfDislikes" => $createdPostInTopic["numberOfDislikes"]);
+                    array_push($createdPostsInTopics[$topicID]["posts"], $aux);
+                }
+            } else {
+                return false;
+            }
+        }
+
+        function textTrimmer($longText, $length) {
+            if(strlen($longText) > $length) {
+                            
+                return $cuttedTopicText = substr($longText, 0, $length) . "...";  
+            } else {
+                return $longText; 
+            }
+        }
+
+        function getCreatedTopics($username) {
+            global $db;
+            global $createdTopicsQuery;
+    
+            if(isset($createdTopicsQuery)) {
+    
+                $createdTopicsQuery->bindParam(':username', $username);
+                $createdTopicsQuery->execute();
+    
+                if($createdTopicsQuery->rowCount() > 0) {
+                    $createdTopicsData = $createdTopicsQuery->fetchall(PDO::FETCH_ASSOC);
+                
+                    for($i = 0; $i < count($createdTopicsData); $i++) {
+                    
+                        $createdTopicsData[$i]["topicDescription"] = $this->textTrimmer($createdTopicsData[$i]["topicText"], 200);
+                        $createdTopicsData[$i]["shortTopicName"] = $this->textTrimmer($createdTopicsData[$i]["topicName"], 53);
+        
+                    }
+    
+                    return $createdTopicsData;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
     }
 ?>

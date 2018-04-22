@@ -17,7 +17,6 @@ $(document).on('change', '#avatarImg', function() {
         $('.preloader-wrapper').removeClass('hide');
       },
       success: function(data) {
-        console.log("data", data);
       }
     });
   }

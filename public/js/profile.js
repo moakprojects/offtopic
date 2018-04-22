@@ -8,9 +8,8 @@ $(document).ready(function(){
 	$(document).on('click', '.carousel-item', function() {
 		$('#errorMsg').addClass('hide');
 		$('.preloader-wrapper').removeClass('hide');
-		console.log('dfd', $(this).attr("id"));
 		$.post('/resources/controllers/userController.php', {avatarName: $(this).attr("id")}, function(returnData) {
-			console.log('returnDataDefaultKépen: ', returnData);
+
 			var obj = jQuery.parseJSON(returnData);
 			$('.preloader-wrapper').addClass('hide');
 			if(obj.data_type == 0) {
@@ -39,9 +38,8 @@ $(document).ready(function(){
 			$('#errorMsg').html("The size is too big");
 		} else {
 			var form_data = new FormData();
-			console.log("property", property);
 			form_data.append("file", property);
-			console.log('form_Data', form_data);
+
 			$.ajax({
 				url: '/resources/controllers/userController.php',
 				method: 'POST',
@@ -53,7 +51,7 @@ $(document).ready(function(){
 					$('.preloader-wrapper').removeClass('hide');
 				},
 				success: function(data) {
-					console.log('returnDataFeltöltöttKépen: ', data);
+
 					$('.preloader-wrapper').addClass('hide');
 					var obj = jQuery.parseJSON(data);
 					
@@ -265,11 +263,8 @@ $(function () {
 	
 
 	$.post('/resources/controllers/userController.php', {requestPostHistoryChartData: true}, function(returnData) {
-		console.log(returnData);
-		
-		var obj = jQuery.parseJSON(returnData);
 
-		console.log(obj);
+		var obj = jQuery.parseJSON(returnData);
 
 		if(obj.data_type === 1) {
 			
@@ -526,5 +521,19 @@ function onDOMLoaded(e){
 		var cl = $(this).attr('class');
 		$(this).attr('class', 'eggPath' + num);
 		num++;
+	});
+}
+
+function getOwnData(username) {
+	
+	$.post('/resources/controllers/userController.php', {requestOwnPosts: true}, function(returnData) {
+		
+		var obj = jQuery.parseJSON(returnData);
+	
+		if(obj.data_type === 1) {
+			$('.createdPosts').load('/profile/' + username + ' .createdPosts', {data: obj.data_value}, function() {
+				$('.ownPostTopicCard').eq(0).css('margin-top', '20px');
+			});
+		}
 	});
 }

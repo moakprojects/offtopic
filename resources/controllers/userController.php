@@ -289,4 +289,39 @@ if(isset($_POST["requestPostLikesChartData"])) {
     }
 }
 
+if(isset($_POST["requestOwnPosts"])) {
+    $createdPostsInTopicsData = $userObj->getCreatedPosts($_SESSION["selectedUsername"]);
+    if($createdPostsInTopicsData) {
+
+        $createdPostsInTopics = array();
+        foreach($createdPostsInTopicsData as $createdPostInTopic) {
+            $topicID = $createdPostInTopic['topicID'];
+            if(!isset($createdPostsInTopics[$topicID])) {
+                $createdPostsInTopics[$topicID] = array();
+                $createdPostsInTopics[$topicID]["topicID"] = $createdPostInTopic["topicID"];
+                $createdPostsInTopics[$topicID]["topicName"] = $createdPostInTopic["topicName"];
+                $createdPostsInTopics[$topicID]["categoryID"] = $createdPostInTopic["categoryID"];
+                $createdPostsInTopics[$topicID]["categoryName"] = $createdPostInTopic["categoryName"];
+                $createdPostsInTopics[$topicID]["createdAt"] = $createdPostInTopic["createdAt"];
+                $createdPostsInTopics[$topicID]["posts"] = array(); 
+            }
+            array_push($createdPostsInTopics[$topicID]["posts"], array("postID" => $createdPostInTopic["postID"], "text" => $createdPostInTopic["text"], "postedOn" => $createdPostInTopic["postedOn"], "numberOfLikes" => $createdPostInTopic["numberOfLikes"], "numberOfDislikes" => $createdPostInTopic["numberOfDislikes"]));
+        }
+
+        
+
+        $result["data_type"] = 1;
+        $result["data_value"] = $createdPostsInTopics;
+
+        echo json_encode($result);
+        exit;
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+        exit;
+    }
+}
+
 ?>

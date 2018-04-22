@@ -10,14 +10,13 @@
             include("resources/modals/avatarChange.php");
         } else {
             $myprofile = false;
-            $userObj->increaseNumberOfVisitors($_SESSION["selectedUsername"]);
+            $userObj->increaseNumberOfVisitors($selectedUsername);
         }
         $selectedUserData = $userObj -> getSelectedUser($selectedUsername);
         $favouriteCategories = $categoryObj->getFavouriteCategoryData($selectedUserData["userID"]);
         $favouriteTopics = $topicObj->getFavouriteTopics($selectedUserData["userID"]);
-        $likedPosts = $postObj->getLikedPosts($_SESSION["selectedUsername"]);
-        $createdTopics = $topicObj->getCreatedTopics($_SESSION["selectedUsername"]);
-        $createdPosts = $postObj->getCreatedPosts($_SESSION["selectedUsername"]);
+        $likedPosts = $postObj->getLikedPosts($selectedUsername);
+        $createdTopics = $userObj->getCreatedTopics($selectedUsername);
 ?>
 <div class="container contentContainer">
     <div class="row breadCrumbContainer">
@@ -88,8 +87,8 @@
                 <ul class="tabs tabs-transparent tabList">
                     <li class="tab"><a href="#userStatistics">User Statistics</a></li>
                     <?php echo (!$favouriteCategories && !$favouriteTopics && !$likedPosts ? "" : "<li class='tab'><a href='#favourites'>Favourites</a></li>");  ?>
-                    <li class="tab"><a href="#ownThings">My own things</a></li>
-                    <li class="tab"><a href="#stat">General informations</a></li>
+                    <li class="tab"><a href="#ownThings" onclick="getOwnData('<?php echo $selectedUsername; ?>')">My own things</a></li>
+                    <li class="tab"><a href="#general">General informations</a></li>
                     <li class="tab"><a href="#set">Settings</a></li>
                 </ul>
                 <div id="userStatistics">
@@ -316,6 +315,7 @@
                     <div class="row noBottomMargin">
                         <div id="animationWindow"></div>
                     </div>
+                    <div id="valami">
                     <div class="row noBottomMargin">
                         <div class="col s6">
                             <p class="ownTitle noMargin">Created Topics</p>
@@ -372,112 +372,172 @@
                         </div>
                     </div>
                     <div class="row createdPosts hide">
-                        <div class="col s10 offset-s1">
+                        <div class="col s10 offset-s1 ownConteiner">
+                            <?php
+                            if(isset($_POST["data"])) {
+                                $userCreations = $_POST["data"];
+                                if($userCreations) {
+                                    foreach($userCreations as $userCreation) {
+                            ?>
                             <div class="row noMargin">
                                 <div class="contentCard col s10 offset-s1 noBottomMargin ownPostTopicCard">
                                     <div class="col s12 ownPostTopicContainer contentCardBody">
-                                        <h3>,bmbmbmb,b,</h3>
-                                        <p class="redirectLink"><a href="/topics/1">View the topic <i class="fas fa-angle-double-right"></i></a></p>
+                                        <h3><?php echo $userCreation["topicName"]; ?></h3>
+                                        <p class="redirectLink"><a href="/topics/<?php echo $userCreation["topicID"]; ?>">View the topic <i class="fas fa-angle-double-right"></i></a></p>
                                         <div class="clear"></div>
                                         <div class="row ownPostTopicBottomSection">
                                             <div class="col s4">
-                                                <a href="/categories/1"><div class="chip ownTopicCategory topicCategory">Everyday life</div></a>
+                                                <a href="/categories/<?php echo $userCreation["categoryID"]; ?>"><div class="chip ownTopicCategory topicCategory"><?php echo $userCreation["categoryName"]; ?></div></a>
                                             </div>
                                             <div class="col s6 offset-s2">
-                                                <p class="right-align ownCreatedAt"><em>Created at: 2018-04-12 12:15:17</em></p>
+                                                <p class="right-align ownCreatedAt"><em>Created at: <?php echo $userCreation["createdAt"]; ?></em></p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <?php
+                                foreach($userCreation["posts"] as $post) {
+                            ?>
                             <div class="row noMargin">
                                 <div class="threeDot col s12 center-align"></div>
                             </div>
                             <div class="row noMargin">
                                 <div class="contentCard noMargin col s12 ownPostCard">
                                     <div class="col s10 ownPostContainer contentCardBody">
-                                        <p class="ownPostText">jkdsgfjks skjldjg sdljf jldgjs dsljfkdgkfjgsd sdljgf k sdfgksjd sds jdsjgs skjg ldsgf dkjg lgkjlsdg </p>
+                                        <p class="ownPostText"><?php echo $post["text"]; ?></p>
                                         <div class="clear"></div>
                                         <div class="row ownPostBottomSection valign-wrapper">
                                             <div class="col s4">
-                                                <p class="left-align ownCreatedAt"><em>Created at: 2018-04-12 12:15:17</em></p>
+                                                <p class="left-align ownCreatedAt"><em>Posted on: <?php echo $post["postedOn"]; ?></em></p>
                                             </div>
                                             <div class="col s6 offset-s2">
-                                                <p class="viewPost right-align"><a href="/topics/1">View the post <i class="fas fa-angle-double-right"></i></a></p>
+                                                <p class="viewPost right-align"><a href="/posts/<?php echo $post["postID"]; ?>">View the post <i class="fas fa-angle-double-right"></i></a></p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col s2 valign-wrapper ownPostRightSection">
                                         <div>
-                                            <div class="comments center-align">
-                                                <div class="commentbg">
-                                                    <span>89</span>
-                                                    <div class="mark">
-
-                                                    </div>
+                                            <div class="row center-align noBottomMargin">
+                                                <div class="col s6">
+                                                    <i class="far fa-thumbs-up fa-lg"></i>
+                                                    <span><?php echo ($post["numberOfLikes"] ? $post["numberOfLikes"] : "0"); ?></span>
                                                 </div>
-                                            </div>
-                                            <div class="time center-align">
-                                                <div class="row heartContainer noBottomMargin">
-                                                    <div class="col s12">
-                                                        <i class="fas fa-heart fa-2x center-align"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="row noBottomMargin">
-                                                    <div class="col s12">
-                                                        <p class="noMargin">34 Followers</p>
-                                                    </div>
+                                                <div class="col s6">
+                                                    <i class="far fa-thumbs-down fa-lg center-align"></i>
+                                                    <span><?php echo ($post["numberOfDislikes"] ? $post["numberOfDislikes"] : "0"); ?></span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row noMargin">
-                                <div class="threeDot col s12 center-align"></div>
+                            <?php
+                                }
+                            ?>
+                            <?php
+                                    }
+                                }
+                            }
+                            ?>
+                        </div>
+                    </div>
                             </div>
-                            <div class="row noMargin">
-                                <div class="contentCard noMargin col s12 ownPostCard">
-                                    <div class="col s10 ownPostContainer contentCardBody">
-                                        <p class="ownPostText">jkdsgfjks skjldjg sdljf jldgjs dsljfkdgkfjgsd sdljgf k sdfgksjd sds jdsjgs skjg ldsgf dkjg lgkjlsdg </p>
-                                        <div class="clear"></div>
-                                        <div class="row ownPostBottomSection valign-wrapper">
-                                            <div class="col s4">
-                                                <p class="left-align ownCreatedAt"><em>Created at: 2018-04-12 12:15:17</em></p>
-                                            </div>
-                                            <div class="col s6 offset-s2">
-                                                <p class="viewPost right-align"><a href="/topics/1">View the post <i class="fas fa-angle-double-right"></i></a></p>
-                                            </div>
-                                        </div>
+                </div>
+                <div id="general">
+                    <div class="row">
+                        <div class="col s6">
+                            <p class="profileTitle">Personal Information</p>
+                            <div class="personalInformationContainer col s10">
+                                <div class="row">
+                                    <div class="col s5">
+                                        <div class="col s1 personalInformationIcon"> <i class="far fa-user"></i></div>
+                                        <div class="col s10 personalInformationLabel">Username:</div>
                                     </div>
-                                    <div class="col s2 valign-wrapper ownPostRightSection">
-                                        <div>
-                                            <div class="comments center-align">
-                                                <div class="commentbg">
-                                                    <span>89</span>
-                                                    <div class="mark">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="time center-align">
-                                                <div class="row heartContainer noBottomMargin">
-                                                    <div class="col s12">
-                                                        <i class="fas fa-heart fa-2x center-align"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="row noBottomMargin">
-                                                    <div class="col s12">
-                                                        <p class="noMargin">34 Followers</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="col s7 right-align">
+                                        uuuuu
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col s5">
+                                        <div class="col s1 personalInformationIcon"><i class="far fa-envelope"></i></div>
+                                        <div class="col s10 personalInformationLabel">Email:</div>
+                                    </div>
+                                    <div class="col s7 right-align">
+                                        uuuuu@uuuuu.hu
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s5">
+                                        <div class="col s1 personalInformationIcon"><i class="far fa-calendar"></i></div>
+                                        <div class="col s10 personalInformationLabel">Birthdate:</div>
+                                    </div>
+                                    <div class="col s7 right-align">
+                                        15-01-1999 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s5">
+                                        <div class="col s1 personalInformationIcon"><i class="fas fa-globe"></i></div>
+                                        <div class="col s10 personalInformationLabel">Country/Region:</div>
+                                    </div>
+                                    <div class="col s7 right-align">
+                                        Denmark
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s5">
+                                        <div class="col s1 personalInformationIcon"><i class="fas fa-circle-notch"></i></div>
+                                        <div class="col s10 personalInformationLabel">Rank level:</div>
+                                    </div>
+                                    <div class="col s7 right-align">
+                                        1
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s5">
+                                        <div class="col s1 personalInformationIcon"><i class="fas fa-history"></i></div>
+                                        <div class="col s10 personalInformationLabel">Member for:</div>
+                                    </div>
+                                    <div class="col s7 right-align">
+                                        1 year, 7 month
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s5">
+                                        <div class="col s1 personalInformationIcon"><i class="far fa-clock"></i></div>
+                                        <div class="col s10 personalInformationLabel">Last seen:</div>
+                                    </div>
+                                    <div class="col s7 right-align">
+                                        5 minutes ago
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s5">
+                                    <div class="col s1 personalInformationIcon"><i class="far fa-smile"></i></div>
+                                        <div class="col s10 personalInformationLabel">About me:</div>
+                                    </div>
+                                    <div class="col s7 right-align">
+                                        What about us?
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="col s6">
+                            <p class="profileTitle">Badges</p>
+                            <div class="row badgeContainer">
+                                <div class="col s5 badge center-align"><i class="fas fa-circle dot"></i>Student</div>
+                                <div class="col s5 badge center-align"><i class="fas fa-circle dot"></i>Teacher</div>
+                                <div class="col s5 badge center-align"><i class="fas fa-circle dot"></i>Autobiographer</div>
+                            </div>
+                            <p class="nextBadgeTitle">Next badge:</p>
+                            <div class="row badgeContainer">
+                                <div class="col s5 badge nextBadge center-align tooltipped" data-position="bottom" data-tooltip="Read the entire homepage"><i class="fas fa-circle dot"></i>Informed</div> <i class="fas fa-bars"></i>
                             </div>
                         </div>
                     </div>
+                                
                 </div>
                 <div id="set"><h1>itt lennének a settingek</h1></div>
             </div>

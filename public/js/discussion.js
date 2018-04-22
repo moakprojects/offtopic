@@ -45,12 +45,9 @@ customButton.addEventListener('click', function() {
       $('#errorMsg').addClass('hide');    
       errorMsg = "";    
       $('#errorMsgSeparator').addClass('hide');
-      Array.prototype.push.apply(currentFiles, input.files);
-
-      console.log('upload: ', currentFiles);      
+      Array.prototype.push.apply(currentFiles, input.files);      
       
       validateAttachFile();
-      console.log("error a futás végén: ", errorMsg);
       if(errorMsg != "") {
         $('#errorMsg').removeClass('hide');
         if(currentFiles.length > 0) {
@@ -62,7 +59,7 @@ customButton.addEventListener('click', function() {
 });
 
 $(document).on('change', '.ql-editor', function() {
-  console.log("változok, változok, egész nap csak változok");
+  
 });
 
 quill.on("text-change", function(delta, oldDelta, source) {
@@ -80,27 +77,20 @@ function validateAttachFile() {
     var fileName = currentFiles[i].name;
     var fileExtension = fileName.split('.').pop().toLowerCase();
     var displayedFileName = fileName;
-    console.log("filename", fileName);
-    console.log("displayed", displayedFileName);
-    console.log("length", fileName.length);
-    console.log("extlength", fileExtension.length);
-    console.log("össz", 26 - fileExtension.length);
     if(fileName.length > 27 + fileExtension.length) {
       var cuttedFileName = fileName.substring(0, 27);
       displayedFileName = cuttedFileName + '....' + fileExtension;
     }
-    console.log('aktuális fájl: ', currentFiles[i]);
+
     var fileSize = currentFiles[i].size;
 
     if(jQuery.inArray(fileExtension, ['png', 'jpg', 'jpeg', 'pdf', 'doc', 'docx', 'mp4', 'mpeg', 'txt', 'ppt', 'pptx', 'xls', 'xlsx', 'epub']) == -1) {
       errorMsg += "<i>" + fileName + "</i> has invalid file type<br>";
-      console.log("rossz kiterjesztés");
-      console.log("error a rossz kiterjesztésben", errorMsg);
+
       removeAttachFile(i);
     } else if(fileSize > 4000000) {
       errorMsg += "The size of <i>" + fileName + "</i> is too big<br>";
-      console.log("nagy méret");
-      console.log("error a nagy méretben", errorMsg);
+
       removeAttachFile(i);
     } else {
       $('#attachFiles').append("<li><span>" + displayedFileName + "</span><span onclick='removeAttachFile(" + i + ")'><i class='material-icons'>clear</i></span></li>");
@@ -109,19 +99,13 @@ function validateAttachFile() {
 }
 
 function removeAttachFile(index) {
-  console.log('index: ', index);
-  console.log('törlés előtt: ', currentFiles);
   
   currentFiles.splice(index, 1);
-
-  console.log('törlés után: ', currentFiles);
   
   validateAttachFile();
 }
 
 function likePost(postId) {
-  console.log("like id, ", postId);
-
   $.post('/resources/controllers/discussionController.php', {postId: postId, mood: "like"}, function(returnData) {
 
     var obj = jQuery.parseJSON(returnData);
@@ -131,7 +115,6 @@ function likePost(postId) {
         var objRecount = jQuery.parseJSON(data);
         if(objRecount.data_type === 1) {
           var aux = '.likeValue' + postId;
-          console.log("like valu: ", objRecount);
           $(aux).html(objRecount.data_value.numberOfLikes);
           var likeBtn = '.likeFloatBtn' + postId;
           var dislikeBtn = '.dislikeFloatBtn' + postId;
@@ -146,8 +129,6 @@ function likePost(postId) {
 }
 
 function dislikePost(postId) {
-  console.log("dislike id, ", postId);
-
   $.post('/resources/controllers/discussionController.php', {postId: postId, mood: "dislike"}, function(returnData) {
     
     var obj = jQuery.parseJSON(returnData);
@@ -258,7 +239,7 @@ function scrollToEditor() {
 
 function likeTopic(userId, topicId, action) {
   $.post('/resources/controllers/topicController.php', {userId: userId, favouriteSelectedTopic: topicId, action: action}, function(data) {
-    console.log("data", data);
+    
     var obj = jQuery.parseJSON(data);
     if(obj.data_type === 1) {
       if(obj.data_value === "added") {

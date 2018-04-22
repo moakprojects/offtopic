@@ -9,9 +9,6 @@ $(document).ready(function(){
         var password = $('#regForm').find('.password');
         var passwordConfirm = $('#regForm').find('.passwordConfirm');
 
-        console.log("password", password);
-        console.log("passwordHossz", password["0"].value.length);
-
         //var emailRegex = new RegExp("/^[a-zA-Z0-9_-]+([.][a-zA-Z0-9]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_-]+)*[.][a-zA-Z]{2,4}$/");
         var EMAIL_REGEXP = new RegExp('^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$', 'i');
 
@@ -42,12 +39,10 @@ $(document).ready(function(){
         } else {
             $('.modalErrorMsg').find('p').html('');
             $('.modalErrorMsg').addClass('hide');
-            console.log("ittvan a küldés előtt");
+
             $.post('resources/controllers/userController.php', {regEmail: email["0"].value, regUsername: username["0"].value, regPassword: password["0"].value}, function(returnData) {
-                console.log("visszajött adat");
-                console.log(returnData);
+
                 var obj = jQuery.parseJSON(returnData);
-					console.log(obj);
                 if(obj.data_type == 0) {
                     $('.modalErrorMsg').removeClass('hide');
                     $('.modalErrorMsg').find('p').html(obj.data_value);
@@ -72,8 +67,6 @@ $(document).ready(function(){
         var password = $('#sideBarLogForm').find('.password');
         var rememberMe = $('#sideBarLogForm').find('#rememberMe');
 
-        console.log("remember", rememberMe);
-
         userLogin(loginID["0"].value, password["0"].value, rememberMe["0"].checked, '.sideBarErrorMsg', 'sideBar');
     });
 
@@ -82,17 +75,11 @@ $(document).ready(function(){
         var password = $('#verifyLogForm').find('.password');
         var rememberMe = $('#verifyLogForm').find('#rememberMe');
 
-        console.log(loginID);
-        console.log(password);
-        console.log(rememberMe);
-
         userLogin(loginID["0"].value, password["0"].value, rememberMe["0"].checked, '.verifyErrorMsg', 'verifyPage');
     });
 
     /* login function what we call if user click on Login button in the sidebar or in the login modal */
     function userLogin(loginID, password, rememberMe, errorMsg, location) {
-
-        console.log('juhuuuu');
 
         if (!loginID) {
             $(errorMsg).removeClass('hide');
@@ -105,12 +92,7 @@ $(document).ready(function(){
             $(errorMsg).addClass('hide');
             $.post('/resources/controllers/userController.php', {logID: loginID, logPassword: password, rememberMe: rememberMe}, function(returnData) {
 
-                console.log("return data");
-                console.log("rd", returnData);
-
                 var obj = jQuery.parseJSON(returnData);
-
-                console.log("obj", obj);
 
                 if(obj.data_type == 0) {
                     $(errorMsg).removeClass('hide');
@@ -124,17 +106,13 @@ $(document).ready(function(){
                     } else {
                         window.location.assign('/home');
                     }
-
-                    console.log("ittvanavégén");
                 }
             });
         }
     }
 
     $(document).on('click', '#logOutBtn', function() {
-        console.log("eljut az ajaxig");
         $.post('/resources/controllers/logoutController.php', {logout: true}, function(returnData) {
-            console.log("return");
             window.location.assign('/home');
         });
     });

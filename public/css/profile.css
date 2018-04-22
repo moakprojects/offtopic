@@ -717,6 +717,7 @@
 .ownPostTopicCard {
     height: 135px;
     box-shadow: 2px 2px 9px #c9cccd;
+    margin-top: 100px;
 }
 
 .ownPostTopicContainer {
@@ -742,7 +743,6 @@
 .ownPostCard {
     height: 135px;
     box-shadow: 2px 2px 9px #c9cccd;
-    min-height: 190px !important;
     padding-top: 15px !important;
     padding-bottom: 15px !important;
 }
@@ -755,7 +755,11 @@
 }
 
 .ownPostRightSection {
-    display: block;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    color: rgb(114, 114, 114);
 }
 
 /* three dots */
@@ -766,4 +770,50 @@
     color: #9da6aa;
     font-weight: 100;
     text-shadow: 2px 2px 6px #9da6aa;
+}
+
+/* General information section */
+
+.profileTitle {
+    color: #363838;
+    font-size: 25px;
+}
+
+.personalInformationContainer {
+    box-shadow:2px 2px 9px #c9cccd;
+    border-radius: 2px;
+    padding: 20px 20px 0 20px !important;
+    margin-left: 15px !important;
+}
+
+.personalInformationIcon {
+    padding: 0px !important;
+}
+
+.personalInformationLabel {
+    padding-left: 8px !important;
+}
+
+.badge {
+    color: #fff;
+    background:#204d52;
+    margin: 0px 15px 15px 15px;
+}
+
+.badge svg {
+    margin-bottom: 3px;
+    margin-right: 5px;
+    font-size: 6.5px;
+}
+
+.badgeContainer {
+    margin: 0px 20px !important;
+}
+
+.nextBadgeTitle {
+    
+}
+
+.nextBadge {
+    background: #40b19e;
 }

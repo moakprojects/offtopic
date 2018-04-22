@@ -200,34 +200,4 @@ class Post {
             return $likedPostData;
         }
     }
-
-    function getcreatedPosts($username) {
-        global $db;
-        global $createdPostsQuery;
-
-        if($createdPostsQuery) {
-            $createdPostsQuery->bindParam(":username", $username);
-            $createdPostsQuery->execute();
-
-            $createdPostsData = $createdPostsQuery->fetchall(PDO::FETCH_ASSOC);
-
-            $data = array();
-            foreach ($createdPostsData as $item) {
-                $key = $item['topicID']; // or $item['info_id']
-                if (!isset($data[$key])) {
-                    $data[$key] = array();
-                    $data[$key]["topicID"] = $item["topicID"];
-                    $data[$key]["topicName"] = $item["topicName"];
-                    $data[$key]["categoryName"] = $item["categoryName"];
-                    $data[$key]["createdAt"] = $item["createdAt"];
-                    $data[$key]["posts"] = array();
-                }
-
-                $insideArray = array("postID" => $item["postID"], "text" => $item["text"], "postedOn" => $item["postedOn"], "numberOfLikes" => $item["numberOfLikes"], "numberOfDislikes" => $item["numberOfDislikes"]);
-                array_push($data[$key]["posts"], $insideArray);
-            }
-
-            return $data;
-        }
-    }
 }
