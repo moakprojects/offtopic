@@ -10,7 +10,7 @@
     $hotTopics = $topicObj->getHotTopics();
 ?>
 <div class="container contentContainer">
-    <div class="row">
+    <div class="row noBottomMargin">
         <div class="col s8"> 
             <h2>Dashboard</h2>
             <ul class="tabs tabs-transparent tabsContainer">
