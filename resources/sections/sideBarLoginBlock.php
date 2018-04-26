@@ -6,7 +6,7 @@
             <input type="text" name="userName" Placeholder="Email or username" class="loginID col s8 offset-s1">    
         </div>
         <div class="row">
-            <input type="password" name="password" Placeholder="Password" class="password col s8 offset-s1">    
+            <input type="password" name="password" Placeholder="Password" id="sideBarPassword" class="password col s8 offset-s1">    
         </div>
         <div class="row">
             <div class="col s6  offset-s1 rememberMeContainer">

@@ -61,7 +61,7 @@
                                     <input type="text" name="userName" Placeholder="Email or username" class="col s10 offset-s1 loginID">    
                                 </div>
                                 <div class="row">
-                                    <input type="password" name="password" Placeholder="Password" class="col s10 offset-s1 password">    
+                                    <input type="password" name="password" Placeholder="Password" id="verifyPagePassword" class="col s10 offset-s1 password">    
                                 </div>
                                 <div class="row">
                                     <div class="col s6  offset-s1 rememberMeContainer">

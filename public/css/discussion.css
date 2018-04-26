@@ -78,6 +78,10 @@ strong {
     margin-top: 20px;
 }
 
+.sideBarBlock .categoryContainer a:hover {
+    color: #2196f3;
+}
+
 .sideBarBlock .categoryContainer > a {
     margin-top: 15px;
     display: block;

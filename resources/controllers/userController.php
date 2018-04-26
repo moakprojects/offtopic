@@ -55,7 +55,7 @@ if(isset($_POST["regEmail"])) {
                 $headers .= "MIME-Version: 1.0" . "\r\n";
                 $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
 
-                mail($regEmail, "Verify email address for OffTopic", $emailTemplate, $headers);
+                //mail($regEmail, "Verify email address for OffTopic", $emailTemplate, $headers);
 
                 $result["data_type"] = 1;
                 $result["data_value"] = "Registration finished";
