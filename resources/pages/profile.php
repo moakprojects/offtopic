@@ -575,34 +575,106 @@
                                         <div class="col s4 noLeftPadding">
                                             <label>Date of Birth</label>
                                             <select class="browser-default">
-                                                <option value="" disabled selected>Choose a day</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                            </select> 
-                                        </div>
-                                        <div class="col s4">
-                                            <label class="noLabel">D</label>
-                                            <select class="browser-default">
                                                 <option value="" disabled selected>Choose a month</option>
                                                 <option value="1">January</option>
                                                 <option value="2">February</option>
                                                 <option value="3">March</option>
                                             </select> 
                                         </div>
-                                    </div>
-                                    <div class="row accountInputContainer">
-                                        <div class="input-field accountInput">
-                                            <input value="Budapest, Magyarország" id="newlocation" type="text" class="validate noBottomMargin">
-                                            <label class="active" for="newlocation">Location</label>
+                                        <div class="col s4">
+                                            <label class="noLabel">D</label>
+                                            <select class="browser-default">
+                                                <option value="" disabled selected>Choose a day</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select> 
                                         </div>
                                     </div>
                                     <div class="row accountInputContainer">
-                                        <a class="waves-effect waves-light btn blue">Save</a>
+                                        <div class="input-field accountInput">
+                                            <input value="Budapest, Magyarország" class="autocomplete" id="newlocation" type="text" class="validate noBottomMargin">
+                                            <label class="active" for="newlocation">Location</label>
+                                        </div>
+                                    </div>
+                                    <div class="row accountInputContainer right-align col s9">
+                                        <a class="waves-effect waves-light btn blue" id="saveAccountSettings">Save</a>
                                     </div>
                                 </form>
                             </div>
-                            <div id="notifications">Tab 4</div>
+                            <div id="notifications" class="col s10">
+                                <div class="row noti">
+                                    <p class="notiTitle col s4 noMargin">Desktop Notifications</p>
+                                    <div class="switch col s4">
+                                        <label>
+                                            Off
+                                        <input type="checkbox">
+                                        <span class="lever"></span>
+                                            On
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="labeledNoti">
+                                    <div class="row noMargin">
+                                        <p class="notiTitle noLeftPadding col s4 noMargin">Notify me when liked</p>
+                                        <div class="col s8 notiOptionsContainer">
+                                            <div class="notiOptions">
+                                                <label class="white"> 
+                                                    <input name="notification" type="radio" checked />
+                                                    <span>My Topic</span>
+                                                </label>
+                                            </div>
+                                            <div class="notiOptions">
+                                                <label class="white">
+                                                    <input name="notification" type="radio" />
+                                                    <span>My Post</span>
+                                                </label>
+                                            </div>
+                                            <div class="notiOptions">
+                                                <label class="white">
+                                                    <input name="notification" type="radio" />
+                                                    <span>Everything</span>
+                                                </label>
+                                            </div>
+                                            <div class="notiOptions">
+                                                <label class="white">
+                                                    <input name="notification" type="radio" />
+                                                    <span>Nothing</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="inputHelper">When someone liked my topic, my post, both of them or none of them depending of these settings</span>
+                                </div>  
+                                <div class="row noti">
+                                    <p class="notiTitle col s4 noMargin">Weekly Newsletter</p>
+                                    <div class="switch col s4">
+                                        <label>
+                                            Off
+                                        <input type="checkbox">
+                                        <span class="lever"></span>
+                                            On
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="noti">
+                                    <div class="row noMargin">
+                                        <p class="notiTitle noLeftPadding col s4 noMargin">Activity Summary</p>
+                                        <div class="switch labeledSwitch col s4">
+                                            <label>
+                                                Off
+                                            <input type="checkbox">
+                                            <span class="lever"></span>
+                                                On
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <span class="inputHelper">When I don't visit here, send me an email summary of popular topics and replies</span>
+                                </div> 
+                                <div class="right-align col s11 noRightPadding saveNotificationSettingsBtn">
+                                    <a class="waves-effect waves-light btn blue right-align" id="saveNotificationSettings" >Save</a>
+                                </div> 
+                            </div>
                             <div id="deleteAccount">
                                 <div class="col s11 deleteDescriptionContainer">
                                     <p class="deleteDescription">
@@ -617,8 +689,11 @@
                                         </li>
                                     </ul>
                                     <div class="deleteAccount">
-                                        <input type="checkbox"  id="approvedDeletion" />
+                                        <input type="checkbox" id="approvedDeletion"/>
                                         <label for="approvedDeletion">I have read the information stated above and understand the implications of having my profile deleted. I wish to proceed with the deletion of my profile.</label>
+                                    </div>
+                                    <div class="right-align">
+                                        <a class="waves-effect waves-light btn blue disabled right-align" id="deleteProfile" >Delete Profile</a>
                                     </div>
                                 </div>
                             </div>

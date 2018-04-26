@@ -894,6 +894,10 @@
     color: #039be5;
 }
 
+#modifyAccount {
+    margin-left: 22px !important;
+}
+
 .inputHelper {
     display: block;
     margin-top: 5px;
@@ -916,12 +920,88 @@
     text-justify: inter-word;
 }
 
+.deleteDescription {
+    margin-bottom: 40px;
+}
+
 .first {
     margin-bottom: 10px;
 }
   
-   
-.checkbox-blue input[type="checkbox"]:not(:checked) + label:before{
-    border: 2px solid indigo;
-    background: transparent;
+.deleteAccount {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+#approvedDeletion:checked + label:before{ 
+    border-right: 2px solid #039be5;
+    border-bottom: 2px solid #039be5;
+}
+
+#approvedDeletion + label {
+    color: #000;
+}
+
+#notifications {
+    margin-top: 10px;
+}
+
+.switch label input[type=checkbox]:checked+.lever {
+    background-color: #039be5;
   }
+  
+.switch label input[type=checkbox]:checked+.lever:after {
+    background-color: #039be5;
+}
+
+.noti {
+    margin-bottom: 40px;
+}
+
+.labeledNoti {
+    margin-bottom: 30px;
+}
+
+.labeledSwitch {
+    padding-left: 8px !important;
+}
+
+.notiOptionsContainer {
+    margin-top: -4px;
+    padding-left: 5px !important;
+}
+
+.notiOptions label {
+    float: left;
+    width: 100px;
+	margin: 0px;
+    background-color: #FFF;
+    border: 1px solid #D0D0D0;
+    overflow: auto;
+}
+
+.notiOptions label span {
+    text-align: center;
+    font-size: 13px;
+    padding: 5px 0px;
+    display: block;
+}
+
+.notiOptions label input {
+    position: absolute;
+    top: -20px;
+}
+
+.notiOptions input:checked + span {
+    background-color: #039be5;
+    color: white;
+}
+
+.notiOptions .white {
+    background-color: #FFFFFF;
+    color: #000;
+}
+
+.saveNotificationSettingsBtn {
+    margin-left: 5px;
+}
