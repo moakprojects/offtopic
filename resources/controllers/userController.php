@@ -51,7 +51,7 @@ if(isset($_POST["regEmail"])) {
                 $emailTemplate = str_replace("{{username}}", $regUsername, $emailTemplate);
                 $emailTemplate = str_replace("{{verify_url}}", $verifyEmail, $emailTemplate);
 
-                $headers = "FROM: noreply@offtopic.dev" . "\r\n";
+                $headers = "FROM: noreply@off-topic.tk" . "\r\n";
                 $headers .= "MIME-Version: 1.0" . "\r\n";
                 $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
 

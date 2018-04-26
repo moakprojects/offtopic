@@ -87,9 +87,9 @@
                 <ul class="tabs tabs-transparent tabList">
                     <li class="tab"><a href="#userStatistics">User Statistics</a></li>
                     <?php echo (!$favouriteCategories && !$favouriteTopics && !$likedPosts ? "" : "<li class='tab'><a href='#favourites'>Favourites</a></li>");  ?>
-                    <li class="tab"><a href="#ownThings" onclick="getOwnData('<?php echo $selectedUsername; ?>')">My own things</a></li>
+                    <li class="tab"><a href="#ownThings" onclick="getOwnData('<?php echo $selectedUsername; ?>')">Own things</a></li>
                     <li class="tab"><a href="#general">General informations</a></li>
-                    <li class="tab"><a href="#set">Settings</a></li>
+                    <li class="tab"><a href="#settings">Settings</a></li>
                 </ul>
                 <div id="userStatistics">
                     <div class="row">
@@ -539,7 +539,91 @@
                     </div>
                                 
                 </div>
-                <div id="set"><p>In progress</p></div>
+                <div id="settings">
+                    <div class="row settings">
+                        <div class="col s2 verticalTabContainer">
+                            <ul class="tabs verticalTabs">
+                                <li class="tab"><a href="#modifyAccount">Account</a></li>
+                                <li class="tab"><a href="#notifications">Notifications</a></li>
+                                <li class="tab"><a href="#deleteAccount">Delete Profile</a></li>
+                            </ul>
+                        </div>
+                        <div class="col s9 verticalTabContent">
+                            <div id="modifyAccount">
+                                <form class="accountForm" action="" method="post" id="accountForm">  
+                                    <div class="row">
+                                        <div class="input-field accountInput">
+                                            <input value="uuuuu" id="newusername" type="text" class="validate noBottomMargin">
+                                            <label class="active" for="newusername">Display name</label>
+                                            <span class="inputHelper">People can mention you as @uuuuu</span>
+                                        </div>
+                                    </div>
+                                    <div class="row accountInputContainer">
+                                        <div class="input-field accountInput">
+                                            <input value="uuuuu@uuuuu.hu" id="newemail" type="email" class="validate noBottomMargin">
+                                            <label class="active" for="newemail">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="row accountInputContainer">
+                                        <div class="input-field accountInput">
+                                            <textarea id="newaboutme" class="materialize-textarea noBottomMargin">What about us?</textarea>
+                                            <label class="active" for="newaboutme">About me</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col s4 noLeftPadding">
+                                            <label>Date of Birth</label>
+                                            <select class="browser-default">
+                                                <option value="" disabled selected>Choose a day</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select> 
+                                        </div>
+                                        <div class="col s4">
+                                            <label class="noLabel">D</label>
+                                            <select class="browser-default">
+                                                <option value="" disabled selected>Choose a month</option>
+                                                <option value="1">January</option>
+                                                <option value="2">February</option>
+                                                <option value="3">March</option>
+                                            </select> 
+                                        </div>
+                                    </div>
+                                    <div class="row accountInputContainer">
+                                        <div class="input-field accountInput">
+                                            <input value="Budapest, Magyarország" id="newlocation" type="text" class="validate noBottomMargin">
+                                            <label class="active" for="newlocation">Location</label>
+                                        </div>
+                                    </div>
+                                    <div class="row accountInputContainer">
+                                        <a class="waves-effect waves-light btn blue">Save</a>
+                                    </div>
+                                </form>
+                            </div>
+                            <div id="notifications">Tab 4</div>
+                            <div id="deleteAccount">
+                                <div class="col s11 deleteDescriptionContainer">
+                                    <p class="deleteDescription">
+                                        Before confirming that you would like your profile deleted, we'd like to take a moment to explain the implications of deletion:
+                                    </p>
+                                    <ul class="browser-default">
+                                        <li class="first">
+                                            Deletion is <b>irreversible</b>, and you will have no way to regain any of your original content, should this deletion be carried out and you change your mind later on.
+                                        </li>
+                                        <li>
+                                            Your questions and answers will remain on the site, but will be disassociated and anonymized and will not indicate your authorship even if you later return to the site.
+                                        </li>
+                                    </ul>
+                                    <div class="deleteAccount">
+                                        <input type="checkbox"  id="approvedDeletion" />
+                                        <label for="approvedDeletion">I have read the information stated above and understand the implications of having my profile deleted. I wish to proceed with the deletion of my profile.</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

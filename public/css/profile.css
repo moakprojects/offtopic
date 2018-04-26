@@ -804,10 +804,124 @@
     margin: 0px 20px !important;
 }
 
-.nextBadgeTitle {
-    
-}
-
 .nextBadge {
     background: #40b19e;
 }
+
+/* settings */
+
+.settings {
+    margin-top: 25px;
+}
+
+.verticalTabContainer {
+    margin-left: 12px !important;
+}
+
+.verticalTabs {
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    height: auto;
+    float: left;
+    display: flex;
+}
+
+.verticalTabs .indicator {
+    display: none;
+}
+
+.verticalTabs li {
+    text-align: left !important;
+}
+
+.verticalTabs .active {
+    font-weight: 900;
+}
+
+.verticalTabContent {
+    margin-left: 5px !important;
+}
+
+.input-field label {
+    color: #737f8e;
+}
+
+.accountInput input[type=text] {
+    border-bottom: 1px solid #737f8e !important;
+    width: 574px;
+}
+
+.accountInput input[type=text]:focus + label {
+    color: #039be5;
+}
+
+.accountInput input[type=text]:focus {
+    border-bottom: 1px solid #039be5 !important;
+    box-shadow: 0 1px 0 0 #039be5 !important;
+}
+
+.accountInput input[type=email] {
+    border-bottom: 1px solid #737f8e !important;
+    width: 574px;
+}
+
+.accountInput input[type=email]:focus:not([readonly]) + label {
+    color: #039be5;
+}
+
+.accountInput input[type=email]:focus {
+    border-bottom: 1px solid #039be5 !important;
+    box-shadow: 0 1px 0 0 #039be5 !important;
+}
+
+.accountInput textarea {
+    border-bottom: 1px solid #737f8e !important;
+    width: 574px;
+    padding-bottom: 0px;
+}
+
+.accountInput textarea:focus:not([readonly]) + label {
+    color: #039be5;
+}
+
+.accountInput textarea:focus {
+    border-bottom: 1px solid #039be5 !important;
+    box-shadow: 0 1px 0 0 #039be5 !important;
+}
+
+.accountInput .prefix.active {
+    color: #039be5;
+}
+
+.inputHelper {
+    display: block;
+    margin-top: 5px;
+    color: #919191;
+    margin-bottom: 10px;
+    font-size: 0.8em;
+    line-height: 1.4;
+}
+
+.noLabel {
+    color: white;
+}
+
+.accountInputContainer {
+    margin-top: 40px;   
+}
+
+.deleteDescriptionContainer {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.first {
+    margin-bottom: 10px;
+}
+  
+   
+.checkbox-blue input[type="checkbox"]:not(:checked) + label:before{
+    border: 2px solid indigo;
+    background: transparent;
+  }
