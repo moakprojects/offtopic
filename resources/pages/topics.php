@@ -62,7 +62,7 @@
                     </div>
                     <div class="col s2">
                         <div class="likes">
-                            <span class="favourite col s6"><i class="fas fa-heart"></i> <?php echo ($topic["numberOfLikes"] ? $topic["numberOfLikes"] : "0"); ?> likes</span>
+                            <span class="favourite col s6"><i class="fas fa-heart"></i> <?php echo ($topic["numberOfLikes"] ? $topic["numberOfLikes"] : "0"); ?> follows</span>
                         </div>
                         <div class="comments">
                             <div class="commentbg">

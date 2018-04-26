@@ -234,6 +234,17 @@ function replyPost(postId, username) {
 
 }
 
+/*when the user reply for the discussion starter then we don't send replyID */
+function replyForTheTopic() {
+  replyId = null;
+
+  $('#originalPostID').eq(0).html("");
+  $('#replyTo').eq(0).html("");
+  $('.replyLabel').eq(0).addClass('hide');
+
+  scrollToEditor();
+}
+
 /* scroll down to quill editor */
 function scrollToEditor() {
   $('html, body').animate({

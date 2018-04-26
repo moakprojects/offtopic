@@ -227,11 +227,13 @@ strong {
     font-size: 12px;
 }
 
-.topicDetails .fixed-action-btn.horizontal {
-    position: absolute !important;
-    display: inline-block;
-    right: 75px;
+.topicDetails .fixed-action-btn {
+    position: relative;
     top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0;
 }
 
 .topicDetails .fixed-action-btn.horizontal .shareIcon {
@@ -272,8 +274,10 @@ strong {
 }
 
 .topicDetails .replyBtn {
-    position: absolute;
+    /*position: absolute;
     right: 25px;
+    float: right;
+    margin-left: 15px;*/
 }
 
 /* regular post styling */

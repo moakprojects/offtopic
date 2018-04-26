@@ -35,6 +35,18 @@ html {
     margin-bottom: 0 !important;
 }
 
+.noTopMargin {
+    margin-top: 0 !important;
+}
+
+.noRightPadding {
+    padding-right: 0 !important;
+}
+
+.noLeftPadding {
+    padding-left: 0 !important;
+}
+
 .contentContainer {
     margin: 0;
     width: 100%;

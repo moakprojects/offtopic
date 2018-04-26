@@ -3,6 +3,8 @@
         $topicObj = new Topic();
         $topicID = htmlspecialchars(trim($_SESSION["selectedTopicID"]));
         $selectedTopic = $topicObj -> getSelectedTopic($topicID);
+        $postObj = new Post();
+        $posts = $postObj->getPostsData($_SESSION["selectedTopicID"]);
 ?>
 <div class="container contentContainer">
     <div class="row noBottomMargin">
@@ -41,20 +43,26 @@
                         <div class="row">
                             <div class="created col s5">
                                 <i class="far fa-clock fa-sm"></i>
-                                <span>Created at: <?php echo $selectedTopic["createdAt"]?> by <a href="#" class="postCreator"><strong><?php echo $selectedTopic["username"]?> </strong></a></span>
+                                <span>Created at: <?php echo $selectedTopic["createdAt"]?> by <a href="/profile/<?php echo $selectedTopic["username"]?>" class="postCreator"><strong><?php echo $selectedTopic["username"]?> </strong></a></span>
                             </div>
                             <div class="controlBtns col s4 offset-s3">
-                                <div class="fixed-action-btn horizontal socialButttons">
-                                    <a class="btn-floating shareBtn">
-                                    <i class="material-icons shareIcon">share</i>
-                                    </a>
-                                    <ul>
-                                    <li><a class="btn-floating facebook"><i class="fab fa-facebook-f fa-lg"></i></a></li>
-                                    <li><a class="btn-floating twitter"><i class="fab fa-twitter"></i></a></li>
-                                    <li><a class="btn-floating google"><i class="fab fa-google-plus-g"></i></a></li>
-                                    </ul>
-                                </div>
-                                <a class="btn-floating waves-effect waves-light blue replyBtn" onclick="scrollToEditor()"><i class="material-icons">reply</i></a>
+                                <div class="row noTopMargin">
+                                        <div class="col s6 offset-s<?php echo (isset($loggedUser) && $loggedUser ? "2 noRightPadding" : "6"); ?> right-align">
+                                            <div class="fixed-action-btn horizontal socialButttons">
+                                                <a class="btn-floating shareBtn">
+                                                <i class="material-icons shareIcon">share</i>
+                                                </a>
+                                                <ul>
+                                                <li><a class="btn-floating facebook"><i class="fab fa-facebook-f fa-lg"></i></a></li>
+                                                <li><a class="btn-floating twitter"><i class="fab fa-twitter"></i></a></li>
+                                                <li><a class="btn-floating google"><i class="fab fa-google-plus-g"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="col s4 right-align noLeftPadding <?php echo (isset($loggedUser) && $loggedUser ? '' : 'hide'); ?>">
+                                            <a class="btn-floating waves-effect waves-light blue replyBtn" onclick="replyForTheTopic()"><i class="material-icons">reply</i></a>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -71,9 +79,6 @@
             </div>
             <div id="postContainer">
             <?php
-
-            $postObj = new Post();
-            $posts = $postObj->getPostData($_SESSION["selectedTopicID"]);
             
             for($i = 0; $i < count($posts); $i++) {
             if(isset($_SESSION["user"])) { $postObj->checkPostLikeStatus($_SESSION["user"]["userID"], $posts[$i]["postID"]); }
@@ -91,7 +96,7 @@
                         <div class="col s11 topicContainer">
                             <div class="row postedOnContainer">
                                 <div class="col s4 postedBy">
-                                    <a href="#"><?php echo $posts[$i]['username']; ?></a>
+                                    <a href="/profile/<?php echo $posts[$i]['username']; ?>"><?php echo $posts[$i]['username']; ?></a>
                                 </div>
                                 <div class="col s4 offset-s4 postedOn">
                                     <i class="far fa-clock fa-xs"></i>
@@ -105,7 +110,7 @@
                                         <div class="row postedOnContainer">
                                             <div class="col s12 postedBy">
                                                 <span>Original Posted by - </span>
-                                                <a href="#"><?php echo $posts[$posts[$i]["replyID"]-1]['username']; ?>:</a>
+                                                <a href="/profile/<?php echo $posts[$posts[$i]["replyID"]-1]['username']; ?>"><?php echo $posts[$posts[$i]["replyID"]-1]['username']; ?>:</a>
                                             </div>
                                         </div>
                                         <p class="topicDescription"><?php echo $posts[$posts[$i]["replyID"]-1]["text"];?></p>
@@ -181,17 +186,23 @@
                                 </div>
                                 <div class="col s4"></div>
                                 <div class="controlBtns col s4">
-                                    <div class="fixed-action-btn horizontal socialButttons">
-                                        <a class="btn-floating shareBtn">
-                                        <i class="material-icons shareIcon">share</i>
-                                        </a>
-                                        <ul>
-                                        <li><a class="btn-floating facebook"><i class="fab fa-facebook-f fa-lg"></i></a></li>
-                                        <li><a class="btn-floating twitter"><i class="fab fa-twitter"></i></a></li>
-                                        <li><a class="btn-floating google"><i class="fab fa-google-plus-g"></i></a></li>
-                                        </ul>
+                                    <div class="row noTopMargin">
+                                        <div class="col s6 offset-s<?php echo (isset($loggedUser) && $loggedUser ? "2 noRightPadding" : "6"); ?> right-align">
+                                            <div class="fixed-action-btn horizontal socialButttons">
+                                                <a class="btn-floating shareBtn">
+                                                <i class="material-icons shareIcon">share</i>
+                                                </a>
+                                                <ul>
+                                                <li><a class="btn-floating facebook"><i class="fab fa-facebook-f fa-lg"></i></a></li>
+                                                <li><a class="btn-floating twitter"><i class="fab fa-twitter"></i></a></li>
+                                                <li><a class="btn-floating google"><i class="fab fa-google-plus-g"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="<?php echo (isset($loggedUser) && $loggedUser ? '' : 'hide'); ?> col s4 right-align noLeftPadding">
+                                            <a class="btn-floating waves-effect waves-light blue replyBtn" onclick="replyPost(<?php echo $i + 1 . ", '" . $posts[$i]['username'] ."'"; ?>)"><i class="material-icons">reply</i></a>
+                                        </div>
                                     </div>
-                                    <a class="btn-floating waves-effect waves-light blue replyBtn"><i class="material-icons" onclick="replyPost(<?php echo $i + 1 . ", '" . $posts[$i]['username'] ."'"; ?>)">reply</i></a>
                                 </div>
                             </div>
                         </div>

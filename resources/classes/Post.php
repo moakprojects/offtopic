@@ -9,7 +9,7 @@ class Post {
     }
 
     // request posts data from database
-    function getPostData($selectedTopicID) {
+    function getPostsData($selectedTopicID) {
         global $db;
         global $postQuery;
 
