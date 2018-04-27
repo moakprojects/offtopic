@@ -553,20 +553,20 @@
                                 <form class="accountForm" action="" method="post" id="accountForm">  
                                     <div class="row">
                                         <div class="input-field accountInput">
-                                            <input value="uuuuu" id="newusername" type="text" class="validate noBottomMargin">
+                                            <input value="uuuuu" id="newusername" type="text" class="noBottomMargin">
                                             <label class="active" for="newusername">Display name</label>
                                             <span class="inputHelper">People can mention you as @uuuuu</span>
                                         </div>
                                     </div>
                                     <div class="row accountInputContainer">
                                         <div class="input-field accountInput">
-                                            <input value="uuuuu@uuuuu.hu" id="newemail" type="email" class="validate noBottomMargin">
+                                            <input value="uuuuu@uuuuu.hu" id="newemail" type="email" class="oBottomMargin">
                                             <label class="active" for="newemail">Email</label>
                                         </div>
                                     </div>
                                     <div class="row accountInputContainer">
                                         <div class="input-field accountInput">
-                                            <textarea id="newaboutme" class="materialize-textarea noBottomMargin">What about us?</textarea>
+                                            <textarea id="newaboutme" class="materialize-textarea noBottomMargin" maxlength="255" data-length="255">What about us?</textarea>
                                             <label class="active" for="newaboutme">About me</label>
                                         </div>
                                     </div>
@@ -592,7 +592,7 @@
                                     </div>
                                     <div class="row accountInputContainer">
                                         <div class="input-field accountInput">
-                                            <input value="Budapest, Magyarország" class="autocomplete" id="newlocation" type="text" class="validate noBottomMargin">
+                                            <input value="Budapest, Magyarország" class="autocomplete" id="newlocation" type="text" class="noBottomMargin">
                                             <label class="active" for="newlocation">Location</label>
                                         </div>
                                     </div>

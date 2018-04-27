@@ -843,8 +843,13 @@
     margin-left: 5px !important;
 }
 
+/* account tab */
 .input-field label {
     color: #737f8e;
+}
+
+.accountInput {
+    width: 574px;
 }
 
 .accountInput input[type=text] {
@@ -915,6 +920,8 @@
     margin-top: 40px;   
 }
 
+/* Delete profile tab */
+
 .deleteDescriptionContainer {
     text-align: justify;
     text-justify: inter-word;
@@ -941,6 +948,8 @@
 #approvedDeletion + label {
     color: #000;
 }
+
+/* notification tab */
 
 #notifications {
     margin-top: 10px;
