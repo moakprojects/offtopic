@@ -2,8 +2,20 @@ $(document).ready(function(){
     /* initialize modals */
     $('.modal').modal();
     
-    /* registration process */
+    /* call registration process when user click on registration button */
     $(document).on('click', '#regBtn', function() {
+        registration();
+    });
+
+    /* call registration process when user press enter button on registration form */
+    $('#registrationRePassword').keypress(function(e) {
+        if(e.which == 13) {
+            registration();
+        }
+    });
+
+    function registration() {
+        console.log("jo");
         var email = $('#regForm').find('.email');
         var username = $('#regForm').find('.username');
         var password = $('#regForm').find('.password');
@@ -51,7 +63,7 @@ $(document).ready(function(){
                 }
             });
         }
-    });
+    }
 
     /* ask data from modal for the login */
     $(document).on('click', '#logBtn', function() {
@@ -60,6 +72,17 @@ $(document).ready(function(){
         var rememberMe = $('#logForm').find('#modalRememberMe');
 
         userLogin(loginID["0"].value, password["0"].value, rememberMe["0"].checked, '.modalErrorMsg', 'modal');
+    });
+
+    //try login when user press enter button
+    $('#modalPassword').keypress(function(e) {
+        if(e.which == 13) {
+            var loginID = $('#logForm').find('.loginID');
+            var password = $('#logForm').find('.password');
+            var rememberMe = $('#logForm').find('#modalRememberMe');
+
+            userLogin(loginID["0"].value, password["0"].value, rememberMe["0"].checked, '.modalErrorMsg', 'modal');
+        }
     });
 
     /* ask data from sidebar login form for the login */
@@ -71,6 +94,17 @@ $(document).ready(function(){
         userLogin(loginID["0"].value, password["0"].value, rememberMe["0"].checked, '.sideBarErrorMsg', 'sideBar');
     });
 
+    //try login when user press enter button
+    $('#sideBarPassword').keypress(function(e) {
+        if(e.which == 13) {
+            var loginID = $('#sideBarLogForm').find('.loginID');
+            var password = $('#sideBarLogForm').find('.password');
+            var rememberMe = $('#sideBarLogForm').find('#rememberMe');
+
+            userLogin(loginID["0"].value, password["0"].value, rememberMe["0"].checked, '.sideBarErrorMsg', 'sideBar');
+        }
+    });
+
     /* ask data from verify page login form for the login */
     $(document).on('click', '#verifyLogBtn', function() {
         var loginID = $('#verifyLogForm').find('.loginID');
@@ -78,6 +112,17 @@ $(document).ready(function(){
         var rememberMe = $('#verifyLogForm').find('#rememberMe');
 
         userLogin(loginID["0"].value, password["0"].value, rememberMe["0"].checked, '.verifyErrorMsg', 'verifyPage');
+    });
+
+    //try login when user press enter button
+    $('#verifyPagePassword').keypress(function(e) {
+        if(e.which == 13) {
+            var loginID = $('#verifyLogForm').find('.loginID');
+            var password = $('#verifyLogForm').find('.password');
+            var rememberMe = $('#verifyLogForm').find('#rememberMe');
+
+            userLogin(loginID["0"].value, password["0"].value, rememberMe["0"].checked, '.verifyErrorMsg', 'verifyPage');
+        }
     });
 
     /* login function what we call if user click on Login button in the sidebar or in the login modal or in the verify page */

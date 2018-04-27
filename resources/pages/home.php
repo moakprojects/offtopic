@@ -192,7 +192,7 @@
                             </div>
                             <div class="row noBottomMargin">
                                 <div class="col s12">
-                                    <p class="noMargin">4 Followers</p>
+                                    <p class="noMargin"><?php echo ($ownTopic["numberOfFollowers"] ? $ownTopic["numberOfFollowers"] : "0"); ?> followers</p>
                                 </div>
                             </div>
                         </div>

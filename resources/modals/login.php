@@ -41,7 +41,7 @@
             <div class="loginForm">
                 <form method="post" id="logForm">
                     <input type="text" name="username" class="loginID" Placeholder="Email or username">    
-                    <input type="password" name="password" class="password" Placeholder="Password">    
+                    <input type="password" name="password" class="password" id="modalPassword" Placeholder="Password">    
                     <input type="checkbox" name="rememberMe" id="modalRememberMe" class="filled-in"><label for="modalRememberMe">Remember me</label>    
                     <br>
                     <div class="row modalErrorMsg hide">

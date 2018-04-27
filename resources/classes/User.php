@@ -247,23 +247,6 @@
                 $createdPostsQuery->execute();
     
                 return $createdPostsData = $createdPostsQuery->fetchall(PDO::FETCH_ASSOC);
-
-                $createdPostsInTopics = array();
-                foreach($createdPostsData as $createdPostInTopic) {
-                    $topicID = $createdPostInTopic['topicID'];
-                    if(!isset($createdPostsInTopicsData[$topicID])) {
-                        $createdPostsInTopics[$topicID] = array();
-                        $createdPostsInTopics[$topicID]["topicID"] = $createdPostInTopic["topicID"];
-                        $createdPostsInTopics[$topicID]["topicName"] = $createdPostInTopic["topicName"];
-                        $createdPostsInTopics[$topicID]["categoryID"] = $createdPostInTopic["categoryID"];
-                        $createdPostsInTopics[$topicID]["categoryName"] = $createdPostInTopic["categoryName"];
-                        $createdPostsInTopics[$topicID]["createdAt"] = $createdPostInTopic["createdAt"];
-                        $createdPostsInTopics[$topicID]["posts"] = array(); 
-                    }
-        
-                    $aux = array("postID" => $createdPostInTopic["postID"], "text" => $createdPostInTopic["text"], "postedOn" => $createdPostInTopic["postedOn"], "numberOfLikes" => $createdPostInTopic["numberOfLikes"], "numberOfDislikes" => $createdPostInTopic["numberOfDislikes"]);
-                    array_push($createdPostsInTopics[$topicID]["posts"], $aux);
-                }
             } else {
                 return false;
             }
