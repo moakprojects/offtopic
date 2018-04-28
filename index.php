@@ -40,6 +40,9 @@
                    $_SESSION["verifyCode"] = $queryStringParams[1];
                 }
             break;
+            case "new-topic":
+                $page = "newTopic";
+            break;
             case "error":
                 $page = "error";
             break;
