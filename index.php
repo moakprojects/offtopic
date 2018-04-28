@@ -90,6 +90,7 @@
         <link href="//cdn.quilljs.com/1.3.5/quill.snow.css" rel="stylesheet">
 
         <link rel="stylesheet" href="/public/css/lightbox.min.css">
+        <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyBXdhxA2qjgz3L5C5qC3C8oXkvRdnSfjf0"></script>
     </head>
     <body>
         <?php

@@ -86,7 +86,7 @@
             <div class="tabsContainer">
                 <ul class="tabs tabs-transparent tabList">
                     <li class="tab"><a href="#userStatistics">User Statistics</a></li>
-                    <?php echo (!$favouriteCategories && !$favouriteTopics && !$likedPosts ? "" : "<li class='tab'><a href='#favourites'>Favourites</a></li>");  ?>
+                    <?php echo (!$favouriteCategories && !$favouriteTopics && !$likedPosts ? "" : "<li class='tab'><a href='#favourites'>Favourites</a></li>"); ?>
                     <li class="tab"><a href="#ownThings" onclick="getOwnData('<?php echo $selectedUsername; ?>')">Own things</a></li>
                     <li class="tab"><a href="#general">General informations</a></li>
                     <li class="tab"><a href="#settings">Settings</a></li>
@@ -456,7 +456,7 @@
                                         <div class="col s10 personalInformationLabel">Username:</div>
                                     </div>
                                     <div class="col s7 right-align">
-                                        uuuuu
+                                        <?php echo $selectedUserData["username"]; ?>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -465,34 +465,38 @@
                                         <div class="col s10 personalInformationLabel">Email:</div>
                                     </div>
                                     <div class="col s7 right-align">
-                                        uuuuu@uuuuu.hu
+                                        <?php echo $selectedUserData["email"]; ?>
                                     </div>
                                 </div>
+                                <?php if(!is_null($selectedUserData["birthdate"])) { ?>
                                 <div class="row">
                                     <div class="col s5">
                                         <div class="col s1 personalInformationIcon"><i class="far fa-calendar"></i></div>
                                         <div class="col s10 personalInformationLabel">Birthdate:</div>
                                     </div>
                                     <div class="col s7 right-align">
-                                        15-01-1999 
+                                        <?php echo $selectedUserData["birthdate"]; ?>
                                     </div>
                                 </div>
+                                <?php } ?>
+                                <?php if(!is_null($selectedUserData["location"])) { ?>
                                 <div class="row">
                                     <div class="col s5">
                                         <div class="col s1 personalInformationIcon"><i class="fas fa-globe"></i></div>
                                         <div class="col s10 personalInformationLabel">Country/Region:</div>
                                     </div>
                                     <div class="col s7 right-align">
-                                        Denmark
+                                    <?php echo $selectedUserData["location"]; ?>
                                     </div>
                                 </div>
+                                <?php } ?>
                                 <div class="row">
                                     <div class="col s5">
                                         <div class="col s1 personalInformationIcon"><i class="fas fa-circle-notch"></i></div>
                                         <div class="col s10 personalInformationLabel">Rank level:</div>
                                     </div>
                                     <div class="col s7 right-align">
-                                        1
+                                    <?php echo $selectedUserData["rankID"]; ?>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -501,28 +505,31 @@
                                         <div class="col s10 personalInformationLabel">Member for:</div>
                                     </div>
                                     <div class="col s7 right-align">
-                                        1 year, 7 month
+                                        since <?php echo $selectedUserData["memberFor"]; ?>
                                     </div>
                                 </div>
+                                <?php if($selectedUserData["lastSeen"]) { ?>
                                 <div class="row">
                                     <div class="col s5">
                                         <div class="col s1 personalInformationIcon"><i class="far fa-clock"></i></div>
                                         <div class="col s10 personalInformationLabel">Last seen:</div>
                                     </div>
                                     <div class="col s7 right-align">
-                                        5 minutes ago
+                                        <?php echo $selectedUserData["lastSeen"]; ?> ago
                                     </div>
                                 </div>
+                                <?php } ?>
+                                <?php if(!is_null($selectedUserData["aboutMe"])) { ?>
                                 <div class="row">
                                     <div class="col s5">
                                     <div class="col s1 personalInformationIcon"><i class="far fa-smile"></i></div>
                                         <div class="col s10 personalInformationLabel">About me:</div>
                                     </div>
                                     <div class="col s7 right-align">
-                                        What about us?
+                                    <?php echo $selectedUserData["aboutMe"]; ?>
                                     </div>
                                 </div>
-                                
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="col s6">
@@ -556,7 +563,6 @@
                                         <div class="input-field accountInput">
                                             <input value="uuuuu" id="newusername" type="text" class="noBottomMargin">
                                             <label class="active" for="newusername">Display name</label>
-                                            <span class="inputHelper">People can mention you as @uuuuu</span>
                                         </div>
                                     </div>
                                     <div class="row accountInputContainer">
@@ -593,8 +599,8 @@
                                     </div>
                                     <div class="row accountInputContainer">
                                         <div class="input-field accountInput">
-                                            <input value="Budapest, Magyarország" class="autocomplete" id="newlocation" type="text" class="noBottomMargin">
-                                            <label class="active" for="newlocation">Location</label>
+                                            <input class="autocomplete noBottomMargin validate" id="newLocation" type="text" placeholder="Enter a location">
+                                            <label class="active" for="newLocation">Location</label>
                                         </div>
                                     </div>
                                     <div class="row accountInputContainer right-align col s9">

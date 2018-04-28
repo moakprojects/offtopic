@@ -151,7 +151,16 @@
                 $userQuery->execute();
 
                 if($userQuery->rowCount() > 0) {
-                    return $userData = $userQuery->fetch(PDO::FETCH_ASSOC);
+
+                    $userData = $userQuery->fetch(PDO::FETCH_ASSOC);
+                    $userData["memberFor"] = $this->calculateTimeDifferences($userData["regDate"]);
+                    if(!is_null($userData["lastLoginDate"])) {
+                        $userData["lastSeen"] = $this->calculateTimeDifferences($userData["lastLoginDate"]);
+                    } else {
+                        $userData["lastSeen"] = false;
+                    }
+
+                    return $userData;
                 } else {
                     header("Location: /error");
                     exit;
