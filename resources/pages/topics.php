@@ -31,8 +31,8 @@
                 <hr>
             </div>
             <?php
-                
-                foreach($topics as $topic) {
+                if($topics) {
+                    foreach($topics as $topic) {
             ?>
             <div class="topic">
                 <?php echo "<a href='/topics/" . $topic["topicID"] . "'>"; ?>
@@ -83,6 +83,13 @@
             </div>
             <?php
                 }
+             } else {
+            ?>
+                <div class="topic emptyCategoryCard">
+                    <p>There is no topic in this category. If you have any <?php echo $categoryName ?> related question, just create a <a href="/new-topic">new topic.</a></p>
+                </div>
+            <?php
+             }
             ?>
         </div>
         <div class="col s4">
