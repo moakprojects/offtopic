@@ -170,6 +170,21 @@ $(document).ready(function(){
 		$this.countTo(options);
 	}
 	});
+
+
+	/* autocomplete for location field in settings menu */
+	var locationField = document.getElementById("newLocation");
+	var locationOptions = {
+		types: ['(cities)']
+	};
+	var ac = new google.maps.places.Autocomplete(locationField, locationOptions);
+	google.maps.event.addListener(ac, 'place_changed', function() {
+	var place = ac.getPlace();
+	console.log(place.formatted_address);
+	console.log(place.url);
+	console.log(place.geometry.location);
+	});
+
 });
 
 $(function () {
