@@ -43,6 +43,14 @@
             case "new-topic":
                 $page = "newTopic";
             break;
+            case "post":
+                if(isset($queryStringParams[1]) && $queryStringParams[1] !== "") {
+                    $_SESSION["selectedPost"] = $queryStringParams[1];
+                    $page = "comment";
+                } else {
+                    $page = "error";
+                }
+            break;
             case "error":
                 $page = "error";
             break;

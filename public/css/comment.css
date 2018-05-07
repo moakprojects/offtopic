@@ -6,12 +6,10 @@
     margin-bottom: 12px;
 }
 
-strong {
-    font-weight: 900;
-}
+/* overwrite breadcrumb styling */
 
-.hide {
-    display: none;
+.breadCrumb {
+    margin-top: 20px;
 }
 
 /* Sidebar styling */
@@ -131,15 +129,14 @@ strong {
     padding-left: 0px !important;
 }
 
-/* discussion posts styling */
-
+/* Topic style */
 .topic {
     background: white;
     border-radius: 2px;
     box-shadow: 0 1px 2px #c9cccd;
     margin: 25px 0 20px 0;
-    padding: 15px 0;
-    min-height: 190px;
+    padding: 15px 0 0 0;
+    min-height: 150px;
     width: 100%;
     position: relative;
 }
@@ -168,6 +165,11 @@ strong {
     width: 100%;
 }
 
+.topicCreator {
+    color: #363838;
+    font-weight: 900;
+}
+
 .topic h3 {
     color: #363838;
     line-height: 25px;
@@ -178,7 +180,7 @@ strong {
 
 .topic p {
     margin: 0 0 3px;
-    color: rgb(114, 114, 114);
+    color: rgb(33, 33, 33);
     font-size: 14px;
     line-height: 25px;
     height: 100%;
@@ -189,31 +191,14 @@ strong {
     height: 100%;
     padding-right: 25px !important;
 }
-
 .topicDetails {
-    height: 50px;
     background: white;
+    margin-bottom: 0px;
     border-top: 1px solid #cfd5d7;
 }
 
 .topicDetails .row {
-    margin-top: 20px;
-}
-
-.topicLikeButton {
-    position: absolute;
-    top: -30px;
-    right: 25px;
-    background: #fbb83a;
-}
-
-.topicLikeButton svg {
-    position: relative;
-    top: 2px;
-}
-
-.topicLikeButton:hover, .topicLikeButton:active, .topicLikeButton:visited {
- background: #fbb83a;
+    margin-top: 10px;
 }
 
 .topicDetails .created {
@@ -271,7 +256,17 @@ strong {
     position: relative;
 }
 
-/* regular post styling */
+/* three dots */
+
+.threeDot:after {
+    content: '\2807';
+    font-size: 30px;
+    color: #9da6aa;
+    font-weight: 100;
+    text-shadow: 2px 2px 6px #9da6aa;
+}
+
+/* post style */
 
 .post .topicDescription {
     margin-top: 10px;
@@ -289,84 +284,17 @@ strong {
     color: #383636;
 }
 
-.postedOn {
-    text-align: right;
-}
-
 .postedBy {
     text-align: left;
     padding-left: 0px !important;
 }
 
-.postedOn span {
-    font-size: 11px;
-}
-
-.postedBy a {
-    color: #363838;
-    font-size: 18px;
-}
-
-.postedBy a:hover {
-    color: rgb(33, 150, 243);
-}
-
-.postContent {
+.postedOn {
     margin-bottom: 15px;
 }
 
-.likesContainer {
-    padding-left: 0 !important;
-}
-
-.likesContainer .row {
-    margin-top: 0px;
-}
-
-.likesContainer .row .likeBtnContainer {
-    padding-left: 0px !important;
-}
-
-.likesContainer .likeBtnContainer span,
-.likesContainer .dislikeBtnContainer span {
-    margin-left: 7px;
-    position: relative;
-    top: 4px;
-}
-
-.likesContainer .likeBtnContainer span {
-    color: rgb(26, 188, 156);
-}
-
-.likesContainer .dislikeBtnContainer span {
-    color: rgb(219, 122, 122);
-}
-
-.likesContainer .likeBtn {
-    background: rgb(245, 247, 250);
-    text-align: center;
-}
-
-.likesContainer .likeBtnContainer svg {
-    color: rgb(26, 188, 156);
-}
-
-.likesContainer .dislikeBtnContainer svg {
-    color: rgb(219, 122, 122);
-}
-
-.dislikeBtnContainer {
-    position: relative;
-    left: -35px !important;
-}
-
-.postCreator {
-    color: #363838;
-    font-weight: 900;
-}
-
-.postCreator:hover {
-    color: rgb(33, 150, 243);
+.postedOn span {
+    font-size: 12px;
 }
 
 .postIndex {
@@ -386,8 +314,21 @@ strong {
     margin: 0;
 }
 
-.disabledBtn svg {
-    color: rgb(245, 247, 250) !important;
+.postedBy a {
+    color: #363838;
+    font-size: 18px;
+}
+
+.postedBy a:hover {
+    color: rgb(33, 150, 243);
+}
+
+.postContent {
+    margin-bottom: 15px;
+}
+
+.postCreator:hover {
+    color: rgb(33, 150, 243);
 }
 
 .postAttachFiles {
@@ -411,11 +352,8 @@ strong {
 }
 
 #postAttachFiles li span:first-child {
-    /*white-space: nowrap;
-    overflow: hidden;*/
     display: block;
     width: 270px;
-    /*text-overflow: ellipsis;*/
     position: absolute;
     top: 3px;
     left: 25px;
@@ -434,110 +372,3 @@ strong {
     font-size: 12px;
 }
 
-/* overwrite breadcrumb styling */
-
-.breadCrumb {
-    margin-top: 20px;
-}
-
-/* quill editor styling */
-
-.editorContainer {
-    box-shadow: 0 1px 2px #c9cccd;
-}
-
-.ql-editor {
-    min-height: 200px;
-    background: white;
-}
-
-.ql-toolbar {
-    background: #F5F7FA;
-}
-
-.ql-attachment:after {
-    content: url('../images/content/attachmentIcon.svg');
-}
-
-#errorMsg {
-    color: red;
-}
-
-#attachFiles ul {
-    list-style-position: inside;
-}
-
-#attachFiles li {
-    list-style-image: url('/public/images/content/attachmentIcon.svg');
-    list-style-position: inside;
-    position: relative;
-    padding: 5px 5px 2px 5px;
-    color: #363838;
-}
-
-#attachFiles li:hover {
-    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12);
-}
-
-#attachFiles li span:first-child {
-    /*white-space: nowrap;
-    overflow: hidden;*/
-    display: block;
-    width: 270px;
-    /*text-overflow: ellipsis;*/
-    position: absolute;
-    top: 3px;
-    left: 25px;
-}
-
-#attachFiles li span:last-child {
-    color: red;
-    position: absolute;
-    right: 5px;
-    top: 4px;
-    cursor: pointer;
-}
-
-#attachFiles li span:last-child i {
-    font-size: 17px;
-    position: relative;
-    top: 3px;
-}
-
-.replyBtn.disabled {
-    color: rgb(245, 247, 250) !important;
-}
-
-/* comment card styling */
-
-.commentCard {
-    padding: 23px 0;
-}
-
-.commentCard .postContent {
-    margin: 0px;
-}
-
-.commentCard .userImageContainer img {
-    margin: 0;
-}
-
-.commentCard .topicContainer .row {
-    margin: 15px 0 0 0;
-}
-
-.commentCard .topicContainer .replyLabel {
-    margin-bottom: 10px; 
-}
-
-/* Unlogged style: hide comment editor */
-
-.commentCardUnlogged {
-    min-height: initial;
-    height: 100px;
-}
-
-.commentCardUnlogged p {
-    text-align: center;
-    margin-top: 22px;
-}
