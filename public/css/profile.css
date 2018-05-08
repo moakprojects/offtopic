@@ -812,8 +812,18 @@
     margin: 0px 20px !important;
 }
 
-.nextBadge {
-    background: #40b19e;
+.badgeDetails {
+    margin: 25px 0px;
+    min-height: 36px !important;
+    padding-top: 6px !important;
+}
+
+.badgeDetails a {
+    color: #363838; 
+}
+
+.badgeDetails a:hover {
+    color: #039be5;
 }
 
 /* settings */
@@ -1039,4 +1049,20 @@
 
 .saveNotificationSettingsBtn {
     margin-left: 5px;
+}
+
+/* Badge System Modal styling */
+
+#badgeSystem {
+    min-width: 700px;
+}
+
+.badgeSystemDetails {
+    min-height: 115px !important;
+    border: 1px solid #cfd5d7;
+    border-radius: 2px;
+}
+
+.badgeSystemDetails .badge {
+    margin: 15px;
 }

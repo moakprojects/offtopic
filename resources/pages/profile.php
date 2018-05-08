@@ -533,15 +533,18 @@
                             </div>
                         </div>
                         <div class="col s6">
-                            <p class="profileTitle">Badges</p>
+                            <div class="row noMargin">
+                                <div class='col s2 noPadding'>
+                                    <p class="profileTitle">Badges </p> 
+                                </div>
+                                <div class="col s9 badgeDetails valign-wrapper noPadding">
+                                    <a href="#badgeSystem" class="modal-trigger"><i class="fas fa-bars"></i></a>
+                                </div>
+                            </div>
                             <div class="row badgeContainer">
                                 <div class="col s5 badge center-align"><i class="fas fa-circle dot"></i>Student</div>
                                 <div class="col s5 badge center-align"><i class="fas fa-circle dot"></i>Teacher</div>
                                 <div class="col s5 badge center-align"><i class="fas fa-circle dot"></i>Autobiographer</div>
-                            </div>
-                            <p class="nextBadgeTitle">Next badge:</p>
-                            <div class="row badgeContainer">
-                                <div class="col s5 badge nextBadge center-align tooltipped" data-position="bottom" data-tooltip="Read the entire homepage"><i class="fas fa-circle dot"></i>Informed</div> <i class="fas fa-bars"></i>
                             </div>
                         </div>
                     </div>
@@ -738,6 +741,7 @@
     </div>
 </div>
 <?php
+        include("resources/modals/badgeSystem.php");
     } else {
         header("Location: /error");
         exit;
