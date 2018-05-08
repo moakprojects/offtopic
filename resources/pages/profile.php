@@ -17,6 +17,7 @@
         $favouriteTopics = $userObj->getFavouriteTopics($selectedUserData["userID"]);
         $likedPosts = $userObj->getLikedPosts($selectedUsername);
         $createdTopics = $userObj->getCreatedTopics($selectedUsername);
+        $earnedBadges = $userObj->getEarnedBadges($selectedUsername);
 ?>
 <div class="container contentContainer">
     <div class="row breadCrumbContainer">
@@ -533,17 +534,36 @@
                             </div>
                         </div>
                         <div class="col s6">
-                            <p class="profileTitle">Badges</p>
-                            <div class="row badgeContainer">
-                                <div class="col s5 badge center-align"><i class="fas fa-circle dot"></i>Student</div>
-                                <div class="col s5 badge center-align"><i class="fas fa-circle dot"></i>Teacher</div>
-                                <div class="col s5 badge center-align"><i class="fas fa-circle dot"></i>Autobiographer</div>
+                            <div class="row noMargin">
+                                <div class='col s2 noPadding'>
+                                    <p class="profileTitle">Badges </p> 
+                                </div>
+                                <div class="col s9 badgeDetails valign-wrapper noPadding">
+                                    <a href="#badgeSystem" class="modal-trigger"><i class="fas fa-bars"></i></a>
+                                </div>
                             </div>
-                            <p class="nextBadgeTitle">Next badge:</p>
+                            <?php 
+                                if($earnedBadges) {
+                            ?>
                             <div class="row badgeContainer">
-                                <div class="col s5 badge nextBadge center-align tooltipped" data-position="bottom" data-tooltip="Read the entire homepage"><i class="fas fa-circle dot"></i>Informed</div> <i class="fas fa-bars"></i>
+                                <?php 
+                                    foreach($earnedBadges as $badge) {
+                                ?>
+                                        <div class="col s5 badge ownBadge center-align">
+                                            <i class="fas fa-circle dot"></i>
+                                            <?php echo $badge['badgeName']?>
+                                        </div>
+                                <?php
+                                    }
+                                ?>
                             </div>
                         </div>
+                        <?php } else {
+                        ?>
+                            <p class="noMargin">Have not received a badge yet</p>
+                        <?php
+                            }
+                        ?>
                     </div>
                                 
                 </div>
@@ -738,6 +758,7 @@
     </div>
 </div>
 <?php
+        include("resources/modals/badgeSystem.php");
     } else {
         header("Location: /error");
         exit;

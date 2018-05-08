@@ -140,6 +140,36 @@
             }
         }
 
+        // request badge system for modal
+        function getBadgeSystem($username) {
+            global $db;
+            global $badgeSystemQuery;
+
+            if(isset($badgeSystemQuery)) {
+                $badgeSystemQuery->bindParam(':username', $username);
+                $badgeSystemQuery->execute();
+
+                return $badgeSystemQuery = $badgeSystemQuery->fetchall(PDO::FETCH_ASSOC);
+            } else {
+                return false;
+            }
+        }
+
+        // request the badges belongs to the selected user
+        function getEarnedBadges($username) {
+            global $db;
+            global $earnedBadgeQuery;
+
+            if(isset($earnedBadgeQuery)) {
+                $earnedBadgeQuery->bindParam(':username', $username);
+                $earnedBadgeQuery->execute();
+
+                return $earnedBadgeQuery = $earnedBadgeQuery->fetchall(PDO::FETCH_ASSOC);
+            } else {
+                return false;
+            }
+        }
+
         // get selected user information from database
         function getSelectedUser($username) {
             global $db;
