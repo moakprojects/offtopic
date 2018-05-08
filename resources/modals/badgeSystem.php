@@ -11,24 +11,32 @@
                 <?php
 
                 //display the list of badge
-                $badgeSystem = $userObj->getBadgeSystem();
+                $badgeSystem = $userObj->getBadgeSystem($selectedUsername);
                 if($badgeSystem) {
                     
                     foreach($badgeSystem as $badge) {
-                        echo '
-                        <div class="col s6 badgeSystemDetails">
-                            <div class="row noMargin">
-                                <div class="badge center-align col s12">
-                                    <i class="fas fa-circle dot"></i>' . $badge["badgeName"] . '
-                                </div>
-                            </div>
-                            <div class="row noMargin">
-                                <div class="col s12 noPadding">
-                                    <p class="noTopMargin">' . $badge["badgeDescription"] . '</p>
-                                </div>
+                ?>      
+                    <div class="col s6 badgeSystemDetails">
+                        <div class="row noMargin">
+                            <div class="badge <?php echo ($badge["earned"] ? "ownBadge" : "") ?> center-align col s12">
+                                <i class="fas fa-circle dot"></i> <?php echo $badge["badgeName"] ?>
                             </div>
                         </div>
-                        ';
+                        <div class="row noMargin">
+                            <div class="col s12 noPadding">
+                                <p class="noTopMargin middleElement"><?php echo $badge["badgeDescription"] ?></p>
+                            </div>
+                        </div>
+                        <?php if($badge["earned"]) {
+                        ?>
+                        <div class="row noMargin">
+                            <div class="col s12 noPadding right-align">
+                                <span class="earnedLabel"><em>- earned -</em></span>
+                            </div>
+                        </div>
+                        <?php } ?>
+                    </div>
+                <?php
                     }
                 } else {
                     header("Location: /error");

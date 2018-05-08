@@ -17,6 +17,7 @@
         $favouriteTopics = $userObj->getFavouriteTopics($selectedUserData["userID"]);
         $likedPosts = $userObj->getLikedPosts($selectedUsername);
         $createdTopics = $userObj->getCreatedTopics($selectedUsername);
+        $earnedBadges = $userObj->getEarnedBadges($selectedUsername);
 ?>
 <div class="container contentContainer">
     <div class="row breadCrumbContainer">
@@ -541,12 +542,28 @@
                                     <a href="#badgeSystem" class="modal-trigger"><i class="fas fa-bars"></i></a>
                                 </div>
                             </div>
+                            <?php 
+                                if($earnedBadges) {
+                            ?>
                             <div class="row badgeContainer">
-                                <div class="col s5 badge center-align"><i class="fas fa-circle dot"></i>Student</div>
-                                <div class="col s5 badge center-align"><i class="fas fa-circle dot"></i>Teacher</div>
-                                <div class="col s5 badge center-align"><i class="fas fa-circle dot"></i>Autobiographer</div>
+                                <?php 
+                                    foreach($earnedBadges as $badge) {
+                                ?>
+                                        <div class="col s5 badge ownBadge center-align">
+                                            <i class="fas fa-circle dot"></i>
+                                            <?php echo $badge['badgeName']?>
+                                        </div>
+                                <?php
+                                    }
+                                ?>
                             </div>
                         </div>
+                        <?php } else {
+                        ?>
+                            <p class="noMargin">Have not received a badge yet</p>
+                        <?php
+                            }
+                        ?>
                     </div>
                                 
                 </div>

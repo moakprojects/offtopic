@@ -798,8 +798,11 @@
 
 .badge {
     color: #fff;
-    background:#204d52;
     margin: 0px 15px 15px 15px;
+}
+
+.ownBadge {
+    background:#204d52 !important;
 }
 
 .badge svg {
@@ -1058,11 +1061,21 @@
 }
 
 .badgeSystemDetails {
-    min-height: 115px !important;
+    min-height: 137px !important;
     border: 1px solid #cfd5d7;
     border-radius: 2px;
 }
 
 .badgeSystemDetails .badge {
     margin: 15px;
+    background: #40b19e;
+}
+
+.middleElement {
+    min-height: 45px !important;
+}
+
+.earnedLabel {
+    color: rgb(114, 114, 114);
+    font-size: 11px;
 }
