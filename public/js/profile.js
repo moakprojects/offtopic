@@ -187,6 +187,7 @@ $(document).ready(function(){
 
 });
 
+/*
 $(function () {
 
 	// initialize highcharts
@@ -489,6 +490,7 @@ $(function () {
   });
 
 });
+*/
 
 /* Toggle menu for own things */
 var select = function(s) {
@@ -563,3 +565,78 @@ function getOwnData(username) {
 		}
 	});
 }
+
+/*add event handlet to birthday select */
+$(document).on('change', '#birthdateMonth', function(e) {
+
+	/* we get the days of the selected month (we use a leap year, because we just store the month and the date) */
+	var numberOfDays = new Date(2016, e.currentTarget.value, 0).getDate();
+
+	$selectField = $('#birthdateDay');
+	$selectField.empty();
+	$selectField.append($("<option />").val("").text('Choose a day'));
+	$selectField.attr("selected");
+	for(var i = 1; i <= numberOfDays; i++) {
+		$selectField.append($("<option />").val(i).text(i));
+	}
+	$selectField.removeAttr("disabled");
+});
+
+$(document).on('click', '#saveAccountSettings', function() {
+
+	$('.settingsErrorMsgList').addClass('hide');
+	$('.settingsErrorMsg').css('color', 'red');
+	
+	var username = $('#accountForm').find('#newUsername');
+	var email = $('#accountForm').find('#newEmail');
+	var aboutMe = $('#accountForm').find('#newAboutMe');
+	var birthdateMonth = $('#accountForm').find('#birthdateMonth');
+	var birthdateDay = $('#accountForm').find('#birthdateDay');
+	var location = $('#accountForm').find('#newLocation');
+
+	if (!username["0"].value) {
+		$('.settingsErrorMsg').removeClass('hide');
+		$('.settingsErrorMsg').html('Please fill the username field');
+	} else if(!email["0"].value) {
+		$('.settingsErrorMsg').removeClass('hide');
+		$('.settingsErrorMsg').html('Please fill the email field');
+	} else if ((username["0"].value.length > 16)) {
+		$('.settingsErrorMsg').removeClass('hide');
+		$('.settingsErrorMsg').html('Username must be lower than 16 character');
+	} else if (birthdateMonth["0"].value !== "" && birthdateDay["0"].value === "") {
+		$('.settingsErrorMsg').removeClass('hide');
+		$('.settingsErrorMsg').html('You have to select a day');
+	} else {
+		$('.settingsErrorMsg').html('');
+		$('.settingsErrorMsg').addClass('hide');
+
+		$('.settingsPreloader').removeClass('hide');
+		$.post('/resources/controllers/userController.php', {changeUserSettings: true, email: email["0"].value, username: username["0"].value, aboutMe: aboutMe["0"].value, birthdateMonth: birthdateMonth["0"].value, birthdateDay: birthdateDay["0"].value, location: location["0"].value}, function(returnData) {
+
+			var obj = jQuery.parseJSON(returnData);
+
+			if(obj.data_type == 0) {
+
+				if(Array.isArray(obj.data_value)) {
+					console.log("array", obj.data_value);
+					$('.settingsErrorMsgList').empty();
+					$('.settingsErrorMsgList').removeClass('hide');
+					for(var i=0; i<obj.data_value.length; i++) {
+						$('.settingsErrorMsgList').append("<li>" + obj.data_value[i] + "</li>");
+					}
+				} else {
+					$('.settingsErrorMsg').html("An error occured, try again");
+					$('.settingsErrorMsg').removeClass('hide');
+				}
+			} else {
+
+				$('.settingsErrorMsg').html("The changes were saved");
+				$('.settingsErrorMsg').removeClass('hide');
+				$('.settingsErrorMsg').css('color', '#34d034');
+				$('.userName').html(obj.data_value);
+			}
+
+			$('.settingsPreloader').addClass('hide');
+		});
+	}
+});

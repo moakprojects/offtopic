@@ -6,5 +6,8 @@
     $modifyAccessLevelQuery = $db->prepare("UPDATE user SET accessLevel = 1 WHERE email = :email");
 
     /* increase the number of visitors */
-    $increaseNumberOfVisitors = $db->prepare("UPDATE user SET visitors = visitors + 1 WHERE username = :username")
+    $increaseNumberOfVisitors = $db->prepare("UPDATE user SET visitors = visitors + 1 WHERE username = :username");
+
+    /* change settings */
+    $saveAccountDataQuery = $db->prepare("UPDATE user SET username = :username, email = :email, aboutMe = :aboutMe, birthdate = :birthdate, `location` = :location WHERE userID = :userID");
 ?>

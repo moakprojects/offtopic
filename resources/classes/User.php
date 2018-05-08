@@ -416,5 +416,27 @@
             }
         }
 
+        //set changed settings information
+        function saveAccountData($userID, $username, $email, $aboutMe, $birthdate, $location) {
+            global $db;
+            global $saveAccountDataQuery;
+    
+            if(isset($saveAccountDataQuery)) {
+    
+                $saveAccountDataQuery->bindParam(':userID', $userID);
+                $saveAccountDataQuery->bindParam(':username', $username);
+                $saveAccountDataQuery->bindParam(':email', $email);
+                $saveAccountDataQuery->bindParam(':aboutMe', $aboutMe);
+                $saveAccountDataQuery->bindParam(':birthdate', $birthdate);
+                $saveAccountDataQuery->bindParam(':location', $location);
+                $saveAccountDataQuery->execute();
+   
+                return true;
+
+            } else {
+                return false;
+            }
+        }
+
     }
 ?>

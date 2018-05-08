@@ -89,7 +89,7 @@
                     <?php echo (!$favouriteCategories && !$favouriteTopics && !$likedPosts ? "" : "<li class='tab'><a href='#favourites'>Favourites</a></li>"); ?>
                     <li class="tab"><a href="#ownThings" onclick="getOwnData('<?php echo $selectedUsername; ?>')">Own things</a></li>
                     <li class="tab"><a href="#general">General informations</a></li>
-                    <li class="tab"><a href="#settings">Settings</a></li>
+                    <?php echo (!isset($loggedUser) ? "" : "<li class='tab'><a href='#settings'>Settings</a></li>"); ?>
                 </ul>
                 <div id="userStatistics">
                     <div class="row">
@@ -548,6 +548,7 @@
                                 
                 </div>
                 <div id="settings">
+                    <?php if(isset($loggedUser)) { ?>
                     <div class="row settings">
                         <div class="col s2 verticalTabContainer">
                             <ul class="tabs verticalTabs">
@@ -561,50 +562,75 @@
                                 <form class="accountForm" action="" method="post" id="accountForm">  
                                     <div class="row">
                                         <div class="input-field accountInput">
-                                            <input value="uuuuu" id="newusername" type="text" class="noBottomMargin">
-                                            <label class="active" for="newusername">Display name</label>
+                                            <input value="<?php echo $selectedUserData["username"]; ?>" id="newUsername" type="text" class="noBottomMargin" maxlength="16">
+                                            <label class="active" for="newUsername">Display name</label>
                                         </div>
                                     </div>
                                     <div class="row accountInputContainer">
                                         <div class="input-field accountInput">
-                                            <input value="uuuuu@uuuuu.hu" id="newemail" type="email" class="oBottomMargin">
-                                            <label class="active" for="newemail">Email</label>
+                                            <input value="<?php echo $selectedUserData["email"]; ?>" id="newEmail" type="email" class="oBottomMargin">
+                                            <label class="active" for="newEmail">Email</label>
                                         </div>
                                     </div>
-                                    <div class="row accountInputContainer">
+                                    <div class="row">
                                         <div class="input-field accountInput">
-                                            <textarea id="newaboutme" class="materialize-textarea noBottomMargin" maxlength="255" data-length="255">What about us?</textarea>
-                                            <label class="active" for="newaboutme">About me</label>
+                                            <textarea id="newAboutMe" class="materialize-textarea noBottomMargin" maxlength="255" data-length="255" placeholder="Add something about you"><?php echo (!is_null($selectedUserData["aboutMe"]) ? $selectedUserData["aboutMe"] : ""); ?></textarea>
+                                            <label class="active" for="newAboutMe">About me</label>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col s4 noLeftPadding">
                                             <label>Date of Birth</label>
-                                            <select class="browser-default">
+                                            <select class="browser-default" id="birthdateMonth">
                                                 <option value="" disabled selected>Choose a month</option>
                                                 <option value="1">January</option>
                                                 <option value="2">February</option>
                                                 <option value="3">March</option>
+                                                <option value="4">April</option>
+                                                <option value="5">May</option>
+                                                <option value="6">June</option>
+                                                <option value="7">July</option>
+                                                <option value="8">August</option>
+                                                <option value="9">September</option>
+                                                <option value="10">October</option>
+                                                <option value="11">November</option>
+                                                <option value="12">December</option>
                                             </select> 
                                         </div>
                                         <div class="col s4">
                                             <label class="noLabel">D</label>
-                                            <select class="browser-default">
+                                            <select class="browser-default" id="birthdateDay" disabled>
                                                 <option value="" disabled selected>Choose a day</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
                                             </select> 
                                         </div>
                                     </div>
                                     <div class="row accountInputContainer">
                                         <div class="input-field accountInput">
-                                            <input class="autocomplete noBottomMargin validate" id="newLocation" type="text" placeholder="Enter a location">
+                                            <input class="autocomplete noBottomMargin validate" id="newLocation" type="text" placeholder="Enter a location" value="<?php echo (!is_null($selectedUserData["location"]) ? $selectedUserData["location"] : ""); ?>">
                                             <label class="active" for="newLocation">Location</label>
                                         </div>
                                     </div>
-                                    <div class="row accountInputContainer right-align col s9">
-                                        <a class="waves-effect waves-light btn blue" id="saveAccountSettings">Save</a>
+                                    <div class="row accountInputContainer noLeftMargin noPadding right-align col s9">
+                                        <div class="row">
+                                            <div class="col s7 noLeftPadding">
+                                                <p class="noMargin noLeftPadding hide settingsErrorMsg"></p>
+                                                <ul class="noMargin noLeftPadding settingsErrorMsgList left-align"></ul>
+                                            </div>
+                                            <div class="col s4 offset-s1">
+                                                <div class="preloader-wrapper settingsPreloader hide small active">
+                                                    <div class="spinner-layer spinner-blue-only">
+                                                        <div class="circle-clipper left">
+                                                            <div class="circle"></div>
+                                                        </div><div class="gap-patch">
+                                                            <div class="circle"></div>
+                                                        </div><div class="circle-clipper right">
+                                                            <div class="circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <a class="waves-effect waves-light btn blue" id="saveAccountSettings">Save</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -705,6 +731,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>

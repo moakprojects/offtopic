@@ -16,6 +16,14 @@
     margin: 0;
 }
 
+.noPadding {
+    padding: 0 !important;
+}
+
+.noLeftMargin {
+    margin-left: 0 !important;
+}
+
 .noBottomMargin {
     margin-bottom: 0px !important;
 }
@@ -843,6 +851,23 @@
     margin-left: 5px !important;
 }
 
+.settingsErrorMsg {
+    color: red;
+}
+
+.settingsErrorMsgList li {
+    color: red;
+    margin-bottom: 10px;
+    list-style-type: disc !important;
+    list-style-position: inside;
+}
+
+.settingsPreloader {
+    position: absolute;
+    right: 110px;
+    bottom: 20px;
+}
+
 /* account tab */
 .input-field label {
     color: #737f8e;
@@ -918,6 +943,7 @@
 
 .accountInputContainer {
     margin-top: 40px;   
+    position: relative;
 }
 
 /* Delete profile tab */

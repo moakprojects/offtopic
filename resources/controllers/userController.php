@@ -335,4 +335,105 @@ if(isset($_POST["requestOwnPosts"])) {
     }
 }
 
+//if user wants to change user settings, we check the input data and then call
+if(isset($_POST["changeUserSettings"])) {
+
+    $userData = $userObj->getSelectedUser($_SESSION["selectedUsername"]);
+
+    $errorMsgs = array();
+    $error = false;
+
+    $username = htmlspecialchars(trim($_POST["username"]));
+
+    //if the user write his or her username into the input field we don't get back error message like "Username already used"
+    if($username !== $userData["username"]) {
+        $userDataByUsername = $userObj->checkUsername($username);
+
+        if($userDataByUsername === "error") {
+
+            $error = true;
+
+        } else if ($userDataByUsername === "not exist") {
+
+            
+        } else {
+            array_push($errorMsgs, "The username is already exist");
+        }
+    }
+
+    $email = htmlspecialchars(trim($_POST["email"]));
+
+    if(filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        //if the user write his or her email into the input field we don't get back error message like "Email already used"
+        if($email !== $userData["email"]) {
+            $userDataByEmail = $userObj->checkUserEmail($email);
+
+            if($userDataByEmail === "error") {
+
+                $error = true;
+
+            } else if ($userDataByEmail === "not exist") {
+
+                
+            } else {
+                array_push($errorMsgs, "The email is already exist");
+            }
+        }
+    } else {
+        array_push($errorMsgs, "Please enter a valid email");
+    }
+
+    if($error) {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+        exit;
+    } else {
+        if(!empty($errorMsgs)) {
+            $result["data_type"] = 0;
+            $result["data_value"] = $errorMsgs;
+
+            echo json_encode($result);
+            exit;
+        } else {
+
+            //if every new data validated then we set these information into database by help of persistence layer
+            
+            $aboutMe = htmlspecialchars(trim($_POST["aboutMe"]));
+            if ($aboutMe === "") {
+                $aboutMe = null;
+            }
+
+            $birthdateMonth = htmlspecialchars(trim($_POST["birthdateMonth"]));
+            $birthdateDay = htmlspecialchars(trim($_POST["birthdateDay"]));
+            if($birthdateMonth !== "" && $birthdateDay !== "") {
+                $birthdate = date('F', mktime(0, 0, 0, $birthdateMonth, 10)) . " " . date('d', mktime(0, 0, 0, 10, $birthdateDay));
+            } else {
+                $birthdate = null;
+            }
+
+            $location = htmlspecialchars(trim($_POST["location"]));
+            if($location === "") {
+                $location = null;
+            }
+
+            if($userObj->saveAccountData($userData["userID"], $username, $email, $aboutMe, $birthdate, $location)) {
+                $result["data_type"] = 1;
+                $result["data_value"] = $username;
+
+                echo json_encode($result);
+                exit;
+            } else {
+                $result["data_type"] = 0;
+                $result["data_value"] = "An error occured";
+
+                echo json_encode($result);
+                exit;
+            }
+        }
+        
+    }
+}
+
 ?>
