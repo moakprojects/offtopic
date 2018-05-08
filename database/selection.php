@@ -114,4 +114,7 @@ $latestTopicsQuery = $db->prepare("SELECT topic.*, categoryName, numberOfPosts, 
 
  /* get created posts */
  $createdPostsQuery = $db->prepare("SELECT user.username, post.postID, post.text, post.postedOn, post.topicID, numberOfLikes, numberOfDislikes, topic.topicName, topic.createdAt, category.categoryID, category.categoryName FROM post INNER JOIN user ON user.userID = post.userID LEFT JOIN (SELECT postID, sum(isLike) as numberOfLikes, sum(isDislike) as numberOfDislikes FROM postlike GROUP BY postID) as likes ON likes.postID = post.postID INNER JOIN topic ON topic.topicID = post.topicID INNER JOIN category ON category.categoryID = topic.categoryID WHERE user.username = :username");
+
+ /* get badge system */
+ $badgeSystemQuery = $db->prepare("SELECT * FROM badge");
 ?>

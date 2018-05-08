@@ -140,6 +140,20 @@
             }
         }
 
+        // request badge system for modal
+        function getBadgeSystem() {
+            global $db;
+            global $badgeSystemQuery;
+
+            if(isset($badgeSystemQuery)) {
+                $badgeSystemQuery->execute();
+
+                return $badgeSystemQuery = $badgeSystemQuery->fetchall(PDO::FETCH_ASSOC);
+            } else {
+                return false;
+            }
+        }
+
         // get selected user information from database
         function getSelectedUser($username) {
             global $db;

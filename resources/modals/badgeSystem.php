@@ -8,42 +8,34 @@
         </div>
         <div class="modal-body">
             <div class="row noMargin">
-                <div class="col s6 badgeSystemDetails">
-                    <div class="row noMargin">
-                        <div class="badge center-align col s12">
-                            <i class="fas fa-circle dot"></i>Autobiographer
+                <?php
+
+                //display the list of badge
+                $badgeSystem = $userObj->getBadgeSystem();
+                if($badgeSystem) {
+                    
+                    foreach($badgeSystem as $badge) {
+                        echo '
+                        <div class="col s6 badgeSystemDetails">
+                            <div class="row noMargin">
+                                <div class="badge center-align col s12">
+                                    <i class="fas fa-circle dot"></i>' . $badge["badgeName"] . '
+                                </div>
+                            </div>
+                            <div class="row noMargin">
+                                <div class="col s12 noPadding">
+                                    <p class="noTopMargin">' . $badge["badgeDescription"] . '</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row noMargin">
-                        <div class="col s12 noPadding">
-                            <p class="noTopMargin">Complete "About Me" section of user profile </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s6 badgeSystemDetails">
-                    <div class="row noMargin">
-                        <div class="badge center-align col s12">
-                            <i class="fas fa-circle dot"></i>Commentator
-                        </div>
-                    </div>
-                    <div class="row noMargin">
-                        <div class="col s12 noPadding">
-                            <p class="noTopMargin">Leave 10 comments</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s6 badgeSystemDetails">
-                    <div class="row noMargin">
-                        <div class="badge center-align col s12">
-                            <i class="fas fa-circle dot"></i>Refiner
-                        </div>
-                    </div>
-                    <div class="row noMargin">
-                        <div class="col s12 noPadding">
-                            <p class="noTopMargin">Answer 50 questions</p>
-                        </div>
-                    </div>
-                </div>
+                        ';
+                    }
+                } else {
+                    header("Location: /error");
+                    exit;
+                }
+
+                ?>                
             </div>
         </div>
     </div>
