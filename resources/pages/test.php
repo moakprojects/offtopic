@@ -1,9 +1,10 @@
 <?php
 
-$month = 2;
+$month = "April";
 $day = 9;
 
-$m = date("F", $month);
+$m = date_parse($month);
+$m2 = date('n', strtotime($month));
 $d = date("j", $day);
 
 $monthName = date('F', mktime(0, 0, 0, $month, 10));

@@ -338,10 +338,11 @@ if(isset($_POST["requestOwnPosts"])) {
 //if user wants to change user settings, we check the input data and then call
 if(isset($_POST["changeUserSettings"])) {
 
-    $userData = $userObj->getSelectedUser($_SESSION["selectedUsername"]);
+    $userData = $userObj->getUserData($_SESSION["selectedUsername"]);
 
     $errorMsgs = array();
     $error = false;
+    $newUsername = false;
 
     $username = htmlspecialchars(trim($_POST["username"]));
 
@@ -355,7 +356,8 @@ if(isset($_POST["changeUserSettings"])) {
 
         } else if ($userDataByUsername === "not exist") {
 
-            
+            $newUsername = true;
+
         } else {
             array_push($errorMsgs, "The username is already exist");
         }
@@ -419,11 +421,20 @@ if(isset($_POST["changeUserSettings"])) {
             }
 
             if($userObj->saveAccountData($userData["userID"], $username, $email, $aboutMe, $birthdate, $location)) {
-                $result["data_type"] = 1;
-                $result["data_value"] = $username;
 
-                echo json_encode($result);
-                exit;
+                if(!$newUsername) {
+                    $result["data_type"] = 1;
+                    $result["data_value"] = $username;
+    
+                    echo json_encode($result);
+                    exit;
+                } else {
+                    $result["data_type"] = 2;
+                    $result["data_value"] = $username;
+
+                    echo json_encode($result);
+                    exit;
+                }
             } else {
                 $result["data_type"] = 0;
                 $result["data_value"] = "An error occured";
@@ -436,4 +447,48 @@ if(isset($_POST["changeUserSettings"])) {
     }
 }
 
+//displaying settings data
+if(isset($_POST["requestSettingsData"])) {
+    $selectedUsername = htmlspecialchars(trim($_SESSION["selectedUsername"]));
+    $userData = $userObj->getUserData($selectedUsername);
+
+    if($userData) {
+
+        $settingsData["username"] = $userData["username"];
+        $settingsData["email"] = $userData["email"];
+
+        if(!is_null($userData["aboutMe"])) {
+            $settingsData["aboutMe"] = $userData["aboutMe"];
+        } else {
+            $settingsData["aboutMe"] = "";
+        }
+
+        if(!is_null($userData["birthdate"])) {
+            $birthdate = explode(" ", $userData["birthdate"]);
+            $settingsData["birthdateMonth"] = date('n', strtotime($birthdate[0]));
+            $settingsData["birthdateDay"] = $birthdate[1];
+        } else {
+            $settingsData["birthdateMonth"] = "";
+            $settingsData["birthdateDay"] = "";
+        }
+        
+        if(!is_null($userData["location"])) {
+            $settingsData["location"] = $userData["location"];
+        } else {
+            $settingsData["location"] = "";
+        }
+
+        $result["data_type"] = 1;
+        $result["data_value"] = $settingsData;
+
+        echo json_encode($result);
+        exit;
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+        exit;
+    }
+}
 ?>

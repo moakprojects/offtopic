@@ -562,19 +562,19 @@
                                 <form class="accountForm" action="" method="post" id="accountForm">  
                                     <div class="row">
                                         <div class="input-field accountInput">
-                                            <input value="<?php echo $selectedUserData["username"]; ?>" id="newUsername" type="text" class="noBottomMargin" maxlength="16">
+                                            <input value="" id="newUsername" type="text" class="noBottomMargin" maxlength="16" placeholder="Enter your username">
                                             <label class="active" for="newUsername">Display name</label>
                                         </div>
                                     </div>
                                     <div class="row accountInputContainer">
                                         <div class="input-field accountInput">
-                                            <input value="<?php echo $selectedUserData["email"]; ?>" id="newEmail" type="email" class="oBottomMargin">
+                                            <input value="" id="newEmail" type="email" class="" placeholder="Enter your email">
                                             <label class="active" for="newEmail">Email</label>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="input-field accountInput">
-                                            <textarea id="newAboutMe" class="materialize-textarea noBottomMargin" maxlength="255" data-length="255" placeholder="Add something about you"><?php echo (!is_null($selectedUserData["aboutMe"]) ? $selectedUserData["aboutMe"] : ""); ?></textarea>
+                                            <textarea id="newAboutMe" class="materialize-textarea noBottomMargin" maxlength="255" data-length="255" placeholder="Add something about you"></textarea>
                                             <label class="active" for="newAboutMe">About me</label>
                                         </div>
                                     </div>
@@ -583,18 +583,18 @@
                                             <label>Date of Birth</label>
                                             <select class="browser-default" id="birthdateMonth">
                                                 <option value="" disabled selected>Choose a month</option>
-                                                <option value="1">January</option>
-                                                <option value="2">February</option>
-                                                <option value="3">March</option>
-                                                <option value="4">April</option>
-                                                <option value="5">May</option>
-                                                <option value="6">June</option>
-                                                <option value="7">July</option>
-                                                <option value="8">August</option>
-                                                <option value="9">September</option>
-                                                <option value="10">October</option>
-                                                <option value="11">November</option>
-                                                <option value="12">December</option>
+                                                <option class="month1" value="1">January</option>
+                                                <option class="month2" value="2">February</option>
+                                                <option class="month3" value="3">March</option>
+                                                <option class="month4" value="4">April</option>
+                                                <option class="month5" value="5">May</option>
+                                                <option class="month6" value="6">June</option>
+                                                <option class="month7" value="7">July</option>
+                                                <option class="month8" value="8">August</option>
+                                                <option class="month9" value="9">September</option>
+                                                <option class="month10" value="10">October</option>
+                                                <option class="month11" value="11">November</option>
+                                                <option class="month12" value="12">December</option>
                                             </select> 
                                         </div>
                                         <div class="col s4">
@@ -606,7 +606,7 @@
                                     </div>
                                     <div class="row accountInputContainer">
                                         <div class="input-field accountInput">
-                                            <input class="autocomplete noBottomMargin validate" id="newLocation" type="text" placeholder="Enter a location" value="<?php echo (!is_null($selectedUserData["location"]) ? $selectedUserData["location"] : ""); ?>">
+                                            <input class="autocomplete noBottomMargin validate" id="newLocation" type="text" placeholder="Enter a location" value="">
                                             <label class="active" for="newLocation">Location</label>
                                         </div>
                                     </div>

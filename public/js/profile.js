@@ -566,22 +566,7 @@ function getOwnData(username) {
 	});
 }
 
-/*add event handlet to birthday select */
-$(document).on('change', '#birthdateMonth', function(e) {
-
-	/* we get the days of the selected month (we use a leap year, because we just store the month and the date) */
-	var numberOfDays = new Date(2016, e.currentTarget.value, 0).getDate();
-
-	$selectField = $('#birthdateDay');
-	$selectField.empty();
-	$selectField.append($("<option />").val("").text('Choose a day'));
-	$selectField.attr("selected");
-	for(var i = 1; i <= numberOfDays; i++) {
-		$selectField.append($("<option />").val(i).text(i));
-	}
-	$selectField.removeAttr("disabled");
-});
-
+// validate entered settings data and send to business layer
 $(document).on('click', '#saveAccountSettings', function() {
 
 	$('.settingsErrorMsgList').addClass('hide');
@@ -628,15 +613,68 @@ $(document).on('click', '#saveAccountSettings', function() {
 					$('.settingsErrorMsg').html("An error occured, try again");
 					$('.settingsErrorMsg').removeClass('hide');
 				}
-			} else {
+			} else if(obj.data_type == 1) {
 
 				$('.settingsErrorMsg').html("The changes were saved");
 				$('.settingsErrorMsg').removeClass('hide');
 				$('.settingsErrorMsg').css('color', '#34d034');
 				$('.userName').html(obj.data_value);
+			} else if(obj.data_type == 2) {
+				window.location.assign('/profile/' + obj.data_value);
 			}
 
 			$('.settingsPreloader').addClass('hide');
 		});
 	}
 });
+
+//get settings data
+(function ($) {
+	$.post('/resources/controllers/userController.php', {requestSettingsData: true}, function(returnData) {
+		var obj = jQuery.parseJSON(returnData);
+
+		console.log("sett", obj);
+
+		if(obj.data_type === 1) {
+			$('#newUsername').val(obj.data_value.username);
+			$('#newEmail').val(obj.data_value.email);
+			$('#newAboutMe').html(obj.data_value.aboutMe);
+			$('#newLocation').val(obj.data_value.location);
+
+			if(obj.data_value.birthdateMonth !== "") {
+				$('.month' + obj.data_value.birthdateMonth).eq(0).prop("selected", true);
+			}
+
+			if(obj.data_value.birthdateDay !== "") {
+				var numberOfDays = new Date(2016, obj.data_value.birthdateMonth, 0).getDate();
+				displayDays(numberOfDays, obj.data_value.birthdateDay);
+				console.log("szulcsinapcsi", obj.data_value.birthdateDay);
+				console.log("szulcsi numberofdays", numberOfDays);
+			}
+		}
+	});
+}(jQuery));
+
+/*add event handler to birthday select */
+$(document).on('change', '#birthdateMonth', function(e) {
+
+	/* we get the days of the selected month (we use a leap year, because we just store the month and the date) */
+	var numberOfDays = new Date(2016, e.currentTarget.value, 0).getDate();
+
+	displayDays(numberOfDays, "");
+});
+
+//display days depending on the month and birthday from database
+function displayDays(numberOfDays, selectedDay) {
+	selectField = $('#birthdateDay');
+	selectField.empty();
+	selectField.append($("<option />").val("").text('Choose a day'));
+	for(var i = 1; i <= numberOfDays; i++) {
+		if(i === parseInt(selectedDay)) {
+			selectField.append($("<option selected/>").val(i).text(i));
+		} else {
+			selectField.append($("<option />").val(i).text(i));
+		}
+	}
+	selectField.removeAttr("disabled");
+}

@@ -438,5 +438,24 @@
             }
         }
 
+        //get user setting data from database
+        function getUserData($username) {
+            global $db;
+            global $userQuery;
+    
+            if(isset($userQuery)) {
+    
+                $userQuery->bindParam(':username', $username);
+                $userQuery->execute();
+
+                $userData = $userQuery->fetch(PDO::FETCH_ASSOC);
+
+                return $userData;
+
+            } else {
+                return false;
+            }
+        }
+
     }
 ?>
