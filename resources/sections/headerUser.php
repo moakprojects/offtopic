@@ -24,7 +24,7 @@
                         <i class="material-icons prefix searchIcon">search</i>
                         <input id="searchField" type="text" class="validate" Placeholder="Search...">
                     </li>
-                    <li><a class="waves-effect waves-light btn btnNewTopic blue">Start New Topic</a></li>
+                    <li><a  href="/new-topic" class="waves-effect waves-light btn btnNewTopic blue">Start New Topic</a></li>
                     <li>
                     <a class="dropdown-button profileDropdown" href="#!" data-activates="dropdown1">
                         <?php
