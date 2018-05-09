@@ -90,7 +90,7 @@
                     <?php echo (!$favouriteCategories && !$favouriteTopics && !$likedPosts ? "" : "<li class='tab'><a href='#favourites'>Favourites</a></li>"); ?>
                     <li class="tab"><a href="#ownThings" onclick="getOwnData('<?php echo $selectedUsername; ?>')">Own things</a></li>
                     <li class="tab"><a href="#general">General informations</a></li>
-                    <?php echo (!isset($loggedUser) ? "" : "<li class='tab'><a href='#settings'>Settings</a></li>"); ?>
+                    <?php echo (!$myprofile ? "" : "<li class='tab'><a href='#settings'>Settings</a></li>"); ?>
                 </ul>
                 <div id="userStatistics">
                     <div class="row">
@@ -568,7 +568,7 @@
                                 
                 </div>
                 <div id="settings">
-                    <?php if(isset($loggedUser)) { ?>
+                    <?php if($myprofile) { ?>
                     <div class="row settings">
                         <div class="col s2 verticalTabContainer">
                             <ul class="tabs verticalTabs">

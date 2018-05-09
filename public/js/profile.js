@@ -620,7 +620,7 @@ $(document).on('click', '#saveAccountSettings', function() {
 				$('.settingsErrorMsg').css('color', '#34d034');
 				$('.userName').html(obj.data_value);
 			} else if(obj.data_type == 2) {
-				window.location.assign('/profile/' + obj.data_value);
+				window.location.assign('/profile/' + obj.data_value + '#settings');
 			}
 
 			$('.settingsPreloader').addClass('hide');
