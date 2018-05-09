@@ -557,15 +557,14 @@
                                     }
                                 ?>
                             </div>
-                        </div>
                         <?php } else {
                         ?>
                             <p class="noMargin">Have not received a badge yet</p>
                         <?php
                             }
                         ?>
-                    </div>
-                                
+                        </div>
+                    </div>             
                 </div>
                 <div id="settings">
                     <?php if(isset($loggedUser)) { ?>
