@@ -988,6 +988,10 @@
     color: #000;
 }
 
+.deleteProfileError {
+    color: red;
+}
+
 /* notification tab */
 
 #notifications {

@@ -678,3 +678,33 @@ function displayDays(numberOfDays, selectedDay) {
 	}
 	selectField.removeAttr("disabled");
 }
+
+//if user change delete user profile checkbox then we display the delete button
+$(document).on('change', '#approvedDeletion', function(e) {
+	if(e.target.checked) {
+		$('#deleteProfile').eq(0).removeClass('disabled');
+	} else {
+		$('#deleteProfile').eq(0).addClass('disabled');
+	}
+});
+
+$(document).on('click', '#deleteProfile', function() {
+
+	if($('#approvedDeletion')["0"].checked) {
+		$.post('/resources/controllers/userController.php', {deleteUserProfile: true}, function(returnData) {
+			var obj = jQuery.parseJSON(returnData);
+
+			if(obj.data_type == 1) {
+				$.post('/resources/controllers/logoutController.php', {logout: true}, function(data) {
+					window.location.assign('/home');
+				});
+			} else {
+				$('.deleteProfileError').eq(0).html("An error occured, please try again");
+				$('.deleteProfileError').eq(0).removeClass('hide');
+			}
+		});
+	} else {
+		$('.deleteProfileError').eq(0).html("You have to accept the terms before deletion");
+		$('.deleteProfileError').eq(0).removeClass('hide');
+	}
+});

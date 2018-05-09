@@ -743,8 +743,13 @@
                                         <input type="checkbox" id="approvedDeletion"/>
                                         <label for="approvedDeletion">I have read the information stated above and understand the implications of having my profile deleted. I wish to proceed with the deletion of my profile.</label>
                                     </div>
-                                    <div class="right-align">
-                                        <a class="waves-effect waves-light btn blue disabled right-align" id="deleteProfile" >Delete Profile</a>
+                                    <div class="row">
+                                        <div class="col s6">
+                                            <p class="deleteProfileError noMargin hide"></p>
+                                        </div>
+                                        <div class="col s4 right-align offset-s2">
+                                            <a class="waves-effect waves-light btn blue disabled right-align" id="deleteProfile" >Delete Profile</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
