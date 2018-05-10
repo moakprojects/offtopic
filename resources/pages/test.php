@@ -1,15 +1,17 @@
 <?php
+$egy = null;
+$kett = null;
 
-$month = "April";
-$day = 9;
+if( $egy == $kett ) {
+    $ide = '';
+} else {
+    $ide = '';
+}
 
-$m = date_parse($month);
-$m2 = date('n', strtotime($month));
-$d = date("j", $day);
-
-$monthName = date('F', mktime(0, 0, 0, $month, 10));
-$monthName = date('d', mktime(0, 0, 0, 0, $day));
-
-$date = $m . "-" . $d;
+if( $egy === $kett ) {
+    $ide = '';
+} else {
+    $ide = '';
+}
 
 $jj = "";
