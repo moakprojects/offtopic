@@ -7,8 +7,15 @@ $(document).ready(function(){
         registration();
     });
 
-    /* call registration process when user press enter button on registration form */
+    /* call registration process when user press enter button on password confirm field */
     $('#registrationRePassword').keypress(function(e) {
+        if(e.which == 13) {
+            registration();
+        }
+    });
+
+    /* call registration process when user press enter button on password field */
+    $('#registrationPassword').keypress(function(e) {
         if(e.which == 13) {
             registration();
         }
