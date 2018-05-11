@@ -132,7 +132,7 @@
                                         <p class="topicDescription"><?php echo $posts[$posts[$i]["replyID"]-1]["text"];?></p>
                                         <div class="row postIndexContainer">
                                             <div class="col s12 postIndex">
-                                                <a href="#">#<?php echo $posts[$i]["replyID"]; ?></a>
+                                                <a href="/post/<?php echo $posts[$posts[$i]["replyID"]-1]["postID"]; ?>">#<?php echo $posts[$i]["replyID"]; ?></a>
                                             </div>
                                         </div>
                                     </div>      
@@ -157,7 +157,7 @@
                             </ul>
                             <div class="row postIndexContainer">
                                 <div class="col s12 postIndex">
-                                    <a href="#">#<?php echo $i + 1; ?></a>
+                                    <a href="/post/<?php echo $posts[$i]["postID"]; ?>">#<?php echo $i + 1; ?></a>
                                 </div>
                             </div>
                         </div>
