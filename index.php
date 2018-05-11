@@ -8,7 +8,11 @@
         $queryStringParams = explode("/", $queryString);
         switch($queryStringParams[0]) {
             case "home":
-                $page = "home";
+                if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
+                    $page = "homeAdmin";
+                } else {
+                    $page = "home";
+                }
             break;
             case "categories":
                 if(isset($queryStringParams[1]) && $queryStringParams[1] !== "") {
@@ -62,7 +66,11 @@
                 $page = "error";
         }
     } else {
-        $page = "home";
+        if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
+            $page = "homeAdmin";
+        } else {
+            $page = "home";
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -122,7 +130,9 @@
 
                         $_SESSION["user"]["loggedIn"] = true;
                         $_SESSION["user"]["userID"] = $cookieLoginResult["userID"];
-
+                        if($cookieLoginResult["accessLevel"] == 3) {
+                            $_SESSION["user"]["isAdmin"] = true;
+                        }
                         setcookie("usr", md5($cookieLoginResult["username"]), time() + 7890000);
 
                     } else {
@@ -136,7 +146,9 @@
                 include "resources/classes/$class.php";
             });
 
-            if(isset($_SESSION["user"]) && $_SESSION["user"]["loggedIn"]) {
+            if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
+                include("resources/sections/headerAdmin.php");
+            } else if(isset($_SESSION["user"]) && $_SESSION["user"]["loggedIn"]) {
                 include("resources/sections/headerUser.php");
             } else {
                 include("resources/sections/headerGeneral.php");

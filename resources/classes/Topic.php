@@ -7,6 +7,27 @@ class Topic {
     }
 
     // request topic data from database
+    function getAllTopic() {
+        global $db;
+        global $allTopicQuery;
+
+        if($allTopicQuery) {
+            $allTopicQuery->execute();
+
+            $allTopicData = $allTopicQuery->fetchall(PDO::FETCH_ASSOC);
+
+                for($i = 0; $i < count($allTopicData); $i++) {
+                    $allTopicData[$i]["lastPostElapsedTime"] = $this->calculateTimeDifferences($allTopicData[$i]["latestPost"]);
+                }
+
+            return $allTopicData;
+        } else {
+            header("Location: /error");
+            exit;
+        }
+    }
+
+    // request topic data from database based on category id
     function getTopicData($selectedCategoryId, $categoryObj) {
 
         if($categoryObj -> checkCategory($selectedCategoryId) > 0) {

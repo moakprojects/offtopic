@@ -27,6 +27,23 @@ class Post {
         }
     }
 
+    // request all of the posts data from database
+    function getAllPost() {
+        global $db;
+        global $allPostQuery;
+
+        if($allPostQuery) {
+            $allPostQuery->execute();
+
+            $allPostData = $allPostQuery->fetchall(PDO::FETCH_ASSOC);
+            
+            return $allPostData;
+        } else {
+            header("Location: /error");
+            exit;
+        }
+    }
+
     // trim the long text depending on parameters
     function textTrimmer($longText, $length) {
         if(strlen($longText) > $length) {
