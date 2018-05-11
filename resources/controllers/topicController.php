@@ -8,47 +8,6 @@ include "../../database/modification.php";
 include "../classes/Topic.php";
 $topicObj = new Topic();
 
-if(isset($_POST["selectedTopic"])) {
-    $selectedTopic = htmlspecialchars(trim($_SESSION["selectedTopicID"]));
-    $topicData = $topicObj->getSelectedTopic($selectedTopic);
-    if($topicData) {
-
-        $topicWithAttachedFiles = array();
-        foreach($topicData as $data) {
-            if(!isset($topicWithAttachedFiles["topicID"])) {
-                $topicWithAttachedFiles = array();
-                $topicWithAttachedFiles["topicID"] = $data["topicID"];
-                $topicWithAttachedFiles["topicName"] = $data["topicName"];
-                $topicWithAttachedFiles["topicText"] = $data["topicText"];
-                $topicWithAttachedFiles["createdAt"] = $data["createdAt"];
-                $topicWithAttachedFiles["username"] = $data["username"];
-                $topicWithAttachedFiles["createdBy"] = $data["createdBy"];
-                $topicWithAttachedFiles["profileImage"] = $data["profileImage"];
-                $topicWithAttachedFiles["files"] = array(); 
-            }
-            if(
-                !is_null($data["attachmentID"]) &&
-                !is_null($data["attachmentName"]) &&
-                !is_null($data["displayName"])
-            ) {
-                array_push($topicWithAttachedFiles["files"], array("attachmentID" => $data["attachmentID"], "attachmentName" => $data["attachmentName"], "displayName" => $data["displayName"]));
-            }
-        }
-
-        $result["data_type"] = 1;
-        $result["data_value"] =  $topicWithAttachedFiles;
-
-        echo json_encode($result);
-        exit;
-    } else {
-        $result["data_type"] = 0;
-        $result["data_value"] = "An error occured";
-
-        echo json_encode($result);
-        exit;
-    }
-}
-
 //depending on the action (add or remove) call the right function from persistence layer (what is add or remove the topic from favourites)
 if(isset($_POST["favouriteSelectedTopic"])) {
 

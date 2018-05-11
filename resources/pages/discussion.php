@@ -3,6 +3,7 @@
         $topicObj = new Topic();
         $postObj = new Post();
         $posts = $postObj->getPostsData($_SESSION["selectedTopicID"]);
+        $topicData = $topicObj->getSelectedTopic($_SESSION["selectedTopicID"]);
 ?>
 <div class="container contentContainer">
     <div class="row noBottomMargin">
@@ -19,27 +20,26 @@
                 </div>
             </div>
             <div class="topic container">
-            <div id="selectedTopicContainer">
-                <?php if(isset($_POST["selectedTopic"])) { ?>
                 <div class="row">
                     <div class="col s1 userImageContainer">
                         <?php
-                            echo "<a href='/profile/" . $_POST["selectedTopic"]["username"] . "'><img src=\"";
-                            if($_POST["selectedTopic"]["profileImage"] == 'defaultAvatar.png') {
+                            echo "<a href='/profile/" . $topicData["username"] . "'><img src=\"";
+                            if($topicData["profileImage"] == 'defaultAvatar.png') {
                                 echo '/public/images/content/defaultAvatar.png';
                             } else {
-                                echo "/public/images/upload/" . $_POST["selectedTopic"]["profileImage"] . "\"";
+                                echo "/public/images/upload/" . $topicData["profileImage"] . "\"";
                             }
-                            echo "\" class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip=" . $_POST["selectedTopic"]["username"] . "></a>";
+                            echo "\" class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip=" . $topicData["username"] . "></a>";
                         ?>
                     </div>
                     <div class="col s11 topicContainer">
-                        <h3><?php echo $_POST["selectedTopic"]["topicName"]?></h3>
-                        <p class="topicDescription"><?php echo $_POST["selectedTopic"]["topicText"]?></p>
+                        <h3><?php echo $topicData["topicName"]?></h3>
+                        <p class="topicDescription"><?php echo $topicData["topicText"]?></p>
                         <ul class="postAttachFiles">
                             <?php
-                            if(!empty($_POST["selectedTopic"]["files"])) {
-                                foreach($_POST["selectedTopic"]["files"] as $file) {
+                            $topicAttachedFiles = $topicObj->getAttachedFiles($topicData["attachedFilesCode"]);
+                            if($topicAttachedFiles) {
+                                foreach($topicAttachedFiles as $file) {
                                     $fileExtension = explode(".", $file["attachmentName"]);
                                     if(in_array($fileExtension[1], array('png', 'jpg', 'jpeg'))) {
                                         echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
@@ -59,7 +59,7 @@
                         <div class="row">
                             <div class="created col s5">
                                 <i class="far fa-clock fa-sm"></i>
-                                <span>Created at: <?php echo $_POST["selectedTopic"]["createdAt"]?> by <a href="/profile/<?php echo $_POST["selectedTopic"]["username"]?>" class="postCreator"><strong><?php echo $_POST["selectedTopic"]["username"]?> </strong></a></span>
+                                <span>Created at: <?php echo $topicData["createdAt"]?> by <a href="/profile/<?php echo $topicData["username"]?>" class="postCreator"><strong><?php echo $topicData["username"]?> </strong></a></span>
                             </div>
                             <div class="controlBtns col s4 offset-s3">
                                 <div class="row noTopMargin">
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="topicLikeButtonContainer" class="<?php echo (!isset($_SESSION['user']) || $_POST["selectedTopic"]['createdBy'] === $_SESSION['user']['userID'] ? 'hide' : ''); ?>">
+                <div id="topicLikeButtonContainer" class="<?php echo (!isset($_SESSION['user']) || $topicData['createdBy'] === $_SESSION['user']['userID'] ? 'hide' : ''); ?>">
                 <a data-position="bottom" data-delay="50" data-tooltip="Add to favourites" class="btn-floating btn-large waves-effect waves-light topicLikeButton tooltipped" 
                 onclick="likeTopic(
                     <?php echo $_SESSION["user"]["userID"] . ", " . $_SESSION['selectedTopicID'] . ", " . 
@@ -92,8 +92,6 @@
                         : "'add')\"> <i class=\"far "); 
                     ?> fa-heart fa-lg"></i></a>
                 </div>
-                <?php } ?>
-            </div>
             </div>
             <div id="postContainer">
             <?php
@@ -218,7 +216,7 @@
                                             </div>
                                         </div>
                                         <div class="<?php echo (isset($loggedUser) && $loggedUser ? '' : 'hide'); ?> col s4 right-align noLeftPadding">
-                                            <a class="btn-floating waves-effect waves-light blue replyBtn" onclick="replyPost(<?php echo $i + 1 . ", '" . $post[$i]["postID"] . ", '" . $posts[$i]['username'] ."'"; ?>)"><i class="material-icons">reply</i></a>
+                                            <a class="btn-floating waves-effect waves-light blue replyBtn" onclick="replyPost(<?php echo $i + 1 . ", '" . $posts[$i]["postID"] . ", '" . $posts[$i]['username'] ."'"; ?>)"><i class="material-icons">reply</i></a>
                                         </div>
                                     </div>
                                 </div>

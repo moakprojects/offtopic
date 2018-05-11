@@ -105,18 +105,20 @@ class Topic {
         global $db;
         global $selectedTopicQuery;
 
-        if($selectedTopicQuery) {
+        try {
             $selectedTopicID = htmlspecialchars(trim($selectedTopicID));
             $selectedTopicQuery->bindParam(":topicID", $selectedTopicID);
             $selectedTopicQuery->execute();
 
             if($selectedTopicQuery->rowCount() > 0) {
-                return $selectedTopicData = $selectedTopicQuery->fetchall(PDO::FETCH_ASSOC);
+                return $selectedTopicQuery->fetch(PDO::FETCH_ASSOC);
             } else {
-                return false;
+                header("Location: /error");
+                exit;
             }
-        } else {
-            return false;
+        } catch(PDOException $e) {
+            header("Location: /error");
+            exit;
         }
     }
 
