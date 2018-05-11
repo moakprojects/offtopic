@@ -90,14 +90,12 @@ class Topic {
             $selectedTopicQuery->execute();
 
             if($selectedTopicQuery->rowCount() > 0) {
-                return $selectedTopicData = $selectedTopicQuery->fetch(PDO::FETCH_ASSOC);
+                return $selectedTopicData = $selectedTopicQuery->fetchall(PDO::FETCH_ASSOC);
             } else {
-                header("Location: /error");
-                exit;
+                return false;
             }
         } else {
-            header("Location: /error");
-            exit;
+            return false;
         }
     }
 
@@ -207,6 +205,74 @@ class Topic {
         } else {
             header("Location: /error");
             exit;
+        }
+    }
+
+    function getPeriodInfo() {
+        global $db;
+        global $periodQuery;
+
+        if(isset($periodQuery)) {
+            
+            $periodQuery ->execute();
+            $periods = $periodQuery->fetchall(PDO::FETCH_ASSOC);
+
+            return $periods;
+        } else {
+            header("Location: /error");
+            exit;
+        }
+    }
+
+    function uploadNewTopic($topicName, $topicText, $createdBy, $period, $category, $attachedFilesCode) {
+        global $db;
+        global $newTopicQuery;
+
+        if(isset($newTopicQuery)) {
+
+            try {
+                $topicName = htmlspecialchars(trim($topicName));
+                $topicText = htmlspecialchars(trim($topicText));
+                $createdBy = htmlspecialchars(trim($createdBy));
+                $period = htmlspecialchars(trim($period));
+                $category = htmlspecialchars(trim($category));
+                $attachedFilesCode = htmlspecialchars(trim($attachedFilesCode));
+
+                $newTopicQuery->bindParam(":topicName", $topicName);
+                $newTopicQuery->bindParam(":topicText", $topicText);
+                $createdAt = date("Y-m-d H:i:s");
+                $newTopicQuery->bindParam(":createdAt", $createdAt);
+                $newTopicQuery->bindParam(":createdBy", $createdBy);
+                $newTopicQuery->bindParam(":period", $period);
+                $newTopicQuery->bindParam(":category", $category);
+                $newTopicQuery->bindParam(":attachedFilesCode", $attachedFilesCode);
+                $newTopicQuery ->execute();
+            } catch (PDOException $e) {
+                return false;
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // upload attached file information into database
+    function uploadFiles($filename, $displayname, $attachedFileCode) {
+
+        global $db;
+        global $fileUploadQuery;
+
+        if(isset($fileUploadQuery)) {
+            $fileUploadQuery->bindParam(':attachmentName', $filename);
+            $fileUploadQuery->bindParam(':displayName', $displayname);
+            $fileUploadQuery->bindParam(':attachedFileCode', $attachedFileCode);
+
+            $fileUploadQuery->execute();
+
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -16,4 +16,7 @@
 
     /* put like information favouriteCategory table */
     $likeCategoryQuery = $db->prepare("INSERT INTO `favouritecategory` VALUES (:userID, :categoryID)");
+
+    /* upload new topic into database */
+    $newTopicQuery = $db->prepare("INSERT INTO topic VALUES (NULL, :topicName, :topicText, :createdAt, :createdBy, :period, :category, :attachedFilesCode)");
 ?>

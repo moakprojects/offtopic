@@ -8,6 +8,47 @@ include "../../database/modification.php";
 include "../classes/Topic.php";
 $topicObj = new Topic();
 
+if(isset($_POST["selectedTopic"])) {
+    $selectedTopic = htmlspecialchars(trim($_SESSION["selectedTopicID"]));
+    $topicData = $topicObj->getSelectedTopic($selectedTopic);
+    if($topicData) {
+
+        $topicWithAttachedFiles = array();
+        foreach($topicData as $data) {
+            if(!isset($topicWithAttachedFiles["topicID"])) {
+                $topicWithAttachedFiles = array();
+                $topicWithAttachedFiles["topicID"] = $data["topicID"];
+                $topicWithAttachedFiles["topicName"] = $data["topicName"];
+                $topicWithAttachedFiles["topicText"] = $data["topicText"];
+                $topicWithAttachedFiles["createdAt"] = $data["createdAt"];
+                $topicWithAttachedFiles["username"] = $data["username"];
+                $topicWithAttachedFiles["createdBy"] = $data["createdBy"];
+                $topicWithAttachedFiles["profileImage"] = $data["profileImage"];
+                $topicWithAttachedFiles["files"] = array(); 
+            }
+            if(
+                !is_null($data["attachmentID"]) &&
+                !is_null($data["attachmentName"]) &&
+                !is_null($data["displayName"])
+            ) {
+                array_push($topicWithAttachedFiles["files"], array("attachmentID" => $data["attachmentID"], "attachmentName" => $data["attachmentName"], "displayName" => $data["displayName"]));
+            }
+        }
+
+        $result["data_type"] = 1;
+        $result["data_value"] =  $topicWithAttachedFiles;
+
+        echo json_encode($result);
+        exit;
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+        exit;
+    }
+}
+
 //depending on the action (add or remove) call the right function from persistence layer (what is add or remove the topic from favourites)
 if(isset($_POST["favouriteSelectedTopic"])) {
 
@@ -36,6 +77,63 @@ if(isset($_POST["favouriteSelectedTopic"])) {
             echo json_encode($result);
         }
     }
+}
+
+if(isset($_POST["createNewTopic"])) {
+    $attachedFilesCode = "Att" . time();
+
+    if($topicObj->uploadNewTopic($_POST["newTopicName"], $_POST["newTopicDescription"], $_SESSION["user"]["userID"], $_POST["newTopicPeriod"], $_POST["newTopicCategory"], $attachedFilesCode)) {
+        
+        //create session variable for attachedfilecode to upload attached files information into database with this ID
+        $_SESSION["newTopicAttachedFileCode"] = $attachedFilesCode;
+        
+        $result["data_type"] = 1;
+        $result["data_value"] = "Success";
+
+        echo json_encode($result);
+        exit;
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured, please try again later";
+        
+        echo json_encode($result);
+        exit;
+    }
+}
+
+if(count($_FILES) > 0) {
+
+    foreach($_FILES as $file) {
+        
+        $fileName = time() . '_' . $file["name"];
+        $fileExtension = explode(".", $file["name"]);
+        $location = "../../public/files/upload/" . $fileName;
+
+        $displayedFileName = $file["name"];
+        if(strlen($file["name"]) > 38 - strlen($fileExtension[0])) {
+            $cuttedFileName = substr($file["name"], 0, 39);
+            $displayedFileName = $cuttedFileName . '....' . $fileExtension[1];
+        }
+        
+        if($topicObj->uploadFiles($fileName, $displayedFileName, $_SESSION["newTopicAttachedFileCode"])) {
+            copy($file["tmp_name"], $location);
+
+        } else {
+            $result["data_type"] = 0;
+            $result["data_value"] = "An error occured";
+
+            echo json_encode($result);
+            exit;
+        }
+          
+    }
+
+    unset($_SESSION["newTopicAttachedFileCode"]);
+    $result["data_type"] = 1;
+    $result["data_value"] = "Success";
+
+    echo json_encode($result);
+    exit;
 }
 
 ?>

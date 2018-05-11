@@ -92,3 +92,92 @@ function removeAttachFile(index) {
   
   validateAttachFile();
 }
+
+$(document).on('click', '#newTopicSubmit', function() {
+  $('.newtopicSpinner').removeClass('hide');
+  var newTopicName = $('#newTopicName')["0"].value;
+  var newTopicDescription = quill.getText().trim();
+  var newTopicCategory = $('#newTopicCategory')["0"].value;
+  var newTopicPeriod = $('#newTopicPeriod')["0"].value;
+
+  if(newTopicName !== "") {
+    if(newTopicDescription !== "") {
+      if(newTopicCategory !== "") {
+        if(newTopicPeriod !== "") {
+          $('#errorMsg').html("");
+          $('#errorMsg').addClass('hide');
+
+          $.post('/resources/controllers/topicController.php', {createNewTopic: true, newTopicName: newTopicName, newTopicDescription: newTopicDescription, newTopicCategory: newTopicCategory, newTopicPeriod: newTopicPeriod}, function(returnData) {
+            var obj = jQuery.parseJSON(returnData);
+
+            if(obj.data_type == 1) {
+              
+              if(currentFiles.length > 0) {
+    
+                var attachedFiles = new FormData();
+                $.each(currentFiles, function(i, file) {
+                    attachedFiles.append('file-'+i, file);
+                });
+                
+                $.ajax({
+                  url: '/resources/controllers/topicController.php',
+                  method: 'POST',
+                  type: 'POST',
+                  data: attachedFiles,
+                  contentType: false,
+                  cache: false,
+                  processData: false,
+                  success: function(data) {
+                    var fileObj = jQuery.parseJSON(data);
+                    
+                    if(fileObj.data_type == 0) {
+                      $('#errorMsg').removeClass('hide');
+                      $('#errorMsg').html(fileObj.data_value);
+                    } else {
+                      $('#attachFiles').html("");
+                      quill.deleteText(0, quill.getLength());
+                      $('#newTopicName')["0"].value = "";
+                      $('#newTopicCategory')["0"].value = "";
+                      $('#newTopicPeriod')["0"].value = "";
+                      currentFiles = [];
+                      $('#errorMsgSeparator').addClass('hide');
+                      $('.newtopicSpinner').addClass('hide');
+                    }
+                  }
+                });
+              } else {
+                quill.deleteText(0, quill.getLength());
+                $('#newTopicName')["0"].value = "";
+                $('#newTopicCategory')["0"].value = "";
+                $('#newTopicPeriod')["0"].value = "";
+                currentFiles = [];
+                $('#errorMsgSeparator').addClass('hide');
+                $('.newtopicSpinner').addClass('hide');
+              }
+            } else {
+              $('#errorMsg').html(obj.data_value);
+              $('#errorMsg').removeClass('hide');    
+            }
+          });
+        } else {
+          $('#errorMsg').html("Please select the period of your new topic");
+          $('#errorMsg').removeClass('hide');  
+        }
+      } else {
+        $('#errorMsg').html("Please select the category of your new topic");
+        $('#errorMsg').removeClass('hide');  
+      }
+    } else {
+      $('#errorMsg').html("Please enter the description of your new topic");
+      $('#errorMsg').removeClass('hide');
+    }
+  } else {
+    $('#errorMsg').html("Please enter the name of you new topic");
+    $('#errorMsg').removeClass('hide');
+  }
+
+  console.log(newTopicName);
+  console.log(newTopicDescription);
+  console.log(newTopicCategory);
+  console.log(newTopicPeriod);
+});
