@@ -131,6 +131,11 @@ if(isset($_POST["logID"])) {
                 $_SESSION["user"]["loggedIn"] = true;
                 $_SESSION["user"]["userID"] = $loggedUserData["userID"];
 
+                /* if user is admin */
+                if(intval($loggedUserData["accessLevel"]) === 3) {
+                    $_SESSION["user"]["isAdmin"] = true;
+                }
+
                 /* if user select 'remember me' then we set a cookie into the browser, so the user will be logged for 3 month */
                 if($_POST["rememberMe"] === "true") {
                     setcookie("usr", md5($logID), time() + 7890000, '/');

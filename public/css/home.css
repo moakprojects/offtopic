@@ -152,12 +152,6 @@ h2 {
     line-height: 25px;
 }
 
-.topicDescription {
-    /*overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis*/
-}
-
 .topicCategory {
     position: absolute;
     bottom: 0;

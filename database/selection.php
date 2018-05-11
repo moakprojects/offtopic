@@ -8,12 +8,15 @@ $loggedUserQuery = $db->prepare("SELECT * FROM user WHERE userID = :userID");
 /* get userdata from user table with username */
 $userQuery = $db->prepare("SELECT user.*, numberOfFollowers, numberOfTopics, numberOfPosts, numberOfPostLikes FROM user LEFT JOIN (SELECT topic.createdBy, sum(numberOfFavourites) as numberOfFollowers, count(topic.topicID) as numberOfTopics FROM topic LEFT JOIN (SELECT topicID, count(*) as numberOfFavourites FROM favouritetopic GROUP BY topicID) as favourites ON favourites.topicID = topic.topicID GROUP BY topic.createdBy) as topicInformation ON topicInformation.createdBy = user.userID LEFT JOIN (SELECT post.userID, sum(numberOfLikes) as numberOfPostLikes, count(post.postID) as numberOfPosts FROM post LEFT JOIN (SELECT postID, sum(isLike) as numberOfLikes FROM postlike GROUP BY postID) as likes ON likes.postID = post.postID GROUP BY post.userID) as postInformation ON postInformation.userID = user.userID WHERE username = :username");
 
-/* get post data from post table */
+/* get post data from post table based on topicID*/
 $postQuery = $db->prepare("SELECT post.*, user.username, user.profileImage, numberOfLikes, numberOfDislikes
 FROM post 
 INNER JOIN user ON post.userID = user.userID 
 LEFT JOIN (SELECT postlike.postID, sum(isLike) as numberOfLikes, sum(isDislike) as numberOfDislikes FROM `postlike` GROUP BY postlike.postID) as likes ON likes.postID = post.postID
 WHERE topicID = :topicID");
+
+/* get all of the post data from post table*/
+$allPostQuery = $db->prepare("SELECT post.*, topic.topicName, user.username, user.profileImage, numberOfLikes, numberOfDislikes FROM post INNER JOIN user ON post.userID = user.userID INNER JOIN topic ON topic.topicID = post.topicID LEFT JOIN (SELECT postlike.postID, sum(isLike) as numberOfLikes, sum(isDislike) as numberOfDislikes FROM `postlike` GROUP BY postlike.postID) as likes ON likes.postID = post.postID");
 
 /* get attached files from attechment table with postID */
 $attachedFilesQuery = $db->prepare("SELECT * FROM attachment WHERE attachedFileCode = :attachedFileCode");
@@ -42,7 +45,7 @@ $loginQuery = $db -> prepare("SELECT * FROM user WHERE email = :logID OR usernam
 $cookieLoginQuery = $db -> prepare("SELECT * FROM user WHERE md5(email) = :logIDHash OR md5(username) = :logIDHash");
 
 /* select information for the category page */
-$categoryQuery = $db -> prepare("SELECT category.*, numberOfTopics, numberOfPosts, numberOfLikes 
+$allCategoryQuery = $db -> prepare("SELECT category.*, numberOfTopics, numberOfPosts, numberOfLikes 
     FROM category 
     LEFT JOIN (
         SELECT categoryID, count(*) as numberOfTopics, topicID 
@@ -72,6 +75,9 @@ $sideBarFavouriteCategoriesQuery = $db->prepare("SELECT category.categoryName, c
 
 /* select general topic information based on categoryID */
 $topicQuery = $db -> prepare("SELECT topic.*, numberOfLikes, numberOfPosts, latestPost, username, profileImage, periodName FROM topic LEFT JOIN (SELECT topicID, count(*) as numberOfLikes FROM favouritetopic GROUP BY topicID) as likes ON likes.topicID = topic.topicID LEFT JOIN (SELECT topicID, count(*) as numberOfPosts, MAX(postedOn) as latestPost FROM post GROUP BY topicID) as posts ON posts.topicID = topic.topicID INNER JOIN (SELECT userID, username, profileImage FROM user) as users ON users.userID = topic.createdBy INNER JOIN (SELECT periodID, periodName FROM period) as periods ON periods.periodID = topic.semester WHERE topic.categoryID = :categoryID ORDER BY topic.createdAt DESC");
+
+/* get general topic information */
+$allTopicQuery = $db -> prepare("SELECT topic.*, numberOfLikes, numberOfPosts, latestPost, username, profileImage, periodName, categoryName FROM topic LEFT JOIN (SELECT topicID, count(*) as numberOfLikes FROM favouritetopic GROUP BY topicID) as likes ON likes.topicID = topic.topicID LEFT JOIN (SELECT topicID, count(*) as numberOfPosts, MAX(postedOn) as latestPost FROM post GROUP BY topicID) as posts ON posts.topicID = topic.topicID INNER JOIN (SELECT userID, username, profileImage FROM user) as users ON users.userID = topic.createdBy INNER JOIN (SELECT periodID, periodName FROM period) as periods ON periods.periodID = topic.semester INNER JOIN  (SELECT categoryID, categoryName FROM category) as category ON category.categoryID = topic.categoryID ORDER BY topic.createdAt DESC");
 
 /* check if user added the topic to favourite or not */
 $checkFavouriteTopicQuery = $db->prepare("SELECT * FROM favouritetopic WHERE userID = :userID AND topicID = :topicID");

@@ -12,12 +12,12 @@ class Category {
     function getCategoryData() {
 
         global $db;
-        global $categoryQuery;
+        global $allCategoryQuery;
 
-        if($categoryQuery) {
-            $categoryQuery->execute();
+        if($allCategoryQuery) {
+            $allCategoryQuery->execute();
 
-            $categoryData = $categoryQuery->fetchall(PDO::FETCH_ASSOC);
+            $categoryData = $allCategoryQuery->fetchall(PDO::FETCH_ASSOC);
             
             return $categoryData;
         } else {
