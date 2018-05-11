@@ -123,4 +123,24 @@ $latestTopicsQuery = $db->prepare("SELECT topic.*, categoryName, numberOfPosts, 
 
  /* get period info */
  $periodQuery = $db->prepare("SELECT * FROM `period`");
+
+ /* get selected post data for comment page */
+ $selectedPostsQuery = $db->prepare("SELECT post.postID, post.text, post.postedOn, post.replyID, post.attachedFilesCode as postAttachedFilesCode, topic.topicID, topic.topicName, topic.topicText, topic.createdAt, topic.attachedFilesCode as topicAttachedFilesCode, topicCreatorID, topicCreatorName, topicCreatorImage, post.attachedFilesCode, postWriterID, postWriterName, postWriterImage, originalPostID, originalUserID, originalUsername
+ FROM post
+ INNER JOIN (
+     SELECT userID as postWriterID, username as postWriterName, profileImage as postWriterImage
+     FROM user) as postWriter ON postWriter.postWriterID = post.userID
+ INNER JOIN topic ON topic.topicID = post.topicID
+ INNER JOIN (
+     SELECT userID as topicCreatorID, username as topicCreatorName, profileImage as topicCreatorImage
+     FROM user) as topicCreator ON topicCreator.topicCreatorID = topic.createdBy
+ LEFT JOIN (
+     SELECT post.postID as originalPostID, post.text as originalPostText, originalUserID, originalUsername
+     FROM post
+     INNER JOIN (
+         SELECT userID as originalUserID, username as originalUserName
+         FROM user) 
+         as originalUser ON originalUser.originalUserID = post.userID
+     ) as originalPost ON originalPost.originalPostID = post.replyID
+ WHERE postID = :postID");
 ?>

@@ -143,18 +143,18 @@
                             <ul class="postAttachFiles">
                                 <?php 
                                     $attachedFiles = $postObj->getAttachedFiles($posts[$i]["attachedFilesCode"]);
-
-                                    foreach($attachedFiles as $file) {
-                                        $fileExtension = explode(".", $file["attachmentName"]);
-                                        if(in_array($fileExtension[1], array('png', 'jpg', 'jpeg'))) {
-                                            echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
-                                            echo '<a href="/public/files/upload/' . $file["attachmentName"] . '" data-lightbox="attachedImagePost' . $posts[$i]["postID"] . '" data-title="' . $file["displayName"] . '"><img src="/public/files/upload/' . $file["attachmentName"] . '"></a>';
-                                            echo "<p>(To see the original size click on the name of the image)</p>";
-                                        } else {
-                                            echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
+                                    if($attachedFiles) {
+                                        foreach($attachedFiles as $file) {
+                                            $fileExtension = explode(".", $file["attachmentName"]);
+                                            if(in_array($fileExtension[1], array('png', 'jpg', 'jpeg'))) {
+                                                echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
+                                                echo '<a href="/public/files/upload/' . $file["attachmentName"] . '" data-lightbox="attachedImagePost' . $posts[$i]["postID"] . '" data-title="' . $file["displayName"] . '"><img src="/public/files/upload/' . $file["attachmentName"] . '"></a>';
+                                                echo "<p>(To see the original size click on the name of the image)</p>";
+                                            } else {
+                                                echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
+                                            }
                                         }
                                     }
-
                                 ?>
                             </ul>
                             <div class="row postIndexContainer">
@@ -218,7 +218,7 @@
                                             </div>
                                         </div>
                                         <div class="<?php echo (isset($loggedUser) && $loggedUser ? '' : 'hide'); ?> col s4 right-align noLeftPadding">
-                                            <a class="btn-floating waves-effect waves-light blue replyBtn" onclick="replyPost(<?php echo $i + 1 . ", '" . $posts[$i]['username'] ."'"; ?>)"><i class="material-icons">reply</i></a>
+                                            <a class="btn-floating waves-effect waves-light blue replyBtn" onclick="replyPost(<?php echo $i + 1 . ", '" . $post[$i]["postID"] . ", '" . $posts[$i]['username'] ."'"; ?>)"><i class="material-icons">reply</i></a>
                                         </div>
                                     </div>
                                 </div>

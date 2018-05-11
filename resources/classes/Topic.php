@@ -99,6 +99,25 @@ class Topic {
         }
     }
 
+    //get attached files for the topic
+    function getAttachedFiles($attachedCode) {
+        global $db;
+        global $attachedFilesQuery;
+
+        try {
+            $attachedFilesQuery->bindParam(":attachedFileCode", $attachedCode);
+            $attachedFilesQuery->execute();
+
+            if($attachedFilesQuery->rowCount() > 0) {
+                return $attachedFilesQuery->fetchall(PDO::FETCH_ASSOC);
+            } else {
+                return false;
+            }
+        } catch(PDOException $e) {
+            return false;
+        }
+    }
+
     // request latest topic information for what's new
     function getLatestTopics() {
         global $db;
