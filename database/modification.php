@@ -10,4 +10,11 @@
 
     /* change settings */
     $saveAccountDataQuery = $db->prepare("UPDATE user SET username = :username, email = :email, aboutMe = :aboutMe, birthdate = :birthdate, `location` = :location WHERE userID = :userID");
+
+    /* change user ID to anonymous id after delete user */
+    $modifyDeletedUserInTopic = $db->prepare("UPDATE topic SET createdBy = 39 WHERE createdBy = :userID");
+    $modifyDeletedUserInPostLike = $db->prepare("UPDATE postlike SET userID = 39 WHERE userID = :userID");
+    $modifyDeletedUserInPost = $db->prepare("UPDATE post SET userID = 39 WHERE userID = :userID");
+    $modifyDeletedUserInFavouriteTopic = $db->prepare("UPDATE favouritetopic SET userID = 39 WHERE userID = :userID");
+    $modifyDeletedUserInFavouriteCategory = $db->prepare("UPDATE favouritecategory SET userID = 39 WHERE userID = :userID");
 ?>

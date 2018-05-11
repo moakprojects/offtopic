@@ -86,7 +86,7 @@ $checkFavouriteTopicQuery = $db->prepare("SELECT * FROM favouritetopic WHERE use
 $checkFavouriteCategoryQuery = $db->prepare("SELECT * FROM favouritecategory WHERE userID = :userID AND categoryID = :categoryID");
 
 /* select choosen topic information based on topicId */
-$selectedTopicQuery = $db->prepare("SELECT topic.*, numberOfLikes, numberOfPosts, latestPost, username, profileImage, periodName FROM topic LEFT JOIN (SELECT topicID, count(*) as numberOfLikes FROM favouritetopic GROUP BY topicID) as likes ON likes.topicID = topic.topicID LEFT JOIN (SELECT topicID, count(*) as numberOfPosts, MAX(postedOn) as latestPost FROM post GROUP BY topicID) as posts ON posts.topicID = topic.topicID INNER JOIN (SELECT userID, username, profileImage FROM user) as users ON users.userID = topic.createdBy INNER JOIN (SELECT periodID, periodName FROM period) as periods ON periods.periodID = topic.semester WHERE topic.topicID = :topicID ORDER BY topic.createdAt DESC");
+$selectedTopicQuery = $db->prepare("SELECT topic.*, numberOfLikes, numberOfPosts, latestPost, username, profileImage, periodName, attachment.* FROM topic LEFT JOIN ( SELECT topicID, count(*) as numberOfLikes FROM favouritetopic GROUP BY topicID) as likes ON likes.topicID = topic.topicID LEFT JOIN ( SELECT topicID, count(*) as numberOfPosts, MAX(postedOn) as latestPost FROM post GROUP BY topicID) as posts ON posts.topicID = topic.topicID INNER JOIN ( SELECT userID, username, profileImage FROM user) as users ON users.userID = topic.createdBy INNER JOIN ( SELECT periodID, periodName FROM period) as periods ON periods.periodID = topic.semester LEFT JOIN attachment ON attachment.attachedFileCode = topic.attachedFilesCode WHERE topic.topicID = :topicID ORDER BY topic.createdAt DESC");
 
 /* get latest topics for what's new */
 $latestTopicsQuery = $db->prepare("SELECT topic.*, categoryName, numberOfPosts, username, profileImage FROM topic INNER JOIN (SELECT categoryID, categoryName FROM category) as categories ON categories.categoryID = topic.categoryID LEFT JOIN (SELECT topicID, count(*) as numberOfPosts FROM post GROUP BY topicID) as posts ON posts.topicID = topic.topicID INNER JOIN (SELECT userID, username, profileImage FROM user) as users ON users.userID = topic.createdBy ORDER BY createdAt DESC LIMIT 5");
@@ -126,4 +126,7 @@ $latestTopicsQuery = $db->prepare("SELECT topic.*, categoryName, numberOfPosts, 
 
  /* get badges belongs to the selected user */
  $earnedBadgeQuery = $db->prepare("SELECT badgeName FROM `badge` INNER JOIN earnedbadge ON earnedbadge.badgeID = badge.badgeID INNER JOIN user ON earnedbadge.userID = user.userID WHERE user.username = :username");
+
+ /* get period info */
+ $periodQuery = $db->prepare("SELECT * FROM `period`");
 ?>

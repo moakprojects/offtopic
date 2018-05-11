@@ -272,3 +272,14 @@ function likeTopic(userId, topicId, action) {
     }
   });
 }
+
+(function ($) {
+  console.log("elmegy a cucc");
+  $.post('/resources/controllers/topicController.php', {selectedTopic: true}, function(data) {
+    console.log("visszajön a cucc");
+    var obj = jQuery.parseJSON(data);
+    if(obj.data_type === 1) {
+      $('#selectedTopicContainer').load('/topics/' + obj.data_value.topicID + ' #selectedTopicContainer', {selectedTopic: obj.data_value}, '');
+    }
+  });
+}(jQuery));

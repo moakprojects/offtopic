@@ -42,7 +42,7 @@
                 <form method="post" id="regForm">
                     <input type="text" name="emailAddress" class="email" Placeholder="Email">   
                     <input type="text" name="userName" class="username" maxlength="16" Placeholder="Username">   
-                    <input type="password" name="password" class="password" Placeholder="Password">    
+                    <input type="password" name="password" class="password" Placeholder="Password" id="registrationPassword">    
                     <input type="password" name="passwordConfirm" class="passwordConfirm" id="registrationRePassword" Placeholder="Re-Password">    
                     <br>
                     <div class="row modalErrorMsg hide">

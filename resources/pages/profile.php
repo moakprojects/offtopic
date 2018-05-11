@@ -90,7 +90,7 @@
                     <?php echo (!$favouriteCategories && !$favouriteTopics && !$likedPosts ? "" : "<li class='tab'><a href='#favourites'>Favourites</a></li>"); ?>
                     <li class="tab"><a href="#ownThings" onclick="getOwnData('<?php echo $selectedUsername; ?>')">Own things</a></li>
                     <li class="tab"><a href="#general">General informations</a></li>
-                    <?php echo (!isset($loggedUser) ? "" : "<li class='tab'><a href='#settings'>Settings</a></li>"); ?>
+                    <?php echo (!$myprofile ? "" : "<li class='tab'><a href='#settings'>Settings</a></li>"); ?>
                 </ul>
                 <div id="userStatistics">
                     <div class="row">
@@ -567,7 +567,7 @@
                     </div>             
                 </div>
                 <div id="settings">
-                    <?php if(isset($loggedUser)) { ?>
+                    <?php if($myprofile) { ?>
                     <div class="row settings">
                         <div class="col s2 verticalTabContainer">
                             <ul class="tabs verticalTabs">
@@ -743,8 +743,13 @@
                                         <input type="checkbox" id="approvedDeletion"/>
                                         <label for="approvedDeletion">I have read the information stated above and understand the implications of having my profile deleted. I wish to proceed with the deletion of my profile.</label>
                                     </div>
-                                    <div class="right-align">
-                                        <a class="waves-effect waves-light btn blue disabled right-align" id="deleteProfile" >Delete Profile</a>
+                                    <div class="row">
+                                        <div class="col s6">
+                                            <p class="deleteProfileError noMargin hide"></p>
+                                        </div>
+                                        <div class="col s4 right-align offset-s2">
+                                            <a class="waves-effect waves-light btn blue disabled right-align" id="deleteProfile" >Delete Profile</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

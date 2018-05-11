@@ -4,6 +4,7 @@ include "../../config/connection.php";
 include "../../database/selection.php";
 include "../../database/insertion.php";
 include "../../database/modification.php";
+include "../../database/deletion.php";
 include "../classes/User.php";
 $userObj = new User();
 
@@ -404,8 +405,6 @@ if(isset($_POST["changeUserSettings"])) {
             echo json_encode($result);
             exit;
         } else {
-
-            //if every new data validated then we set these information into database by help of persistence layer
             
             $aboutMe = htmlspecialchars(trim($_POST["aboutMe"]));
             if ($aboutMe === "") {
@@ -425,27 +424,42 @@ if(isset($_POST["changeUserSettings"])) {
                 $location = null;
             }
 
-            if($userObj->saveAccountData($userData["userID"], $username, $email, $aboutMe, $birthdate, $location)) {
+            if(
+                $username == $userData["username"] &&
+                $email == $userData["email"] &&
+                $aboutMe == $userData["aboutMe"] &&
+                $birthdate == $userData["birthdate"] &&
+                $location == $userData["location"]
+            ) {
+                $result["data_type"] = 3;
+                $result["data_value"] = "Nothing changed";
 
-                if(!$newUsername) {
-                    $result["data_type"] = 1;
-                    $result["data_value"] = $username;
-    
-                    echo json_encode($result);
-                    exit;
+                echo json_encode($result);
+                exit;
+            } else {
+                //if every new data validated then we set these information into database by help of persistence layer
+                if($userObj->saveAccountData($userData["userID"], $username, $email, $aboutMe, $birthdate, $location)) {
+
+                    if(!$newUsername) {
+                        $result["data_type"] = 1;
+                        $result["data_value"] = $username;
+        
+                        echo json_encode($result);
+                        exit;
+                    } else {
+                        $result["data_type"] = 2;
+                        $result["data_value"] = $username;
+
+                        echo json_encode($result);
+                        exit;
+                    }
                 } else {
-                    $result["data_type"] = 2;
-                    $result["data_value"] = $username;
+                    $result["data_type"] = 0;
+                    $result["data_value"] = "An error occured";
 
                     echo json_encode($result);
                     exit;
                 }
-            } else {
-                $result["data_type"] = 0;
-                $result["data_value"] = "An error occured";
-
-                echo json_encode($result);
-                exit;
             }
         }
         
@@ -485,6 +499,25 @@ if(isset($_POST["requestSettingsData"])) {
 
         $result["data_type"] = 1;
         $result["data_value"] = $settingsData;
+
+        echo json_encode($result);
+        exit;
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+        exit;
+    }
+}
+
+if(isset($_POST["deleteUserProfile"])) {
+    $userData = $userObj->getUserData($_SESSION["selectedUsername"]);
+    $userID = $userData["userID"];
+
+    if($userObj->deleteUser($userID)) {
+        $result["data_type"] = 1;
+        $result["data_value"] = "Success";
 
         echo json_encode($result);
         exit;

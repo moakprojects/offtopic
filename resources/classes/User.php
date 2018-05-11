@@ -468,7 +468,7 @@
             }
         }
 
-        //get user setting data from database
+        //get user data from database (for ajax call)
         function getUserData($username) {
             global $db;
             global $userQuery;
@@ -483,6 +483,55 @@
                 return $userData;
 
             } else {
+                return false;
+            }
+        }
+
+        function deleteUser($userID) {
+            global $db;
+
+            global $modifyDeletedUserInTopic;
+            global $modifyDeletedUserInPostLike;
+            global $modifyDeletedUserInPost;
+            global $modifyDeletedUserInFavouriteTopic;
+            global $modifyDeletedUserInFavouriteCategory;
+            global $deletedUserFromEarnedBadge;
+
+            global $deleteUser;
+
+            $userID = htmlspecialchars(trim($userID));
+
+            try {
+                $db->beginTransaction();
+
+                $modifyDeletedUserInTopic->bindParam(':userID', $userID);
+                $modifyDeletedUserInTopic->execute();
+
+                $modifyDeletedUserInPostLike->bindParam(':userID', $userID);
+                $modifyDeletedUserInPostLike->execute();
+
+                $modifyDeletedUserInPost->bindParam(':userID', $userID);
+                $modifyDeletedUserInPost->execute();
+                
+                $modifyDeletedUserInFavouriteTopic->bindParam(':userID', $userID);
+                $modifyDeletedUserInFavouriteTopic->execute();
+                
+                $modifyDeletedUserInFavouriteCategory->bindParam(':userID', $userID);
+                $modifyDeletedUserInFavouriteCategory->execute();
+                
+                $deletedUserFromEarnedBadge->bindParam(':userID', $userID);
+                $deletedUserFromEarnedBadge->execute();
+
+                $deleteUser->bindParam(':userID', $userID);
+                $deleteUser->execute();
+
+                $db->commit();
+
+                return true;
+
+            } catch(PDOException $e) {
+                $db->rollBack();
+
                 return false;
             }
         }
