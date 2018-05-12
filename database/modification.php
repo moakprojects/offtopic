@@ -18,6 +18,9 @@
     $modifyDeletedUserInFavouriteTopic = $db->prepare("UPDATE favouritetopic SET userID = 39 WHERE userID = :userID");
     $modifyDeletedUserInFavouriteCategory = $db->prepare("UPDATE favouritecategory SET userID = 39 WHERE userID = :userID");
 
+    /* save last login date into database */
+    $saveLastLoginQuery = $db->prepare("UPDATE user SET lastLoginDate = :lastLoginDate WHERE userID = :userID");
+    
     /* change isReported column of a topic*/
     $reportTopicQuery = $db->prepare("UPDATE topic SET isReported = 1 WHERE topicID = :topicID");
 

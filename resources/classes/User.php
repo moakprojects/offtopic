@@ -591,5 +591,37 @@
                 return "error";
             }
         }
+
+        function getNumberOfPosts($userID) {
+            global $db;
+            global $getNumberOfPostsQuery;
+
+            try {
+                $getNumberOfPostsQuery->bindParam(':userID', $userID);
+                $getNumberOfPostsQuery->execute();
+
+                return $getNumberOfPostsQuery->rowCount();
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+        function saveLoginDate($userID) {
+            global $db;
+            global $saveLastLoginQuery;
+            
+            try {
+                $saveLastLoginQuery->bindParam(':userID', $userID);
+                $now = new DateTime('now');
+                $now = $now->format('Y-m-d H:i:s');
+                $saveLastLoginQuery->bindParam(':lastLoginDate', $now);
+                $saveLastLoginQuery->execute();
+
+                return true;
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+    
     }
 ?>

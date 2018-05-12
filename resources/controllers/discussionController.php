@@ -5,7 +5,9 @@ include "../../database/selection.php";
 include "../../database/insertion.php";
 include "../../database/modification.php";
 include "../classes/Post.php";
+include "../classes/User.php";
 $postObj = new Post();
+$userObj = new User();
 
 // if the user send a post call createpost from persistence layer
 if(isset($_POST["replyContent"])) {
@@ -22,6 +24,20 @@ if(isset($_POST["replyContent"])) {
         
         //create session variable for attachedfilecode to upload attached files information into database with this ID
         $_SESSION["attachedFileCode"] = $attachedFileCode;
+
+        if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 2)) {
+            $numberOfPosts = $userObj->getNumberOfPosts($_SESSION["user"]["userID"]);
+            if($numberOfPosts >= 10) {
+                $userObj->uploadBadge($_SESSION["user"]["userID"], 2);
+            }
+        }
+
+        if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 3)) {
+            $numberOfPosts = $userObj->getNumberOfPosts($_SESSION["user"]["userID"]);
+            if($numberOfPosts >= 50) {
+                $userObj->uploadBadge($_SESSION["user"]["userID"], 3);
+            }
+        }
         
         $result["data_type"] = 1;
         $result["data_value"] = $_SESSION["selectedTopicID"];
