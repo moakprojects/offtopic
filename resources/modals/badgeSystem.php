@@ -6,7 +6,7 @@
                 <button type="button" class="btn-flat modal-action modal-close col s2"><i class="material-icons">clear</i></button>
             </div>
         </div>
-        <div class="modal-body">
+        <div class="modal-body badgeSystemContainer">
             <div class="row noMargin">
                 <?php
 

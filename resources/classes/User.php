@@ -558,5 +558,38 @@
             }
         }
 
+        function uploadBadge($userID, $badgeID) {
+            global $db;
+            global $newBadgeQuery;
+
+            try {
+                $newBadgeQuery->bindParam(':userID', $userID);
+                $newBadgeQuery->bindParam(':badgeID', $badgeID);
+                $newBadgeQuery->execute();
+
+                return true;
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+        function checkBadgeStatus($userID, $badgeID) {
+            global $db;
+            global $getBadgeInformationQuery;
+
+            try {
+                $getBadgeInformationQuery->bindParam(':userID', $userID);
+                $getBadgeInformationQuery->bindParam(':badgeID', $badgeID);
+                $getBadgeInformationQuery->execute();
+
+                if($getBadgeInformationQuery->rowCount() > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (PDOException $e) {
+                return "error";
+            }
+        }
     }
 ?>

@@ -18,5 +18,8 @@
     $likeCategoryQuery = $db->prepare("INSERT INTO `favouritecategory` VALUES (:userID, :categoryID)");
 
     /* upload new topic into database */
-    $newTopicQuery = $db->prepare("INSERT INTO topic VALUES (NULL, :topicName, :topicText, :createdAt, :createdBy, :period, :category, :attachedFilesCode, 0)");
+    $newTopicQuery = $db->prepare("INSERT INTO topic VALUES (NULL, :topicName, :topicText, :createdAt, :createdBy, :period, :category, :attachedFilesCode)");
+
+    /* if the user reach the required condition for a badge we store this information in database */
+    $newBadgeQuery = $db->prepare("INSERT INTO earnedBadge VALUES (:userID, :badgeID)");
 ?>

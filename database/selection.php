@@ -134,7 +134,7 @@ $latestTopicsQuery = $db->prepare("SELECT topic.*, categoryName, numberOfPosts, 
  $periodQuery = $db->prepare("SELECT * FROM `period`");
 
  /* get selected post data for comment page */
- $selectedPostsQuery = $db->prepare("SELECT post.postID, post.text, post.postedOn, post.replyID, post.attachedFilesCode as postAttachedFilesCode, topic.topicID, topic.topicName, topic.topicText, topic.createdAt, topic.attachedFilesCode as topicAttachedFilesCode, topicCreatorID, topicCreatorName, topicCreatorImage, post.attachedFilesCode, postWriterID, postWriterName, postWriterImage, originalPostID, originalUserID, originalUsername
+ $selectedPostsQuery = $db->prepare("SELECT post.postID, post.text, post.postedOn, post.replyID, post.attachedFilesCode as postAttachedFilesCode, topic.topicID, topic.topicName, topic.topicText, topic.createdAt, topic.attachedFilesCode as topicAttachedFilesCode, topicCreatorID, topicCreatorName, topicCreatorImage, post.attachedFilesCode, postWriterID, postWriterName, postWriterImage, originalPostID, originalUserID, originalUsername, postIdInTopic
  FROM post
  INNER JOIN (
      SELECT userID as postWriterID, username as postWriterName, profileImage as postWriterImage
@@ -151,9 +151,18 @@ $latestTopicsQuery = $db->prepare("SELECT topic.*, categoryName, numberOfPosts, 
          FROM user) 
          as originalUser ON originalUser.originalUserID = post.userID
      ) as originalPost ON originalPost.originalPostID = post.replyID
+INNER JOIN (
+    SELECT topicID, count(*) as postIdInTopic
+    FROM post 
+    WHERE postID <= :postID 
+    GROUP BY topicID
+    ) as postIdInTopic ON postIdInTopic.topicID = topic.topicID
  WHERE postID = :postID");
 
 
 /* get the ID of the created new topic */
 $getIdOfCreatedTopicQuery = $db->prepare("SELECT topicID FROM topic WHERE createdBy = :createdBy && createdAt = :createdAt");
+
+/* in function where user can earn badge we check if he or she already earned or not */
+$getBadgeInformationQuery = $db->prepare("SELECT * FROM earnedBadge WHERE userID = :userID && badgeID = :badgeID");
 ?>

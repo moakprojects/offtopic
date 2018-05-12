@@ -154,7 +154,7 @@
                         </ul>
                         <div class="row postIndexContainer">
                             <div class="col s12 postIndex">
-                                <a href="/post/<?php echo $postData["postID"]; ?>">#<?php echo $postData["postID"]; ?></a>
+                                <a href="/post/<?php echo $postData["postID"]; ?>">#<?php echo $postData["postIdInTopic"]; ?></a>
                             </div>
                         </div>
                     </div>
