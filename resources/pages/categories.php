@@ -26,7 +26,21 @@
                         </div>
                         <!-- Post Content-->
                         <div class="post-content">
-                            <h1 class="title"><?php echo $category["categoryName"]; ?></h1>
+                            <div class="row noMargin">
+                                <div class="col s9 noPadding">
+                                    <h1 class="title"><?php echo $category["categoryName"]; ?></h1>
+                                </div>
+                                <div class="col s1 noPadding pencilIcon titleIcon center-align">
+                                    <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                        <i class="fas fa-pencil-alt fa-xs"></i>
+                                    </a>
+                                </div>
+                                <div class="col s1 noPadding trashIcon titleIcon center-align">
+                                    <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                        <i class="fas fa-trash fa-xs"></i>
+                                    </a>
+                                </div>
+                            </div>
                             <p class="description"><?php echo $category["categoryDescription"]; ?></p>
                             <div class="post-meta row">
                                 <span class="comments col s6"><i class="fa fa-comments"></i> <?php echo ($category["numberOfPosts"] ? $category["numberOfPosts"] : "0") ; ?> posts</span>

@@ -228,6 +228,27 @@ strong {
     font-size: 8px;
 }
 
+.stickyBtn {
+    background-color: white;
+    color: #fbb83a;
+    border: 1px solid #fbb83a;
+    padding: 0 0.5rem;
+    line-height: 27px;
+    height: 26px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    font-size: 8px;
+}
+
+.stickyBtn:hover {
+    color: white;
+    background-color: #fbb83a;
+}
+
+.adminIcons {
+    padding-right: 40px !important;
+}
+
 .postReport {
     margin-left: 0px !important;
 }
@@ -400,6 +421,10 @@ strong {
 
 .postCreator:hover {
     color: rgb(33, 150, 243);
+}
+
+.postIndexContainer .postIndex {
+    padding-right: 13px !important;
 }
 
 .postIndex {
