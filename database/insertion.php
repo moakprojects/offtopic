@@ -3,7 +3,7 @@
     $likePostQuery = $db->prepare("INSERT INTO `postlike` VALUES (:userID, :postID, :isLike, :isDislike)");
 
     /* create post */
-    $createPostQuery = $db->prepare("INSERT INTO `post` VALUES (NULL, :text, :postedOn, :replyID, :userID, :topicID, :attachedFilesCode, NULL)");
+    $createPostQuery = $db->prepare("INSERT INTO `post` VALUES (NULL, :text, :postedOn, :replyID, :userID, :topicID, :attachedFilesCode, 0)");
 
     /* upload file to database */
     $fileUploadQuery = $db->prepare("INSERT INTO `attachment` VALUES (NULL, :attachmentName, :displayName, :attachedFileCode)");
@@ -18,5 +18,5 @@
     $likeCategoryQuery = $db->prepare("INSERT INTO `favouritecategory` VALUES (:userID, :categoryID)");
 
     /* upload new topic into database */
-    $newTopicQuery = $db->prepare("INSERT INTO topic VALUES (NULL, :topicName, :topicText, :createdAt, :createdBy, :period, :category, :attachedFilesCode, NULL)");
+    $newTopicQuery = $db->prepare("INSERT INTO topic VALUES (NULL, :topicName, :topicText, :createdAt, :createdBy, :period, :category, :attachedFilesCode, 0)");
 ?>

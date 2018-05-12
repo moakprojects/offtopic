@@ -17,4 +17,10 @@
     $modifyDeletedUserInPost = $db->prepare("UPDATE post SET userID = 39 WHERE userID = :userID");
     $modifyDeletedUserInFavouriteTopic = $db->prepare("UPDATE favouritetopic SET userID = 39 WHERE userID = :userID");
     $modifyDeletedUserInFavouriteCategory = $db->prepare("UPDATE favouritecategory SET userID = 39 WHERE userID = :userID");
+
+    /* change isReported column of a topic*/
+    $reportTopicQuery = $db->prepare("UPDATE topic SET isReported = 1 WHERE topicID = :topicID");
+
+    /* change isReported column of a post*/
+    $reportPostQuery = $db->prepare("UPDATE post SET isReported = 1 WHERE postID = :postID");
 ?>

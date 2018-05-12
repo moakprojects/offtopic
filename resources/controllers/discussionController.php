@@ -37,6 +37,21 @@ if(isset($_POST["replyContent"])) {
     }
 }
 
+/* report post controller */
+if(isset($_POST["reportedPost"])) {
+    if($postObj->reportPost($_POST["reportedPost"])) {
+        $result["data_type"] = 1;
+        $result["data_value"] = "reported";
+
+        echo json_encode($result);
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+    }
+}
+
 // if the user wants to upload files we upload the files information to the database with the attachedfilecode what the user got when the postupload function ran, then we copy the file to the storage
 if(count($_FILES) > 0) {
 

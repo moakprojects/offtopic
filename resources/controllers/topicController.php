@@ -97,4 +97,19 @@ if(count($_FILES) > 0) {
     exit;
 }
 
+/* report topic controller */
+if(isset($_POST["reportedTopic"])) {
+    if($topicObj->reportTopic($_POST["reportedTopic"])) {
+        $result["data_type"] = 1;
+        $result["data_value"] = "reported";
+
+        echo json_encode($result);
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+    }
+}
+
 ?>

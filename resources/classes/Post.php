@@ -145,6 +145,21 @@ class Post {
         }
     }
 
+    // modify topic table by isreported column
+    function reportPost($postID) {
+        global $db;
+        global $reportPostQuery;
+
+        try {
+            $reportPostQuery->bindParam(':postID', $postID);
+            $reportPostQuery->execute();
+
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     // modify postlike table 
     function likePost($userID, $postID, $like, $dislike) {
             

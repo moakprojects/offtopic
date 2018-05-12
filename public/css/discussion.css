@@ -216,6 +216,34 @@ strong {
  background: #fbb83a;
 }
 
+.reportBtn {
+    background-color: white;
+    color: #d50000;
+    border: 1px solid #d50000;
+    padding: 0 0.5rem;
+    line-height: 27px;
+    height: 26px;
+    margin-bottom: 10px;
+    margin-left: 8px;
+    font-size: 8px;
+}
+
+.postReport {
+    margin-left: 0px !important;
+}
+
+#toast-container {
+    top: auto !important;
+    right: 5%;
+    bottom: 10%;
+    left: auto !important;  
+  }
+
+.reportBtn:hover {
+    color: white;
+    background-color: #d50000;
+}
+
 .topicDetails .created {
     color: #383636;
     padding-left: 0px !important;
@@ -375,7 +403,8 @@ strong {
 }
 
 .postIndex {
-    text-align: right;
+    padding-right: 45px !important;
+    margin-bottom: 10px;
 }
 
 .postIndex a {

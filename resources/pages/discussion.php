@@ -56,6 +56,15 @@
                         </ul>
                     </div>
                 </div>
+                <?php
+                    if(isset($loggedUser) && $loggedUser) {
+                ?>
+                <div class="row noMargin">
+                    <a class="waves-effect waves-light btn reportBtn" onclick="report(<?php echo $topicData["topicID"]; ?>, 'topic')">Report</a>
+                </div>
+                <?php
+                    }
+                ?>
                 <div class="row topicDetails">
                     <div class="col s11 offset-s1">
                         <div class="row">
@@ -189,10 +198,22 @@
                                 ?>
                             </ul>
                             <div class="row postIndexContainer">
-                                <div class="col s12 postIndex">
-                                    <a href="/post/<?php echo $posts[$i]["postID"]; ?>">#<?php echo $i + 1; ?></a>
-                                </div>
+                                
                             </div>
+                        </div>
+                    </div>
+                    <div class="row noMargin">
+                        <div class="col s4">
+                            <?php
+                                if(isset($loggedUser) && $loggedUser) {
+                            ?>
+                                <a class="waves-effect waves-light btn reportBtn postReport" onclick="report(<?php echo $posts[$i]["postID"]; ?>, 'post')">Report</a>
+                            <?php
+                                }
+                            ?>
+                        </div>
+                        <div class="col s8 right-align postIndex">
+                            <a href="/post/<?php echo $posts[$i]["postID"]; ?>">#<?php echo $i + 1; ?></a>
                         </div>
                     </div>
                     <div class="row topicDetails">
