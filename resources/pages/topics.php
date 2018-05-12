@@ -39,13 +39,15 @@
                     <div class="col s1 userImageContainer">
                         <div class="row">
                         <?php
-                            echo "<a href='/profile/" . $topic["username"] . "'><img src=\"";
-                            if($topic["profileImage"] == 'defaultAvatar.png') {
-                                echo '/public/images/content/defaultAvatar.png';
+                            if($topic['profileImage'] == 'defaultAvatar.png') {
+                                echo "<a href='/profile/" . $topic["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $topic["username"]  . "'></a>";
+                            } else if ($topic['profileImage'] == 'admin.png') {
+                                echo "<img src='/public/images/content/admin.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $topic["username"]  . "'>";
+                            } else if ($topic['profileImage'] == 'anonymous.png') {
+                                echo "<img src='/public/images/content/anonymous.png' class=' tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $topic["username"]  . "'>";
                             } else {
-                                echo "/public/images/upload/" . $topic["profileImage"] . "\"";
+                                echo "<a href='/profile/" . $topic["username"] . "'><img src='/public/images/upload/" . $topic['profileImage'] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $topic["username"]  . "'></a>";
                             }
-                            echo "\" class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip=" . $topic["username"] . "></a>";
                         ?> 
                         </div>
                     </div>

@@ -27,14 +27,16 @@
                 <div class="topic">
                     <div class="col s1 userImageContainer">
                     <?php
-                            echo "<a href='/profile/" . $hotTopic["username"] . "'><img src='";
-                            if($hotTopic["profileImage"] == 'defaultAvatar.png') {
-                                echo '/public/images/content/defaultAvatar.png';
-                            } else {
-                                echo "/public/images/upload/" . $hotTopic["profileImage"];
-                            }
-                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $hotTopic["username"] . "'></a>";
-                        ?>
+                        if($hotTopic['profileImage'] == 'defaultAvatar.png') {
+                            echo "<a href='/profile/" . $hotTopic["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $hotTopic["username"]  . "'></a>";
+                        } else if ($hotTopic['profileImage'] == 'admin.png') {
+                            echo "<img src='/public/images/content/admin.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $hotTopic["username"]  . "'>";
+                        } else if ($hotTopic['profileImage'] == 'anonymous.png') {
+                            echo "<img src='/public/images/content/anonymous.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $hotTopic["username"]  . "'>";
+                        } else {
+                            echo "<a href='/profile/" . $hotTopic["username"] . "'><img src='/public/images/upload/" . $hotTopic['profileImage'] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $hotTopic["username"]  . "'></a>";
+                        }
+                    ?>
                     </div>
                     <div class="col s9 topicContainer">
                         <h3><?php echo $hotTopic["shortTopicName"]; ?></h3>
@@ -73,13 +75,17 @@
                 <div class="topic">
                     <div class="col s1 userImageContainer">
                         <?php
-                            echo "<a href='/profile/" . $latestTopic["username"] . "'><img src='";
-                            if($latestTopic["profileImage"] == 'defaultAvatar.png') {
-                                echo '/public/images/content/defaultAvatar.png';
+
+                            if($latestTopic['profileImage'] == 'defaultAvatar.png') {
+                                echo "<a href='/profile/" . $latestTopic["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $latestTopic["username"]  . "'></a>";
+                            } else if ($latestTopic['profileImage'] == 'admin.png') {
+                                echo "<img src='/public/images/content/admin.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $latestTopic["username"]  . "'>";
+                            } else if ($latestTopic['profileImage'] == 'anonymous.png') {
+                                echo "<img src='/public/images/content/anonymous.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $latestTopic["username"]  . "'>";
                             } else {
-                                echo "/public/images/upload/" . $latestTopic["profileImage"];
+                                echo "<a href='/profile/" . $latestTopic["username"] . "'><img src='/public/images/upload/" . $latestTopic['profileImage'] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $latestTopic["username"]  . "'></a>";
                             }
-                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $latestTopic["username"] . "'></a>";
+                            
                         ?>
                     </div>
                     <div class="col s9 topicContainer">
@@ -117,13 +123,17 @@
                 <div class="topic">
                     <div class="col s1 userImageContainer">
                         <?php
-                            echo "<a href='/profile/" . $favouriteTopic["username"] . "'><img src='";
-                            if($favouriteTopic["profileImage"] == 'defaultAvatar.png') {
-                                echo '/public/images/content/defaultAvatar.png';
+                        
+                            if($favouriteTopic['profileImage'] == 'defaultAvatar.png') {
+                                echo "<a href='/profile/" . $favouriteTopic["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $favouriteTopic["username"]  . "'></a>";
+                            } else if ($favouriteTopic['profileImage'] == 'admin.png') {
+                                echo "<img src='/public/images/content/admin.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $favouriteTopic["username"]  . "'>";
+                            } else if ($favouriteTopic['profileImage'] == 'anonymous.png') {
+                                echo "<img src='/public/images/content/anonymous.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $favouriteTopic["username"]  . "'>";
                             } else {
-                                echo "/public/images/upload/" . $favouriteTopic["profileImage"];
+                                echo "<a href='/profile/" . $favouriteTopic["username"] . "'><img src='/public/images/upload/" . $favouriteTopic['profileImage'] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $favouriteTopic["username"]  . "'></a>";
                             }
-                            echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $favouriteTopic["username"] . "'></a>";
+
                         ?>
                     </div>
                     <div class="col s9 topicContainer">

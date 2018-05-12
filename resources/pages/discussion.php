@@ -23,13 +23,15 @@
                 <div class="row">
                     <div class="col s1 userImageContainer">
                         <?php
-                            echo "<a href='/profile/" . $topicData["username"] . "'><img src=\"";
-                            if($topicData["profileImage"] == 'defaultAvatar.png') {
-                                echo '/public/images/content/defaultAvatar.png';
+                             if($topicData["profileImage"] == 'defaultAvatar.png') {
+                                echo "<a href='/profile/" . $topicData["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $topicData["username"] . "'></a>";
+                            } else if ($topicData["profileImage"]  == 'admin.png') {
+                                echo "<img src='/public/images/content/admin.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $topicData["username"] . "'>";
+                            } else if ($topicData["profileImage"]  == 'anonymous.png') {
+                                echo "<img src='/public/images/content/anonymous.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $topicData["username"] . "'>";
                             } else {
-                                echo "/public/images/upload/" . $topicData["profileImage"] . "\"";
+                                echo "<a href='/profile/" . $topicData["username"] . "'><img src='/public/images/upload/" . $topicData["profileImage"] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $topicData["username"]  . "'></a>";
                             }
-                            echo "\" class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip=" . $topicData["username"] . "></a>";
                         ?>
                     </div>
                     <div class="col s11 topicContainer">
@@ -103,10 +105,15 @@
                     <div class="row postContent">
                         <div class="col s1 userImageContainer">
                             <?php
-
-                                echo "<a href='/profile/" . $posts[$i]["username"] . "'><img src='"; 
-                                echo ($posts[$i]['profileImage'] === 'defaultAvatar.png' ?'/public/images/content/defaultAvatar.png' : '/public/images/upload/' . $posts[$i]["profileImage"]);
-                                echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]['username'] . "'></a>";
+                                if($posts[$i]["profileImage"] == 'defaultAvatar.png') {
+                                    echo "<a href='/profile/" . $posts[$i]["profileImage"] . "'><img src='/public/images/content/defaultAvatar.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $posts[$i]["username"]  . "'></a>";
+                                } else if ($posts[$i]["profileImage"] == 'admin.png') {
+                                    echo "<img src='/public/images/content/admin.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $posts[$i]["username"]  . "'>";
+                                } else if ($posts[$i]["profileImage"] == 'anonymous.png') {
+                                    echo "<img src='/public/images/content/anonymous.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $posts[$i]["username"]  . "'>";
+                                } else {
+                                    echo "<a href='/profile/" . $posts[$i]["username"] . "'><img src='/public/images/upload/" . $posts[$i]["profileImage"] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $posts[$i]["username"]  . "'></a>";
+                                }
                             ?>
                         </div>
                         <div class="col s11 topicContainer">
@@ -230,9 +237,17 @@
                 <div class="row postContent">
                     <div class="col s1 userImageContainer">
                     <?php
-                        echo "<img src='"; 
-                        echo ($loggedUser['profileImage'] === 'defaultAvatar.png' ?'/public/images/content/defaultAvatar.png' : '/public/images/upload/' . $loggedUser["profileImage"]);
-                        echo "' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $loggedUser["username"] . "'>";
+
+                        if($loggedUser['profileImage'] == 'defaultAvatar.png') {
+                            echo "<a href='/profile/" . $loggedUser["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $loggedUser["username"]  . "'></a>";
+                        } else if ($loggedUser['profileImage'] == 'admin.png') {
+                            echo "<img src='/public/images/content/admin.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $loggedUser["username"]  . "'>";
+                        } else if ($loggedUser['profileImage'] == 'anonymous.png') {
+                            echo "<img src='/public/images/content/anonymous.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $loggedUser["username"]  . "'>";
+                        } else {
+                            echo "<a href='/profile/" . $loggedUser["username"] . "'><img src='/public/images/upload/" . $loggedUser['profileImage'] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $loggedUser["username"]  . "'></a>";
+                        }
+
                     ?>
                     </div>
                     <div class="col s11 topicContainer editorTop">

@@ -452,6 +452,12 @@ h2 {
 .postedBy {
     text-align: left;
     padding-left: 0px !important;
+    font-size: 18px;
+}
+
+.adminTitle {
+    color: #ffa055;
+    font-size: 18px;
 }
 
 .postContainer span {
@@ -460,7 +466,6 @@ h2 {
 
 .postedBy a {
     color: #363838;
-    font-size: 18px;
 }
 
 .postedBy a:hover {

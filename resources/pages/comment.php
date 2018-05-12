@@ -24,13 +24,15 @@
                 <div class="row">
                     <div class="col s1 userImageContainer">
                         <?php
-                            echo "<a href='/profile/" . $postData["topicCreatorName"] . "'><img src=\"";
                             if($postData["topicCreatorImage"] == 'defaultAvatar.png') {
-                                echo '/public/images/content/defaultAvatar.png';
+                                echo "<a href='/profile/" . $postData["topicCreatorName"] . "'><img src='/public/images/content/defaultAvatar.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $postData["topicCreatorName"]  . "'></a>";
+                            } else if ($postData["topicCreatorImage"] == 'admin.png') {
+                                echo "<img src='/public/images/content/admin.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $postData["topicCreatorName"]  . "'>";
+                            } else if ($postData["topicCreatorImage"] == 'anonymous.png') {
+                                echo "<img src='/public/images/content/anonymous.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $postData["topicCreatorName"]  . "'>";
                             } else {
-                                echo "/public/images/upload/" . $postData["topicCreatorImage"] . "\"";
+                                echo "<a href='/profile/" . $postData["topicCreatorName"] . "'><img src='/public/images/upload/" . $postData["topicCreatorImage"] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $postData["topicCreatorName"]  . "'></a>";
                             }
-                            echo "\" class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip=" . $postData["topicCreatorName"] . "></a>";
                         ?>
                     </div>
                     <div class="col s11 topicContainer">
@@ -73,13 +75,15 @@
                 <div class="row postContent">
                     <div class="col s1 userImageContainer">
                         <?php
-                            echo "<a href='/profile/" . $postData["postWriterName"] . "'><img src=\"";
-                            if($postData["postWriterImage"] == 'defaultAvatar.png') {
-                                echo '/public/images/content/defaultAvatar.png';
+                             if($postData["postWriterImage"] == 'defaultAvatar.png') {
+                                echo "<a href='/profile/" . $postData["postWriterName"] . "'><img src='/public/images/content/defaultAvatar.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $postData["postWriterName"]  . "'></a>";
+                            } else if ($postData["postWriterImage"]  == 'admin.png') {
+                                echo "<img src='/public/images/content/admin.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $postData["postWriterName"]  . "'>";
+                            } else if ($postData["postWriterImage"]  == 'anonymous.png') {
+                                echo "<img src='/public/images/content/anonymous.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $postData["postWriterName"] . "'>";
                             } else {
-                                echo "/public/images/upload/" . $postData["postWriterImage"] . "\"";
+                                echo "<a href='/profile/" . $postData["postWriterName"] . "'><img src='/public/images/upload/" . $postData["postWriterImage"] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $postData["postWriterName"]  . "'></a>";
                             }
-                            echo "\" class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip=" . $postData["postWriterName"] . "></a>";
                         ?>
                     </div>
                     <div class="col s11 topicContainer">
