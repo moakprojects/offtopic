@@ -440,15 +440,29 @@ if(isset($_POST["changeUserSettings"])) {
                 //if every new data validated then we set these information into database by help of persistence layer
                 if($userObj->saveAccountData($userData["userID"], $username, $email, $aboutMe, $birthdate, $location)) {
 
+                    $data_value = array();
+
+                    if($aboutMe != $userData["aboutMe"]) {
+                        if(!$userObj->checkBadgeStatus($userData["userID"], 1)) {
+                            $userObj->uploadBadge($userData["userID"], 1);
+                            $data_value["refreshBadges"] = true;
+                        } else {
+                            $data_value["refreshBadges"] = false;
+                        }
+                    } else {
+                        $data_value["refreshBadges"] = false;
+                    }
+                    $data_value["username"] = str_replace(' ', '%20', $username);
+
                     if(!$newUsername) {
                         $result["data_type"] = 1;
-                        $result["data_value"] = $username;
+                        $result["data_value"] = $data_value;
         
                         echo json_encode($result);
                         exit;
                     } else {
                         $result["data_type"] = 2;
-                        $result["data_value"] = $username;
+                        $result["data_value"] = $data_value;
 
                         echo json_encode($result);
                         exit;

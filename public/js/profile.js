@@ -188,6 +188,7 @@ $(document).ready(function(){
 });
 
 //chart functions
+/*
 $(function () {
 
 	// initialize highcharts
@@ -490,6 +491,7 @@ $(function () {
   });
 
 });
+*/
 
 /* Toggle menu for own things */
 var select = function(s) {
@@ -617,9 +619,17 @@ $(document).on('click', '#saveAccountSettings', function() {
 				$('.settingsErrorMsg').html("The changes were saved");
 				$('.settingsErrorMsg').removeClass('hide');
 				$('.settingsErrorMsg').css('color', '#34d034');
-				$('.userName').html(obj.data_value);
+
+				if(obj.data_value.refreshBadges) {
+					console.log('username', obj.data_value.username);
+					console.log('link', '/profile/' + obj.data_value.username + ' .earnedBadgeContainer');
+					$('.earnedBadgeContainer').load('/profile/' + obj.data_value.username + ' .earnedBadgeContainer', function() {
+						console.log("itt vagy?");
+						$('.badgeSystemContainer').load('/profile/' + obj.data_value.username + ' .badgeSystemContainer', '');
+					});
+				}
 			} else if(obj.data_type == 2) {
-				window.location.assign('/profile/' + obj.data_value + '#settings');
+				window.location.assign('/profile/' + obj.data_value.username + '#settings');
 			}
 
 			$('.settingsPreloader').addClass('hide');

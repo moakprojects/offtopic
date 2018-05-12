@@ -17,7 +17,6 @@
         $favouriteTopics = $userObj->getFavouriteTopics($selectedUserData["userID"]);
         $likedPosts = $userObj->getLikedPosts($selectedUsername);
         $createdTopics = $userObj->getCreatedTopics($selectedUsername);
-        $earnedBadges = $userObj->getEarnedBadges($selectedUsername);
 ?>
 <div class="container contentContainer">
     <div class="row breadCrumbContainer">
@@ -534,35 +533,35 @@
                             </div>
                         </div>
                         <div class="col s6">
-                            <div class="row noMargin">
-                                <div class='col s2 noPadding'>
-                                    <p class="profileTitle">Badges </p> 
+                            <div class="earnedBadgeContainer">
+                                <?php $earnedBadges = $userObj->getEarnedBadges($selectedUsername); ?>
+                                <div class="row noMargin">
+                                    <div class='col s2 noPadding'>
+                                        <p class="profileTitle">Badges </p> 
+                                    </div>
+                                    <div class="col s9 badgeDetails valign-wrapper noPadding">
+                                        <a href="#badgeSystem" class="modal-trigger"><i class="fas fa-bars"></i></a>
+                                    </div>
                                 </div>
-                                <div class="col s9 badgeDetails valign-wrapper noPadding">
-                                    <a href="#badgeSystem" class="modal-trigger"><i class="fas fa-bars"></i></a>
-                                </div>
-                            </div>
-                            <?php 
-                                if($earnedBadges) {
-                            ?>
-                            <div class="row badgeContainer">
                                 <?php 
-                                    foreach($earnedBadges as $badge) {
+                                    if($earnedBadges) {
                                 ?>
-                                        <div class="col s5 badge ownBadge center-align">
-                                            <i class="fas fa-circle dot"></i>
-                                            <?php echo $badge['badgeName']?>
-                                        </div>
-                                <?php
-                                    }
-                                ?>
+                                <div class="row badgeContainer">
+                                    <?php 
+                                        foreach($earnedBadges as $badge) {
+                                    ?>
+                                            <div class="col s5 badge ownBadge center-align">
+                                                <i class="fas fa-circle dot"></i>
+                                                <?php echo $badge['badgeName']?>
+                                            </div>
+                                    <?php
+                                        }
+                                    ?>
+                                </div>
+                                <?php } else { ?>
+                                <p class="noMargin">Have not received a badge yet</p>
+                                <?php } ?>
                             </div>
-                        <?php } else {
-                        ?>
-                            <p class="noMargin">Have not received a badge yet</p>
-                        <?php
-                            }
-                        ?>
                         </div>
                     </div>             
                 </div>
