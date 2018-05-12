@@ -105,17 +105,38 @@ class Topic {
         global $db;
         global $selectedTopicQuery;
 
-        if($selectedTopicQuery) {
+        try {
             $selectedTopicID = htmlspecialchars(trim($selectedTopicID));
             $selectedTopicQuery->bindParam(":topicID", $selectedTopicID);
             $selectedTopicQuery->execute();
 
             if($selectedTopicQuery->rowCount() > 0) {
-                return $selectedTopicData = $selectedTopicQuery->fetchall(PDO::FETCH_ASSOC);
+                return $selectedTopicQuery->fetch(PDO::FETCH_ASSOC);
+            } else {
+                header("Location: /error");
+                exit;
+            }
+        } catch(PDOException $e) {
+            header("Location: /error");
+            exit;
+        }
+    }
+
+    //get attached files for the topic
+    function getAttachedFiles($attachedCode) {
+        global $db;
+        global $attachedFilesQuery;
+
+        try {
+            $attachedFilesQuery->bindParam(":attachedFileCode", $attachedCode);
+            $attachedFilesQuery->execute();
+
+            if($attachedFilesQuery->rowCount() > 0) {
+                return $attachedFilesQuery->fetchall(PDO::FETCH_ASSOC);
             } else {
                 return false;
             }
-        } else {
+        } catch(PDOException $e) {
             return false;
         }
     }

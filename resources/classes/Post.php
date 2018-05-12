@@ -135,7 +135,11 @@ class Post {
             $attachedFilesQuery->bindParam(':attachedFileCode', $attachedFileCode);
             $attachedFilesQuery->execute();
     
-            return $attachedFilesResult = $attachedFilesQuery->fetchall(PDO::FETCH_ASSOC);
+            if($attachedFilesQuery->rowCount() > 0) {
+                return $attachedFilesQuery->fetchall(PDO::FETCH_ASSOC);
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -196,6 +200,26 @@ class Post {
             }
         } else {
             return false;
+        }
+    }
+
+    function getSelectedPost($selectedPost) {
+        global $db;
+        global $selectedPostsQuery;
+
+        try {
+            $selectedPostsQuery->bindParam(':postID', $selectedPost);
+            $selectedPostsQuery->execute();
+
+            if($selectedPostsQuery->rowCount() > 0) {
+                return $selectedPostsQuery->fetch(PDO::FETCH_ASSOC);
+            } else {
+                header("Location: /error");
+                exit;
+            }
+        } catch (PDOException $e) {
+            header("Location: /error");
+            exit;
         }
     }
 }

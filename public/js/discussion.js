@@ -223,7 +223,7 @@ function refreshPostContent(selectedTopicID) {
 }
 
 /* display original post for what the user answer */ 
-function replyPost(postId, username) {
+function replyPost(postId, realPostId, username) {
 
   $('#originalPostID').eq(0).html("#" + postId);
   $('#replyTo').eq(0).html(username);
