@@ -17,4 +17,7 @@
     $modifyDeletedUserInPost = $db->prepare("UPDATE post SET userID = 39 WHERE userID = :userID");
     $modifyDeletedUserInFavouriteTopic = $db->prepare("UPDATE favouritetopic SET userID = 39 WHERE userID = :userID");
     $modifyDeletedUserInFavouriteCategory = $db->prepare("UPDATE favouritecategory SET userID = 39 WHERE userID = :userID");
+
+    /* save last login date into database */
+    $saveLastLoginQuery = $db->prepare("UPDATE user SET lastLoginDate = :lastLoginDate WHERE userID = :userID");
 ?>

@@ -188,7 +188,6 @@ $(document).ready(function(){
 });
 
 //chart functions
-/*
 $(function () {
 
 	// initialize highcharts
@@ -491,7 +490,7 @@ $(function () {
   });
 
 });
-*/
+
 
 /* Toggle menu for own things */
 var select = function(s) {

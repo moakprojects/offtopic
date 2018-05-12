@@ -141,6 +141,9 @@ if(isset($_POST["logID"])) {
                     setcookie("usr", md5($logID), time() + 7890000, '/');
                 }
 
+                //save lastLoginDate
+                $userObj->saveLoginDate($loggedUserData["userID"]);
+
                 $result["data_type"] = 1;
                 $result["data_value"] = "Valid";    
             
