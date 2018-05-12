@@ -24,13 +24,13 @@
                     <div class="col s1 userImageContainer">
                         <?php
                              if($topicData["profileImage"] == 'defaultAvatar.png') {
-                                echo "<a href='/profile/" . $topicData["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $topicData["username"] . "'></a>";
+                                echo "<a href='/profile/" . $topicData["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $topicData["username"] . "'></a>";
                             } else if ($topicData["profileImage"]  == 'admin.png') {
-                                echo "<img src='/public/images/content/admin.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $topicData["username"] . "'>";
+                                echo "<img src='/public/images/content/admin.png' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $topicData["username"] . "'>";
                             } else if ($topicData["profileImage"]  == 'anonymous.png') {
-                                echo "<img src='/public/images/content/anonymous.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $topicData["username"] . "'>";
+                                echo "<img src='/public/images/content/anonymous.png' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $topicData["username"] . "'>";
                             } else {
-                                echo "<a href='/profile/" . $topicData["username"] . "'><img src='/public/images/upload/" . $topicData["profileImage"] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $topicData["username"]  . "'></a>";
+                                echo "<a href='/profile/" . $topicData["username"] . "'><img src='/public/images/upload/" . $topicData["profileImage"] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $topicData["username"]  . "'></a>";
                             }
                         ?>
                     </div>
@@ -59,11 +59,21 @@
                 <div class="row topicDetails">
                     <div class="col s11 offset-s1">
                         <div class="row">
-                            <div class="created col s5">
+                            <div class="created col s8">
                                 <i class="far fa-clock fa-sm"></i>
-                                <span>Created at: <?php echo $topicData["createdAt"]?> by <a href="/profile/<?php echo $topicData["username"]?>" class="postCreator"><strong><?php echo $topicData["username"]?> </strong></a></span>
+                                <span>Created at: <?php echo $topicData["createdAt"]?> by 
+                                    <?php 
+                                        if($topicData["username"] == 'admin') {
+                                            echo "<p class='noMargin originalAdmin'><strong>" . $topicData["username"] . "</strong></p>";
+                                        } else if($topicData["username"] == 'Anonymous') {
+                                            echo "<p class='postCreator'><strong>" . $topicData["username"] . "</strong><p>";
+                                        } else {
+                                            echo "<a href='/profile/" . $topicData["username"] . "' class='postCreator'><strong>" . $topicData["username"] . "</strong></a>"; 
+                                        }
+                                    ?>
+                                </span>
                             </div>
-                            <div class="controlBtns col s4 offset-s3">
+                            <div class="controlBtns col s4">
                                 <div class="row noTopMargin">
                                         <div class="col s6 offset-s<?php echo (isset($loggedUser) && $loggedUser ? "2 noRightPadding" : "6"); ?> right-align">
                                             <div class="fixed-action-btn horizontal socialButttons">
@@ -106,20 +116,28 @@
                         <div class="col s1 userImageContainer">
                             <?php
                                 if($posts[$i]["profileImage"] == 'defaultAvatar.png') {
-                                    echo "<a href='/profile/" . $posts[$i]["profileImage"] . "'><img src='/public/images/content/defaultAvatar.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $posts[$i]["username"]  . "'></a>";
+                                    echo "<a href='/profile/" . $posts[$i]["profileImage"] . "'><img src='/public/images/content/defaultAvatar.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"]  . "'></a>";
                                 } else if ($posts[$i]["profileImage"] == 'admin.png') {
-                                    echo "<img src='/public/images/content/admin.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $posts[$i]["username"]  . "'>";
+                                    echo "<img src='/public/images/content/admin.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"]  . "'>";
                                 } else if ($posts[$i]["profileImage"] == 'anonymous.png') {
-                                    echo "<img src='/public/images/content/anonymous.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $posts[$i]["username"]  . "'>";
+                                    echo "<img src='/public/images/content/anonymous.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"]  . "'>";
                                 } else {
-                                    echo "<a href='/profile/" . $posts[$i]["username"] . "'><img src='/public/images/upload/" . $posts[$i]["profileImage"] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $posts[$i]["username"]  . "'></a>";
+                                    echo "<a href='/profile/" . $posts[$i]["username"] . "'><img src='/public/images/upload/" . $posts[$i]["profileImage"] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"]  . "'></a>";
                                 }
                             ?>
                         </div>
                         <div class="col s11 topicContainer">
                             <div class="row postedOnContainer">
                                 <div class="col s4 postedBy">
-                                    <a href="/profile/<?php echo $posts[$i]['username']; ?>"><?php echo $posts[$i]['username']; ?></a>
+                                    <?php
+                                            if($posts[$i]['username'] == 'admin') {
+                                                echo "<p class='noMargin adminTitle'>" . $posts[$i]['username'] . "</p>";
+                                            } else if($posts[$i]['username'] == 'Anonymous') {
+                                                echo $posts[$i]['username'];
+                                            } else {
+                                                echo "<a href='/profile/" . $posts[$i]['username'] . "'>" . $posts[$i]['username'] . "</a>"; 
+                                            }
+                                    ?> 
                                 </div>
                                 <div class="col s4 offset-s4 postedOn">
                                     <i class="far fa-clock fa-xs"></i>
@@ -133,7 +151,15 @@
                                         <div class="row postedOnContainer">
                                             <div class="col s12 postedBy">
                                                 <span>Original Posted by - </span>
-                                                <a href="/profile/<?php echo $posts[$posts[$i]["replyID"]-1]['username']; ?>"><?php echo $posts[$posts[$i]["replyID"]-1]['username']; ?>:</a>
+                                                <?php
+                                                    if($posts[$posts[$i]["replyID"]-1]['username'] == 'admin') {
+                                                        echo "<p class='noMargin originalAdmin'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</p>";
+                                                    } else if($posts[$posts[$i]["replyID"]-1]['username'] == 'Anonymous') {
+                                                        echo $posts[$posts[$i]["replyID"]-1]['username'] . ":";
+                                                    } else {
+                                                        echo "<a href='/profile/" . $posts[$posts[$i]["replyID"]-1]['username'] . "'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</a>"; 
+                                                    }
+                                                ?>  
                                             </div>
                                         </div>
                                         <p class="topicDescription"><?php echo $posts[$posts[$i]["replyID"]-1]["text"];?></p>
@@ -239,13 +265,13 @@
                     <?php
 
                         if($loggedUser['profileImage'] == 'defaultAvatar.png') {
-                            echo "<a href='/profile/" . $loggedUser["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $loggedUser["username"]  . "'></a>";
+                            echo "<a href='/profile/" . $loggedUser["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $loggedUser["username"]  . "'></a>";
                         } else if ($loggedUser['profileImage'] == 'admin.png') {
-                            echo "<img src='/public/images/content/admin.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $loggedUser["username"]  . "'>";
+                            echo "<img src='/public/images/content/admin.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $loggedUser["username"]  . "'>";
                         } else if ($loggedUser['profileImage'] == 'anonymous.png') {
-                            echo "<img src='/public/images/content/anonymous.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $loggedUser["username"]  . "'>";
+                            echo "<img src='/public/images/content/anonymous.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $loggedUser["username"]  . "'>";
                         } else {
-                            echo "<a href='/profile/" . $loggedUser["username"] . "'><img src='/public/images/upload/" . $loggedUser['profileImage'] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $loggedUser["username"]  . "'></a>";
+                            echo "<a href='/profile/" . $loggedUser["username"] . "'><img src='/public/images/upload/" . $loggedUser['profileImage'] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $loggedUser["username"]  . "'></a>";
                         }
 
                     ?>

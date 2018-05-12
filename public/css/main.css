@@ -16,6 +16,11 @@
     height: 100%;
 }
 
+.originalAdmin {
+    color: #ffa055 !important;
+    display: inline-block !important; 
+}
+
 body {
     background: #ecf0f1;
     position: relative;

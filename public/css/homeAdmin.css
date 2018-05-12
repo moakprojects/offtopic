@@ -456,8 +456,8 @@ h2 {
 }
 
 .adminTitle {
-    color: #ffa055;
-    font-size: 18px;
+    color: #ffa055 !important;
+    font-size: 18px !important;
 }
 
 .postContainer span {
