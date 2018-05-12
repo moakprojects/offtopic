@@ -152,4 +152,8 @@ $latestTopicsQuery = $db->prepare("SELECT topic.*, categoryName, numberOfPosts, 
          as originalUser ON originalUser.originalUserID = post.userID
      ) as originalPost ON originalPost.originalPostID = post.replyID
  WHERE postID = :postID");
+
+
+/* get the ID of the created new topic */
+$getIdOfCreatedTopicQuery = $db->prepare("SELECT topicID FROM topic WHERE createdBy = :createdBy && createdAt = :createdAt");
 ?>

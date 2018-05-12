@@ -142,6 +142,8 @@ $(document).on('click', '#newTopicSubmit', function() {
                       currentFiles = [];
                       $('#errorMsgSeparator').addClass('hide');
                       $('.newtopicSpinner').addClass('hide');
+
+                      window.location.assign("/topics/" + obj.data_value.topicID);
                     }
                   }
                 });
@@ -153,6 +155,8 @@ $(document).on('click', '#newTopicSubmit', function() {
                 currentFiles = [];
                 $('#errorMsgSeparator').addClass('hide');
                 $('.newtopicSpinner').addClass('hide');
+
+                window.location.assign("/topics/" + obj.data_value.topicID);
               }
             } else {
               $('#errorMsg').html(obj.data_value);
@@ -176,8 +180,5 @@ $(document).on('click', '#newTopicSubmit', function() {
     $('#errorMsg').removeClass('hide');
   }
 
-  console.log(newTopicName);
-  console.log(newTopicDescription);
-  console.log(newTopicCategory);
-  console.log(newTopicPeriod);
+  $('.newtopicSpinner').addClass('hide');
 });

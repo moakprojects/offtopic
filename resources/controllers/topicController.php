@@ -41,13 +41,15 @@ if(isset($_POST["favouriteSelectedTopic"])) {
 if(isset($_POST["createNewTopic"])) {
     $attachedFilesCode = "Att" . time();
 
-    if($topicObj->uploadNewTopic($_POST["newTopicName"], $_POST["newTopicDescription"], $_SESSION["user"]["userID"], $_POST["newTopicPeriod"], $_POST["newTopicCategory"], $attachedFilesCode)) {
+    $uploadInfo = $topicObj->uploadNewTopic($_POST["newTopicName"], $_POST["newTopicDescription"], $_SESSION["user"]["userID"], $_POST["newTopicPeriod"], $_POST["newTopicCategory"], $attachedFilesCode);
+
+    if($uploadInfo) {
         
         //create session variable for attachedfilecode to upload attached files information into database with this ID
         $_SESSION["newTopicAttachedFileCode"] = $attachedFilesCode;
         
         $result["data_type"] = 1;
-        $result["data_value"] = "Success";
+        $result["data_value"] = $uploadInfo;
 
         echo json_encode($result);
         exit;

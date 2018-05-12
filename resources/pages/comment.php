@@ -36,7 +36,7 @@
                         ?>
                     </div>
                     <div class="col s11 topicContainer">
-                        <h3><?php echo $postData["topicName"]; ?></h3>
+                        <a href="/topics/<?php echo $postData["topicID"]; ?>"><h3 class="postPageTopicTitle"><?php echo $postData["topicName"]; ?></h3></a>
                         <p class="topicDescription"><?php echo $postData["topicText"]; ?></p>
                         <ul class="postAttachFiles">
                             <?php
