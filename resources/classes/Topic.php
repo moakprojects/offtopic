@@ -269,6 +269,7 @@ class Topic {
     function uploadNewTopic($topicName, $topicText, $createdBy, $period, $category, $attachedFilesCode) {
         global $db;
         global $newTopicQuery;
+        global $getIdOfCreatedTopicQuery;
 
         if(isset($newTopicQuery)) {
 
@@ -280,15 +281,30 @@ class Topic {
                 $category = htmlspecialchars(trim($category));
                 $attachedFilesCode = htmlspecialchars(trim($attachedFilesCode));
 
-                $newTopicQuery->bindParam(":topicName", $topicName);
-                $newTopicQuery->bindParam(":topicText", $topicText);
-                $createdAt = date("Y-m-d H:i:s");
-                $newTopicQuery->bindParam(":createdAt", $createdAt);
-                $newTopicQuery->bindParam(":createdBy", $createdBy);
-                $newTopicQuery->bindParam(":period", $period);
-                $newTopicQuery->bindParam(":category", $category);
-                $newTopicQuery->bindParam(":attachedFilesCode", $attachedFilesCode);
-                $newTopicQuery ->execute();
+                try {
+                    $db->beginTransaction();
+                    
+                    $newTopicQuery->bindParam(":topicName", $topicName);
+                    $newTopicQuery->bindParam(":topicText", $topicText);
+                    $createdAt = date("Y-m-d H:i:s");
+                    $newTopicQuery->bindParam(":createdAt", $createdAt);
+                    $newTopicQuery->bindParam(":createdBy", $createdBy);
+                    $newTopicQuery->bindParam(":period", $period);
+                    $newTopicQuery->bindParam(":category", $category);
+                    $newTopicQuery->bindParam(":attachedFilesCode", $attachedFilesCode);
+                    $newTopicQuery ->execute();
+
+                    $getIdOfCreatedTopicQuery->bindParam(":createdBy", $createdBy);
+                    $getIdOfCreatedTopicQuery->bindParam(":createdAt", $createdAt);
+                    $getIdOfCreatedTopicQuery->execute();
+
+                    $db->commit();
+
+                    return $getIdOfCreatedTopicQuery->fetch(PDO::FETCH_ASSOC); 
+                } catch (PDOException $ex) {
+                    $db->rollback();
+                    return false;
+                }
             } catch (PDOException $e) {
                 return false;
             }

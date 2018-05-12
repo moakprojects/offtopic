@@ -216,7 +216,7 @@
                                             </div>
                                         </div>
                                         <div class="<?php echo (isset($loggedUser) && $loggedUser ? '' : 'hide'); ?> col s4 right-align noLeftPadding">
-                                            <a class="btn-floating waves-effect waves-light blue replyBtn" onclick="replyPost(<?php echo $i + 1 . ", '" . $posts[$i]["postID"] . ", '" . $posts[$i]['username'] ."'"; ?>)"><i class="material-icons">reply</i></a>
+                                            <a class="btn-floating waves-effect waves-light blue replyBtn" onclick="replyPost(<?php echo $i + 1 . ", " . $posts[$i]["postID"] . ", '" . $posts[$i]['username'] ."'"; ?>)"><i class="material-icons">reply</i></a>
                                         </div>
                                     </div>
                                 </div>
