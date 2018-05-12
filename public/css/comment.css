@@ -210,6 +210,10 @@
     padding-left: 0px !important;
 }
 
+.topicDetails .created span a:hover {
+    color: rgb(33, 150, 243);
+}
+
 .topicDetails .created span {
     font-size: 12px;
 }
@@ -291,6 +295,12 @@
 .postedBy {
     text-align: left;
     padding-left: 0px !important;
+    font-size: 18px;
+}
+
+.adminTitle {
+    color: #ffa055 !important;
+    font-size: 18px !important;
 }
 
 .postedOn {
@@ -320,7 +330,6 @@
 
 .postedBy a {
     color: #363838;
-    font-size: 18px;
 }
 
 .postedBy a:hover {

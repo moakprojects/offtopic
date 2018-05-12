@@ -287,13 +287,13 @@
                                 <div class="row postContainer">
                                     <div class="col s10 postedBy">
                                         <?php
-                                            if($posts[$i]['username'] == 'admin' && $posts[$i]['username'] != 'Anonymous' ) {
+                                            if($posts[$i]['username'] == 'admin') {
                                                 echo "<p class='noMargin adminTitle'>" . $posts[$i]['username'] . "</p>";
                                             } else if($posts[$i]['username'] == 'Anonymous') {
                                                 echo $posts[$i]['username'];
                                             } else {
                                                 echo "<a href='/profile/" . $posts[$i]['username'] . "'>" . $posts[$i]['username'] . "</a>"; 
-                                           }
+                                            }
                                         ?>  
                                     </div>
                                     <div class="col s1 noPadding pencilIcon titleIcon center-align">
@@ -314,7 +314,15 @@
                                             <div class="row postContainer">
                                                 <div class="col s12 postedBy">
                                                     <span>Original Posted by - </span>
-                                                    <a href="/profile/<?php echo $posts[$posts[$i]["replyID"]-1]['username']; ?>"><?php echo $posts[$posts[$i]["replyID"]-1]['username']; ?>:</a>
+                                                    <?php
+                                                        if($posts[$posts[$i]["replyID"]-1]['username'] == 'admin') {
+                                                            echo "<p class='noMargin originalAdmin'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</p>";
+                                                        } else if($posts[$posts[$i]["replyID"]-1]['username'] == 'Anonymous') {
+                                                            echo $posts[$posts[$i]["replyID"]-1]['username'] . ":";
+                                                        } else {
+                                                            echo "<a href='/profile/" . $posts[$posts[$i]["replyID"]-1]['username'] . "'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</a>"; 
+                                                        }
+                                                    ?>
                                                 </div>
                                             </div>
                                             <p class="topicDescription"><?php echo $posts[$posts[$i]["replyID"]-1]["text"];?></p>

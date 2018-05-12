@@ -60,9 +60,19 @@
                 <div class="row topicDetails">
                     <div class="col s11 offset-s1">
                         <div class="row">
-                            <div class="created col s5">
+                            <div class="created col s12">
                                 <i class="far fa-clock fa-sm"></i>
-                                <span>Created at: <?php echo $postData["createdAt"]; ?> by <a class="topicCreator" href="/profile/<?php echo $postData["topicCreatorName"]; ?>"><?php echo $postData["topicCreatorName"]; ?></a></span>
+                                <span>Created at: <?php echo $postData["createdAt"]; ?> by 
+                                    <?php
+                                        if($postData["topicCreatorName"] == 'admin') {
+                                            echo "<p class='topicCreator noMargin originalAdmin'>" . $postData["topicCreatorName"] . "</p>";
+                                        } else if($postData["topicCreatorName"] == 'Anonymous') {
+                                            echo "<p clas='topicCreator'>". $postData["topicCreatorName"] ."</p>";
+                                        } else {
+                                            echo "<a class='topicCreator' href='/profile/" . $postData["topicCreatorName"]. "'>" . $postData["topicCreatorName"] . "</a>"; 
+                                        }
+                                    ?>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -89,7 +99,15 @@
                     <div class="col s11 topicContainer">
                         <div class="row postedOnContainer">
                             <div class="col s4 postedBy">
-                                <a href="/profile/<?php echo $postData["postWriterName"]; ?>"><?php echo $postData["postWriterName"]; ?></a>
+                                <?php
+                                    if($postData["postWriterName"] == 'admin') {
+                                        echo "<p class='noMargin adminTitle'>" . $postData["postWriterName"] . "</p>";
+                                    } else if($postData["postWriterName"] == 'Anonymous') {
+                                        echo $postData["postWriterName"];
+                                    } else {
+                                        echo "<a href='/profile/" . $postData["postWriterName"] . "'>" . $postData["postWriterName"] . "</a>"; 
+                                    }
+                                ?>
                             </div>
                         </div>
                             <?php if(isset($postData["originalPostID"]) && !is_null($postData["originalPostID"])) { ?> 
@@ -97,7 +115,15 @@
                                 <div class="row postedOnContainer">
                                     <div class="col s12 postedBy">
                                         <span>Original Posted by - </span>
-                                        <a href="/profile/<?php echo $postData["originalUsername"]; ?>"><?php echo $postData["originalUsername"]; ?>:</a>
+                                        <?php
+                                            if($posts[$i]['username'] == 'admin') {
+                                                echo "<p class='noMargin originalAdmin'>" . $postData["originalUsername"] . "</p>";
+                                            } else if($postData["originalUsername"] == 'Anonymous') {
+                                                echo $postData["originalUsername"];
+                                            } else {
+                                                echo "<a href='/profile/" . $postData["originalUsername"] . "'>" . $postData["originalUsername"] . "</a>"; 
+                                            }
+                                        ?>
                                     </div>
                                 </div>
                                 <p class="topicDescription"><?php echo $postData["originalPostText"]; ?></p>

@@ -3,7 +3,7 @@
     $likePostQuery = $db->prepare("INSERT INTO `postlike` VALUES (:userID, :postID, :isLike, :isDislike)");
 
     /* create post */
-    $createPostQuery = $db->prepare("INSERT INTO `post` VALUES (NULL, :text, :postedOn, :replyID, :userID, :topicID, :attachedFilesCode)");
+    $createPostQuery = $db->prepare("INSERT INTO `post` VALUES (NULL, :text, :postedOn, :replyID, :userID, :topicID, :attachedFilesCode, NULL)");
 
     /* upload file to database */
     $fileUploadQuery = $db->prepare("INSERT INTO `attachment` VALUES (NULL, :attachmentName, :displayName, :attachedFileCode)");

@@ -383,15 +383,15 @@
                             <div class="row noMargin">
                                 <div class="contentCard col s10 offset-s1 noBottomMargin ownPostTopicCard">
                                     <div class="col s12 ownPostTopicContainer contentCardBody">
-                                        <h3><?php echo htmlspecialchars($userCreation["topicName"]); ?></h3>
-                                        <p class="redirectLink"><a href="/topics/<?php echo htmlspecialchars($userCreation["topicID"]); ?>">View the topic <i class="fas fa-angle-double-right"></i></a></p>
+                                        <h3><?php echo $userCreation["topicName"]; ?></h3>
+                                        <p class="redirectLink"><a href="/topics/<?php echo $userCreation["topicID"]; ?>">View the topic <i class="fas fa-angle-double-right"></i></a></p>
                                         <div class="clear"></div>
                                         <div class="row ownPostTopicBottomSection">
                                             <div class="col s4">
-                                                <a href="/categories/<?php echo htmlspecialchars($userCreation["categoryID"]); ?>"><div class="chip ownTopicCategory topicCategory"><?php echo htmlspecialchars($userCreation["categoryName"]); ?></div></a>
+                                                <a href="/categories/<?php echo $userCreation["categoryID"]; ?>"><div class="chip ownTopicCategory topicCategory"><?php echo htmlspecialchars($userCreation["categoryName"]); ?></div></a>
                                             </div>
                                             <div class="col s6 offset-s2">
-                                                <p class="right-align ownCreatedAt"><em>Created at: <?php echo htmlspecialchars($userCreation["createdAt"]); ?></em></p>
+                                                <p class="right-align ownCreatedAt"><em>Created at: <?php echo $userCreation["createdAt"]; ?></em></p>
                                             </div>
                                         </div>
                                     </div>
@@ -406,14 +406,14 @@
                             <div class="row noMargin">
                                 <div class="contentCard noMargin col s12 ownPostCard">
                                     <div class="col s10 ownPostContainer contentCardBody">
-                                        <p class="ownPostText"><?php echo htmlspecialchars($post["text"]); ?></p>
+                                        <p class="ownPostText"><?php echo $post["text"]; ?></p>
                                         <div class="clear"></div>
                                         <div class="row ownPostBottomSection valign-wrapper">
                                             <div class="col s4">
-                                                <p class="left-align ownCreatedAt"><em>Posted on: <?php echo htmlspecialchars($post["postedOn"]); ?></em></p>
+                                                <p class="left-align ownCreatedAt"><em>Posted on: <?php echo $post["postedOn"]; ?></em></p>
                                             </div>
                                             <div class="col s6 offset-s2">
-                                                <p class="viewPost right-align"><a href="/posts/<?php echo htmlspecialchars($post["postID"]); ?>">View the post <i class="fas fa-angle-double-right"></i></a></p>
+                                                <p class="viewPost right-align"><a href="/posts/<?php echo $post["postID"]; ?>">View the post <i class="fas fa-angle-double-right"></i></a></p>
                                             </div>
                                         </div>
                                     </div>
@@ -422,11 +422,11 @@
                                             <div class="row center-align noBottomMargin">
                                                 <div class="col s6">
                                                     <i class="far fa-thumbs-up fa-lg"></i>
-                                                    <span><?php echo (htmlspecialchars($post["numberOfLikes"]) ? htmlspecialchars($post["numberOfLikes"]) : "0"); ?></span>
+                                                    <span><?php echo ($post["numberOfLikes"] ? $post["numberOfLikes"] : "0"); ?></span>
                                                 </div>
                                                 <div class="col s6">
                                                     <i class="far fa-thumbs-down fa-lg center-align"></i>
-                                                    <span><?php echo (htmlspecialchars($post["numberOfDislikes"]) ? htmlspecialchars($post["numberOfDislikes"]) : "0"); ?></span>
+                                                    <span><?php echo ($post["numberOfDislikes"] ? $post["numberOfDislikes"] : "0"); ?></span>
                                                 </div>
                                             </div>
                                         </div>
