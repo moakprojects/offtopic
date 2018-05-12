@@ -20,4 +20,10 @@
 
     /* save last login date into database */
     $saveLastLoginQuery = $db->prepare("UPDATE user SET lastLoginDate = :lastLoginDate WHERE userID = :userID");
+    
+    /* change isReported column of a topic*/
+    $reportTopicQuery = $db->prepare("UPDATE topic SET isReported = 1 WHERE topicID = :topicID");
+
+    /* change isReported column of a post*/
+    $reportPostQuery = $db->prepare("UPDATE post SET isReported = 1 WHERE postID = :postID");
 ?>

@@ -272,3 +272,23 @@ function likeTopic(userId, topicId, action) {
     }
   });
 }
+
+function report(id, type) {
+    if(type == 'topic') {
+      $.post('/resources/controllers/topicController.php', {reportedTopic: id}, function(data) {
+
+        var obj = jQuery.parseJSON(data);
+        if(obj.data_type === 1) {
+          Materialize.toast('You reported this topic', 4000);
+        }
+      }); 
+    } else {
+      $.post('/resources/controllers/discussionController.php', {reportedPost: id}, function(data) {
+  
+        var obj = jQuery.parseJSON(data);
+        if(obj.data_type === 1) {
+          Materialize.toast('You reported this post', 4000);
+        }
+      }); 
+    }
+}

@@ -166,6 +166,21 @@ class Topic {
         }
     }
 
+    // modify topic table by isreported column
+    function reportTopic($topicID) {
+        global $db;
+        global $reportTopicQuery;
+
+        try {
+            $reportTopicQuery->bindParam(':topicID', $topicID);
+            $reportTopicQuery->execute();
+
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     //modify favouritetopic table 
     function likeTopic($userID, $topicID) {
         global $db;
