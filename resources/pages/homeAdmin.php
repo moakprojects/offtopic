@@ -26,8 +26,79 @@
                 <li class='tab'><a href='#stickyPosts'>Sticky Posts</a></li>
                 <li class='tab'><a href='#information'>Forum information</a></li>
             </ul>
-            <div id="users">
-                
+            <div id="users" class="row">
+                <div class="col s12 userCardContainer">
+                    <?php
+                        $userObj = new User();
+                        $users = $userObj -> getAllUser();
+                        
+                        foreach($users as $user) {
+                    ?>
+                    <div class="col s5 cardSection">
+                        <div class="row noMargin">
+                            <div class="userCard valign-wrapper">
+                                <div class="userCardContent row noMargin">
+                                    <div class="col s4">
+                                        <?php
+                                            echo "<a href='/profile/" . $user["username"] . "'><img src=\"";
+                                            if($user["profileImage"] == 'defaultAvatar.png') {
+                                                echo '/public/images/content/defaultAvatar.png';
+                                            } else if ($user["profileImage"] == 'admin.png') {
+                                                echo '/public/images/content/admin.png';
+                                            } else if ($user["profileImage"] == 'anonymous.png') {
+                                                echo '/public/images/content/anonymous.png';
+                                            } else {
+                                                echo "/public/images/upload/" . $user["profileImage"] . "\"";
+                                            }
+                                            echo "\" class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip=" . $user["username"] . "></a>";
+                                        ?> 
+                                    </div>
+                                    <div class="col s8 personalInformation">
+                                        <div class="row noMargin">
+                                            <div class="col s11 noPadding">
+                                                <h3 class="noTopMargin"><?php echo "<a href='/profile/" . $user["username"] . "'>" . $user["username"] . "</a>"?></h3>
+                                            </div>
+                                            <div class="col s1 noPadding right-align">
+                                                <div class="ban center-align">
+                                                    <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Ban">
+                                                        <i class="fas fa-ban"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row noMargin">
+                                            <p class="col s5 noMargin noPadding"><i class="far fa-envelope fa-sm"></i> Email:</p>
+                                            <p class="col s7 noMargin noPadding right-align"><?php echo $user["email"]; ?></p>    
+                                        </div>
+                                        <div class="row noMargin">
+                                            <p class="col s5 noMargin noPadding"><i class="fas fa-history fa-sm"></i> Member for:</p>
+                                            <p class="col s7 noMargin noPadding right-align"><?php echo $user["memberFor"]; ?></p>    
+                                        </div>
+                                        <div class="row noMargin">
+                                            <p class="col s5 noMargin noPadding"><i class="fas fa-circle-notch fa-sm"></i> Rank level:</p>
+                                            <p class="col s7 noMargin noPadding right-align"><?php echo $user["rankID"]; ?></p>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row noMargin">
+                            <div class="userIconCard row noMargin center-align">
+                                <div class="col s12">
+                                    <div class="row noMargin">
+                                        <p class="userStat col s3"><i class="far fa-heart fa-sm"></i> <?php echo (isset($user["numberOfFollowers"]) ? $user["numberOfFollowers"] : "0"); ?></p> 
+                                        <p class="userStat col s3"><i class="far fa-comments"></i> <?php echo (isset($user["numberOfTopics"]) ? $user["numberOfTopics"] : "0"); ?></p> 
+                                        <p class="userStat col s3"><i class="far fa-comment-alt"></i> <?php echo (isset($user["numberOfPosts"]) ? $user["numberOfPosts"] : "0"); ?></p> 
+                                        <p class="userStat col s3"><i class="far fa-thumbs-up"></i> <?php echo (isset($user["numberOfPostLikes"]) ? $user["numberOfPostLikes"] : "0"); ?></p> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                        }
+                    ?>
+                </div>
             </div>
             <div id="categories" class="row">
                 <div class="categoryCardContainer col s12">
@@ -79,7 +150,8 @@
                 </div>
             </div>
             <div id="topics">
-                <div class="topicsContainer">
+                <h3 class="titleName">Reported Topics </h3>
+                <h3 class="titleName">Original Topics </h3>
                 <?php
                     $topicObj = new Topic();
                     $topics = $topicObj -> getAllTopic();
@@ -163,9 +235,10 @@
                     </a>
                 </div>
                 <?php } ?>
-                </div>
             </div>
             <div id="posts">
+                <h3 class="titleName">Reported Posts </h3>
+                <h3 class="titleName">Original Posts </h3>
                 <?php
                     $postObj = new Post();
                     $posts = $postObj -> getAllPost();

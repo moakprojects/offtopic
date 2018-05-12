@@ -34,7 +34,98 @@ h2 {
     width: 22% !important;                         
 }
 
-/* Category cards styling */
+/* User styling */
+
+.userCardContainer {
+    margin-top: 40px;
+    position:relative;
+}
+
+.cardSection {
+    margin-left: 60px !important;
+    margin-bottom: 60px;
+}
+
+.userCard {
+    background-color: white;
+    padding: 15px 15px 0 15px;
+    border-radius: 3px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2); 
+    position: relative;
+    overflow: hidden;
+}
+
+.userCard:after {
+    content: '';
+    display: block;
+    width: 190px;
+    height: 310px;
+    background: #152b39;
+    position: absolute;
+    left: -100px;
+    transform: rotate(150deg);   
+}
+
+.userCardContent {
+    z-index: 2;
+    width: 100%;
+    height: 150px;
+}
+
+.userCardContent img {
+    width: 120px; 
+    height: 120px;
+    margin-top: 10px;
+    border-radius: 50%;
+}
+
+.userIconCard {
+    border-radius: 3px;
+    background-color: #ECECEC;
+    width: 450px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    margin-left: 18px !important;
+    margin-top: -10px !important;
+}
+
+.userStat {
+    display: inline-block;
+    color:rgb(105, 118, 131);
+    font-size: 17px;
+    margin-bottom: 9px;
+}
+
+.personalInformation {
+    padding-right: 5px !important;
+}
+
+.personalInformation h3 {
+    font-size: 23px;
+}
+
+.personalInformation h3 a {
+    color: #363838;
+}
+
+.personalInformation h3 a:hover {
+    color: #039be5;
+}
+
+.personalInformation p {
+    margin-bottom: 8px !important;
+}
+
+.ban {
+    background-color: #dd2c00;
+    margin-top: 2px;
+    border-radius: 4px;
+}
+
+.ban a {
+    color: white;
+}
+
+/* Category styling */
 
 .post-module {
     position: relative;
@@ -179,11 +270,6 @@ h2 {
 
 /* topic cards styling */
 
-.topicsContainer {
-    margin-left: 20px;
-    margin-right: 20px;
-}
-
 .topic {
     background: white;
     border-radius: 2px;
@@ -194,8 +280,8 @@ h2 {
 }
 
 .topic .userImageContainer img {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     margin-top: 10px;
     margin-left: 3px;
@@ -332,6 +418,13 @@ h2 {
 
 /* regular post styling */
 
+.titleName {
+    padding-bottom: 15px;
+    margin-bottom: 0;
+    font-size: 18px;
+    margin-top: 35px;
+}
+
 .post .topicDescription {
     margin-top: 10px;
 }
@@ -342,6 +435,10 @@ h2 {
 
 .postContainer {
     margin-bottom: 0px;
+}
+
+.postContainer .titleIcon {
+    margin-top: 0px;
 }
 
 .postedOn, .postedBy {

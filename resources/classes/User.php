@@ -201,6 +201,28 @@
             }
         }
 
+        // get selected user information from database
+        function getAllUser() {
+            global $db;
+            global $allUserQuery;
+
+            if(isset($allUserQuery)) {
+
+                $allUserQuery->execute();
+
+                $allUserData = $allUserQuery->fetchall(PDO::FETCH_ASSOC);
+        
+                for($i = 0; $i < count($allUserData); $i++) {
+                    $allUserData[$i]["memberFor"] = $this->calculateTimeDifferences($allUserData[$i]["regDate"]);
+                }
+
+                return $allUserData;
+            } else {
+                header("Location: /error");
+                exit;
+            }
+        }
+
         // get information for post distribution chart
         function getInformationForPostDistributionChart($username) {
             global $db;
