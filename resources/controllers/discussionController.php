@@ -125,6 +125,21 @@ if(isset($_POST["postId"])) {
     }
 
     if($postObj->likePost($_SESSION["user"]["userID"], $_POST["postId"], $like, $dislike)) {
+
+        //Supporter badge: id=7
+        if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 7)) {
+            if($like == 1) {
+                $userObj->uploadBadge($_SESSION["user"]["userID"], 7);
+            }
+        }
+
+        //Critic badge: id=8
+        if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 8)) {
+            if($dislike == 1) {
+                $userObj->uploadBadge($_SESSION["user"]["userID"], 8);
+            }
+        }
+
         $result["data_type"] = 1;
         $result["data_value"] = "Success";
 
