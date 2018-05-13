@@ -171,4 +171,7 @@ $getNumberOfPostsQuery = $db->prepare("SELECT * FROM post WHERE userID = :userID
 
 /* get received questions for badge */
 $getReceivedQuestionsQuery = $db->prepare("SELECT topic.createdBy, count(numberOfPosts) as receivedQuestions FROM topic LEFT JOIN ( SELECT topicID, count(*) as numberOfPosts FROM post GROUP BY topicID) as numberOfPosts ON numberOfPosts.topicID = topic.topicID WHERE createdBy = (SELECT userID FROM topic INNER JOIN user ON user.userID = topic.createdBy WHERE topicID = :topicID)");
+
+/* get celeb topics for celeb badge */
+$getWellFollowedTopicQuery = $db->prepare("SELECT createdBy FROM topic LEFT JOIN ( SELECT topicID, count(*) as numberOfFollowers FROM `favouritetopic` GROUP BY topicID) as followers ON followers.topicID = topic.topicID WHERE createdBy = ( SELECT userID FROM topic INNER JOIN user ON user.userID = topic.createdBy WHERE topicID = :topicID) AND numberOfFollowers >= 25");
 ?>

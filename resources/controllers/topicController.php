@@ -6,13 +6,24 @@ include "../../database/insertion.php";
 include "../../database/deletion.php";
 include "../../database/modification.php";
 include "../classes/Topic.php";
+include "../classes/User.php";
 $topicObj = new Topic();
+$userObj = new User();
 
 //depending on the action (add or remove) call the right function from persistence layer (what is add or remove the topic from favourites)
 if(isset($_POST["favouriteSelectedTopic"])) {
 
     if($_POST["action"] === "add") {
         if($topicObj->likeTopic($_POST["userId"], $_POST["favouriteSelectedTopic"])) {
+
+            //Celeb badge: id=9
+            $hasCelebTopic = $userObj->getWellFollowedTopic($_POST["favouriteSelectedTopic"]);
+            if(!$userObj->checkBadgeStatus($hasCelebTopic["createdBy"], 9)) {
+                if($hasCelebTopic) {
+                    $userObj->uploadBadge($hasCelebTopic["createdBy"], 9);
+                }
+            }
+
             $result["data_type"] = 1;
             $result["data_value"] = "added";
     
