@@ -286,4 +286,20 @@ class Post {
             exit;
         }
     }
+
+    /* get replyID for the displaying of the selected post */
+    function getOriginalPost($topicID, $offset) {
+        global $db;
+        global $getOriginalPostQuery;
+
+        try {
+            $getOriginalPostQuery->bindParam(':topicID', $topicID);
+            $getOriginalPostQuery->bindParam(':offsetem', $offset, PDO::PARAM_INT);
+            $getOriginalPostQuery->execute();
+
+            return $getOriginalPostQuery->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }

@@ -25,6 +25,7 @@ if(isset($_POST["replyContent"])) {
         //create session variable for attachedfilecode to upload attached files information into database with this ID
         $_SESSION["attachedFileCode"] = $attachedFileCode;
 
+        //Commentator badge: id=2
         if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 2)) {
             $numberOfPosts = $userObj->getNumberOfPosts($_SESSION["user"]["userID"]);
             if($numberOfPosts >= 10) {
@@ -32,10 +33,19 @@ if(isset($_POST["replyContent"])) {
             }
         }
 
+        //Refiner badge: id=3
         if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 3)) {
             $numberOfPosts = $userObj->getNumberOfPosts($_SESSION["user"]["userID"]);
             if($numberOfPosts >= 50) {
                 $userObj->uploadBadge($_SESSION["user"]["userID"], 3);
+            }
+        }
+
+        //Curious badge: id=5
+        $receivedTopics = $userObj->getReceivedQuestions($_SESSION["selectedTopicID"]);
+        if(!$userObj->checkBadgeStatus($receivedTopics["createdBy"], 5)) {
+            if($receivedTopics["receivedQuestions"] >= 5) {
+                $userObj->uploadBadge($receivedTopics["createdBy"], 5);
             }
         }
         
@@ -158,6 +168,29 @@ if(isset($_POST["postId"])) {
     }
 
     if($postObj->likePost($_SESSION["user"]["userID"], $_POST["postId"], $like, $dislike)) {
+
+        //Supporter badge: id=7
+        if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 7)) {
+            if($like == 1) {
+                $userObj->uploadBadge($_SESSION["user"]["userID"], 7);
+            }
+        }
+
+        //Critic badge: id=8
+        if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 8)) {
+            if($dislike == 1) {
+                $userObj->uploadBadge($_SESSION["user"]["userID"], 8);
+            }
+        }
+
+        //reliable badge: id=10
+        $wellLikedUser = $userObj->getWellLikedUser($_POST["postId"]);
+        if(!$userObj->checkBadgeStatus($wellLikedUser["userID"], 10)) {
+            if($wellLikedUser && $like == 1) {
+                $userObj->uploadBadge($wellLikedUser["userID"], 10);
+            }
+        }
+
         $result["data_type"] = 1;
         $result["data_value"] = "Success";
 

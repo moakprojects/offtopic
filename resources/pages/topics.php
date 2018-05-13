@@ -18,15 +18,17 @@
                     <i class="material-icons">chevron_right</i>
                     <?php echo "<a href='/categories/" . $_SESSION['selectedCategoryID'] . "'>$categoryName</a>"; ?>
                 </div>
-                <div id="categoryLikeButtonContainer">
-                    <a data-position="bottom" data-delay="50" data-tooltip="Add to favourites" class="btn-floating btn-large waves-effect waves-light categoryLikeButton tooltipped <?php echo (!isset($_SESSION['user']) ? 'hide' : ''); ?>" 
-                    onclick="likeCategory(
-                    <?php echo $_SESSION["user"]["userID"] . ", " . $_SESSION['selectedCategoryID'] . ", " . 
-                    ($categoryObj->checkLikedCategories($_SESSION["user"]["userID"], $_SESSION["selectedCategoryID"]) > 0 
-                        ? "'remove')\"> <i class=\"fas "
-                        : "'add')\"> <i class=\"far "); 
-                    ?> fa-heart fa-lg"></i></a>
-                </div>
+                <?php if(isset($_SESSION["user"])) { ?>
+                    <div id="categoryLikeButtonContainer">
+                        <a data-position="bottom" data-delay="50" data-tooltip="Add to favourites" class="btn-floating btn-large waves-effect waves-light categoryLikeButton tooltipped <?php echo (!isset($_SESSION['user']) ? 'hide' : ''); ?>" 
+                        onclick="likeCategory(
+                        <?php echo $_SESSION["user"]["userID"] . ", " . $_SESSION['selectedCategoryID'] . ", " . 
+                        ($categoryObj->checkLikedCategories($_SESSION["user"]["userID"], $_SESSION["selectedCategoryID"]) > 0 
+                            ? "'remove')\"> <i class=\"fas "
+                            : "'add')\"> <i class=\"far "); 
+                        ?> fa-heart fa-lg"></i></a>
+                    </div>
+                <?php } ?>
                 <h3><?php echo $categoryName; ?></h3>
                 <hr>
             </div>

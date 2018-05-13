@@ -162,6 +162,9 @@ INNER JOIN (
     ) as postIdInTopic ON postIdInTopic.topicID = topic.topicID
  WHERE postID = :postID");
 
+ /* get original post for comment page */
+ $getOriginalPostQuery = $db->prepare("SELECT user.userID, user.username, post.postID, post.text FROM post INNER JOIN user ON user.userID = post.userID WHERE topicID = :topicID ORDER BY postID LIMIT :offsetem, 1");
+
 
 /* get the ID of the created new topic */
 $getIdOfCreatedTopicQuery = $db->prepare("SELECT topicID FROM topic WHERE createdBy = :createdBy && createdAt = :createdAt");
@@ -171,4 +174,13 @@ $getBadgeInformationQuery = $db->prepare("SELECT * FROM earnedBadge WHERE userID
 
 /* get number of posts for badge */
 $getNumberOfPostsQuery = $db->prepare("SELECT * FROM post WHERE userID = :userID");
+
+/* get received questions for badge */
+$getReceivedQuestionsQuery = $db->prepare("SELECT topic.createdBy, count(numberOfPosts) as receivedQuestions FROM topic LEFT JOIN ( SELECT topicID, count(*) as numberOfPosts FROM post GROUP BY topicID) as numberOfPosts ON numberOfPosts.topicID = topic.topicID WHERE createdBy = (SELECT userID FROM topic INNER JOIN user ON user.userID = topic.createdBy WHERE topicID = :topicID)");
+
+/* get celeb topics for celeb badge */
+$getWellFollowedTopicQuery = $db->prepare("SELECT createdBy FROM topic LEFT JOIN ( SELECT topicID, count(*) as numberOfFollowers FROM `favouritetopic` GROUP BY topicID) as followers ON followers.topicID = topic.topicID WHERE createdBy = ( SELECT userID FROM topic INNER JOIN user ON user.userID = topic.createdBy WHERE topicID = :topicID) AND numberOfFollowers >= 25");
+
+/* get reliable user for reliable badge */
+$getWellLikedUserQuery = $db->prepare("SELECT post.userID FROM post LEFT JOIN ( SELECT postID, count(*) as numberOfLikes FROM `postlike` WHERE isLike = 1 GROUP BY postID) as likes ON likes.postID = post.postID WHERE post.userID = ( SELECT post.userID FROM post INNER JOIN user ON user.userID = post.userID WHERE postID = :postID) AND numberOFLikes >= 25");
 ?>

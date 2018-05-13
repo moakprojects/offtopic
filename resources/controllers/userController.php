@@ -141,6 +141,42 @@ if(isset($_POST["logID"])) {
                     setcookie("usr", md5($logID), time() + 7890000, '/');
                 }
 
+                // check and add fanatic or enthusiast badge
+                $hasFanaticBadge = $userObj->checkBadgeStatus($loggedUserData["userID"], 4);
+                $hasEnthusiastBadge = $userObj->checkBadgeStatus($loggedUserData["userID"], 6);
+                if(!$hasFanaticBadge || !$hasEnthusiastBadge) {
+                    if(!is_null($loggedUserData["lastLoginDate"])) {
+                        $latestLogin = new DateTime($loggedUserData["lastLoginDate"]);
+                        $latestLogin = $latestLogin->format("Y-m-d");
+    
+                        $newDate = strtotime("+1 day", strtotime($latestLogin));
+                        $newDate = date("Y-m-d", $newDate);
+                        
+                        $now = new DateTime('now');
+                        $now = $now->format("Y-m-d");
+    
+                        if($latestLogin != $now) {
+                            if($newDate == $now) {
+                                $userObj->increaseConsecutiveVisit($loggedUserData["userID"]);
+
+                                if(!$hasFanaticBadge) {
+                                    if($loggedUserData["consecutiveVisit"] >= 29) {
+                                        $userObj->uploadBadge($loggedUserData["userID"], 4);
+                                    }
+                                }
+
+                                if(!$hasEnthusiastBadge) {
+                                    if($loggedUserData["consecutiveVisit"] >= 99) {
+                                        $userObj->uploadBadge($loggedUserData["userID"], 6);
+                                    }
+                                }
+                            } else {
+                                $userObj->deleteConsecutiveVisit($loggedUserData["userID"]);
+                            }
+                        }
+                    }
+                }
+
                 //save lastLoginDate
                 $userObj->saveLoginDate($loggedUserData["userID"]);
 

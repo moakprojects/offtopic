@@ -290,11 +290,11 @@
         // increase number of visitors in database
         function increaseNumberOfVisitors($username) {
             global $db;
-            global $increaseNumberOfVisitors;
+            global $increaseNumberOfVisitorsQuery;
 
-            if(isset($increaseNumberOfVisitors)) {
-                $increaseNumberOfVisitors->bindParam(':username', $username);
-                $increaseNumberOfVisitors->execute();
+            if(isset($increaseNumberOfVisitorsQuery)) {
+                $increaseNumberOfVisitorsQuery->bindParam(':username', $username);
+                $increaseNumberOfVisitorsQuery->execute();
             }
         }
 
@@ -512,40 +512,40 @@
         function deleteUser($userID) {
             global $db;
 
-            global $modifyDeletedUserInTopic;
-            global $modifyDeletedUserInPostLike;
-            global $modifyDeletedUserInPost;
-            global $modifyDeletedUserInFavouriteTopic;
-            global $modifyDeletedUserInFavouriteCategory;
-            global $deletedUserFromEarnedBadge;
+            global $modifyDeletedUserInTopicQuery;
+            global $modifyDeletedUserInPostLikeQuery;
+            global $modifyDeletedUserInPostQuery;
+            global $modifyDeletedUserInFavouriteTopicQuery;
+            global $modifyDeletedUserInFavouriteCategoryQuery;
+            global $deletedUserFromEarnedBadgeQuery;
 
-            global $deleteUser;
+            global $deleteUserQuery;
 
             $userID = htmlspecialchars(trim($userID));
 
             try {
                 $db->beginTransaction();
 
-                $modifyDeletedUserInTopic->bindParam(':userID', $userID);
-                $modifyDeletedUserInTopic->execute();
+                $modifyDeletedUserInTopicQuery->bindParam(':userID', $userID);
+                $modifyDeletedUserInTopicQuery->execute();
 
-                $modifyDeletedUserInPostLike->bindParam(':userID', $userID);
-                $modifyDeletedUserInPostLike->execute();
+                $modifyDeletedUserInPostLikeQuery->bindParam(':userID', $userID);
+                $modifyDeletedUserInPostLikeQuery->execute();
 
-                $modifyDeletedUserInPost->bindParam(':userID', $userID);
-                $modifyDeletedUserInPost->execute();
+                $modifyDeletedUserInPostQuery->bindParam(':userID', $userID);
+                $modifyDeletedUserInPostQuery->execute();
                 
-                $modifyDeletedUserInFavouriteTopic->bindParam(':userID', $userID);
-                $modifyDeletedUserInFavouriteTopic->execute();
+                $modifyDeletedUserInFavouriteTopicQuery->bindParam(':userID', $userID);
+                $modifyDeletedUserInFavouriteTopicQuery->execute();
                 
-                $modifyDeletedUserInFavouriteCategory->bindParam(':userID', $userID);
-                $modifyDeletedUserInFavouriteCategory->execute();
+                $modifyDeletedUserInFavouriteCategoryQuery->bindParam(':userID', $userID);
+                $modifyDeletedUserInFavouriteCategoryQuery->execute();
                 
-                $deletedUserFromEarnedBadge->bindParam(':userID', $userID);
-                $deletedUserFromEarnedBadge->execute();
+                $deletedUserFromEarnedBadgeQuery->bindParam(':userID', $userID);
+                $deletedUserFromEarnedBadgeQuery->execute();
 
-                $deleteUser->bindParam(':userID', $userID);
-                $deleteUser->execute();
+                $deleteUserQuery->bindParam(':userID', $userID);
+                $deleteUserQuery->execute();
 
                 $db->commit();
 
@@ -582,6 +582,7 @@
                 $getBadgeInformationQuery->bindParam(':badgeID', $badgeID);
                 $getBadgeInformationQuery->execute();
 
+                //if false then the user don't have badge yet
                 if($getBadgeInformationQuery->rowCount() > 0) {
                     return true;
                 } else {
@@ -618,6 +619,89 @@
                 $saveLastLoginQuery->execute();
 
                 return true;
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+        function increaseConsecutiveVisit($userID) {
+            global $db;
+            global $increaseNumberOfConsecutiveVisitQuery;
+
+            try {
+                $increaseNumberOfConsecutiveVisitQuery->bindParam(':userID', $userID);
+                $increaseNumberOfConsecutiveVisitQuery->execute();
+
+                return true;
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+        function deleteConsecutiveVisit($userID) {
+            global $db;
+            global $clearNumberOfConsecutiveVisitQuery;
+
+            $clearNumberOfConsecutiveVisitQuery->bindParam(':userID', $userID);
+            $clearNumberOfConsecutiveVisitQuery->execute();
+
+            try {
+                return true;
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+        function getReceivedQuestions($topicID) {
+            global $db;
+            global $getReceivedQuestionsQuery;
+
+            try {
+
+                $getReceivedQuestionsQuery->bindParam(":topicID", $topicID);
+                $getReceivedQuestionsQuery->execute();
+
+                return $getReceivedQuestionsQuery->fetch(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+        // we check for the celeb badge if the user has one or more topic with more than 25 followers
+        function getWellFollowedTopic($topicID) {
+            global $db;
+            global $getWellFollowedTopicQuery;
+
+            try {
+
+                $getWellFollowedTopicQuery->bindParam(":topicID", $topicID);
+                $getWellFollowedTopicQuery->execute();
+
+                if($getWellFollowedTopicQuery->rowCount() > 0) {
+                    return $getWellFollowedTopicQuery->fetch(PDO::FETCH_ASSOC);
+                } else {
+                    return false;
+                }
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+        // we check for the celeb badge if the user has one or more topic with more than 25 followers
+        function getWellLikedUser($postID) {
+            global $db;
+            global $getWellLikedUserQuery;
+
+            try {
+
+                $getWellLikedUserQuery->bindParam(":postID", $postID);
+                $getWellLikedUserQuery->execute();
+
+                if($getWellLikedUserQuery->rowCount() > 0) {
+                    return $getWellLikedUserQuery->fetch(PDO::FETCH_ASSOC);
+                } else {
+                    return false;
+                }
             } catch (PDOException $e) {
                 return false;
             }
