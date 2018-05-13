@@ -220,30 +220,6 @@ h2 {
     font-size: 23px;
   }
 
-  .pencilIcon {
-    background-color: #00c853;
-    margin-right: 5px;
-    margin-left: 17px !important;
-  }
-
-  .trashIcon {
-    background-color: #dd2c00;
-  }
-
-  .titleIcon {
-    margin-top: 2px;
-    border-radius: 4px;
-  }
-
-  .titleIcon a {
-    color: white;
-  }
-
-  .titleIcon svg {
-    position: relative;
-    top: -1px;
-  }
-
   .post-module .post-content .description {
     display: none;
     color: #666666;

@@ -1,4 +1,5 @@
 <?php
+if(isset($_SESSION["user"])) {
     $userObj = new User();
     $loggedUser = $userObj->loggedUser($_SESSION["user"]["userID"]);
 ?>
@@ -41,3 +42,9 @@
         </nav>
     </div>
 </header>
+<?php
+    } else {
+        header("Location: /error");
+        exit;
+    }
+?>
