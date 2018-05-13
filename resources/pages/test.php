@@ -1,17 +1,10 @@
 <?php
-$egy = null;
-$kett = null;
+$now = new DateTime('2018-05-10');
+$now += 1;
 
-if( $egy == $kett ) {
-    $ide = '';
-} else {
-    $ide = '';
-}
+$regDate = new DateTime('2018-05-11 10:00:00');
 
-if( $egy === $kett ) {
-    $ide = '';
-} else {
-    $ide = '';
-}
+
+$diff = $regDate->diff($now);
 
 $jj = "";

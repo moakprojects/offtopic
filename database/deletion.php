@@ -7,7 +7,7 @@ $dislikeTopicQuery = $db->prepare("DELETE FROM favouritetopic WHERE userID = :us
 $dislikeCategoryQuery = $db->prepare("DELETE FROM favouritecategory WHERE userID = :userID AND categoryID = :categoryID");
 
 /* delete user from database */
-$deleteUser = $db->prepare("DELETE FROM user WHERE userID = :userID");
+$deleteUserQuery = $db->prepare("DELETE FROM user WHERE userID = :userID");
 
 /* delete user from earnedbadge after user delete his or her profile */
-$deletedUserFromEarnedBadge = $db->prepare("DELETE FROM earnedbadge WHERE userID = :userID");
+$deletedUserFromEarnedBadgeQuery = $db->prepare("DELETE FROM earnedbadge WHERE userID = :userID");
