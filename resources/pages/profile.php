@@ -414,7 +414,7 @@
                                                 <p class="left-align ownCreatedAt"><em>Posted on: <?php echo $post["postedOn"]; ?></em></p>
                                             </div>
                                             <div class="col s6 offset-s2">
-                                                <p class="viewPost right-align"><a href="/posts/<?php echo $post["postID"]; ?>">View the post <i class="fas fa-angle-double-right"></i></a></p>
+                                                <p class="viewPost right-align"><a href="/post/<?php echo $post["postID"]; ?>">View the post <i class="fas fa-angle-double-right"></i></a></p>
                                             </div>
                                         </div>
                                     </div>

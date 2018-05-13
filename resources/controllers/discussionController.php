@@ -25,6 +25,7 @@ if(isset($_POST["replyContent"])) {
         //create session variable for attachedfilecode to upload attached files information into database with this ID
         $_SESSION["attachedFileCode"] = $attachedFileCode;
 
+        //Commentator badge: id=2
         if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 2)) {
             $numberOfPosts = $userObj->getNumberOfPosts($_SESSION["user"]["userID"]);
             if($numberOfPosts >= 10) {
@@ -32,10 +33,19 @@ if(isset($_POST["replyContent"])) {
             }
         }
 
+        //Refiner badge: id=3
         if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 3)) {
             $numberOfPosts = $userObj->getNumberOfPosts($_SESSION["user"]["userID"]);
             if($numberOfPosts >= 50) {
                 $userObj->uploadBadge($_SESSION["user"]["userID"], 3);
+            }
+        }
+
+        //Curious badge: id=5
+        $receivedTopics = $userObj->getReceivedQuestions($_SESSION["selectedTopicID"]);
+        if(!$userObj->checkBadgeStatus($receivedTopics["createdBy"], 5)) {
+            if($receivedTopics["receivedQuestions"] >= 5) {
+                $userObj->uploadBadge($receivedTopics["createdBy"], 5);
             }
         }
         

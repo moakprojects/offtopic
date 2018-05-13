@@ -651,6 +651,21 @@
                 return false;
             }
         }
+
+        function getReceivedQuestions($topicID) {
+            global $db;
+            global $getReceivedQuestionsQuery;
+
+            try {
+
+                $getReceivedQuestionsQuery->bindParam(":topicID", $topicID);
+                $getReceivedQuestionsQuery->execute();
+
+                return $getReceivedQuestionsQuery->fetch(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
     
     }
 ?>

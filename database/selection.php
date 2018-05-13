@@ -168,4 +168,7 @@ $getBadgeInformationQuery = $db->prepare("SELECT * FROM earnedBadge WHERE userID
 
 /* get number of posts for badge */
 $getNumberOfPostsQuery = $db->prepare("SELECT * FROM post WHERE userID = :userID");
+
+/* get received questions for badge */
+$getReceivedQuestionsQuery = $db->prepare("SELECT topic.createdBy, count(numberOfPosts) as receivedQuestions FROM topic LEFT JOIN ( SELECT topicID, count(*) as numberOfPosts FROM post GROUP BY topicID) as numberOfPosts ON numberOfPosts.topicID = topic.topicID WHERE createdBy = (SELECT userID FROM topic INNER JOIN user ON user.userID = topic.createdBy WHERE topicID = :topicID)");
 ?>

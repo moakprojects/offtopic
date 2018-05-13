@@ -130,15 +130,17 @@
                         </div>
                     </div>
                 </div>
-                <div id="topicLikeButtonContainer" class="<?php echo (!isset($_SESSION['user']) || $topicData['createdBy'] === $_SESSION['user']['userID'] ? 'hide' : ''); ?>">
-                <a data-position="bottom" data-delay="50" data-tooltip="Add to favourites" class="btn-floating btn-large waves-effect waves-light topicLikeButton tooltipped" 
-                onclick="likeTopic(
-                    <?php echo $_SESSION["user"]["userID"] . ", " . $_SESSION['selectedTopicID'] . ", " . 
-                    ($topicObj->checkLikedTopics($_SESSION["user"]["userID"], $_SESSION["selectedTopicID"]) > 0 
-                        ? "'remove')\"> <i class=\"fas "
-                        : "'add')\"> <i class=\"far "); 
-                    ?> fa-heart fa-lg"></i></a>
-                </div>
+                <?php if(isset($_SESSION["user"]) && $topicData['createdBy'] != $_SESSION['user']['userID']) { ?>
+                    <div id="topicLikeButtonContainer">
+                    <a data-position="bottom" data-delay="50" data-tooltip="Add to favourites" class="btn-floating btn-large waves-effect waves-light topicLikeButton tooltipped" 
+                    onclick="likeTopic(
+                        <?php echo $_SESSION["user"]["userID"] . ", " . $_SESSION['selectedTopicID'] . ", " . 
+                        ($topicObj->checkLikedTopics($_SESSION["user"]["userID"], $_SESSION["selectedTopicID"]) > 0 
+                            ? "'remove')\"> <i class=\"fas "
+                            : "'add')\"> <i class=\"far "); 
+                        ?> fa-heart fa-lg"></i></a>
+                    </div>
+                <?php } ?>
             </div>
             <div id="postContainer">
             <?php
@@ -338,7 +340,8 @@
                 </div>
             <?php } ?>
             </div>
-            <div class="topic commentCard  <?php echo (!isset($_SESSION["user"]) ? 'hide' : ""); ?>">
+            <?php if(isset($_SESSION["user"])) { ?>
+            <div class="topic commentCard">
                 <div class="row postContent">
                     <div class="col s1 userImageContainer">
                     <?php
@@ -384,6 +387,7 @@
                     </div>
                 </div>
             </div>
+            <?php } ?>
             <div class="topic commentCardUnlogged <?php echo (isset($_SESSION["user"]) && $_SESSION["user"]["loggedIn"] ? 'hide' : ""); ?>">
                 <p>You must <a href="#login" class="modal-trigger">Log In</a> or <a href="#signup" class="modal-trigger">Sign Up</a> to reply.</p>
             </div>
