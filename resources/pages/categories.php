@@ -30,6 +30,7 @@
                                 <div class="col s9 noPadding">
                                     <h1 class="title"><?php echo $category["categoryName"]; ?></h1>
                                 </div>
+                                <?php if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) { ?>
                                 <div class="col s1 noPadding pencilIcon titleIcon center-align">
                                     <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                         <i class="fas fa-pencil-alt fa-xs"></i>
@@ -40,6 +41,7 @@
                                         <i class="fas fa-trash fa-xs"></i>
                                     </a>
                                 </div>
+                                <?php } ?>
                             </div>
                             <p class="description"><?php echo $category["categoryDescription"]; ?></p>
                             <div class="post-meta row">
@@ -57,7 +59,8 @@
         </div>
         <div class="col s4">
             <?php 
-                include "resources/sections/sideBarLoginBlock.php"; 
+                include "resources/sections/sideBarLoginBlock.php";
+                include "resources/sections/sideBarStickyPost.php";  
                 include "resources/sections/sideBarLatestPostsBlock.php"; 
             ?>
         </div>

@@ -292,3 +292,19 @@ function report(id, type) {
       }); 
     }
 }
+
+function setSticky(postID, selectedTopicID, type) {
+    $.post('/resources/controllers/discussionController.php', {stickyID: postID, type: type}, function(data) {
+
+      var obj = jQuery.parseJSON(data);
+      if(obj.data_type === 1) {
+        $('#postContainer').load('/topics/' + selectedTopicID + ' #postContainer', function() {
+          if(type == "sticky") {
+            Materialize.toast('You marked this post as sticky', 4000);
+          } else if (type == "unsticky") {
+            Materialize.toast('You removed the sticky mark of this post', 4000);
+          }
+        });
+      }
+    }); 
+}

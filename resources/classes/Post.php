@@ -44,6 +44,23 @@ class Post {
         }
     }
 
+    // request the sidebar sticky posts data from database
+    function getAllSidebarSticky() {
+        global $db;
+        global $allSidebarStickyPostQuery;
+
+        if($allSidebarStickyPostQuery) {
+            $allSidebarStickyPostQuery->execute();
+
+            $allSidebarStickyPostData = $allSidebarStickyPostQuery->fetchall(PDO::FETCH_ASSOC);
+            
+            return $allSidebarStickyPostData;
+        } else {
+            header("Location: /error");
+            exit;
+        }
+    }
+
     // trim the long text depending on parameters
     function textTrimmer($longText, $length) {
         if(strlen($longText) > $length) {
@@ -145,7 +162,7 @@ class Post {
         }
     }
 
-    // modify topic table by isreported column
+    // modify post table by isreported column
     function reportPost($postID) {
         global $db;
         global $reportPostQuery;
@@ -153,6 +170,38 @@ class Post {
         try {
             $reportPostQuery->bindParam(':postID', $postID);
             $reportPostQuery->execute();
+
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    // modify post table by isreported column
+    function setSticky($postID, $value) {
+        global $db;
+        global $stickyPostQuery;
+
+        try {
+            $stickyPostQuery->bindParam(':value', $value);
+            $stickyPostQuery->bindParam(':postID', $postID);
+            $stickyPostQuery->execute();
+
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    // add new sidebar sticky post
+    function uploadnewStickyPost($postTitle, $postDescription) {
+        global $db;
+        global $newSidebarStickyQuery;
+
+        try {
+            $newSidebarStickyQuery->bindParam(':postTitle', $postTitle);
+            $newSidebarStickyQuery->bindParam(':postDescription', $postDescription);
+            $newSidebarStickyQuery->execute();
 
             return true;
         } catch (PDOException $e) {

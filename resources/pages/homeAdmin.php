@@ -16,7 +16,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     <a href="/new-topic" class="waves-effect waves-light btn newBtn blue">Start New Topic</a></li>
                 </div>
                 <div class="col s3 newBtnContainer right-align noPadding">
-                    <a href="#" class="waves-effect waves-light btn newBtn blue">Create Sticky Post</a></li>
+                    <a href="/new-sticky-post" class="waves-effect waves-light btn newBtn blue">Create Sticky Post</a></li>
                 </div>
             </div>
             <ul class="tabs tabs-transparent tabsContainer">
@@ -166,7 +166,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     foreach($topics as $topic) {
                         if($topic["isReported"] == 1) {
                 ?>
-                <div class="topic row">
+                <div class="topic row topicGrid">
                     <div class="col s1 userImageContainer center-align">
                         <div class="row">
                         <?php
@@ -268,7 +268,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     foreach($topics as $topic) {
                         if($topic['isReported'] != 1) {
                 ?>
-                <div class="topic row">
+                <div class="topic row topicGrid">
                     <div class="col s1 userImageContainer center-align">
                         <div class="row">
                         <?php
@@ -461,6 +461,11 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                     <div class="col s4 postedOn">
                                         <i class="far fa-clock fa-xs"></i>
                                         <span>Posted on: <?php echo $posts[$i]["postedOn"]; ?></span>
+                                        <?php if($posts[$i]["isSticky"] == 1) { ?>
+                                            <span class="stickyPin">
+                                                <i class="fas fa-thumbtack"></i>
+                                            </span>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -487,7 +492,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                 <h3 class="titleName">Original Posts </h3>
                 <?php
                     for($i = 0; $i < count($posts); $i++) {
-                        if($posts[$i]["isReported"] != 1) {
+                        if($posts[$i]["isReported"] != 1 && $posts[$i]["isSticky"] != 1) {
                 ?>
                     <div class="topic post">
                         <div class="row postContent">
@@ -599,7 +604,150 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                 ?>
             </div>
             <div id="stickyPosts">
-                
+                <h3 class="titleName">Sidebar stickies </h3>
+                <div class="row noMargin stickyContainer">
+                <?php
+                    $stickyPosts = $postObj -> getAllSidebarSticky();
+                    foreach($stickyPosts as $stickyPost) {
+                ?>
+                        <div class="col s4 sticky">
+                            <div class="stickyPost">
+                                <div class="row noMargin">
+                                    <h4 class="col s9 noPadding"><?php echo $stickyPost["stickyPostTitle"]; ?></h4>
+                                    <div class="col s1 pencilIcon titleIcon center-align">
+                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                            <i class="fas fa-pencil-alt fa-xs"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col s1 trashIcon titleIcon center-align">
+                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                            <i class="fas fa-trash fa-xs"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="line"></div>
+                                <div class="stickyContent">
+                                    <p><?php echo $stickyPost["stickyPostText"]; ?> </p>
+                                </div>
+                            </div>
+                        </div>
+                <?php
+                    }
+                ?>
+                </div>
+                <h3 class="titleName">Topic related stickies </h3>
+                <?php
+                    for($i = 0; $i < count($posts); $i++) {
+                        if($posts[$i]["isSticky"] == 1) {
+                ?>
+                    <div class="topic post">
+                        <div class="row postContent">
+                            <div class="col s1 userImageContainer center-align">
+                                <?php
+                                    if($posts[$i]['profileImage'] == 'defaultAvatar.png') {
+                                        echo "<a href='/profile/" . $posts[$i]["username"] . "'><img src='/public/images/content/defaultAvatar.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"] . "'></a>";
+                                    } else if ($posts[$i]['profileImage'] == 'admin.png') {
+                                        echo "<img src='/public/images/content/admin.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"] . "'>";
+                                    } else if ($posts[$i]['profileImage'] == 'anonymous.png') {
+                                        echo "<img src='/public/images/content/anonymous.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"] . "'>";
+                                    } else {
+                                        echo "<a href='/profile/" . $posts[$i]["username"] . "'><img src='/public/images/upload/" . $posts[$i]["profileImage"] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"] . "'></a>";
+                                    }
+                                ?>
+                            </div>
+                            <div class="col s9 topicContainer">
+                                <div class="row postContainer">
+                                    <div class="col s10 postedBy">
+                                        <?php
+                                            if($posts[$i]['username'] == 'admin') {
+                                                echo "<p class='noMargin adminTitle'>" . $posts[$i]['username'] . "</p>";
+                                            } else if($posts[$i]['username'] == 'Anonymous') {
+                                                echo $posts[$i]['username'];
+                                            } else {
+                                                echo "<a href='/profile/" . $posts[$i]['username'] . "'>" . $posts[$i]['username'] . "</a>"; 
+                                            }
+                                        ?>  
+                                    </div>
+                                    <div class="col s1 noPadding pencilIcon titleIcon center-align">
+                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                            <i class="fas fa-pencil-alt fa-xs"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col s1 noPadding trashIcon titleIcon center-align">
+                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                            <i class="fas fa-trash fa-xs"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <?php 
+                                    if(isset($posts[$i]["replyID"])) {
+                                ?>
+                                        <div class="replyContent">
+                                            <div class="row postContainer">
+                                                <div class="col s12 postedBy">
+                                                    <span>Original Posted by - </span>
+                                                    <?php
+                                                        if($posts[$posts[$i]["replyID"]-1]['username'] == 'admin') {
+                                                            echo "<p class='noMargin originalAdmin'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</p>";
+                                                        } else if($posts[$posts[$i]["replyID"]-1]['username'] == 'Anonymous') {
+                                                            echo $posts[$posts[$i]["replyID"]-1]['username'] . ":";
+                                                        } else {
+                                                            echo "<a href='/profile/" . $posts[$posts[$i]["replyID"]-1]['username'] . "'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</a>"; 
+                                                        }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                            <p class="topicDescription"><?php echo $posts[$posts[$i]["replyID"]-1]["text"];?></p>
+                                        </div>      
+                                <?php } ?>
+                                <p class="topicDescription"><?php echo $posts[$i]["text"]; ?></p>
+                                <ul class="postAttachFiles">
+                                    <?php 
+                                        $attachedFiles = $postObj->getAttachedFiles($posts[$i]["attachedFilesCode"]);
+                                        if($attachedFiles) {
+                                            foreach($attachedFiles as $file) {
+                                                $fileExtension = explode(".", $file["attachmentName"]);
+                                                if(in_array($fileExtension[1], array('png', 'jpg', 'jpeg'))) {
+                                                    echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
+                                                    echo '<a href="/public/files/upload/' . $file["attachmentName"] . '" data-lightbox="attachedImagePost' . $posts[$i]["postID"] . '" data-title="' . $file["displayName"] . '"><img src="/public/files/upload/' . $file["attachmentName"] . '"></a>';
+                                                    echo "<p>(To see the original size click on the name of the image)</p>";
+                                                } else {
+                                                    echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
+                                                }
+                                            }
+                                        }
+                                    ?>
+                                </ul>
+                                <div class="row postContainer">
+                                    <div class="col s8">
+                                        <em><span>This post belongs to the <a href="/topics/<?php echo $posts[$i]["topicID"];?>"><?php echo $posts[$i]["topicName"]; ?></a> topic </span></em>
+                                    </div>
+                                    <div class="col s4 postedOn">
+                                        <i class="far fa-clock fa-xs"></i>
+                                        <span>Posted on: <?php echo $posts[$i]["postedOn"]; ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s2 valign-wrapper postRightSection">
+                                <div>
+                                    <div class="row center-align noBottomMargin">
+                                        <div class="col s6">
+                                            <i class="far fa-thumbs-up fa-lg"></i>
+                                            <span><?php echo ($posts[$i]["numberOfLikes"] ? $posts[$i]["numberOfLikes"] : "0"); ?></span>
+                                        </div>
+                                        <div class="col s6">
+                                            <i class="far fa-thumbs-down fa-lg center-align"></i>
+                                            <span><?php echo ($posts[$i]["numberOfDislikes"] ? $posts[$i]["numberOfDislikes"] : "0"); ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php 
+                    }
+                }
+                ?>
             </div>
             <div id="information">
                 

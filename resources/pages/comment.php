@@ -128,7 +128,7 @@
                                 </div>
                                 <p class="topicDescription"><?php echo $postData["originalPostText"]; ?></p>
                                 <div class="row postIndexContainer">
-                                    <div class="col s12 postIndex">
+                                    <div class="col s12 postIndex right-align">
                                         <a href="/post/<?php echo $postData["originalPostID"]; ?>">#<?php echo $postData["originalPostID"]; ?></a>
                                     </div>
                                 </div>
@@ -193,6 +193,7 @@
             <?php 
                 include "resources/sections/sideBarLoginBlock.php"; 
                 include "resources/sections/sideBarCategoryListBlock.php"; 
+                include "resources/sections/sideBarStickyPost.php";  
             ?>
         </div>
     </div>

@@ -98,6 +98,7 @@
             <?php 
                 include "resources/sections/sideBarLoginBlock.php"; 
                 include "resources/sections/sideBarCategoryListBlock.php";
+                include "resources/sections/sideBarStickyPost.php";  
             ?>
         </div>
     </div>

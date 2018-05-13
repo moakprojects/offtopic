@@ -26,4 +26,7 @@
 
     /* change isReported column of a post*/
     $reportPostQuery = $db->prepare("UPDATE post SET isReported = 1 WHERE postID = :postID");
+
+    /* change isSticky column of a post*/
+    $stickyPostQuery = $db->prepare("UPDATE post SET isSticky = :value WHERE postID = :postID");
 ?>

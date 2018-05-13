@@ -27,7 +27,7 @@
     position: absolute;
     right: 0;
     bottom: 16px;
-    background: #fbb83a;
+    background: rgb(26, 188, 156);;
 }
 
 .titleSection .categoryLikeButton svg {

@@ -3,7 +3,7 @@
     $likePostQuery = $db->prepare("INSERT INTO `postlike` VALUES (:userID, :postID, :isLike, :isDislike)");
 
     /* create post */
-    $createPostQuery = $db->prepare("INSERT INTO `post` VALUES (NULL, :text, :postedOn, :replyID, :userID, :topicID, :attachedFilesCode, 0)");
+    $createPostQuery = $db->prepare("INSERT INTO `post` VALUES (NULL, :text, :postedOn, :replyID, :userID, :topicID, :attachedFilesCode, 0, 0)");
 
     /* upload file to database */
     $fileUploadQuery = $db->prepare("INSERT INTO `attachment` VALUES (NULL, :attachmentName, :displayName, :attachedFileCode)");
@@ -22,4 +22,7 @@
 
     /* if the user reach the required condition for a badge we store this information in database */
     $newBadgeQuery = $db->prepare("INSERT INTO earnedBadge VALUES (:userID, :badgeID)");
+
+    /* upload new sidebar sticky post into database */
+    $newSidebarStickyQuery = $db->prepare("INSERT INTO sidebarStickyPost VALUES (NULL, :postTitle, :postDescription)");
 ?>

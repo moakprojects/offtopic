@@ -6,10 +6,6 @@
     margin-bottom: 12px;
 }
 
-strong {
-    font-weight: 900;
-}
-
 .hide {
     display: none;
 }
@@ -204,7 +200,7 @@ strong {
     position: absolute;
     top: -30px;
     right: 25px;
-    background: #fbb83a;
+    background: rgb(26, 188, 156);;
 }
 
 .topicLikeButton svg {
@@ -213,7 +209,7 @@ strong {
 }
 
 .topicLikeButton:hover, .topicLikeButton:active, .topicLikeButton:visited {
- background: #fbb83a;
+ background: rgb(26, 188, 156);;
 }
 
 .reportBtn {
@@ -243,6 +239,13 @@ strong {
 .stickyBtn:hover {
     color: white;
     background-color: #fbb83a;
+}
+
+.stickyPin svg {
+    transform: rotate(40deg);
+    color: #fbb83a;
+    margin-left: 10px;
+    font-size: 20px;
 }
 
 .adminIcons {

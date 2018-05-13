@@ -19,7 +19,10 @@ LEFT JOIN (SELECT postlike.postID, sum(isLike) as numberOfLikes, sum(isDislike) 
 WHERE topicID = :topicID");
 
 /* get all of the post data from post table*/
-$allPostQuery = $db->prepare("SELECT post.*, topic.topicName, user.username, user.profileImage, numberOfLikes, numberOfDislikes FROM post INNER JOIN user ON post.userID = user.userID INNER JOIN topic ON topic.topicID = post.topicID LEFT JOIN (SELECT postlike.postID, sum(isLike) as numberOfLikes, sum(isDislike) as numberOfDislikes FROM `postlike` GROUP BY postlike.postID) as likes ON likes.postID = post.postID");
+$allPostQuery = $db->prepare("SELECT post.*, topic.topicName, user.username, user.profileImage, numberOfLikes, numberOfDislikes FROM post INNER JOIN user ON post.userID = user.userID LEFT JOIN topic ON topic.topicID = post.topicID LEFT JOIN (SELECT postlike.postID, sum(isLike) as numberOfLikes, sum(isDislike) as numberOfDislikes FROM `postlike` GROUP BY postlike.postID) as likes ON likes.postID = post.postID");
+
+/* get all posts from sideBarStickyPost table */
+$allSidebarStickyPostQuery = $db->prepare("SELECT * from sidebarStickyPost");
 
 /* get attached files from attechment table with postID */
 $attachedFilesQuery = $db->prepare("SELECT * FROM attachment WHERE attachedFileCode = :attachedFileCode");

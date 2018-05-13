@@ -255,6 +255,16 @@ h2 {
     padding: 15px 0;
 }
 
+.topicGrid {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.topicInformation {
+    justify-content: space-around;   
+}
+
 .topic .userImageContainer img {
     width: 60px;
     height: 60px;
@@ -450,6 +460,9 @@ h2 {
 
 .postContent {
     margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
 }
 
 .postCreator {
@@ -462,10 +475,7 @@ h2 {
 }
 
 .postRightSection {
-    height: 100%;
-    display: flex;
     justify-content: space-around;
-    flex-direction: column;
     color: rgb(114, 114, 114);
 }
 
@@ -497,6 +507,21 @@ h2 {
     left: 25px;
 }
 
+.stickyPin svg {
+    transform: rotate(40deg);
+    color: #fbb83a;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+.stickyPost .pencilIcon {   
+    margin-left: 38px !important;
+}
+
+.stickyPost .titleIcon {   
+    margin-top: 0px;
+}
+
 /* replyContent */
 
 .replyContent {
@@ -508,4 +533,16 @@ h2 {
 .replyContent .postedBy,
 .replyContent .postedBy a {
     font-size: 12px;
+}
+
+/* sticky posts */
+.stickyContainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.sticky {
+    width: 100%;
+    margin-left: 0px !important;
 }

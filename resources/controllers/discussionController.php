@@ -68,6 +68,49 @@ if(isset($_POST["reportedPost"])) {
     }
 }
 
+/* set the selected post sticky */
+if(isset($_POST["stickyID"])) {
+    $value = 0;
+
+    if($_POST["type"] == "sticky") {
+        $value = 1;
+    } else if($_POST["type"] == "unsticky") {
+        $value = 0;
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+    }
+
+    if($postObj->setSticky($_POST["stickyID"], $value)) {
+        $result["data_type"] = 1;
+        $result["data_value"] = "set to sticky";
+
+        echo json_encode($result);
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+    }
+}
+
+/* upload new sidebar sticky post */
+if(isset($_POST["createNewSticky"])) {
+    if($postObj->uploadnewStickyPost($_POST["newStickyName"], $_POST["newStickyDescription"])) {
+        $result["data_type"] = 1;
+        $result["data_value"] = "New sticky post was created";
+
+        echo json_encode($result);
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+    }
+}
+
 // if the user wants to upload files we upload the files information to the database with the attachedfilecode what the user got when the postupload function ran, then we copy the file to the storage
 if(count($_FILES) > 0) {
 
