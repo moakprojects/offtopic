@@ -1,4 +1,5 @@
 <?php
+if(isset($_SESSION["user"])) {
     $categoryObj = new Category();
     $topicObj = new Topic();
     $categories = $categoryObj->getCategoryData();
@@ -85,3 +86,9 @@
         </div>
     </div>
 </div>
+<?php
+    } else {
+        header("Location: /error");
+        exit;
+    }
+?>

@@ -1,4 +1,5 @@
 <?php
+if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
     $userObj = new User();
 ?>
 <div class="container contentContainer">
@@ -606,3 +607,9 @@
         </div>
     </div>
 </div>
+<?php
+    } else {
+        header("Location: /error");
+        exit;
+    }
+?>

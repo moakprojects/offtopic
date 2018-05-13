@@ -61,6 +61,13 @@ html {
     width: 100%;
 }
 
+#toast-container {
+    top: auto !important;
+    right: 5%;
+    bottom: 10%;
+    left: auto !important;  
+  }
+
 /* buttons style just for admin */
 .pencilIcon {
     background-color: #00c853;

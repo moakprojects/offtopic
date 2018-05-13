@@ -59,9 +59,15 @@
                 <?php
                     if(isset($loggedUser) && $loggedUser) {
                 ?>
-                <div class="row noMargin">
+                <div class="row noMargin"> 
                     <div class="col s3">
-                        <a class="waves-effect waves-light btn reportBtn" onclick="report(<?php echo $topicData["topicID"]; ?>, 'topic')">Report</a>
+                        <?php 
+                            if($topicData["username"] != "admin" && !isset($_SESSION["user"]["isAdmin"]) && $topicData['createdBy'] !== $_SESSION['user']['userID']) {
+                        ?>
+                                <a class="waves-effect waves-light btn reportBtn" onclick="report(<?php echo $topicData["topicID"]; ?>, 'topic')">Report</a>
+                        <?php
+                            }
+                        ?>
                     </div>
                     <?php
                         if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
@@ -231,9 +237,9 @@
                         </div>
                     </div>
                     <div class="row noMargin">
-                        <div class="col s1">
+                        <div class="col s1 <?php echo (isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"]) ? 'hide' : ''); ?>">
                             <?php
-                                if(isset($loggedUser) && $loggedUser) {
+                                if(isset($loggedUser) && $loggedUser && $topicData["username"] != "admin" && $topicData['createdBy'] !== $_SESSION['user']['userID']) {
                             ?>
                                 <a class="waves-effect waves-light btn reportBtn postReport" onclick="report(<?php echo $posts[$i]["postID"]; ?>, 'post')">Report</a>
                             <?php
@@ -246,7 +252,7 @@
                         <div class="col s2">
                             <a class="waves-effect waves-light btn stickyBtn" onclick="Materialize.toast('You set sticky this post ', 4000);">Sticky</a>
                         </div>
-                        <div class="col s2 offset-s7 right-align adminIcons">
+                        <div class="col s2 offset-s8 right-align adminIcons">
                             <div class="noPadding pencilIcon titleIcon center-align">
                                 <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                     <i class="fas fa-pencil-alt fa-xs"></i>
@@ -261,7 +267,7 @@
                         <?php
                             } else {
                         ?>
-                            <div class="col s8 right-align postIndex">
+                            <div class="col s11 right-align postIndex">
                                 <a href="/post/<?php echo $posts[$i]["postID"]; ?>">#<?php echo $i + 1; ?></a>
                             </div>
                         <?php

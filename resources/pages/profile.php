@@ -1,5 +1,5 @@
 <?php
-    if(isset($_SESSION["selectedUsername"])) {
+    if(isset($_SESSION["selectedUsername"]) && $_SESSION["selectedUsername"] != "admin" && $_SESSION["selectedUsername"] != "Anonymous") {
         $userObj = new User();
         $categoryObj = new Category();
         $topicObj = new Topic();
@@ -17,6 +17,7 @@
         $favouriteTopics = $userObj->getFavouriteTopics($selectedUserData["userID"]);
         $likedPosts = $userObj->getLikedPosts($selectedUsername);
         $createdTopics = $userObj->getCreatedTopics($selectedUsername);
+        if($selectedUserData["accessLevel"] != 0) {
 ?>
 <div class="container contentContainer">
     <div class="row breadCrumbContainer">
@@ -563,7 +564,16 @@
                                 <?php } ?>
                             </div>
                         </div>
-                    </div>             
+                    </div>     
+                    <?php
+                        if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
+                    ?>
+                        <div class="row">
+                            <a class="waves-effect waves-light btn suspendBtn" onclick="Materialize.toast('You suspended this user', 4000);">Suspend this user</a>
+                        </div>  
+                    <?php
+                        }
+                    ?>
                 </div>
                 <div id="settings">
                     <?php if($myprofile) { ?>
@@ -762,6 +772,10 @@
 </div>
 <?php
         include("resources/modals/badgeSystem.php");
+        } else {
+            header("Location: /error");
+            exit;
+        }
     } else {
         header("Location: /error");
         exit;

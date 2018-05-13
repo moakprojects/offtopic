@@ -247,18 +247,12 @@ strong {
 
 .adminIcons {
     padding-right: 40px !important;
+    margin-bottom: 10px;
 }
 
 .postReport {
     margin-left: 0px !important;
 }
-
-#toast-container {
-    top: auto !important;
-    right: 5%;
-    bottom: 10%;
-    left: auto !important;  
-  }
 
 .reportBtn:hover {
     color: white;

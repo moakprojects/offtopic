@@ -263,7 +263,7 @@
     color: #697683 !important;
 }
 
-.tabsContainer il li a.active {
+.tabsContainer ul li a.active {
     color: #2196f3 !important;
 }
 
@@ -827,6 +827,23 @@
 
 .badgeDetails a:hover {
     color: #039be5;
+}
+
+.suspendBtn {
+    background-color: white;
+    color: #d50000;
+    border: 1px solid #d50000;
+    padding: 0 0.5rem;
+    line-height: 30px;
+    height: 30px;
+    margin-bottom: 10px;
+    margin-left: 8px;
+    font-size: 12px;
+}
+
+.suspendBtn:hover {
+    color: white;
+    background-color: #d50000;
 }
 
 /* settings */
