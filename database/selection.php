@@ -159,6 +159,9 @@ INNER JOIN (
     ) as postIdInTopic ON postIdInTopic.topicID = topic.topicID
  WHERE postID = :postID");
 
+ /* get original post for comment page */
+ $getOriginalPostQuery = $db->prepare("SELECT user.userID, user.username, post.postID, post.text FROM post INNER JOIN user ON user.userID = post.userID WHERE topicID = :topicID ORDER BY postID LIMIT :offsetem, 1");
+
 
 /* get the ID of the created new topic */
 $getIdOfCreatedTopicQuery = $db->prepare("SELECT topicID FROM topic WHERE createdBy = :createdBy && createdAt = :createdAt");

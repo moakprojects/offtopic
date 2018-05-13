@@ -3,6 +3,7 @@
         $postObj = new Post();
         $topicObj = new Topic();
         $postData = $postObj->getSelectedPost($_SESSION["selectedPost"]);
+        $originalPost = $postObj->getOriginalPost($postData["topicID"], $postData["replyID"] - 1);
 ?>
 <div class="container contentContainer">
     <div class="row noBottomMargin">
@@ -110,26 +111,26 @@
                                 ?>
                             </div>
                         </div>
-                            <?php if(isset($postData["originalPostID"]) && !is_null($postData["originalPostID"])) { ?> 
+                            <?php if($originalPost) { ?> 
                             <div class="replyContent">
                                 <div class="row postedOnContainer">
                                     <div class="col s12 postedBy">
                                         <span>Original Posted by - </span>
                                         <?php
-                                            if($posts[$i]['username'] == 'admin') {
-                                                echo "<p class='noMargin originalAdmin'>" . $postData["originalUsername"] . "</p>";
-                                            } else if($postData["originalUsername"] == 'Anonymous') {
-                                                echo $postData["originalUsername"];
+                                            if($originalPost['username'] == 'admin') {
+                                                echo "<p class='noMargin originalAdmin'>" . $originalPost["username"] . "</p>";
+                                            } else if($originalPost["username"] == 'Anonymous') {
+                                                echo $originalPost["username"];
                                             } else {
-                                                echo "<a href='/profile/" . $postData["originalUsername"] . "'>" . $postData["originalUsername"] . "</a>"; 
+                                                echo "<a href='/profile/" . $originalPost["username"] . "'>" . $originalPost["username"] . "</a>"; 
                                             }
                                         ?>
                                     </div>
                                 </div>
-                                <p class="topicDescription"><?php echo $postData["originalPostText"]; ?></p>
+                                <p class="topicDescription"><?php echo $originalPost["text"]; ?></p>
                                 <div class="row postIndexContainer">
                                     <div class="col s12 postIndex">
-                                        <a href="/post/<?php echo $postData["originalPostID"]; ?>">#<?php echo $postData["originalPostID"]; ?></a>
+                                        <a href="/post/<?php echo $originalPost["postID"]; ?>">#<?php echo $postData["replyID"]; ?></a>
                                     </div>
                                 </div>
                             </div>      
