@@ -140,6 +140,14 @@ if(isset($_POST["postId"])) {
             }
         }
 
+        //reliable badge: id=10
+        $wellLikedUser = $userObj->getWellLikedUser($_POST["postId"]);
+        if(!$userObj->checkBadgeStatus($wellLikedUser["userID"], 10)) {
+            if($wellLikedUser && $like == 1) {
+                $userObj->uploadBadge($wellLikedUser["userID"], 10);
+            }
+        }
+
         $result["data_type"] = 1;
         $result["data_value"] = "Success";
 

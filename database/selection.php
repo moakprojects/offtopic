@@ -174,4 +174,7 @@ $getReceivedQuestionsQuery = $db->prepare("SELECT topic.createdBy, count(numberO
 
 /* get celeb topics for celeb badge */
 $getWellFollowedTopicQuery = $db->prepare("SELECT createdBy FROM topic LEFT JOIN ( SELECT topicID, count(*) as numberOfFollowers FROM `favouritetopic` GROUP BY topicID) as followers ON followers.topicID = topic.topicID WHERE createdBy = ( SELECT userID FROM topic INNER JOIN user ON user.userID = topic.createdBy WHERE topicID = :topicID) AND numberOfFollowers >= 25");
+
+/* get reliable user for reliable badge */
+$getWellLikedUserQuery = $db->prepare("SELECT post.userID FROM post LEFT JOIN ( SELECT postID, count(*) as numberOfLikes FROM `postlike` WHERE isLike = 1 GROUP BY postID) as likes ON likes.postID = post.postID WHERE post.userID = ( SELECT post.userID FROM post INNER JOIN user ON user.userID = post.userID WHERE postID = :postID) AND numberOFLikes >= 25");
 ?>

@@ -686,6 +686,26 @@
                 return false;
             }
         }
+
+        // we check for the celeb badge if the user has one or more topic with more than 25 followers
+        function getWellLikedUser($postID) {
+            global $db;
+            global $getWellLikedUserQuery;
+
+            try {
+
+                $getWellLikedUserQuery->bindParam(":postID", $postID);
+                $getWellLikedUserQuery->execute();
+
+                if($getWellLikedUserQuery->rowCount() > 0) {
+                    return $getWellLikedUserQuery->fetch(PDO::FETCH_ASSOC);
+                } else {
+                    return false;
+                }
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
     
     }
 ?>
