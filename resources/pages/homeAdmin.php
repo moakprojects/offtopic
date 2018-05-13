@@ -636,6 +636,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                 ?>
                 </div>
                 <h3 class="titleName">Topic related stickies </h3>
+                <div class="topicRelatedStickies">
                 <?php
                     for($i = 0; $i < count($posts); $i++) {
                         if($posts[$i]["isSticky"] == 1) {
@@ -656,8 +657,8 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                 ?>
                             </div>
                             <div class="col s9 topicContainer">
-                                <div class="row postContainer">
-                                    <div class="col s10 postedBy">
+                                <div class="row postContainer stickyPostContainer">
+                                    <div class="col s9 postedBy">
                                         <?php
                                             if($posts[$i]['username'] == 'admin') {
                                                 echo "<p class='noMargin adminTitle'>" . $posts[$i]['username'] . "</p>";
@@ -668,12 +669,15 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                             }
                                         ?>  
                                     </div>
-                                    <div class="col s1 noPadding pencilIcon titleIcon center-align">
+                                    <div class="col s2 right-align noPadding">
+                                        <a class="waves-effect waves-light btn stickyBtn" onclick="setSticky(<?php echo $posts[$i]["postID"]?>)">Unsticky</a>
+                                    </div>
+                                    <div class="noPadding pencilIcon titleIcon center-align">
                                         <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                             <i class="fas fa-pencil-alt fa-xs"></i>
                                         </a>
                                     </div>
-                                    <div class="col s1 noPadding trashIcon titleIcon center-align">
+                                    <div class="noPadding trashIcon titleIcon center-align">
                                         <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
                                             <i class="fas fa-trash fa-xs"></i>
                                         </a>
@@ -748,6 +752,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     }
                 }
                 ?>
+                </div>
             </div>
             <div id="information">
                 
