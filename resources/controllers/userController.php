@@ -5,6 +5,7 @@ include "../../database/selection.php";
 include "../../database/insertion.php";
 include "../../database/modification.php";
 include "../../database/deletion.php";
+include "../../database/event.php";
 include "../classes/User.php";
 $userObj = new User();
 
@@ -118,6 +119,12 @@ if(isset($_POST["logID"])) {
         
             echo json_encode($result);
             exit;
+        } else if(intval($loggedUserData["accessLevel"]) === 2) {
+            $result["data_type"] = 0;
+            $result["data_value"] = "Your profile has been suspended for 3 days";    
+        
+            echo json_encode($result);
+            exit;
         } else {
             $password = htmlspecialchars(trim($_POST["logPassword"]));
 
@@ -132,7 +139,7 @@ if(isset($_POST["logID"])) {
                 $_SESSION["user"]["userID"] = $loggedUserData["userID"];
 
                 /* if user is admin */
-                if(intval($loggedUserData["accessLevel"]) === 3) {
+                if(intval($loggedUserData["accessLevel"]) === 18) {
                     $_SESSION["user"]["isAdmin"] = true;
                 }
 
@@ -565,10 +572,11 @@ if(isset($_POST["requestSettingsData"])) {
 }
 
 if(isset($_POST["deleteUserProfile"])) {
+    //we need userID because in topic, postlike, favouritetopic tables we just store the userID
     $userData = $userObj->getUserData($_SESSION["selectedUsername"]);
     $userID = $userData["userID"];
 
-    if($userObj->deleteUser($userID)) {
+    if($userObj->deleteUser($userID, 'delete')) {
         $result["data_type"] = 1;
         $result["data_value"] = "Success";
 
@@ -581,5 +589,51 @@ if(isset($_POST["deleteUserProfile"])) {
         echo json_encode($result);
         exit;
     }
+}
+
+if(isset($_POST["suspendUser"])) {
+    
+    //check if user had a suspend time already
+    $userData = $userObj->getUserInfo($_POST["userID"]);
+
+    if($userData["hadSuspendPeriod"] == 0) {
+        //if no we send to him/her an email and block for 3 days
+
+        if($userObj->suspendUserFirstTime($userData["username"])) {
+            $suspensionEmailTemplate = file_get_contents("../templates/suspensionEmailTemplate.html");
+
+            $username = htmlspecialchars(trim($userData["username"]));
+            $suspensionEmailTemplate = str_replace("{{username}}", $username, $suspensionEmailTemplate);
+
+            $headers = "FROM: noreply@off-topic.tk" . "\r\n";
+            $headers .= "MIME-Version: 1.0" . "\r\n";
+            $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
+
+            //mail($userData["email"], "Suspension on OffTopic website", $suspensionEmailTemplate, $headers);
+
+            $result["data_type"] = 1;
+            $result["data_value"] = "Suspend user first time";
+
+            echo json_encode($result);
+            exit;
+        } else {
+            $result["data_type"] = 0;
+            $result["data_value"] = "An error occured";
+
+            echo json_encode($result);
+            exit;
+        }
+    } else {
+        //if yes we block him/her profile
+
+        if($userObj->deleteUser($userData["userID"], 'suspend')) {
+            $result["data_type"] = 1;
+            $result["data_value"] = "Suspend user second time";
+
+            echo json_encode($result);
+            exit;
+        }
+    }
+
 }
 ?>

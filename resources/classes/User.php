@@ -509,7 +509,22 @@
             }
         }
 
-        function deleteUser($userID) {
+        //get userData with userID
+        function getUserInfo($userID) {
+            global $db;
+            global $userInfoQuery;
+    
+            try {
+                $userInfoQuery->bindParam(':userID', $userID);
+                $userInfoQuery->execute();
+
+                return $userInforQuery->fetch(PDO::FETCH_ASSOC);
+            } catch(PDOException $e) {
+                return false;
+            }
+        }
+
+        function deleteUser($userID, $type) {
             global $db;
 
             global $modifyDeletedUserInTopicQuery;
@@ -519,6 +534,7 @@
             global $modifyDeletedUserInFavouriteCategoryQuery;
             global $deletedUserFromEarnedBadgeQuery;
 
+            global $suspendUserSecondTimeQuery;
             global $deleteUserQuery;
 
             $userID = htmlspecialchars(trim($userID));
@@ -544,8 +560,13 @@
                 $deletedUserFromEarnedBadgeQuery->bindParam(':userID', $userID);
                 $deletedUserFromEarnedBadgeQuery->execute();
 
-                $deleteUserQuery->bindParam(':userID', $userID);
-                $deleteUserQuery->execute();
+                if($type == "delete") {
+                    $deleteUserQuery->bindParam(':userID', $userID);
+                    $deleteUserQuery->execute();
+                } else if($type == "suspend") {
+                    $suspendUserSecondTimeQuery->bindParam(':userID', $userID);
+                    $suspendUserSecondTimeQuery->execute();
+                }
 
                 $db->commit();
 
@@ -706,6 +727,29 @@
                 return false;
             }
         }
-    
+
+        //first time we block the user profile for 3 days
+        function suspendUserFirstTime($username) {
+            global $db;
+            global $suspendUserFirstTimeQuery;
+            global $dissolveSuspensionQuery;
+
+            try {
+
+                $db->beginTransaction();
+
+                $suspendUserFirstTimeQuery->bindParam(":username", $username);
+                $suspendUserFirstTimeQuery->execute();
+
+                $dissolveSuspensionQuery->bindParam(":username", $username);
+                $dissolveSuspensionQuery->execute();
+
+                $db->commit();
+                return true;
+            } catch (PDOException $e) {
+                $db->rollback();
+                return false;
+            }
+        }
     }
 ?>

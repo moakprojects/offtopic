@@ -67,7 +67,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                             </div>
                                             <div class="col s1 noPadding right-align">
                                                 <div class="ban center-align">
-                                                    <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Ban">
+                                                    <a class="tooltipped" data-position="bottom" data-tooltip="Suspend" onclick="suspendUser('<?php echo $user["userID"]; ?>')">
                                                         <i class="fas fa-ban"></i>
                                                     </a>
                                                 </div>

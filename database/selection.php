@@ -183,4 +183,7 @@ $getWellFollowedTopicQuery = $db->prepare("SELECT createdBy FROM topic LEFT JOIN
 
 /* get reliable user for reliable badge */
 $getWellLikedUserQuery = $db->prepare("SELECT post.userID FROM post LEFT JOIN ( SELECT postID, count(*) as numberOfLikes FROM `postlike` WHERE isLike = 1 GROUP BY postID) as likes ON likes.postID = post.postID WHERE post.userID = ( SELECT post.userID FROM post INNER JOIN user ON user.userID = post.userID WHERE postID = :postID) AND numberOFLikes >= 25");
+
+/* get userdata through userID */
+$userInfoQuery = $db->prepare("SELECT * FROM user WHERE userID = :userID");
 ?>

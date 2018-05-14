@@ -34,4 +34,10 @@
 
     /* delet consecutive logins */
     $clearNumberOfConsecutiveVisitQuery = $db->prepare("UPDATE user SET consecutiveVisit = 0 WHERE userID = :userID");
+
+    /* suspend user in first time */
+    $suspendUserFirstTimeQuery = $db->prepare("UPDATE user SET accessLevel = 2, hadSuspendPeriod = 1 WHERE username = :username");
+
+    /* suspend user in second time */
+    $suspendUserSecondTimeQuery = $db->prepare("UPDATE user SET accessLevel = 3 WHERE userID = :userID");
 ?>
