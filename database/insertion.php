@@ -25,4 +25,7 @@
 
     /* upload new sidebar sticky post into database */
     $newSidebarStickyQuery = $db->prepare("INSERT INTO sidebarStickyPost VALUES (NULL, :postTitle, :postDescription)");
+
+    /* upload new category into database */
+    $newCategoryQuery = $db->prepare("INSERT INTO category VALUES (NULL, :categoryName, :categoryDescription, :thumbnail)");
 ?>

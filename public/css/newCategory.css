@@ -1,0 +1,132 @@
+/* general styling */
+h2 {
+    font-size: 30px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.newCategoryContainer {
+    background: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px #c9cccd;
+    padding: 15px;
+}
+
+/* sidebar */
+.helperSideBarContainer {
+    background: rgba(68,157,68, 0.3);
+    border-radius: 2px;
+    box-shadow: 0 1px 2px #c9cccd;
+    margin-bottom: 20px;
+    margin-top: 25px;
+    padding: 15px;
+}
+
+.helperSideBarContainer h4 {
+    margin: 0 0 20px 5px;
+    color: #363838;
+    font-size: 20px;
+}
+
+.helperSideBarContainer .line {
+    height: 1px;
+    line-height: 1px;
+    border-bottom: solid 1px #363838;
+}
+
+.helperSideBarContainer .helperContent {
+    font-size: 14px;
+    margin-top: 20px;
+    margin-left: 5px;
+}
+
+.helperSideBarContainer .helperContent p {
+    line-height: 30px;
+}
+
+/* content */
+
+.input-field label {
+    color: #737f8e;
+}
+.none {
+    display: none;
+}
+.fileInput {
+    display: inline-block;
+}
+
+.fileInputText {
+    border-bottom: 1px solid #737f8e !important;
+}
+
+.fileInputContainer {
+    margin: auto; 
+}
+
+.fileInputField {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#fileInputTextDiv {
+    margin-left: 8px;
+    display: inline-block;
+    width: 90%;
+}
+
+.uploadIcon span {
+    border-radius: 50%;
+    background-color: red;
+}
+
+.newCategoryInput {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.newCategoryInput input[type=text] {
+    border-bottom: 1px solid #737f8e !important;
+    width: 100%;
+}
+
+.newCategoryInput input[type=text]:focus + label {
+    color: #039be5;
+}
+
+.newCategoryInput input[type=text]:focus {
+    border-bottom: 1px solid #039be5 !important;
+    box-shadow: 0 1px 0 0 #039be5 !important;
+}
+
+.newCategoryInput textarea {
+    border-bottom: 1px solid #737f8e !important;
+    padding-bottom: 0px;
+}
+
+.newCategoryInput textarea:focus:not([readonly]) + label {
+    color: #039be5;
+}
+
+.newCategoryInput textarea:focus {
+    border-bottom: 1px solid #039be5 !important;
+    box-shadow: 0 1px 0 0 #039be5 !important;
+}
+
+.textareaContainer {
+    margin-top: 40px;
+}
+
+.inputContainer {
+    margin-top: 40px;
+    margin-left: 28px !important;
+    margin-right: 28px !important;
+}
+
+.createNewCategory {
+    padding-right: 12px;
+}
+
+#errorMsg {
+    color: red;
+}

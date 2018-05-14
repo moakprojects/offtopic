@@ -26,6 +26,23 @@ class Category {
         }
     }
 
+     // add new sidebar sticky post
+     function uploadNewCategory($categoryName, $categoryDescription, $attachment) {
+        global $db;
+        global $newCategoryQuery;
+
+        try {
+            $newCategoryQuery->bindParam(':categoryName', $categoryName);
+            $newCategoryQuery->bindParam(':categoryDescription', $categoryDescription);
+            $newCategoryQuery->bindParam(':thumbnail', $attachment);
+            $newCategoryQuery->execute();
+
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     // request category data for the sidebar from database
     function getCategoryDataForSideBar($userID) {
 

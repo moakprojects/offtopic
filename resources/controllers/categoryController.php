@@ -38,4 +38,23 @@ if(isset($_POST["favouriteSelectedCategory"])) {
     }
 }
 
+/* upload new category */
+if(isset($_POST["createNewCategory"])) {
+    $fileName = time() . '_' . $_FILES["file"]["name"];
+    $location = "../../public/images/content/categoryThumbnail/" . $fileName;
+
+    if($categoryObj->uploadNewCategory($_POST["newCategoryName"], $_POST["newCategoryDescription"], $fileName)) {
+        copy($_FILES["file"]["tmp_name"], $location);
+        $result["data_type"] = 1;
+        $result["data_value"] = "New category was created";
+
+        echo json_encode($result);
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+    }
+}
+
 ?>

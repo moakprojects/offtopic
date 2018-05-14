@@ -10,7 +10,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     <h2>Dashboard</h2>
                 </div>
                 <div class="col s3 offset-s1 newBtnContainer right-align noPadding">
-                    <a href="#" class="waves-effect waves-light btn newBtn blue">Create New Category</a></li>
+                    <a href="/new-category" class="waves-effect waves-light btn newBtn blue">Create New Category</a></li>
                 </div>
                 <div class="col s3 newBtnContainer right-align noPadding">
                     <a href="/new-topic" class="waves-effect waves-light btn newBtn blue">Start New Topic</a></li>
