@@ -50,6 +50,9 @@
             case "new-sticky-post":
                 $page = "newSidebarStickyPost";
             break;
+            case "new-category":
+                $page = "newCategory";
+            break;
             case "post":
                 if(isset($queryStringParams[1]) && $queryStringParams[1] !== "") {
                     $_SESSION["selectedPost"] = $queryStringParams[1];
