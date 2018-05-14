@@ -133,7 +133,7 @@
 
                         $_SESSION["user"]["loggedIn"] = true;
                         $_SESSION["user"]["userID"] = $cookieLoginResult["userID"];
-                        if($cookieLoginResult["accessLevel"] == 3) {
+                        if($cookieLoginResult["accessLevel"] == 18) {
                             $_SESSION["user"]["isAdmin"] = true;
                         }
                         setcookie("usr", md5($cookieLoginResult["username"]), time() + 7890000);
