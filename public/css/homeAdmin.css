@@ -579,3 +579,34 @@ h2 {
     width: 100%;
     margin-left: 0px !important;
 }
+
+/* Forum information tab */
+
+.verticalTabContainer {
+    margin-left: 12px !important;
+}
+
+.verticalTabs {
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    height: auto;
+    float: left;
+    display: flex;
+}
+
+.verticalTabs .indicator {
+    display: none;
+}
+
+.verticalTabs li {
+    text-align: left !important;
+}
+
+.verticalTabs .active {
+    font-weight: 900;
+}
+
+.verticalTabContent {
+    margin-left: 5px !important;
+}
