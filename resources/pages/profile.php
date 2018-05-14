@@ -569,7 +569,7 @@
                         if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     ?>
                         <div class="row">
-                            <a class="waves-effect waves-light btn suspendBtn" onclick="Materialize.toast('You suspended this user', 4000);">Suspend this user</a>
+                            <a class="waves-effect waves-light btn suspendBtn" onclick="suspendUser('<?php echo $selectedUserData["userID"]; ?>')">Suspend this user</a>
                         </div>  
                     <?php
                         }

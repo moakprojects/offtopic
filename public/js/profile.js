@@ -716,3 +716,12 @@ $(document).on('click', '#deleteProfile', function() {
 		$('.deleteProfileError').eq(0).removeClass('hide');
 	}
 });
+
+//if the admin wants to suspend the user we send the selected username for the business layer
+function suspendUser(userID) {
+
+	$.post("/resources/controllers/userController.php", {suspendUser: true, userID: userID}, function(data) {
+		var obj = jQuery.parseJSON(data);
+		Materialize.toast('You suspend ' + obj.data_value + ' user', 4000);
+	});
+}
