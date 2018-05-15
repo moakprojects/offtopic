@@ -764,9 +764,9 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                 <div class="row">
                     <div class="col s3 verticalTabContainer">
                         <ul class="tabs verticalTabs">
-                            <li class="tab"><a href="#description">Description of the site</a></li>
                             <li class="tab"><a href="#contact">Contact informations</a></li>
                             <li class="tab"><a href="#rules">Rules and regulations</a></li>
+                            <li class="tab"><a href="#description">Description of the site</a></li>
                         </ul>
                     </div>
                     <div class="col s8 verticalTabContent">
