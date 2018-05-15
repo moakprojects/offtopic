@@ -396,9 +396,9 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                     <div class="col s10 postedBy">
                                         <?php
                                             if($posts[$i]['username'] == 'admin') {
-                                                echo "<p class='noMargin adminTitle'>" . $posts[$i]['username'] . "</p>";
+                                                echo "<span class='noMargin adminTitle'>" . $posts[$i]['username'] . "</span>";
                                             } else if($posts[$i]['username'] == 'Anonymous') {
-                                                echo $posts[$i]['username'];
+                                                echo "<span>" . $posts[$i]['username'] . "</span>";
                                             } else {
                                                 echo "<a href='/profile/" . $posts[$i]['username'] . "'>" . $posts[$i]['username'] . "</a>"; 
                                             }
@@ -424,9 +424,9 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                                     <span>Original Posted by - </span>
                                                     <?php
                                                         if($posts[$posts[$i]["replyID"]-1]['username'] == 'admin') {
-                                                            echo "<p class='noMargin originalAdmin'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</p>";
+                                                            echo "<span class='noMargin originalAdmin'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</span>";
                                                         } else if($posts[$posts[$i]["replyID"]-1]['username'] == 'Anonymous') {
-                                                            echo $posts[$posts[$i]["replyID"]-1]['username'] . ":";
+                                                            echo "<span>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</span>";
                                                         } else {
                                                             echo "<a href='/profile/" . $posts[$posts[$i]["replyID"]-1]['username'] . "'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</a>"; 
                                                         }
@@ -514,9 +514,9 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                     <div class="col s10 postedBy">
                                         <?php
                                             if($posts[$i]['username'] == 'admin') {
-                                                echo "<p class='noMargin adminTitle'>" . $posts[$i]['username'] . "</p>";
+                                                echo "<span class='noMargin adminTitle'>" . $posts[$i]['username'] . "</span>";
                                             } else if($posts[$i]['username'] == 'Anonymous') {
-                                                echo $posts[$i]['username'];
+                                                echo "</span>" . $posts[$i]['username'] . "</span>";
                                             } else {
                                                 echo "<a href='/profile/" . $posts[$i]['username'] . "'>" . $posts[$i]['username'] . "</a>"; 
                                             }
@@ -542,9 +542,9 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                                     <span>Original Posted by - </span>
                                                     <?php
                                                         if($posts[$posts[$i]["replyID"]-1]['username'] == 'admin') {
-                                                            echo "<p class='noMargin originalAdmin'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</p>";
+                                                            echo "<span class='noMargin originalAdmin'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</span>";
                                                         } else if($posts[$posts[$i]["replyID"]-1]['username'] == 'Anonymous') {
-                                                            echo $posts[$posts[$i]["replyID"]-1]['username'] . ":";
+                                                            echo "<span>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</span>";
                                                         } else {
                                                             echo "<a href='/profile/" . $posts[$posts[$i]["replyID"]-1]['username'] . "'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</a>"; 
                                                         }
@@ -661,9 +661,9 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                     <div class="col s9 postedBy">
                                         <?php
                                             if($posts[$i]['username'] == 'admin') {
-                                                echo "<p class='noMargin adminTitle'>" . $posts[$i]['username'] . "</p>";
+                                                echo "<span class='noMargin adminTitle'>" . $posts[$i]['username'] . "</span>";
                                             } else if($posts[$i]['username'] == 'Anonymous') {
-                                                echo $posts[$i]['username'];
+                                                echo "<span>" . $posts[$i]['username'] . "</span>";
                                             } else {
                                                 echo "<a href='/profile/" . $posts[$i]['username'] . "'>" . $posts[$i]['username'] . "</a>"; 
                                             }
@@ -692,9 +692,9 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                                     <span>Original Posted by - </span>
                                                     <?php
                                                         if($posts[$posts[$i]["replyID"]-1]['username'] == 'admin') {
-                                                            echo "<p class='noMargin originalAdmin'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</p>";
+                                                            echo "<span class='noMargin originalAdmin'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</span>";
                                                         } else if($posts[$posts[$i]["replyID"]-1]['username'] == 'Anonymous') {
-                                                            echo $posts[$posts[$i]["replyID"]-1]['username'] . ":";
+                                                            echo "<span>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</span>";
                                                         } else {
                                                             echo "<a href='/profile/" . $posts[$posts[$i]["replyID"]-1]['username'] . "'>" . $posts[$posts[$i]["replyID"]-1]['username'] . ":</a>"; 
                                                         }

@@ -75,17 +75,18 @@
             global $db;
             global $loginQuery;
 
-            if(isset($loginQuery)) {
-                
-                $loginQuery->bindParam(':logID', $logID);
+            try {
+                $loginQuery->bindParam(":logID", $logID);
                 $loginQuery->execute();
 
                 if($loginQuery->rowCount() > 0) {
-                    return $loginResult = $loginQuery->fetch(PDO::FETCH_ASSOC);
+                    $loginData = $loginQuery->fetch(PDO::FETCH_ASSOC);
+                    $loginQuery->closeCursor();
+                    return $loginData;
                 } else {
-                    return $loginResult = "not exist";
+                    return "not exist";
                 }
-            } else {
+            } catch (PDOEXception $e) {
                 return $loginResult = "error";
             }
         }

@@ -14,13 +14,18 @@ class Category {
         global $db;
         global $allCategoryQuery;
 
-        if($allCategoryQuery) {
+        try {
             $allCategoryQuery->execute();
-
             $categoryData = $allCategoryQuery->fetchall(PDO::FETCH_ASSOC);
+            $allCategoryQuery->closeCursor();
             
-            return $categoryData;
-        } else {
+            if($categoryData) {
+                return $categoryData;
+            } else {
+                header("Location: /error");
+                exit;
+            }
+        } catch (PDOException $e) {
             header("Location: /error");
             exit;
         }

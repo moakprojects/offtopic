@@ -76,7 +76,7 @@ class Post {
         global $db;
         global $latestPostsQuery;
 
-        if($latestPostsQuery) {
+        try {
             $latestPostsQuery->execute();
 
             $latestPostsData = $latestPostsQuery->fetchall(PDO::FETCH_ASSOC);
@@ -92,9 +92,9 @@ class Post {
             }
 
             return $latestPostsData;
-        } else {
-            header("Location: /error");
-            exit;
+        } catch(PDOException $e) {
+            $valami = $e;
+            return $e;
         }
     }
 

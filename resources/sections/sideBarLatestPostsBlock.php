@@ -16,9 +16,9 @@
                     <div class="name">- 
                     <?php 
                         if($latestPost["username"] == 'admin') {
-                            echo "<p class='noMargin originalAdmin'>" . $latestPost["username"] . "</p>";
+                            echo "<span class='noMargin originalAdmin'>" . $latestPost["username"] . "</span>";
                         } else if($latestPost["username"] == 'Anonymous') {
-                            echo $latestPost["username"];
+                            echo "<span>" . $latestPost["username"] . "</span>";
                         } else {
                             echo "<a href='/profile/" . $latestPost["username"] . "'>" . $latestPost["username"] . "</a>"; 
                         }
