@@ -1,6 +1,3 @@
-<div id="headerImage">
-    <div></div>
-</div>
 <header>
     <div class="sideSpace">
         <a href="/home"><img src="/public/images/content/offtopicLogo.png" alt="Offtopic forum's logo" class="logo"></a>

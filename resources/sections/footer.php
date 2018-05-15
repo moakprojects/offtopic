@@ -16,7 +16,7 @@
                     </div>
                     <div class="footerSubSeparator col s1"></div>
                     <div class="footerLinkParent col s3">
-                        <a href="#">About us</a>
+                        <a href="/description-of-the-site">About us</a>
                     </div>
                     <div class="footerSubSeparator col s1"></div>
                     <div class="footerLinkParent col s3">
@@ -29,7 +29,7 @@
                         <a href="https://www.facebook.com/EASVdk/" target="_blank" class="facebookIcon"><i class="fab fa-facebook-f fa-lg"></i></a>
                     </div>
                     <div class="socialIconParent col s3">
-                        <a href="#" class="emailIcon"><i class="far fa-envelope fa-2x"></i></a>
+                        <a href="/contact" class="emailIcon"><i class="far fa-envelope fa-2x"></i></a>
                     </div>
                     <div class="socialIconParent col s2">
                         <a href="https://www.instagram.com/erhvervsakademi_sydvest/" target="_blank" class="instagramIcon"><i class="fab fa-instagram fa-lg"></i></a>
