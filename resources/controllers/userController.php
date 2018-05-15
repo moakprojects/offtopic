@@ -612,7 +612,7 @@ if(isset($_POST["suspendUser"])) {
             //mail($userData["email"], "Suspension on OffTopic website", $suspensionEmailTemplate, $headers);
 
             $result["data_type"] = 1;
-            $result["data_value"] = "Suspend user first time";
+            $result["data_value"] = $userData["username"];
 
             echo json_encode($result);
             exit;

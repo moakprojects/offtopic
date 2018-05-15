@@ -518,9 +518,9 @@
                 $userInfoQuery->bindParam(':userID', $userID);
                 $userInfoQuery->execute();
 
-                return $userInforQuery->fetch(PDO::FETCH_ASSOC);
+                return $userInfoQuery->fetch(PDO::FETCH_ASSOC);
             } catch(PDOException $e) {
-                return false;
+                return $e;
             }
         }
 
