@@ -20,7 +20,7 @@
                     </div>
                     <div class="footerSubSeparator col s1"></div>
                     <div class="footerLinkParent col s3">
-                        <a href="#">Terms</a>
+                        <a href="/rules-and-regulations">Terms</a>
                     </div>
                 </div>
                 <div class="col s3">

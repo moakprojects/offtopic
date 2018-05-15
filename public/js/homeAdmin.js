@@ -37,20 +37,17 @@ $(document).on('click', '#modifyDescriptionSubmit', function() {
             $('#descriptionError').html(obj.data_value);
             $('#descriptionError').removeClass('hide');
             $('#descriptionError').css('color', '#34d034');
-            $('.modifyDescriptionSpinner').addClass('hide');
         
         } else {
         $('#descriptionError').css('color', 'red');
         $('#descriptionError').html(obj.data_value);
         $('#descriptionError').removeClass('hide');  
-        $('.modifyDescriptionSpinner').addClass('hide');  
         }
     });
     } else {
     $('#descriptionError').css('color', 'red');
     $('#descriptionError').html("Please enter something about us");
     $('#descriptionError').removeClass('hide');
-    $('.modifyDescriptionSpinner').addClass('hide');  
     }
   
     $('.modifyDescriptionSpinner').addClass('hide');
@@ -77,32 +74,27 @@ $(document).on('click', '#modifyContactSubmit', function() {
                         $('#contactErrorMsg').html(obj.data_value);
                         $('#contactErrorMsg').removeClass('hide');
                         $('#contactErrorMsg').css('color', '#34d034');
-                        $('.modifyContactSpinner').addClass('hide');
                     
                     } else {
                     $('#contactErrorMsg').css('color', 'red');
                     $('#contactErrorMsg').html(obj.data_value);
                     $('#contactErrorMsg').removeClass('hide'); 
-                    $('.modifyContactSpinner').addClass('hide');   
                     }
                 });
             } else {
                 $('#contactErrorMsg').css('color', 'red');
                 $('#contactErrorMsg').html("Please enter a right location of the office");
                 $('#contactErrorMsg').removeClass('hide'); 
-                $('.modifyContactSpinner').addClass('hide');
             }
         } else {
             $('#contactErrorMsg').css('color', 'red');
             $('#contactErrorMsg').html("Please enter a right phone number");
             $('#contactErrorMsg').removeClass('hide'); 
-            $('.modifyContactSpinner').addClass('hide');
         }
     } else {
         $('#contactErrorMsg').css('color', 'red');
         $('#contactErrorMsg').html("Please enter the general contact guide");
         $('#contactErrorMsg').removeClass('hide'); 
-        $('.modifyContactSpinner').addClass('hide'); 
     }
   
     $('.modifyContactSpinner').addClass('hide');
@@ -136,51 +128,43 @@ $(document).on('click', '#modifyRulesSubmit', function() {
                                     $('#rulesErrorMsg').html(obj.data_value);
                                     $('#rulesErrorMsg').removeClass('hide');
                                     $('#rulesErrorMsg').css('color', '#34d034');
-                                    $('.rulesErrorMsg').addClass('hide');
                                 
                                 } else {
                                 $('#rulesErrorMsg').css('color', 'red');
                                 $('#rulesErrorMsg').html(obj.data_value);
                                 $('#rulesErrorMsg').removeClass('hide');  
-                                $('.rulesErrorMsg').addClass('hide');  
                                 }
                             });
                         } else {
                             $('#rulesErrorMsg').css('color', 'red');
                             $('#rulesErrorMsg').html("Please enter something about Integration and Severability");
                             $('#rulesErrorMsg').removeClass('hide'); 
-                            $('.rulesErrorMsg').addClass('hide');
                         }
                     } else {
                         $('#rulesErrorMsg').css('color', 'red');
                         $('#rulesErrorMsg').html("Please enter something about Termination");
                         $('#rulesErrorMsg').removeClass('hide'); 
-                        $('.rulesErrorMsg').addClass('hide');
                     }
                 } else {
                     $('#rulesErrorMsg').css('color', 'red');
                     $('#rulesErrorMsg').html("Please enter something about Rules and Conduct");
                     $('#rulesErrorMsg').removeClass('hide'); 
-                    $('.rulesErrorMsg').addClass('hide');
                 }
             } else {
                 $('#rulesErrorMsg').css('color', 'red');
                 $('#rulesErrorMsg').html("Please enter something about Modification of Terms of Use");
                 $('#rulesErrorMsg').removeClass('hide'); 
-                $('.rulesErrorMsg').addClass('hide');
             }
         } else {
             $('#rulesErrorMsg').css('color', 'red');
             $('#rulesErrorMsg').html("Please enter some Acceptance of Terms");
             $('#rulesErrorMsg').removeClass('hide'); 
-            $('.rulesErrorMsg').addClass('hide');
         }
     } else {
         $('#rulesErrorMsg').css('color', 'red');
         $('#rulesErrorMsg').html("Please enter the general rules guide");
         $('#rulesErrorMsg').removeClass('hide');  
-        $('.rulesErrorMsg').addClass('hide');
     }
   
-    $('.rulesErrorMsg').addClass('hide');
+    $('.modifyRulesSpinner').addClass('hide');
   });

@@ -53,6 +53,9 @@
             case "new-category":
                 $page = "newCategory";
             break;
+            case "rules-and-regulations":
+                $page = "terms";
+            break;
             case "post":
                 if(isset($queryStringParams[1]) && $queryStringParams[1] !== "") {
                     $_SESSION["selectedPost"] = $queryStringParams[1];
