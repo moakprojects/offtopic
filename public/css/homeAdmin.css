@@ -5,6 +5,11 @@ h2 {
     margin-top: 20px;
 }
 
+.errorMsg {
+    color: red;
+    margin-left: 40px;
+}
+
 /* Creator buttons */
 
 .newBtnContainer {
@@ -583,7 +588,7 @@ h2 {
 /* Forum information tab */
 
 .verticalTabContainer {
-    margin-left: 12px !important;
+    margin-top: 15px;
 }
 
 .verticalTabs {
@@ -593,6 +598,8 @@ h2 {
     height: auto;
     float: left;
     display: flex;
+    width: 81%;
+    background-color: transparent;
 }
 
 .verticalTabs .indicator {
@@ -603,10 +610,69 @@ h2 {
     text-align: left !important;
 }
 
+.verticalTabs li a {
+    color: #697683 !important
+}
+
 .verticalTabs .active {
     font-weight: 900;
+    color: #2196f3 !important;
+    border-right: solid 2px #2196f3;
 }
 
 .verticalTabContent {
     margin-left: 5px !important;
+    background-color: white;
+    margin-top: 30px;
+}
+
+.changeForumInformationBtn {
+    margin-left: 20px;
+}
+
+.forumInformationInput {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 0px;
+}
+
+.forumInformationInput label{
+    color: #9e9e9e !important;
+}
+
+.forumInformationInput textarea {
+    border-bottom: 1px solid #737f8e !important;
+    padding-bottom: 0px;
+}
+
+.forumInformationInput textarea:focus:not([readonly]) + label {
+    color: #039be5 !important;
+}
+
+.forumInformationInput textarea:focus {
+    border-bottom: 1px solid #039be5 !important;
+    box-shadow: 0 1px 0 0 #039be5 !important;
+}
+
+.inputContainer {
+    margin-bottom: 35px;
+}
+
+.textareaContainer {
+    margin-top: 40px !important;
+    margin-bottom: 0px;
+}
+
+.forumInformationInput input[type=text] {
+    border-bottom: 1px solid #737f8e !important;
+    width: 100%;
+}
+
+.forumInformationInput input[type=text]:focus + label {
+    color: #039be5;
+}
+
+.forumInformationInput input[type=text]:focus {
+    border-bottom: 1px solid #039be5 !important;
+    box-shadow: 0 1px 0 0 #039be5 !important;
 }

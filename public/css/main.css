@@ -418,6 +418,10 @@ footer {
     color: #908f8f;
 }
 
+.footerLinkParent a:hover {
+    color: #2196f3;
+}
+
 .socialIconParent {
     display: table;
     height: 70px;
