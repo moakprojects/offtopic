@@ -66,9 +66,9 @@
                                 <span>Created at: <?php echo $postData["createdAt"]; ?> by 
                                     <?php
                                         if($postData["topicCreatorName"] == 'admin') {
-                                            echo "<p class='topicCreator noMargin originalAdmin'>" . $postData["topicCreatorName"] . "</p>";
+                                            echo "<span class='topicCreator noMargin originalAdmin'>" . $postData["topicCreatorName"] . "</span>";
                                         } else if($postData["topicCreatorName"] == 'Anonymous') {
-                                            echo "<p clas='topicCreator'>". $postData["topicCreatorName"] ."</p>";
+                                            echo "<span class='topicCreator'>". $postData["topicCreatorName"] ."</span>";
                                         } else {
                                             echo "<a class='topicCreator' href='/profile/" . $postData["topicCreatorName"]. "'>" . $postData["topicCreatorName"] . "</a>"; 
                                         }
@@ -102,7 +102,7 @@
                             <div class="col s4 postedBy">
                                 <?php
                                     if($postData["postWriterName"] == 'admin') {
-                                        echo "<p class='noMargin adminTitle'>" . $postData["postWriterName"] . "</p>";
+                                        echo "<span class='noMargin adminTitle'>" . $postData["postWriterName"] . "</span>";
                                     } else if($postData["postWriterName"] == 'Anonymous') {
                                         echo $postData["postWriterName"];
                                     } else {
@@ -118,9 +118,9 @@
                                         <span>Original Posted by - </span>
                                         <?php
                                             if($originalPost['username'] == 'admin') {
-                                                echo "<p class='noMargin originalAdmin'>" . $originalPost["username"] . "</p>";
+                                                echo "<span class='noMargin originalAdmin'>" . $originalPost["username"] . "</span>";
                                             } else if($originalPost["username"] == 'Anonymous') {
-                                                echo $originalPost["username"];
+                                                echo  "<span>" . $originalPost["username"] . "</span>";
                                             } else {
                                                 echo "<a href='/profile/" . $originalPost["username"] . "'>" . $originalPost["username"] . "</a>"; 
                                             }
