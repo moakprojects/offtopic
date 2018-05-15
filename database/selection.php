@@ -44,31 +44,22 @@ $checkUsernameQuery = $db->prepare("SELECT * FROM user WHERE username = :usernam
 /* select user for verify email address */
 $verifyEmailQuery = $db->prepare("SELECT * FROM user WHERE md5(email) = :emailHash");
 
-/* select user for login */
-$loginQuery = $db -> prepare("SELECT * FROM user WHERE email = :logID OR username = :logID");
+/* select user for login 
+=======
+we change this query for stored procedure
+=======
+$loginQuery = $db -> prepare("SELECT * FROM user WHERE email = :logID OR username = :logID"); */
+$loginQuery = $db->prepare("CALL proc_check_login_id(:logID)");
 
 /* select user for login by cookie */
 $cookieLoginQuery = $db -> prepare("SELECT * FROM user WHERE md5(email) = :logIDHash OR md5(username) = :logIDHash");
 
-/* select information for the category page */
-$allCategoryQuery = $db -> prepare("SELECT category.*, numberOfTopics, numberOfPosts, numberOfLikes 
-    FROM category 
-    LEFT JOIN (
-        SELECT categoryID, count(*) as numberOfTopics, topicID 
-        FROM topic 
-        GROUP BY categoryID) as topics ON topics.categoryID = category.categoryID 
-    LEFT JOIN (
-        SELECT topic.categoryID, topic.topicID, sum(postQuantity) as numberOfPosts 
-        FROM `topic` 
-        LEFT JOIN (
-            SELECT topicID, count(*) as postQuantity 
-            FROM post 
-            GROUP BY topicID) as countPost ON countPost.topicID = topic.topicID 
-        GROUP BY topic.categoryID ) as posts ON posts.topicID = topics.topicID 
-    LEFT JOIN (
-        SELECT categoryID, count(*) as numberOfLikes 
-        FROM favouritecategory 
-        GROUP BY categoryID) as likes ON likes.categoryID = category.categoryID");
+/* select information for the category page
+=======
+we change this query for stored procedure
+=======
+$allCategoryQuery = $db -> prepare("SELECT category.*, numberOfTopics, numberOfPosts, numberOfLikes FROM category LEFT JOIN ( SELECT categoryID, count(*) as numberOfTopics, topicID FROM topic GROUP BY categoryID) as topics ON topics.categoryID = category.categoryID LEFT JOIN ( SELECT topic.categoryID, topic.topicID, sum(postQuantity) as numberOfPosts FROM `topic` LEFT JOIN ( SELECT topicID, count(*) as postQuantity FROM post GROUP BY topicID) as countPost ON countPost.topicID = topic.topicID GROUP BY topic.categoryID ) as posts ON posts.topicID = topics.topicID LEFT JOIN ( SELECT categoryID, count(*) as numberOfLikes FROM favouritecategory GROUP BY categoryID) as likes ON likes.categoryID = category.categoryID"); */
+$allCategoryQuery = $db->prepare("CALL proc_get_all_category()");
 
 /* get categories for sidebar category block */
 $sideBarCategoriesQuery = $db->prepare("SELECT category.categoryName, category.categoryID, numberOfTopics FROM category LEFT JOIN (SELECT categoryID, count(*) as numberOfTopics, topicID FROM topic GROUP BY categoryID) as topics ON topics.categoryID = category.categoryID WHERE category.categoryID NOT IN (SELECT categoryID FROM favouritecategory WHERE userID = :userID) LIMIT 5");
