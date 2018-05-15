@@ -163,6 +163,9 @@ $getIdOfCreatedTopicQuery = $db->prepare("SELECT topicID FROM topic WHERE create
 /* in function where user can earn badge we check if he or she already earned or not */
 $getBadgeInformationQuery = $db->prepare("SELECT * FROM earnedBadge WHERE userID = :userID && badgeID = :badgeID");
 
+/* get all badge what belongs to one of the user */
+$getAllBadges = $db->prepare("SELECT badgeID FROM earnedbadge WHERE userID = :userID");
+
 /* get number of posts for badge */
 $getNumberOfPostsQuery = $db->prepare("SELECT * FROM post WHERE userID = :userID");
 

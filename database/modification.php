@@ -49,4 +49,7 @@
 
     /*change the fields of rules and regulations by Admin */
     $modifyRulesAndRegulationsQuery = $db->prepare("UPDATE rulesAndRegulations SET generalTxt = :generalTxt, acceptanceOfTerms = :acceptanceOfTerms, modificationOfTerms = :modificationOfTerms, rulesAndConduct = :rulesAndConduct, termination = :termination, integration = :integration WHERE ID = 1");
+
+    /* change rankID field in user table when user earned enough badge for it */
+    $modifyRankIdQuery = $db->prepare("UPDATE user SET rankID = rankID + 1 where userID = :userID");
 ?>

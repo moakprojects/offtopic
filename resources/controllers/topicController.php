@@ -20,7 +20,39 @@ if(isset($_POST["favouriteSelectedTopic"])) {
             $hasCelebTopic = $userObj->getWellFollowedTopic($_POST["favouriteSelectedTopic"]);
             if(!$userObj->checkBadgeStatus($hasCelebTopic["createdBy"], 9)) {
                 if($hasCelebTopic) {
-                    $userObj->uploadBadge($hasCelebTopic["createdBy"], 9);
+                    if($userObj->uploadBadge($hasCelebTopic["createdBy"], 9)) {
+                        $earnedBadges = $userObj->getAllBadges($hasCelebTopic["createdBy"]);
+
+                        if($loggedUserData["rankID"] == 3) {
+                            if(
+                                in_array("1", $earnedBadge) &&
+                                in_array("2", $earnedBadge) &&
+                                in_array("3", $earnedBadge) &&
+                                in_array("4", $earnedBadge) &&
+                                in_array("5", $earnedBadge) &&
+                                in_array("6", $earnedBadge) &&
+                                in_array("7", $earnedBadge) &&
+                                in_array("8", $earnedBadge) &&
+                                in_array("9", $earnedBadge) &&
+                                in_array("10", $earnedBadge)
+                            ) {
+                                $userObject->increaseRankId($hasCelebTopic["createdBy"]);
+                            }
+                        } else if($loggedUserData["rankID"] == 2) {
+                            if(
+                                in_array("1", $earnedBadge) &&
+                                in_array("2", $earnedBadge) &&
+                                in_array("5", $earnedBadge) &&
+                                in_array("6", $earnedBadge) &&
+                                in_array("7", $earnedBadge) &&
+                                in_array("8", $earnedBadge) &&
+                                in_array("9", $earnedBadge) &&
+                                in_array("10", $earnedBadge)
+                            ) {
+                                $userObject->increaseRankId($hasCelebTopic["createdBy"]);
+                            }
+                        }
+                    }
                 }
             }
 

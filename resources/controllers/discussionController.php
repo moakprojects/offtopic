@@ -29,7 +29,49 @@ if(isset($_POST["replyContent"])) {
         if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 2)) {
             $numberOfPosts = $userObj->getNumberOfPosts($_SESSION["user"]["userID"]);
             if($numberOfPosts >= 10) {
-                $userObj->uploadBadge($_SESSION["user"]["userID"], 2);
+                if($userObj->uploadBadge($_SESSION["user"]["userID"], 2)) {
+                    $earnedBadges = $userObj->getAllBadges($_SESSION["user"]["userID"]);
+
+                    if($loggedUserData["rankID"] == 3) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("3", $earnedBadge) &&
+                            in_array("4", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("6", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge) &&
+                            in_array("9", $earnedBadge) &&
+                            in_array("10", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($_SESSION["user"]["userID"]);
+                        }
+                    } else if($loggedUserData["rankID"] == 2) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("6", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge) &&
+                            in_array("9", $earnedBadge) &&
+                            in_array("10", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($_SESSION["user"]["userID"]);
+                        }
+                    } else if($loggedUserData["rankID"] == 1) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($_SESSION["user"]["userID"]);
+                        }
+                    }
+                }
             }
         }
 
@@ -37,7 +79,26 @@ if(isset($_POST["replyContent"])) {
         if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 3)) {
             $numberOfPosts = $userObj->getNumberOfPosts($_SESSION["user"]["userID"]);
             if($numberOfPosts >= 50) {
-                $userObj->uploadBadge($_SESSION["user"]["userID"], 3);
+                if($userObj->uploadBadge($_SESSION["user"]["userID"], 3)) {
+                    $earnedBadges = $userObj->getAllBadges($_SESSION["user"]["userID"]);
+
+                    if($loggedUserData["rankID"] == 3) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("3", $earnedBadge) &&
+                            in_array("4", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("6", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge) &&
+                            in_array("9", $earnedBadge) &&
+                            in_array("10", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($_SESSION["user"]["userID"]);
+                        }
+                    }
+                }
             }
         }
 
@@ -45,7 +106,49 @@ if(isset($_POST["replyContent"])) {
         $receivedTopics = $userObj->getReceivedQuestions($_SESSION["selectedTopicID"]);
         if(!$userObj->checkBadgeStatus($receivedTopics["createdBy"], 5)) {
             if($receivedTopics["receivedQuestions"] >= 5) {
-                $userObj->uploadBadge($receivedTopics["createdBy"], 5);
+                if($userObj->uploadBadge($receivedTopics["createdBy"], 5)) {
+                    $earnedBadges = $userObj->getAllBadges($receivedTopics["createdBy"]);
+
+                    if($loggedUserData["rankID"] == 3) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("3", $earnedBadge) &&
+                            in_array("4", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("6", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge) &&
+                            in_array("9", $earnedBadge) &&
+                            in_array("10", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($receivedTopics["createdBy"]);
+                        }
+                    } else if($loggedUserData["rankID"] == 2) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("6", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge) &&
+                            in_array("9", $earnedBadge) &&
+                            in_array("10", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($receivedTopics["createdBy"]);
+                        }
+                    } else if($loggedUserData["rankID"] == 1) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($receivedTopics["createdBy"]);
+                        }
+                    }
+                }
             }
         }
         
@@ -172,14 +275,98 @@ if(isset($_POST["postId"])) {
         //Supporter badge: id=7
         if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 7)) {
             if($like == 1) {
-                $userObj->uploadBadge($_SESSION["user"]["userID"], 7);
+                if($userObj->uploadBadge($_SESSION["user"]["userID"], 7)) {
+                    $earnedBadges = $userObj->getAllBadges($_SESSION["user"]["userID"]);
+
+                    if($loggedUserData["rankID"] == 3) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("3", $earnedBadge) &&
+                            in_array("4", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("6", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge) &&
+                            in_array("9", $earnedBadge) &&
+                            in_array("10", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($_SESSION["user"]["userID"]);
+                        }
+                    } else if($loggedUserData["rankID"] == 2) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("6", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge) &&
+                            in_array("9", $earnedBadge) &&
+                            in_array("10", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($_SESSION["user"]["userID"]);
+                        }
+                    } else if($loggedUserData["rankID"] == 1) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($_SESSION["user"]["userID"]);
+                        }
+                    }
+                }
             }
         }
 
         //Critic badge: id=8
         if(!$userObj->checkBadgeStatus($_SESSION["user"]["userID"], 8)) {
             if($dislike == 1) {
-                $userObj->uploadBadge($_SESSION["user"]["userID"], 8);
+                if($userObj->uploadBadge($_SESSION["user"]["userID"], 8)) {
+                    $earnedBadges = $userObj->getAllBadges($_SESSION["user"]["userID"]);
+
+                    if($loggedUserData["rankID"] == 3) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("3", $earnedBadge) &&
+                            in_array("4", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("6", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge) &&
+                            in_array("9", $earnedBadge) &&
+                            in_array("10", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($_SESSION["user"]["userID"]);
+                        }
+                    } else if($loggedUserData["rankID"] == 2) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("6", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge) &&
+                            in_array("9", $earnedBadge) &&
+                            in_array("10", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($_SESSION["user"]["userID"]);
+                        }
+                    } else if($loggedUserData["rankID"] == 1) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($_SESSION["user"]["userID"]);
+                        }
+                    }
+                }
             }
         }
 
@@ -187,7 +374,39 @@ if(isset($_POST["postId"])) {
         $wellLikedUser = $userObj->getWellLikedUser($_POST["postId"]);
         if(!$userObj->checkBadgeStatus($wellLikedUser["userID"], 10)) {
             if($wellLikedUser && $like == 1) {
-                $userObj->uploadBadge($wellLikedUser["userID"], 10);
+                if($userObj->uploadBadge($wellLikedUser["userID"], 10)) {
+                    $earnedBadges = $userObj->getAllBadges($wellLikedUser["userID"]);
+
+                    if($loggedUserData["rankID"] == 3) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("3", $earnedBadge) &&
+                            in_array("4", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("6", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge) &&
+                            in_array("9", $earnedBadge) &&
+                            in_array("10", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($wellLikedUser["userID"]);
+                        }
+                    } else if($loggedUserData["rankID"] == 2) {
+                        if(
+                            in_array("1", $earnedBadge) &&
+                            in_array("2", $earnedBadge) &&
+                            in_array("5", $earnedBadge) &&
+                            in_array("6", $earnedBadge) &&
+                            in_array("7", $earnedBadge) &&
+                            in_array("8", $earnedBadge) &&
+                            in_array("9", $earnedBadge) &&
+                            in_array("10", $earnedBadge)
+                        ) {
+                            $userObject->increaseRankId($wellLikedUser["userID"]);
+                        }
+                    }
+                }
             }
         }
 
