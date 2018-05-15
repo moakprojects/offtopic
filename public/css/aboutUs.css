@@ -1,0 +1,38 @@
+/* general styling */
+
+h2 {
+    font-size: 30px;
+    margin-top: 40px;
+    font-weight: 900;
+}
+
+/* section styling */
+.aboutUsTopWrapper {
+    background-image: url(../images/content/workstation.png);   
+    background-size: cover;
+    background-position: top center;
+    height: 700px;
+    width: auto;
+    margin-left: -12.5% !important;
+    margin-right: -12.5% !important;
+    color: white;
+}
+
+.aboutUsTopWrapper p {
+    text-align: justify;
+    font-size: 17px;
+}
+
+.meetTheTeamWrapper img{
+    max-height: 300px;
+    border-radius: 30px;
+}
+
+.imageContainer {
+    margin-top: 60px;
+}
+
+.teamMember {
+    font-size: 25px;
+    font-weight: 700;
+}

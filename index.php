@@ -56,6 +56,9 @@
             case "rules-and-regulations":
                 $page = "terms";
             break;
+            case "description-of-the-site":
+                $page = "aboutUs";
+            break;
             case "post":
                 if(isset($queryStringParams[1]) && $queryStringParams[1] !== "") {
                     $_SESSION["selectedPost"] = $queryStringParams[1];
@@ -154,6 +157,14 @@
             spl_autoload_register(function ($class) {
                 include "resources/classes/$class.php";
             });
+            
+            if($page != "aboutUs") {
+                ?>
+                    <div id="headerImage">
+                        <div></div>
+                    </div>
+                <?php
+            }
 
             if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                 include("resources/sections/headerAdmin.php");

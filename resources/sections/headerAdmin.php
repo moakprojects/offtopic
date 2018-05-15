@@ -3,9 +3,6 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
     $userObj = new User();
     $loggedUser = $userObj->loggedUser($_SESSION["user"]["userID"]);
 ?>
-<div id="headerImage">
-    <div></div>
-</div>
 <header>
     <div class="sideSpace">
         <a href="/home"><img src="/public/images/content/offtopicLogo.png" alt="Offtopic forum's logo" class="logo"></a>
