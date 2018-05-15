@@ -5,7 +5,7 @@
     <div class="container contentContainer">
         <div class="row">
             <div class="col s7 offset-s1"> 
-                <h2>Contact</h2>
+                <h2 class="noTopMargin">Contact</h2>
                 <p class="generalTxt"><?php echo $contactInformation[0]["generalText"]; ?></p>
             </div>             
             <div class="col s3 contactBoxContainer"> 
@@ -26,8 +26,8 @@
                 <form class="contactForm" action="" method="post" id="contactForm">  
                     <div class="row">
                         <div class="input-field contactInput">
-                            <input id="email" type="text" class="noBottomMargin">
-                            <label class="active" for="email">Your name</label>
+                            <input id="name" type="text" class="noBottomMargin">
+                            <label class="active" for="name">Your name</label>
                         </div>
                     </div>
                     <div class="row">

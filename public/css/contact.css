@@ -2,7 +2,6 @@
 
 h2 {
     font-size: 30px;
-    margin-top: 20px;
 }
 
 h3{
@@ -11,6 +10,9 @@ h3{
     margin-bottom: 5px;
 }
 
+.contentContainer {
+    margin-top: 40px;
+}
 /* section styling */
 
 .generalTxt {
