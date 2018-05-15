@@ -752,5 +752,36 @@
                 return false;
             }
         }
+
+        //get all badge what is belongs to the user
+        function getAllBadges($userID) {
+            global $db;
+            global $getAllBadgesQuery;
+
+            try {
+
+                $getAllBadgesQuery->bindParam(":userID", $userID);
+                $getAllBadgesQuery->execute();
+
+                return $getAllBadgesQuery->fetchall(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
+
+        // if the user earned the recuired badges for the new rank, then we set it
+        function increaseRankId($userID) {
+            global $db;
+            global $modifyRankIdQuery;
+
+            try {
+                $modifyRankIdQuery->bindParam(":userID", $userID);
+                $modifyRankIdQuery->execute();
+
+                return $modifyRankIdQuery->fetchall(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                return false;
+            }
+        }
     }
 ?>

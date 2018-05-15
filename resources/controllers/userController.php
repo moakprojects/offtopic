@@ -174,13 +174,64 @@ if(isset($_POST["logID"])) {
 
                                 if(!$hasFanaticBadge) {
                                     if($loggedUserData["consecutiveVisit"] >= 29) {
-                                        $userObj->uploadBadge($loggedUserData["userID"], 4);
+                                        if($userObj->uploadBadge($loggedUserData["userID"], 4)) {
+                                            $earnedBadges = $userObj->getAllBadges($loggedUserData["userID"]);
+
+                                            if($loggedUserData["rankID"] == 3) {
+                                                if(
+                                                    in_array("1", $earnedBadge) &&
+                                                    in_array("2", $earnedBadge) &&
+                                                    in_array("3", $earnedBadge) &&
+                                                    in_array("4", $earnedBadge) &&
+                                                    in_array("5", $earnedBadge) &&
+                                                    in_array("6", $earnedBadge) &&
+                                                    in_array("7", $earnedBadge) &&
+                                                    in_array("8", $earnedBadge) &&
+                                                    in_array("9", $earnedBadge) &&
+                                                    in_array("10", $earnedBadge)
+                                                ) {
+                                                    $userObject->increaseRankId($loggedUserData["userID"]);
+                                                }
+                                            }
+                                        }
                                     }
                                 }
 
                                 if(!$hasEnthusiastBadge) {
                                     if($loggedUserData["consecutiveVisit"] >= 99) {
-                                        $userObj->uploadBadge($loggedUserData["userID"], 6);
+                                       if($userObj->uploadBadge($loggedUserData["userID"], 6)) {
+                                            $earnedBadges = $userObj->getAllBadges($loggedUserData["userID"]);
+
+                                            if($loggedUserData["rankID"] == 3) {
+                                                if(
+                                                    in_array("1", $earnedBadge) &&
+                                                    in_array("2", $earnedBadge) &&
+                                                    in_array("3", $earnedBadge) &&
+                                                    in_array("4", $earnedBadge) &&
+                                                    in_array("5", $earnedBadge) &&
+                                                    in_array("6", $earnedBadge) &&
+                                                    in_array("7", $earnedBadge) &&
+                                                    in_array("8", $earnedBadge) &&
+                                                    in_array("9", $earnedBadge) &&
+                                                    in_array("10", $earnedBadge)
+                                                ) {
+                                                    $userObject->increaseRankId($loggedUserData["userID"]);
+                                                }
+                                            } else if($loggedUserData["rankID"] == 2) {
+                                                if(
+                                                    in_array("1", $earnedBadge) &&
+                                                    in_array("2", $earnedBadge) &&
+                                                    in_array("5", $earnedBadge) &&
+                                                    in_array("6", $earnedBadge) &&
+                                                    in_array("7", $earnedBadge) &&
+                                                    in_array("8", $earnedBadge) &&
+                                                    in_array("9", $earnedBadge) &&
+                                                    in_array("10", $earnedBadge)
+                                                ) {
+                                                    $userObject->increaseRankId($loggedUserData["userID"]);
+                                                }
+                                            }
+                                       }
                                     }
                                 }
                             } else {
@@ -496,7 +547,49 @@ if(isset($_POST["changeUserSettings"])) {
 
                     if($aboutMe != $userData["aboutMe"]) {
                         if(!$userObj->checkBadgeStatus($userData["userID"], 1)) {
-                            $userObj->uploadBadge($userData["userID"], 1);
+                            if($userObj->uploadBadge($userData["userID"], 1)) {
+                                $earnedBadges = $userObj->getAllBadges($userData["userID"]);
+
+                                if($loggedUserData["rankID"] == 3) {
+                                    if(
+                                        in_array("1", $earnedBadge) &&
+                                        in_array("2", $earnedBadge) &&
+                                        in_array("3", $earnedBadge) &&
+                                        in_array("4", $earnedBadge) &&
+                                        in_array("5", $earnedBadge) &&
+                                        in_array("6", $earnedBadge) &&
+                                        in_array("7", $earnedBadge) &&
+                                        in_array("8", $earnedBadge) &&
+                                        in_array("9", $earnedBadge) &&
+                                        in_array("10", $earnedBadge)
+                                    ) {
+                                        $userObject->increaseRankId($userData["userID"]);
+                                    }
+                                } else if($loggedUserData["rankID"] == 2) {
+                                    if(
+                                        in_array("1", $earnedBadge) &&
+                                        in_array("2", $earnedBadge) &&
+                                        in_array("5", $earnedBadge) &&
+                                        in_array("6", $earnedBadge) &&
+                                        in_array("7", $earnedBadge) &&
+                                        in_array("8", $earnedBadge) &&
+                                        in_array("9", $earnedBadge) &&
+                                        in_array("10", $earnedBadge)
+                                    ) {
+                                        $userObject->increaseRankId($userData["userID"]);
+                                    }
+                                } else if($loggedUserData["rankID"] == 1) {
+                                    if(
+                                        in_array("1", $earnedBadge) &&
+                                        in_array("2", $earnedBadge) &&
+                                        in_array("5", $earnedBadge) &&
+                                        in_array("7", $earnedBadge) &&
+                                        in_array("8", $earnedBadge)
+                                    ) {
+                                        $userObject->increaseRankId($userData["userID"]);
+                                    }
+                                }
+                            }
                             $data_value["refreshBadges"] = true;
                         } else {
                             $data_value["refreshBadges"] = false;
