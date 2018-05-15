@@ -755,6 +755,12 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                 </div>
             </div>
             <div id="information">
+                <?php
+                    $generalObj = new General();
+                    $descriptionOfTheSite = $generalObj -> getDescriptionOfTheSite();
+                    $contactInformation = $generalObj -> getContactInformation();
+                    $rulesAndRegulations = $generalObj -> getRulesAndRegulationsData();
+                ?>
                 <div class="row">
                     <div class="col s3 verticalTabContainer">
                         <ul class="tabs verticalTabs">
@@ -763,15 +769,135 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                             <li class="tab"><a href="#rules">Rules and regulations</a></li>
                         </ul>
                     </div>
-                    <div class="col s9 verticalTabContent">
+                    <div class="col s8 verticalTabContent">
                         <div id="description">
-
+                            <form class="modifyDescriptionForm" action="" method="post" id="modifyDescriptionForm">  
+                                <div class="row textareaContainer">
+                                    <div class="input-field forumInformationInput">
+                                        <textarea id="newDescription" class="materialize-textarea"><?php echo $descriptionOfTheSite[0]["aboutUs"]; ?></textarea>
+                                        <label for="newDescription">About Us</label>
+                                    </div>
+                                </div>
+                                <div class="row inputContainer">
+                                    <div class="col s8">
+                                        <p id="descriptionError" class="errorMsg"></p>
+                                    </div>
+                                    <div class="col s1">
+                                        <div class="preloader-wrapper small active hide modifyDescriptionSpinner">
+                                            <div class="spinner-layer spinner-blue-only">
+                                                <div class="circle-clipper left">
+                                                    <div class="circle"></div>
+                                                </div><div class="gap-patch">
+                                                    <div class="circle"></div>
+                                                </div><div class="circle-clipper right">
+                                                    <div class="circle"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <a class="btn waves-effect waves-light blue col s2 changeForumInformationBtn" id="modifyDescriptionSubmit">Save</a>
+                                </div>
+                            </form>
                         </div>
                         <div id="contact">
-
+                            <form class="modifyContactForm" action="" method="post" id="modifyContactForm">  
+                                <div class="row textareaContainer">
+                                    <div class="input-field forumInformationInput">
+                                        <textarea id="newGeneralContactText" class="materialize-textarea"><?php echo $contactInformation[0]["generalText"]; ?></textarea>
+                                        <label for="newGeneralContactText">General text</label>
+                                    </div>
+                                </div>
+                                <div class="row inputContainer">
+                                    <div class="input-field forumInformationInput">
+                                        <input id="newPhoneNumber" type="text" class="noBottomMargin" value="<?php echo $contactInformation[0]["phoneNumber"]; ?>">
+                                        <label for="newPhoneNumber">Phone number</label>
+                                    </div>
+                                </div>
+                                <div class="row inputContainer">
+                                    <div class="input-field forumInformationInput">
+                                        <input id="newLocation" type="text" class="noBottomMargin" value="<?php echo $contactInformation[0]["location"]; ?>">
+                                        <label for="newLocation">Location</label>
+                                    </div>
+                                </div>
+                                <div class="row inputContainer">    
+                                    <div class="col s8">
+                                        <p id="contactErrorMsg" class="errorMsg"></p>
+                                    </div>
+                                    <div class="col s1">
+                                        <div class="preloader-wrapper small active hide modifyContactSpinner">
+                                            <div class="spinner-layer spinner-blue-only">
+                                                <div class="circle-clipper left">
+                                                    <div class="circle"></div>
+                                                </div><div class="gap-patch">
+                                                    <div class="circle"></div>
+                                                </div><div class="circle-clipper right">
+                                                    <div class="circle"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <a class="btn waves-effect waves-light blue col s2 changeForumInformationBtn" id="modifyContactSubmit">Save</a>
+                                </div>
+                            </form>
                         </div>
                         <div id="rules">
-
+                            <form class="modifyRules" action="" method="post" id="modifyRulesForm">  
+                                <div class="row textareaContainer">
+                                    <div class="input-field forumInformationInput">
+                                        <textarea id="newGeneralRules" class="materialize-textarea"><?php echo $rulesAndRegulations[0]["generalTxt"]; ?></textarea>
+                                        <label for="newGeneralRules">General information about rules</label>
+                                    </div>
+                                </div>
+                                <div class="row textareaContainer">
+                                    <div class="input-field forumInformationInput">
+                                        <textarea id="newAcceptanceOfTerms" class="materialize-textarea"><?php echo $rulesAndRegulations[0]["acceptanceOfTerms"]; ?></textarea>
+                                        <label for="newAcceptanceOfTerms">Acceptance of Terms</label>
+                                    </div>
+                                </div>
+                                <div class="row textareaContainer">
+                                    <div class="input-field forumInformationInput">
+                                        <textarea id="newModificationOfTerms" class="materialize-textarea"><?php echo $rulesAndRegulations[0]["modificationOfTerms"]; ?></textarea>
+                                        <label for="newModificationOfTerms">Modification of Terms of Use</label>
+                                    </div>
+                                </div>
+                                <div class="row textareaContainer">
+                                    <div class="input-field forumInformationInput">
+                                        <textarea id="newRulesAndConduct" class="materialize-textarea"><?php echo $rulesAndRegulations[0]["rulesAndConduct"]; ?></textarea>
+                                        <label for="newRulesAndConduct">Rules and Conduct</label>
+                                    </div>
+                                </div>
+                                <div class="row textareaContainer">
+                                    <div class="input-field forumInformationInput">
+                                        <textarea id="newTermination" class="materialize-textarea"><?php echo $rulesAndRegulations[0]["termination"]; ?></textarea>
+                                        <label for="newTermination">Termination</label>
+                                    </div>
+                                </div>
+                                <div class="row textareaContainer">
+                                    <div class="input-field forumInformationInput">
+                                        <textarea id="newIntegration" class="materialize-textarea"><?php echo $rulesAndRegulations[0]["integration"]; ?></textarea>
+                                        <label for="newIntegration">Integration and Severability</label>
+                                    </div>
+                                </div>
+                                <div class="row inputContainer">
+                                    <div class="col s8">
+                                        <p id="rulesErrorMsg" class="errorMsg"></p>
+                                    </div>
+                                    <div class="col s1">
+                                        <div class="preloader-wrapper small active hide modifyRulesSpinner">
+                                            <div class="spinner-layer spinner-blue-only">
+                                                <div class="circle-clipper left">
+                                                    <div class="circle"></div>
+                                                </div><div class="gap-patch">
+                                                    <div class="circle"></div>
+                                                </div><div class="circle-clipper right">
+                                                    <div class="circle"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <a class="btn waves-effect waves-light blue col s2 changeForumInformationBtn" id="modifyRulesSubmit">Save</a>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

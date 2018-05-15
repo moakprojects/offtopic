@@ -40,4 +40,13 @@
 
     /* suspend user in second time */
     $suspendUserSecondTimeQuery = $db->prepare("UPDATE user SET accessLevel = 3 WHERE userID = :userID");
+
+    /* change the fields of description of the site by Admin*/
+    $modifyDescriptionOfTheSiteQuery = $db->prepare("UPDATE descriptionOfTheSite SET aboutUs = :aboutUs WHERE ID = 1");
+
+    /* change the fields of the contact information by Admin*/
+    $modifyContactInformationQuery = $db->prepare("UPDATE contactInformation SET generalText = :generalText, phoneNumber = :phoneNumber, location = :location WHERE ID = 1");
+
+    /*change the fields of rules and regulations by Admin */
+    $modifyRulesAndRegulationsQuery = $db->prepare("UPDATE rulesAndRegulations SET generalTxt = :generalTxt, acceptanceOfTerms = :acceptanceOfTerms, modificationOfTerms = :modificationOfTerms, rulesAndConduct = :rulesAndConduct, termination = :termination, integration = :integration WHERE ID = 1");
 ?>
