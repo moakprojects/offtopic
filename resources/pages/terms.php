@@ -36,7 +36,7 @@
             <p><?php echo $rulesAndRegulations[0]["termination"]; ?></p>
         </div>
         <div class="row titleSection">
-            <h3>Integration</h3>
+            <h3>Integration and Severability</h3>
         </div>
         <div class="row noBottomMargin ruleTxt">
             <p><?php echo $rulesAndRegulations[0]["integration"]; ?></p>
