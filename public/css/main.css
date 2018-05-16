@@ -507,3 +507,9 @@ footer {
 .stickyPost .titleIcon {   
     padding-left: 6px;
 }
+
+/* rank trophy styling */
+
+.rankTrophy {
+    margin-top: 10px;
+}

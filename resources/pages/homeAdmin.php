@@ -83,7 +83,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         </div>
                                         <div class="row noMargin">
                                             <p class="col s5 noMargin noPadding"><i class="fas fa-circle-notch fa-sm"></i> Rank level:</p>
-                                            <p class="col s7 noMargin noPadding right-align"><?php echo $user["rankID"]; ?></p>    
+                                            <p class="col s7 noMargin noPadding right-align"><?php echo $user["rankTitle"]; ?></p>    
                                         </div>
                                     </div>
                                 </div>
@@ -179,8 +179,23 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                             } else {
                                 echo "<a href='/profile/" . $topic["username"] . "'><img src='/public/images/upload/" . $topic["profileImage"] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $topic["username"]  . "'></a>";
                             }
-                        ?> 
+                        ?>
                         </div>
+                        <?php
+                        
+                        if (
+                            $topic["rankID"] == 2 ||
+                            $topic["rankID"] == 3 ||
+                            $topic["rankID"] == 4) {
+                        ?>
+                        <div class="row">
+                            <div class="col s12">
+                                <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $topic['rankColor'] . "'"; ?>></i>
+                            </div>
+                        </div>
+                        <?php
+                            }
+                        ?>
                     </div>
                     <div class="col s9 topicContainer">
                         <div class="row noMargin">
@@ -283,6 +298,20 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                             }
                         ?> 
                         </div>
+                        <?php
+                        if (
+                                $topic["rankID"] == 2 ||
+                                $topic["rankID"] == 3 ||
+                                $topic["rankID"] == 4) {
+                            ?>
+                            <div class="row">
+                                <div class="col s12">
+                                    <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $topic['rankColor'] . "'"; ?>></i>
+                                </div>
+                            </div>
+                            <?php
+                                }
+                            ?>
                     </div>
                     <div class="col s9 topicContainer">
                         <div class="row noMargin">
@@ -390,6 +419,20 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         echo "<a href='/profile/" . $posts[$i]["username"] . "'><img src='/public/images/upload/" . $posts[$i]["profileImage"] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"] . "'></a>";
                                     }
                                 ?>
+                            <?php
+                            if (
+                                $posts[$i]["rankID"] == 2 ||
+                                $posts[$i]["rankID"] == 3 ||
+                                $posts[$i]["rankID"] == 4) {
+                            ?>
+                            <div class="row">
+                                <div class="col s12">
+                                    <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $posts[$i]['rankColor'] . "'"; ?>></i>
+                                </div>
+                            </div>
+                            <?php
+                                }
+                            ?>
                             </div>
                             <div class="col s9 topicContainer">
                                 <div class="row postContainer">
@@ -506,6 +549,18 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         echo "<img src='/public/images/content/anonymous.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"] . "'>";
                                     } else {
                                         echo "<a href='/profile/" . $posts[$i]["username"] . "'><img src='/public/images/upload/" . $posts[$i]["profileImage"] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"] . "'></a>";
+                                    }
+                                if (
+                                    $posts[$i]["rankID"] == 2 ||
+                                    $posts[$i]["rankID"] == 3 ||
+                                    $posts[$i]["rankID"] == 4) {
+                                ?>
+                                <div class="row">
+                                    <div class="col s12">
+                                        <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $posts[$i]['rankColor'] . "'"; ?>></i>
+                                    </div>
+                                </div>
+                                <?php
                                     }
                                 ?>
                             </div>
@@ -653,6 +708,19 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         echo "<img src='/public/images/content/anonymous.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"] . "'>";
                                     } else {
                                         echo "<a href='/profile/" . $posts[$i]["username"] . "'><img src='/public/images/upload/" . $posts[$i]["profileImage"] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"] . "'></a>";
+                                    }
+
+                                if (
+                                    $posts[$i]["rankID"] == 2 ||
+                                    $posts[$i]["rankID"] == 3 ||
+                                    $posts[$i]["rankID"] == 4) {
+                                ?>
+                                <div class="row">
+                                    <div class="col s12">
+                                        <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $posts[$i]['rankColor'] . "'"; ?>></i>
+                                    </div>
+                                </div>
+                                <?php
                                     }
                                 ?>
                             </div>

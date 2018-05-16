@@ -36,6 +36,19 @@
                         } else {
                             echo "<a href='/profile/" . $hotTopic["username"] . "'><img src='/public/images/upload/" . $hotTopic['profileImage'] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $hotTopic["username"]  . "'></a>";
                         }
+                    
+                    if (
+                        $hotTopic["rankID"] == 2 ||
+                        $hotTopic["rankID"] == 3 ||
+                        $hotTopic["rankID"] == 4) {
+                    ?>
+                    <div class="row">
+                        <div class="col s12 center-align">
+                            <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $hotTopic['rankColor'] . "'"; ?>></i>
+                        </div>
+                    </div>
+                    <?php
+                        }
                     ?>
                     </div>
                     <div class="col s9 topicContainer">
@@ -86,6 +99,18 @@
                                 echo "<a href='/profile/" . $latestTopic["username"] . "'><img src='/public/images/upload/" . $latestTopic['profileImage'] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $latestTopic["username"]  . "'></a>";
                             }
                             
+                        if (
+                            $latestTopic["rankID"] == 2 ||
+                            $latestTopic["rankID"] == 3 ||
+                            $latestTopic["rankID"] == 4) {
+                        ?>
+                        <div class="row">
+                            <div class="col s12 center-align">
+                                <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $latestTopic['rankColor'] . "'"; ?>></i>
+                            </div>
+                        </div>
+                        <?php
+                            }
                         ?>
                     </div>
                     <div class="col s9 topicContainer">
@@ -134,6 +159,18 @@
                                 echo "<a href='/profile/" . $favouriteTopic["username"] . "'><img src='/public/images/upload/" . $favouriteTopic['profileImage'] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $favouriteTopic["username"]  . "'></a>";
                             }
 
+                        if (
+                            $favouriteTopic["rankID"] == 2 ||
+                            $favouriteTopic["rankID"] == 3 ||
+                            $favouriteTopic["rankID"] == 4) {
+                        ?>
+                        <div class="row">
+                            <div class="col s12 center-align">
+                                <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $favouriteTopic['rankColor'] . "'"; ?>></i>
+                            </div>
+                        </div>
+                        <?php
+                            }
                         ?>
                     </div>
                     <div class="col s9 topicContainer">
