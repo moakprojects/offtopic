@@ -528,3 +528,9 @@ footer {
 .material-dialog .btn-flat:hover {
     color: white;
 }
+
+/* rank trophy styling */
+
+.rankTrophy {
+    margin-top: 10px;
+}

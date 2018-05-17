@@ -32,6 +32,19 @@
                             } else {
                                 echo "<a href='/profile/" . $topicData["username"] . "'><img src='/public/images/upload/" . $topicData["profileImage"] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $topicData["username"]  . "'></a>";
                             }
+                        
+                        if (
+                            $topicData["rankID"] == 2 ||
+                            $topicData["rankID"] == 3 ||
+                            $topicData["rankID"] == 4) {
+                        ?>
+                        <div class="row">
+                            <div class="col s12">
+                                <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $topicData['rankColor'] . "'"; ?>></i>
+                            </div>
+                        </div>
+                        <?php
+                            }
                         ?>
                     </div>
                     <div class="col s11 topicContainer">
@@ -150,6 +163,19 @@
                                     echo "<img src='/public/images/content/anonymous.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"]  . "'>";
                                 } else {
                                     echo "<a href='/profile/" . $posts[$i]["username"] . "'><img src='/public/images/upload/" . $posts[$i]["profileImage"] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"]  . "'></a>";
+                                }
+                            
+                            if (
+                                $posts[$i]["rankID"] == 2 ||
+                                $posts[$i]["rankID"] == 3 ||
+                                $posts[$i]["rankID"] == 4) {
+                            ?>
+                            <div class="row">
+                                <div class="col s12">
+                                    <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $posts[$i]['rankColor'] . "'"; ?>></i>
+                                </div>
+                            </div>
+                            <?php
                                 }
                             ?>
                         </div>
@@ -367,6 +393,18 @@
                                 } else {
                                     echo "<a href='/profile/" . $posts[$i]["username"] . "'><img src='/public/images/upload/" . $posts[$i]["profileImage"] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $posts[$i]["username"]  . "'></a>";
                                 }
+                            if (
+                                $posts[$i]["rankID"] == 2 ||
+                                $posts[$i]["rankID"] == 3 ||
+                                $posts[$i]["rankID"] == 4) {
+                            ?>
+                            <div class="row">
+                                <div class="col s12">
+                                    <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $posts[$i]['rankColor'] . "'"; ?>></i>
+                                </div>
+                            </div>
+                            <?php
+                                }
                             ?>
                         </div>
                         <div class="col s11 topicContainer">
@@ -564,19 +602,31 @@
             <div class="topic commentCard">
                 <div class="row postContent">
                     <div class="col s1 userImageContainer">
-                    <?php
+                        <?php
 
-                        if($loggedUser['profileImage'] == 'defaultAvatar.png') {
-                            echo "<a href='/profile/" . $loggedUser["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $loggedUser["username"]  . "'></a>";
-                        } else if ($loggedUser['profileImage'] == 'admin.png') {
-                            echo "<img src='/public/images/content/admin.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $loggedUser["username"]  . "'>";
-                        } else if ($loggedUser['profileImage'] == 'anonymous.png') {
-                            echo "<img src='/public/images/content/anonymous.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $loggedUser["username"]  . "'>";
-                        } else {
-                            echo "<a href='/profile/" . $loggedUser["username"] . "'><img src='/public/images/upload/" . $loggedUser['profileImage'] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $loggedUser["username"]  . "'></a>";
-                        }
+                            if($loggedUser['profileImage'] == 'defaultAvatar.png') {
+                                echo "<a href='/profile/" . $loggedUser["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $loggedUser["username"]  . "'></a>";
+                            } else if ($loggedUser['profileImage'] == 'admin.png') {
+                                echo "<img src='/public/images/content/admin.png' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $loggedUser["username"]  . "'>";
+                            } else if ($loggedUser['profileImage'] == 'anonymous.png') {
+                                echo "<img src='/public/images/content/anonymous.png' class=' newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $loggedUser["username"]  . "'>";
+                            } else {
+                                echo "<a href='/profile/" . $loggedUser["username"] . "'><img src='/public/images/upload/" . $loggedUser['profileImage'] ."' class='newAvatarImg tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $loggedUser["username"]  . "'></a>";
+                            }
 
-                    ?>
+                        if (
+                            $loggedUser["rankID"] == 2 ||
+                            $loggedUser["rankID"] == 3 ||
+                            $loggedUser["rankID"] == 4) {
+                        ?>
+                        <div class="row">
+                            <div class="col s12">
+                                <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $loggedUser['rankColor'] . "'"; ?>></i>
+                            </div>
+                        </div>
+                        <?php
+                            }
+                        ?>
                     </div>
                     <div class="col s11 topicContainer editorTop">
                         <p class="replyLabel hide">Reply to <strong id="originalPostID"></strong> written by <em id="replyTo"></em>:</p>

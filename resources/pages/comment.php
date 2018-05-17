@@ -34,6 +34,19 @@
                             } else {
                                 echo "<a href='/profile/" . $postData["topicCreatorName"] . "'><img src='/public/images/upload/" . $postData["topicCreatorImage"] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $postData["topicCreatorName"]  . "'></a>";
                             }
+
+                        if (
+                            $postData["topicCreatorRankID"] == 2 ||
+                            $postData["topicCreatorRankID"] == 3 ||
+                            $postData["topicCreatorRankID"] == 4) {
+                        ?>
+                        <div class="row">
+                            <div class="col s12">
+                                <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $postData['topicCreatorRankColor'] . "'"; ?>></i>
+                            </div>
+                        </div>
+                        <?php
+                            }
                         ?>
                     </div>
                     <div class="col s11 topicContainer">
@@ -94,6 +107,19 @@
                                 echo "<img src='/public/images/content/anonymous.png' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $postData["postWriterName"] . "'>";
                             } else {
                                 echo "<a href='/profile/" . $postData["postWriterName"] . "'><img src='/public/images/upload/" . $postData["postWriterImage"] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-tooltip='" . $postData["postWriterName"]  . "'></a>";
+                            }
+
+                        if (
+                            $postData["postWriterRankID"] == 2 ||
+                            $postData["postWriterRankID"] == 3 ||
+                            $postData["postWriterRankID"] == 4) {
+                        ?>
+                        <div class="row">
+                            <div class="col s12">
+                                <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $postData['postWriterRankColor'] . "'"; ?>></i>
+                            </div>
+                        </div>
+                        <?php
                             }
                         ?>
                     </div>

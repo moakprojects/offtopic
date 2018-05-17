@@ -263,6 +263,18 @@
                                             echo "/public/images/upload/" . $favouriteTopic["profileImage"];
                                         }
                                         echo "' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $favouriteTopic["username"] . "'></a>";
+                                    if (
+                                        $favouriteTopic["rankID"] == 2 ||
+                                        $favouriteTopic["rankID"] == 3 ||
+                                        $favouriteTopic["rankID"] == 4) {
+                                    ?>
+                                    <div class="row">
+                                        <div class="col s12 center-align">
+                                            <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $favouriteTopic['rankColor'] . "'"; ?>></i>
+                                        </div>
+                                    </div>
+                                    <?php
+                                        }
                                     ?>
                                 </div>
                                 <div class="col s11 contentCardBody">
@@ -497,7 +509,7 @@
                                         <div class="col s10 personalInformationLabel">Rank level:</div>
                                     </div>
                                     <div class="col s7 right-align">
-                                    <?php echo $selectedUserData["rankID"]; ?>
+                                    <?php echo $selectedUserData["rankTitle"]; ?>
                                     </div>
                                 </div>
                                 <div class="row">

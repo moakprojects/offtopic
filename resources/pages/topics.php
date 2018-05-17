@@ -52,6 +52,20 @@
                             }
                         ?> 
                         </div>
+                        <?php
+                        if (
+                            $topic["rankID"] == 2 ||
+                            $topic["rankID"] == 3 ||
+                            $topic["rankID"] == 4) {
+                        ?>
+                        <div class="row">
+                            <div class="col s12">
+                                <i class="fas fa-trophy rankTrophy" <?php echo "style='color: " . $topic['rankColor'] . "'"; ?>></i>
+                            </div>
+                        </div>
+                        <?php
+                            }
+                        ?>
                     </div>
                     <div class="col s9 topicContainer">
                         <h3><?php echo $topic["shortTopicName"]?></h3>
@@ -90,7 +104,7 @@
              } else {
             ?>
                 <div class="topic emptyCategoryCard">
-                    <p>There is no topic in this category. If you have any <?php echo $categoryName ?> related question, just create a <a href="/new-topic">new topic.</a></p>
+                    <p>There is no topic in this category. <?php echo (isset($_SESSION["user"]) ? "If you have any $categoryName related question, just create a <a href='/new-topic'>new topic.</a>" : ""); ?></p>
                 </div>
             <?php
              }
