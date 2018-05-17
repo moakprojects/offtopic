@@ -6,7 +6,7 @@
         <?php
             $sideBarCategoryObj = new Category();
             if(!isset($_SESSION["user"])) {
-                $sideBarCategories = $sideBarCategoryObj -> getCategoryData();
+                $sideBarCategories = $sideBarCategoryObj -> getAllCategoryData();
             } else {
                 $sideBarCategories = $sideBarCategoryObj -> getCategoryDataForSideBar($_SESSION["user"]["userID"]);
                 $sideBarFavouriteCategories = $sideBarCategoryObj -> getFavouriteCategoryData($_SESSION["user"]["userID"]);

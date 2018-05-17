@@ -2,7 +2,7 @@
 if(isset($_SESSION["user"])) {
     $categoryObj = new Category();
     $topicObj = new Topic();
-    $categories = $categoryObj->getCategoryData();
+    $categories = $categoryObj->getAllCategoryData();
     $periods = $topicObj->getPeriodInfo();
 ?>
 <div class="container contentContainer">

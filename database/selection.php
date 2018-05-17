@@ -57,6 +57,9 @@ we change this query for stored procedure
 $allCategoryQuery = $db -> prepare("SELECT category.*, numberOfTopics, numberOfPosts, numberOfLikes FROM category LEFT JOIN ( SELECT categoryID, count(*) as numberOfTopics, topicID FROM topic GROUP BY categoryID) as topics ON topics.categoryID = category.categoryID LEFT JOIN ( SELECT topic.categoryID, topic.topicID, sum(postQuantity) as numberOfPosts FROM `topic` LEFT JOIN ( SELECT topicID, count(*) as postQuantity FROM post GROUP BY topicID) as countPost ON countPost.topicID = topic.topicID GROUP BY topic.categoryID ) as posts ON posts.topicID = topics.topicID LEFT JOIN ( SELECT categoryID, count(*) as numberOfLikes FROM favouritecategory GROUP BY categoryID) as likes ON likes.categoryID = category.categoryID"); */
 $allCategoryQuery = $db->prepare("CALL proc_get_all_category()");
 
+/* get category by categoryID */
+$categoryQuery = $db->prepare("SELECT * FROM category WHERE categoryID = :categoryID");
+
 /* get categories for sidebar category block */
 $sideBarCategoriesQuery = $db->prepare("SELECT category.categoryName, category.categoryID, numberOfTopics FROM category LEFT JOIN (SELECT categoryID, count(*) as numberOfTopics, topicID FROM topic GROUP BY categoryID) as topics ON topics.categoryID = category.categoryID WHERE category.categoryID NOT IN (SELECT categoryID FROM favouritecategory WHERE userID = :userID) LIMIT 5");
 

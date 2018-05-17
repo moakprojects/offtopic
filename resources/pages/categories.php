@@ -10,7 +10,7 @@
             <div class="categoryCardContainer">
                 <?php
                     $categoryObj = new Category();
-                    $categories = $categoryObj -> getCategoryData();
+                    $categories = $categoryObj -> getAllCategoryData();
                     
                     foreach($categories as $category) {
                 ?>
@@ -32,7 +32,7 @@
                                 </div>
                                 <?php if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) { ?>
                                 <div class="col s1 noPadding pencilIcon titleIcon center-align">
-                                    <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                    <a onclick="adminModification('category', <?php echo $category['categoryID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                         <i class="fas fa-pencil-alt fa-xs"></i>
                                     </a>
                                 </div>

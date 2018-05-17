@@ -9,7 +9,7 @@ class Category {
     }
 
     // request categories data from database
-    function getCategoryData() {
+    function getAllCategoryData() {
 
         global $db;
         global $allCategoryQuery;
@@ -18,6 +18,28 @@ class Category {
             $allCategoryQuery->execute();
             $categoryData = $allCategoryQuery->fetchall(PDO::FETCH_ASSOC);
             $allCategoryQuery->closeCursor();
+            
+            if($categoryData) {
+                return $categoryData;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            header("Location: /error");
+            exit;
+        }
+    }
+
+    // request selected category data from database
+    function getCategoryData($categoryID) {
+
+        global $db;
+        global $categoryQuery;
+
+        try {
+            $categoryQuery->bindParam(':categoryID', $categoryID);
+            $categoryQuery->execute();
+            $categoryData = $categoryQuery->fetch(PDO::FETCH_ASSOC);
             
             if($categoryData) {
                 return $categoryData;
@@ -183,6 +205,25 @@ class Category {
             $checkFavouriteCategoryQuery ->execute();
 
             return $checkFavouriteCategoryQuery->rowCount();
+        } else {
+            return false;
+        }
+    }
+
+    /* modify the data of a selected category */
+    function modifyCategoryData($categoryID, $categoryName, $categoryDescription, $thumbnail) {
+        global $db;
+        global $modifyCategoryQuery;
+
+        if($modifyCategoryQuery) {
+
+            $modifyCategoryQuery->bindParam(":categoryID", $categoryID);
+            $modifyCategoryQuery->bindParam(":categoryName", $categoryName);
+            $modifyCategoryQuery->bindParam(":categoryDescription", $categoryDescription);
+            $modifyCategoryQuery->bindParam(":thumbnail", $thumbnail);
+            $modifyCategoryQuery ->execute();
+
+            return true;
         } else {
             return false;
         }

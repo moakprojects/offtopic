@@ -116,7 +116,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                 <div class="categoryCardContainer col s12">
                     <?php
                         $categoryObj = new Category();
-                        $categories = $categoryObj -> getCategoryData();
+                        $categories = $categoryObj -> getAllCategoryData();
                         
                         if($categories) {
                             foreach($categories as $category) {
@@ -139,7 +139,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         <h1 class="title"><?php echo $category["categoryName"]; ?></h1>
                                     </div>
                                     <div class="col s1 noPadding pencilIcon titleIcon center-align">
-                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                        <a onclick="adminModification('category', <?php echo $category['categoryID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                             <i class="fas fa-pencil-alt fa-xs"></i>
                                         </a>
                                     </div>
