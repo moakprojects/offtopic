@@ -199,7 +199,7 @@
         <script src="https://code.highcharts.com/highcharts-3d.js"></script>
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-        
+        <script src="/public/js/material-dialog.min.js" type="text/javascript"></script>
         <!-- own scripts main and dinamic depends on the page -->
         <script src="/public/js/main.js"></script>
         <script src="/public/js/lightbox.min.js"></script>

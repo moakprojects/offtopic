@@ -87,7 +87,8 @@ strong {
     border-radius: 4px;
     width: 22px !important;
     height: 22px;
-    display: inline-block
+    display: inline-block;
+    cursor: pointer;
   }
 
   .titleIcon a {
@@ -506,4 +507,24 @@ footer {
 
 .stickyPost .titleIcon {   
     padding-left: 6px;
+}
+
+/* confirmation modal */
+
+.material-dialog {
+    min-height: 185px;
+    width: 600px;
+}
+
+.material-dialog .modal-close {
+    margin-right: 20px !important;
+    margin-bottom: 10px !important;
+}
+
+.material-dialog .waves-red:hover {
+    background-color: #f44336;
+}
+
+.material-dialog .btn-flat:hover {
+    color: white;
 }

@@ -219,8 +219,7 @@
 
                 return $allUserData;
             } else {
-                header("Location: /error");
-                exit;
+                return false;
             }
         }
 

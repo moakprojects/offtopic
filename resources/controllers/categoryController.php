@@ -57,4 +57,20 @@ if(isset($_POST["createNewCategory"])) {
     }
 }
 
+/* delete selected category */
+if(isset($_POST["deleteCategory"])) {
+    if($categoryObj->deleteCategory($_POST["categoryID"])) {
+        
+        $result["data_type"] = 1;
+        $result["data_value"] = "The selected category was deleted";
+
+        echo json_encode($result);
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+    }
+}
+
 ?>

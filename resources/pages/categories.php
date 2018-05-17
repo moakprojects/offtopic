@@ -37,7 +37,7 @@
                                     </a>
                                 </div>
                                 <div class="col s1 noPadding trashIcon titleIcon center-align">
-                                    <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                    <a onclick="adminDelition('categories', '.categoryCardContainer', 'category', <?php echo $category['categoryID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
                                         <i class="fas fa-trash fa-xs"></i>
                                     </a>
                                 </div>
@@ -57,12 +57,14 @@
                 ?>
             </div>
         </div>
-        <div class="col s4">
-            <?php 
-                include "resources/sections/sideBarLoginBlock.php";
-                include "resources/sections/sideBarStickyPost.php";  
-                include "resources/sections/sideBarLatestPostsBlock.php"; 
-            ?>
+        <div class="col s4 sideBarContainer">
+            <div class="sideBar">
+                <?php 
+                    include "resources/sections/sideBarLoginBlock.php";
+                    include "resources/sections/sideBarStickyPost.php";  
+                    include "resources/sections/sideBarLatestPostsBlock.php"; 
+                ?>
+            </div>
         </div>
     </div>
 </div>

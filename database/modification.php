@@ -51,5 +51,11 @@
     $modifyRulesAndRegulationsQuery = $db->prepare("UPDATE rulesAndRegulations SET generalTxt = :generalTxt, acceptanceOfTerms = :acceptanceOfTerms, modificationOfTerms = :modificationOfTerms, rulesAndConduct = :rulesAndConduct, termination = :termination, integration = :integration WHERE ID = 1");
 
     /* change rankID field in user table when user earned enough badge for it */
-    $modifyRankIdQuery = $db->prepare("UPDATE user SET rankID = rankID + 1 where userID = :userID");
+    $modifyRankIdQuery = $db->prepare("UPDATE user SET rankID = rankID + 1 WHERE userID = :userID");
+
+    /* modify replyID of a post when the reply ID is equal to the post id which the admin would like to delete */
+    $modifyEqualReplyIDQuery = $db->prepare("UPDATE post SET replyID = -1 WHERE replyID = :replyID AND topicID = :topicID");
+
+    /* modify replyID of a post when the reply ID is larger than the post id which the admin would like to delete */
+    $modifyLargerReplyIDQuery = $db->prepare("UPDATE post SET replyID = replyID-1 WHERE replyID > :replyID AND topicID = :topicID");
 ?>

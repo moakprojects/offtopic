@@ -14,7 +14,7 @@
                             </a>
                         </div>
                         <div class="col s1 trashIcon titleIcon center-align">
-                            <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                            <a onclick="adminDelition('<?php echo $_GET["page"]; ?>', '.sideBar', 'sticky', <?php echo $stickyPost["stickyPostID"] ; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
                                 <i class="fas fa-trash fa-xs"></i>
                             </a>
                         </div>

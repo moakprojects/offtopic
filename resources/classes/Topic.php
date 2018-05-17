@@ -22,8 +22,7 @@ class Topic {
 
             return $allTopicData;
         } else {
-            header("Location: /error");
-            exit;
+            return false;
         }
     }
 
@@ -345,6 +344,30 @@ class Topic {
 
             return true;
         } else {
+            return false;
+        }
+    }
+
+       // delete selected topic
+       function deleteTopic($topicID) {
+        global $db;
+        global $deleteTopicQuery;
+        global $deletePostByTopicQuery;
+
+        try {
+            $db->beginTransaction();
+
+            $deletePostByTopicQuery->bindParam(':topicID', $topicID);
+            $deletePostByTopicQuery->execute();            
+
+            $deleteTopicQuery->bindParam(':topicID', $topicID);
+            $deleteTopicQuery->execute();
+
+            $db->commit();
+
+            return true;
+        } catch (PDOException $e) {
+            $db->rollback();
             return false;
         }
     }

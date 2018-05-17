@@ -214,13 +214,15 @@
                 ?>
             </div>
         </div>
-        <div class="col s4">
-            <?php 
-                include "resources/sections/sideBarLoginBlock.php"; 
-                include "resources/sections/sideBarCategoryListBlock.php"; 
-                include "resources/sections/sideBarStickyPost.php";  
-                include "resources/sections/sideBarLatestPostsBlock.php";
-            ?>
+        <div class="col s4 sideBarContainer">
+            <div class="sideBar">
+                <?php 
+                    include "resources/sections/sideBarLoginBlock.php"; 
+                    include "resources/sections/sideBarCategoryListBlock.php"; 
+                    include "resources/sections/sideBarStickyPost.php";  
+                    include "resources/sections/sideBarLatestPostsBlock.php";
+                ?>
+            </div>
         </div>
     </div>
 </div>

@@ -5,7 +5,7 @@
         $posts = $postObj->getPostsData($_SESSION["selectedTopicID"]);
         $topicData = $topicObj->getSelectedTopic($_SESSION["selectedTopicID"]);
 ?>
-<div class="container contentContainer">
+<div class="container contentContainer discussionPage">
     <div class="row noBottomMargin">
         <div class="col s8">
             <div class="titleSection">
@@ -72,18 +72,6 @@
                     <?php
                         if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     ?>
-                    <div class="col s2 offset-s7 right-align adminIcons">
-                        <div class="noPadding pencilIcon titleIcon center-align">
-                            <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
-                                <i class="fas fa-pencil-alt fa-xs"></i>
-                            </a>
-                        </div>
-                        <div class="noPadding trashIcon titleIcon center-align">
-                            <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
-                                <i class="fas fa-trash fa-xs"></i>
-                            </a>
-                        </div>
-                    </div>
                     <?php
                         }
                     ?>
@@ -188,6 +176,7 @@
                             </div>
                             <?php 
                                 if(isset($posts[$i]["replyID"])) {
+                                    if($posts[$i]["replyID"] != -1) {
                             ?>
                                     <div class="replyContent">
                                         <div class="row postedOnContainer">
@@ -211,7 +200,20 @@
                                             </div>
                                         </div>
                                     </div>      
-                            <?php } ?>
+                            <?php 
+                                    } else {
+                            ?>
+                                        <div class="replyContent">
+                                            <div class="row postedOnContainer">
+                                                <div class="col s12 postedBy">
+                                                    <span>The original post has been deleted by admin.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                            <?php
+                                    }
+                                }    
+                            ?>
                             <p class="topicDescription"><?php echo $posts[$i]["text"]; ?></p>
                             <ul class="postAttachFiles">
                                 <?php 
@@ -267,7 +269,7 @@
                                 </a>
                             </div>
                             <div class="noPadding trashIcon titleIcon center-align">
-                                <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                <a onclick="adminDelition('topics/<?php echo $_SESSION["selectedTopicID"]; ?>', '#postContainer', 'post', <?php echo $posts[$i]["postID"] ; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
                                     <i class="fas fa-trash fa-xs"></i>
                                 </a>
                             </div>
@@ -387,6 +389,7 @@
                             </div>
                             <?php 
                                 if(isset($posts[$i]["replyID"])) {
+                                    if($posts[$i]["replyID"] != -1) {
                             ?>
                                     <div class="replyContent">
                                         <div class="row postedOnContainer">
@@ -410,7 +413,20 @@
                                             </div>
                                         </div>
                                     </div>      
-                            <?php } ?>
+                            <?php 
+                                    } else {
+                            ?>
+                                        <div class="replyContent">
+                                            <div class="row postedOnContainer">
+                                                <div class="col s12 postedBy">
+                                                    <span>The original post has been deleted by admin.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                            <?php
+                                    }
+                                } 
+                            ?>
                             <p class="topicDescription"><?php echo $posts[$i]["text"]; ?></p>
                             <ul class="postAttachFiles">
                                 <?php 
@@ -465,7 +481,7 @@
                                 </a>
                             </div>
                             <div class="noPadding trashIcon titleIcon center-align">
-                                <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                <a onclick="adminDelition('topics/<?php echo $_SESSION["selectedTopicID"]; ?>', '#postContainer', 'post', <?php echo $posts[$i]["postID"] ; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
                                     <i class="fas fa-trash fa-xs"></i>
                                 </a>
                             </div>
@@ -596,12 +612,14 @@
                 <p>You must <a href="#login" class="modal-trigger">Log In</a> or <a href="#signup" class="modal-trigger">Sign Up</a> to reply.</p>
             </div>
         </div>
-        <div class="col s4">
-            <?php 
-                include "resources/sections/sideBarLoginBlock.php"; 
-                include "resources/sections/sideBarCategoryListBlock.php"; 
-                include "resources/sections/sideBarStickyPost.php";  
-            ?>
+        <div class="col s4 sideBarContainer">
+            <div class="sideBar">
+                <?php 
+                    include "resources/sections/sideBarLoginBlock.php"; 
+                    include "resources/sections/sideBarCategoryListBlock.php"; 
+                    include "resources/sections/sideBarStickyPost.php";  
+                ?>
+            </div>
         </div>
     </div>
 </div>

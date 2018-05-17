@@ -3,6 +3,7 @@ session_start();
 include "../../config/connection.php";
 include "../../database/selection.php";
 include "../../database/insertion.php";
+include "../../database/deletion.php";
 include "../../database/modification.php";
 include "../classes/Post.php";
 include "../classes/User.php";
@@ -435,6 +436,42 @@ if(isset($_POST["reCountID"])) {
         $result["data_type"] = 0;
         $result["data_value"] = "An error occured";
 
+        echo json_encode($result);
+    }
+}
+
+/* delete selected post */
+if(isset($_POST["deletePost"])) {
+    if($_POST["type"] === "post") {
+        if($postObj->deletePost($_POST["postID"])) {
+        
+            $result["data_type"] = 1;
+            $result["data_value"] = "The selected post was deleted";
+    
+            echo json_encode($result);
+        } else {
+            $result["data_type"] = 0;
+            $result["data_value"] = "An error occured";
+    
+            echo json_encode($result);
+        }
+    } else if ($_POST["type"] === "sticky") {
+        if($postObj->deleteSticky($_POST["postID"])) {
+        
+            $result["data_type"] = 1;
+            $result["data_value"] = "The selected sticky post was deleted";
+    
+            echo json_encode($result);
+        } else {
+            $result["data_type"] = 0;
+            $result["data_value"] = "An error occured";
+    
+            echo json_encode($result);
+        }
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+    
         echo json_encode($result);
     }
 }

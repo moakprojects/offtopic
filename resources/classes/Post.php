@@ -39,8 +39,7 @@ class Post {
             
             return $allPostData;
         } else {
-            header("Location: /error");
-            exit;
+            return false;
         }
     }
 
@@ -298,6 +297,55 @@ class Post {
             $getOriginalPostQuery->execute();
 
             return $getOriginalPostQuery->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    // delete selected post
+    function deletePost($postID) {
+        global $db;
+        global $getOrderNumberQuery;
+        global $modifyEqualReplyIDQuery;
+        global $modifyLargerReplyIDQuery;
+        global $deletePostQuery;
+
+        try {
+            $db->beginTransaction();
+
+            $getOrderNumberQuery->bindParam(':postID', $postID);
+            $getOrderNumberQuery->execute();
+            $orderNumber = $getOrderNumberQuery->fetch(PDO::FETCH_ASSOC);
+
+            $modifyEqualReplyIDQuery->bindParam(':replyID', $orderNumber['orderNumberOfPost'], PDO::PARAM_INT);
+            $modifyEqualReplyIDQuery->bindParam(':topicID', $orderNumber['topicID'], PDO::PARAM_INT);
+            $modifyEqualReplyIDQuery->execute();
+
+            $modifyLargerReplyIDQuery->bindParam(':replyID', $orderNumber['orderNumberOfPost'], PDO::PARAM_INT);
+            $modifyLargerReplyIDQuery->bindParam(':topicID', $orderNumber['topicID'], PDO::PARAM_INT);
+            $modifyLargerReplyIDQuery->execute();
+
+            $deletePostQuery->bindParam(':postID', $postID);
+            $deletePostQuery->execute();
+
+            $db->commit();
+            return true;
+        } catch (PDOException $e) {
+            $db->rollback();
+            return false;
+        }
+    }
+
+    // delete selected sticky post
+    function deleteSticky($postID) {
+        global $db;
+        global $deleteStickyPostQuery;
+
+        try {
+            $deleteStickyPostQuery->bindParam(':stickyPostID', $postID);
+            $deleteStickyPostQuery->execute();
+
+            return true;
         } catch (PDOException $e) {
             return false;
         }

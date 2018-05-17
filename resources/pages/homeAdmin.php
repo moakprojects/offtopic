@@ -2,7 +2,7 @@
 if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
     $userObj = new User();
 ?>
-<div class="container contentContainer">
+<div class="container contentContainer homeAdmin">
     <div class="row noBottomMargin">
         <div class="col s12"> 
             <div class="row noMargin">
@@ -32,8 +32,8 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     <?php
                         $userObj = new User();
                         $users = $userObj -> getAllUser();
-                        
-                        foreach($users as $user) {
+                        if($users) {
+                            foreach($users as $user) {
                     ?>
                     <div class="col s5 cardSection">
                         <div class="row noMargin">
@@ -104,6 +104,11 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     </div>
                     <?php
                         }
+                    } else {
+                    ?>
+                        <p class="noMargin empty">Something went wrong, please refresh the page.</p>
+                    <?php
+                        }
                     ?>
                 </div>
             </div>
@@ -113,7 +118,8 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                         $categoryObj = new Category();
                         $categories = $categoryObj -> getCategoryData();
                         
-                        foreach($categories as $category) {
+                        if($categories) {
+                            foreach($categories as $category) {
                     ?>
                     <div class="post-module col s3">
                         <?php echo "<a href='/categories/" . $category["categoryID"] . "'>"; ?>
@@ -138,7 +144,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         </a>
                                     </div>
                                     <div class="col s1 noPadding trashIcon titleIcon center-align">
-                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                        <a onclick="adminDelition('home', '#categories', 'category', <?php echo $category['categoryID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
                                             <i class="fas fa-trash fa-xs"></i>
                                         </a>
                                     </div>
@@ -152,6 +158,11 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     </div>
                     <div class="col s1"></div>
                     <?php
+                            }
+                        } else {
+                    ?>
+                        <p class="noMargin empty">There isn't any category yet.</p>
+                    <?php
                         }
                     ?>
                 </div>
@@ -160,6 +171,8 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                 <?php
                     $topicObj = new Topic();
                     $topics = $topicObj -> getAllTopic();
+                    
+                    if($topics) {
                 ?>
                 <h3 class="titleName">Reported Topics </h3>
                 <?php
@@ -194,7 +207,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                 </a>
                             </div>
                             <div class="col s1 noPadding trashIcon titleIcon center-align">
-                                <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                <a onclick="adminDelition('home', '#topics', 'topic', <?php echo $topic['topicID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
                                     <i class="fas fa-trash fa-xs"></i>
                                 </a>
                             </div>
@@ -260,13 +273,15 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     </div>
                 </div>
                 <?php 
-                    }
-                } 
+                        }
+                    } 
+                }
                 ?>
                 <h3 class="titleName">Original Topics </h3>
                 <?php
-                    foreach($topics as $topic) {
-                        if($topic['isReported'] != 1) {
+                    if($topics) {
+                        foreach($topics as $topic) {
+                            if($topic['isReported'] != 1) {
                 ?>
                 <div class="topic row topicGrid">
                     <div class="col s1 userImageContainer center-align">
@@ -296,7 +311,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                 </a>
                             </div>
                             <div class="col s1 noPadding trashIcon titleIcon center-align">
-                                <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                <a onclick="adminDelition('home', '#topics', 'topic', <?php echo $topic['topicID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
                                     <i class="fas fa-trash fa-xs"></i>
                                 </a>
                             </div>
@@ -362,14 +377,21 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     </div>
                 </div>
                 <?php 
+                        }
                     }
-                }
+                } else {
+                ?>
+                    <p class="noMargin empty">There isn't any topic yet.</p>
+                <?php
+                    }
                 ?>
             </div>
             <div id="posts">
                 <?php
                     $postObj = new Post();
                     $posts = $postObj -> getAllPost();
+
+                    if($posts) {
                 ?>
                 <h3 class="titleName">Reported Posts </h3>
                 <?php
@@ -410,13 +432,14 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         </a>
                                     </div>
                                     <div class="col s1 noPadding trashIcon titleIcon center-align">
-                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                        <a onclick="adminDelition('home', '#posts', 'post', <?php echo $posts[$i]['postID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
                                             <i class="fas fa-trash fa-xs"></i>
                                         </a>
                                     </div>
                                 </div>
                                 <?php 
                                     if(isset($posts[$i]["replyID"])) {
+                                        if($posts[$i]["replyID"] != -1) {
                                 ?>
                                         <div class="replyContent">
                                             <div class="row postContainer">
@@ -435,7 +458,20 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                             </div>
                                             <p class="topicDescription"><?php echo $posts[$posts[$i]["replyID"]-1]["text"];?></p>
                                         </div>      
-                                <?php } ?>
+                                <?php 
+                                        } else {
+                                ?>
+                                            <div class="replyContent">
+                                                <div class="row postedOnContainer">
+                                                    <div class="col s12 postedBy">
+                                                        <span>The original post has been deleted by admin.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                <?php
+                                        }
+                                    } 
+                                ?>
                                 <p class="topicDescription"><?php echo $posts[$i]["text"]; ?></p>
                                 <ul class="postAttachFiles">
                                     <?php 
@@ -486,13 +522,15 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                         </div>
                     </div>
                 <?php 
+                        }
                     }
                 }
                 ?>
                 <h3 class="titleName">Original Posts </h3>
                 <?php
-                    for($i = 0; $i < count($posts); $i++) {
-                        if($posts[$i]["isReported"] != 1 && $posts[$i]["isSticky"] != 1) {
+                    if($posts) {
+                        for($i = 0; $i < count($posts); $i++) {
+                            if($posts[$i]["isReported"] != 1 && $posts[$i]["isSticky"] != 1) {
                 ?>
                     <div class="topic post">
                         <div class="row postContent">
@@ -528,13 +566,14 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         </a>
                                     </div>
                                     <div class="col s1 noPadding trashIcon titleIcon center-align">
-                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                        <a onclick="adminDelition('home', '#posts', 'post', <?php echo $posts[$i]['postID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
                                             <i class="fas fa-trash fa-xs"></i>
                                         </a>
                                     </div>
                                 </div>
                                 <?php 
                                     if(isset($posts[$i]["replyID"])) {
+                                        if($posts[$i]["replyID"] != -1) {
                                 ?>
                                         <div class="replyContent">
                                             <div class="row postContainer">
@@ -553,7 +592,20 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                             </div>
                                             <p class="topicDescription"><?php echo $posts[$posts[$i]["replyID"]-1]["text"];?></p>
                                         </div>      
-                                <?php } ?>
+                                <?php 
+                                        } else {
+                                ?>
+                                            <div class="replyContent">
+                                                <div class="row postedOnContainer">
+                                                    <div class="col s12 postedBy">
+                                                        <span>The original post has been deleted by admin.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                <?php
+                                        }
+                                    } 
+                                ?>
                                 <p class="topicDescription"><?php echo $posts[$i]["text"]; ?></p>
                                 <ul class="postAttachFiles">
                                     <?php 
@@ -599,8 +651,13 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                         </div>
                     </div>
                 <?php 
+                        }
                     }
-                }
+                } else {
+                ?>
+                    <p class="noMargin empty">There isn't any post yet.</p>
+                <?php
+                    }
                 ?>
             </div>
             <div id="stickyPosts">
@@ -608,7 +665,8 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                 <div class="row noMargin stickyContainer">
                 <?php
                     $stickyPosts = $postObj -> getAllSidebarSticky();
-                    foreach($stickyPosts as $stickyPost) {
+                    if($stickyPosts) {
+                        foreach($stickyPosts as $stickyPost) {
                 ?>
                         <div class="col s4 sticky">
                             <div class="stickyPost">
@@ -620,7 +678,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         </a>
                                     </div>
                                     <div class="col s1 trashIcon titleIcon center-align">
-                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                        <a onclick="adminDelition('home', '#stickyPosts', 'sticky', <?php echo $stickyPost['stickyPostID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
                                             <i class="fas fa-trash fa-xs"></i>
                                         </a>
                                     </div>
@@ -632,14 +690,20 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                             </div>
                         </div>
                 <?php
-                    }
-                ?>
+                        }
+                    } else {
+                    ?>
+                        <p class="noMargin">There isn't any sticky post yet.</p>
+                    <?php
+                        }
+                    ?>
                 </div>
                 <h3 class="titleName">Topic related stickies </h3>
                 <div class="topicRelatedStickies">
                 <?php
-                    for($i = 0; $i < count($posts); $i++) {
-                        if($posts[$i]["isSticky"] == 1) {
+                    if($posts) {
+                        for($i = 0; $i < count($posts); $i++) {
+                            if($posts[$i]["isSticky"] == 1) {
                 ?>
                     <div class="topic post">
                         <div class="row postContent">
@@ -678,13 +742,14 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         </a>
                                     </div>
                                     <div class="noPadding trashIcon titleIcon center-align">
-                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                        <a onclick="adminDelition('home', '#stickyPosts', 'post', <?php echo $posts[$i]['postID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
                                             <i class="fas fa-trash fa-xs"></i>
                                         </a>
                                     </div>
                                 </div>
                                 <?php 
                                     if(isset($posts[$i]["replyID"])) {
+                                        if($posts[$i]["replyID"] != -1) {
                                 ?>
                                         <div class="replyContent">
                                             <div class="row postContainer">
@@ -703,7 +768,20 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                             </div>
                                             <p class="topicDescription"><?php echo $posts[$posts[$i]["replyID"]-1]["text"];?></p>
                                         </div>      
-                                <?php } ?>
+                                <?php 
+                                        } else {
+                                ?>
+                                            <div class="replyContent">
+                                                <div class="row postedOnContainer">
+                                                    <div class="col s12 postedBy">
+                                                        <span>The original post has been deleted by admin.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                <?php
+                                        }
+                                    } 
+                                ?>
                                 <p class="topicDescription"><?php echo $posts[$i]["text"]; ?></p>
                                 <ul class="postAttachFiles">
                                     <?php 
@@ -749,8 +827,13 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                         </div>
                     </div>
                 <?php 
+                        }
+                    } 
+                } else {
+                ?>
+                    <p class="noMargin empty">There isn't any post yet.</p>
+                <?php
                     }
-                }
                 ?>
                 </div>
             </div>

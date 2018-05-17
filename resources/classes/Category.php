@@ -22,8 +22,7 @@ class Category {
             if($categoryData) {
                 return $categoryData;
             } else {
-                header("Location: /error");
-                exit;
+                return false;
             }
         } catch (PDOException $e) {
             header("Location: /error");
@@ -31,7 +30,7 @@ class Category {
         }
     }
 
-     // add new sidebar sticky post
+     // add new category
      function uploadNewCategory($categoryName, $categoryDescription, $attachment) {
         global $db;
         global $newCategoryQuery;
@@ -44,6 +43,34 @@ class Category {
 
             return true;
         } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    // delete selected category
+    function deleteCategory($categoryID) {
+        global $db;
+        global $deleteCategoryQuery;
+        global $deleteTopicByCategoryQuery;
+        global $deletePostByCategoryQuery;
+
+        try {
+            $db->beginTransaction();
+
+            $deletePostByCategoryQuery->bindParam(':categoryID', $categoryID);
+            $deletePostByCategoryQuery->execute();
+
+            $deleteTopicByCategoryQuery->bindParam(':categoryID', $categoryID);
+            $deleteTopicByCategoryQuery->execute();            
+
+            $deleteCategoryQuery->bindParam(':categoryID', $categoryID);
+            $deleteCategoryQuery->execute();
+
+            $db->commit();
+
+            return true;
+        } catch (PDOException $e) {
+            $db->rollback();
             return false;
         }
     }

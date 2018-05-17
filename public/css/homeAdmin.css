@@ -10,6 +10,10 @@ h2 {
     margin-left: 40px;
 }
 
+.empty {
+    min-height: 400px;
+}
+
 /* Creator buttons */
 
 .newBtnContainer {
@@ -409,6 +413,7 @@ h2 {
 .topicContainer .trashIcon {
     position:relative;
     right: -68px !important;
+    cursor: pointer;
 }
 
 /* regular post styling */

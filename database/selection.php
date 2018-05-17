@@ -189,4 +189,7 @@ $descriptionOfTheSiteQuery = $db->prepare("SELECT * FROM descriptionOfTheSite");
 
 /* get contact information */
 $contactInformationQuery = $db->prepare("SELECT * FROM contactInformation");
+
+/* get the order number of a post in a specific topic when the admin would like to delete the post */
+$getOrderNumberQuery = $db->prepare("SELECT count(*) as orderNumberOfPost, topicID FROM post WHERE (topicID = (SELECT topicID FROM post WHERE postID = :postID) AND postID <= :postID) ORDER BY postID");
 ?>

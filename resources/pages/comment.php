@@ -111,7 +111,10 @@
                                 ?>
                             </div>
                         </div>
-                            <?php if($originalPost) { ?> 
+                            <?php 
+                                if($originalPost) { 
+                                    if($originalPost != -1) {
+                            ?> 
                             <div class="replyContent">
                                 <div class="row postedOnContainer">
                                     <div class="col s12 postedBy">
@@ -134,7 +137,20 @@
                                     </div>
                                 </div>
                             </div>      
-                            <?php } ?>
+                            <?php 
+                                    } else {
+                            ?>
+                                <div class="replyContent">
+                                    <div class="row postedOnContainer">
+                                        <div class="col s12 postedBy">
+                                            <span>The original post has been deleted by admin.</span>
+                                        </div>
+                                    </div>
+                                </div> 
+                            <?php
+                                    }
+                                } 
+                            ?>
                         <p class="topicDescription"><?php echo $postData["text"]; ?></p>
                         <ul class="postAttachFiles">
                             <?php
@@ -190,12 +206,14 @@
                 </div>
             </div>
         </div>
-        <div class="col s4">
-            <?php 
-                include "resources/sections/sideBarLoginBlock.php"; 
-                include "resources/sections/sideBarCategoryListBlock.php"; 
-                include "resources/sections/sideBarStickyPost.php";  
-            ?>
+        <div class="col s4 sideBarContainer">
+            <div class="sideBar">
+                <?php 
+                    include "resources/sections/sideBarLoginBlock.php"; 
+                    include "resources/sections/sideBarCategoryListBlock.php"; 
+                    include "resources/sections/sideBarStickyPost.php";  
+                ?>
+            </div>
         </div>
     </div>
 </div>

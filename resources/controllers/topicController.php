@@ -155,4 +155,20 @@ if(isset($_POST["reportedTopic"])) {
     }
 }
 
+/* delete selected topic */
+if(isset($_POST["deleteTopic"])) {
+    if($topicObj->deleteTopic($_POST["topicID"])) {
+        
+        $result["data_type"] = 1;
+        $result["data_value"] = "The selected topic was deleted";
+
+        echo json_encode($result);
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+    }
+}
+
 ?>

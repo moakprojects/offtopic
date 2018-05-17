@@ -22,7 +22,7 @@ $(document).ready(function(){
     });
 
     function registration() {
-        console.log("jo");
+        
         var email = $('#regForm').find('.email');
         var username = $('#regForm').find('.username');
         var password = $('#regForm').find('.password');
@@ -172,3 +172,84 @@ $(document).ready(function(){
         });
     });
 });
+
+function adminDelition(page, section, type, ID) {
+    var reloadSection = '/' + page + ' ' + section;
+    MaterialDialog.dialog(
+      "Are you sure you want to delete this " + type + "?",
+      {
+          title:"Delete " + type,
+          modalType:"modal", 
+          buttons:{
+              close:{
+                  className:"waves-effect waves-red btn-flat",
+                  text:"No"
+              },
+              confirm:{
+                  className:"modal-close waves-effect waves-green btn-flat",
+                  text:"Yes",
+                  callback:function(){
+                        if(type === "category") {
+                            $.post('/resources/controllers/categoryController.php', {deleteCategory: true, categoryID: ID}, function(data) {
+
+                                var obj = jQuery.parseJSON(data);
+                                if(obj.data_type === 1) {
+                                    if(page=="home") {
+                                        $(section).load(reloadSection, function() {
+                                            Materialize.toast(obj.data_value, 4000);
+                                            $('#topics').load('/home/ #topics', function() {
+                                                $('#stickyPosts').load('/home/ #stickyPosts', function() {
+                                                    $('#posts').load('/home/ #posts', '');
+                                                });
+                                            });
+                                        });
+                                    } else {
+                                        $(section).load(reloadSection, function() {
+                                            Materialize.toast(obj.data_value, 4000);
+                                        });
+                                    }
+                                } else {
+                                    Materialize.toast(obj.data_value, 4000);
+                                }
+                            });
+                        } else if (type === "topic") {
+                            $.post('/resources/controllers/topicController.php', {deleteTopic: true, topicID: ID}, function(data) {
+
+                                var obj = jQuery.parseJSON(data);
+                                if(obj.data_type === 1) {
+                                    if(page=="home") {
+                                        $(section).load(reloadSection, function() {
+                                            Materialize.toast(obj.data_value, 4000);
+                                            $("#posts").load('/home/ #posts', function() {
+                                                $("#stickyPosts").load('/home/ #stickyPosts', '');
+                                            });
+                                        });
+                                    } else {
+                                        $(section).load(reloadSection, function() {
+                                            Materialize.toast(obj.data_value, 4000);
+                                        });
+                                    }
+                                } else {
+                                    Materialize.toast(obj.data_value, 4000);
+                                }
+                            });
+                        } else if (type === "post" || type === "sticky") {
+                            $.post('/resources/controllers/discussionController.php', {deletePost: true, type: type, postID: ID}, function(data) {
+
+                                var obj = jQuery.parseJSON(data);
+                                if(obj.data_type === 1) {
+                                  $(section).load(reloadSection, function() {
+                                      Materialize.toast(obj.data_value, 4000);
+                                  });
+                                } else {
+                                    Materialize.toast(obj.data_value, 4000);
+                                }
+                            }); 
+                        }
+                  }
+              }
+              
+          }
+      }
+  );
+}
