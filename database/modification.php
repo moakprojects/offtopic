@@ -41,6 +41,15 @@
     /* suspend user in second time */
     $suspendUserSecondTimeQuery = $db->prepare("UPDATE user SET accessLevel = 3 WHERE userID = :userID");
 
+    /* change the fields of category by Admin */
+    $modifyCategoryQuery = $db->prepare("UPDATE category SET categoryName = :categoryName, categoryDescription = :categoryDescription, thumbnail = :thumbnail WHERE categoryID = :categoryID");
+
+    /* change the fields of selected topic by Admin */
+    $modifyTopicQuery = $db->prepare("UPDATE topic SET topicName = :topicName, topicText = :topicText, semester = :semester, categoryID = :categoryID WHERE topicID = :topicID");
+
+    /* change the fields of sidebar sticky post by Admin */
+    $modifySidebarStickyQuery = $db->prepare("UPDATE sidebarStickyPost SET stickyPostTitle = :stickyPostTitle, stickyPostText = :stickyPostText WHERE stickyPostID = :stickyPostID");
+
     /* change the fields of description of the site by Admin*/
     $modifyDescriptionOfTheSiteQuery = $db->prepare("UPDATE descriptionOfTheSite SET aboutUs = :aboutUs WHERE ID = 1");
 

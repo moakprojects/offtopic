@@ -30,11 +30,11 @@ $(document).on('click', '#newStickySubmit', function() {
             }
         });
         } else {
-        $('#errorMsg').html("Please enter the description of your new topic");
+        $('#errorMsg').html("Please enter the description of your new sticky post");
         $('#errorMsg').removeClass('hide');  
         }
     } else {
-        $('#errorMsg').html("Please enter the name of you new topic");
+        $('#errorMsg').html("Please enter the name of you new sticky post");
         $('#errorMsg').removeClass('hide');  
     }
   

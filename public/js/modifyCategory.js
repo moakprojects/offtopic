@@ -1,4 +1,3 @@
-
 /* it is just for display the name of the attachment image */
 var fileInput = document.getElementById('fileInput');
 var fileInputText = document.getElementById('fileInputText');
@@ -31,8 +30,8 @@ function validateAttachFile() {
         attachment = ""
       } else if(fileSize > 4000000) {
         errorMsg = "The size of <i>" + fileName + "</i> is too big<br>";
-        attachment = "";
         fileInputText.value = "";
+        attachment = "";
       } else {
         errorMsg = "";
         if (fileName.lastIndexOf('\\')) {
@@ -46,23 +45,29 @@ function validateAttachFile() {
 }
 
 // send new category data 
-$(document).on('click', '#newCategorySubmit', function() {
-    $('.newCategorySpinner').removeClass('hide');
+function submitModifiedCategoryData(categoryID, oldImage) {
+    $('.modifyCategorySpinner').removeClass('hide');
 
-    var newCategoryName = $('#newCategoryName')["0"].value;
-    var newCategoryDescription = $('#newCategoryDescription')["0"].value;
+    var modifiedCategoryName = $('#modifiedCategoryName')["0"].value;
+    var modifiedCategoryDescription = $('#modifiedCategoryDescription')["0"].value;
+    if (attachment == "") {
+        attachment = fileInputText.placeholder;
+    } else {
+        attachment = attachment;
+    }
 
-    if(newCategoryName !== "") {
-        if(newCategoryDescription !== "") {
-            if(attachment != "") {
+    if(modifiedCategoryName !== "") {
+        if(modifiedCategoryDescription !== "") {
                 $('#errorMsg').html("");
                 $('#errorMsg').addClass('hide');
                 
                 var form_data = new FormData();
                 form_data.append("file", attachment);
-                form_data.append('createNewCategory', true);
-                form_data.append('newCategoryName', newCategoryName);
-                form_data.append('newCategoryDescription', newCategoryDescription);
+                form_data.append('oldImage', oldImage);
+                form_data.append('modifiedCategoryData', true);
+                form_data.append('modifiedCategoryID', categoryID);
+                form_data.append('modifiedCategoryName', modifiedCategoryName);
+                form_data.append('modifiedCategoryDescription', modifiedCategoryDescription);
 
                 $.ajax({
                     url: '/resources/controllers/categoryController.php',
@@ -78,35 +83,24 @@ $(document).on('click', '#newCategorySubmit', function() {
 
                         if(obj.data_type == 1) {
                             
-                            fileInputText.value = "Category thumbnail"
-                            $('#newCategoryName')["0"].value = "";
-                            $('#newCategoryDescription')["0"].value = "";
-                            
-                            $('.newCategorySpinner').addClass('hide');
-                            $('#errorMsg').html(obj.data_value);
-                            $('#errorMsg').removeClass('hide');
-                            $('#errorMsg').css('color', '#34d034');
+                            window.location.href = "/home/#categories";
                         
                         } else {
-                            $('.newCategorySpinner').addClass('hide');
+                            $('.modifyCategorySpinner').addClass('hide');
                             $('#errorMsg').html(obj.data_value);
                             $('#errorMsg').removeClass('hide');    
                         }
                         
                     }
                 });
-            } else {
-                $('#errorMsg').html("Please upload a thumbnail image");
-                $('#errorMsg').removeClass('hide');  
-            }
         } else {
-        $('#errorMsg').html("Please enter the description of your new category");
+        $('#errorMsg').html("Please enter the description of the category topic");
         $('#errorMsg').removeClass('hide');  
         }
     } else {
-        $('#errorMsg').html("Please enter the name of you new category");
+        $('#errorMsg').html("Please enter a valid name of the category");
         $('#errorMsg').removeClass('hide');  
     }
   
-    $('.newCategorySpinner').addClass('hide');
-});
+    $('.modifyCategorySpinner').addClass('hide');
+}

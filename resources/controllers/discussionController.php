@@ -476,4 +476,32 @@ if(isset($_POST["deletePost"])) {
     }
 }
 
+/* add the selected post id - which the admin want to modify - to the session */
+if(isset($_POST["modifyPost"])) {
+    if($_POST["type"] == "sticky") {
+        $_SESSION["modifySidebarStickyID"] = $_POST["postID"];
+    }
+    
+    $result["data_type"] = 1;
+    $result["data_value"] = "Success";
+    echo json_encode($result);
+}
+
+/* modify selected category */
+if(isset($_POST["modifiedStickyData"])) {
+    if($postObj->modifySidebarSticky($_POST["modifiedStickyID"], $_POST["modifiedStickyName"], $_POST["modifiedStickyDescription"])) {
+        $result["data_type"] = 1;
+        $result["data_value"] = "Success";
+
+        unset($_SESSION["modifySidebarStickyID"]);
+
+        echo json_encode($result);
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+    }
+}
+
 ?>

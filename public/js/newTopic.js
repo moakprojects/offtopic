@@ -19,7 +19,7 @@ var toolbarOptions = [
         }
       }
     },
-    placeholder: 'Post a Reply',
+    placeholder: 'Write a detailed topic description',
     theme: 'snow'
   });
 

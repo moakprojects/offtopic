@@ -116,7 +116,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                 <div class="categoryCardContainer col s12">
                     <?php
                         $categoryObj = new Category();
-                        $categories = $categoryObj -> getCategoryData();
+                        $categories = $categoryObj -> getAllCategoryData();
                         
                         if($categories) {
                             foreach($categories as $category) {
@@ -139,7 +139,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         <h1 class="title"><?php echo $category["categoryName"]; ?></h1>
                                     </div>
                                     <div class="col s1 noPadding pencilIcon titleIcon center-align">
-                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                        <a onclick="adminModification('category', <?php echo $category['categoryID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                             <i class="fas fa-pencil-alt fa-xs"></i>
                                         </a>
                                     </div>
@@ -217,7 +217,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                 <em><p class="subtitle"> - in <a href="/categories/<?php echo $topic["categoryID"]?>"><?php echo $topic["categoryName"]?></a></p></em>
                             </div>
                             <div class="col s1 noPadding pencilIcon titleIcon center-align">
-                                <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                <a onclick="adminModification('topic', <?php echo $topic['topicID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                     <i class="fas fa-pencil-alt fa-xs"></i>
                                 </a>
                             </div>
@@ -335,7 +335,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                 <em><p class="subtitle"> - in <a href="/categories/<?php echo $topic["categoryID"]?>"><?php echo $topic["categoryName"]?></a></p></em>
                             </div>
                             <div class="col s1 noPadding pencilIcon titleIcon center-align">
-                                <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                <a onclick="adminModification('topic', <?php echo $topic['topicID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                     <i class="fas fa-pencil-alt fa-xs"></i>
                                 </a>
                             </div>
@@ -728,7 +728,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                 <div class="row noMargin">
                                     <h4 class="col s9 noPadding"><?php echo $stickyPost["stickyPostTitle"]; ?></h4>
                                     <div class="col s1 pencilIcon titleIcon center-align">
-                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                        <a onclick="adminModification('sticky', <?php echo $stickyPost['stickyPostID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                             <i class="fas fa-pencil-alt fa-xs"></i>
                                         </a>
                                     </div>

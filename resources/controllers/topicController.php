@@ -171,4 +171,58 @@ if(isset($_POST["deleteTopic"])) {
     }
 }
 
+/* add the selected topic id - which the admin want to modify - to the session */
+if(isset($_POST["modifyTopic"])) {
+    $_SESSION["modifyTopicID"] = $_POST["topicID"];
+    
+    $result["data_type"] = 1;
+    $result["data_value"] = "Success";
+    echo json_encode($result);
+}
+
+/* get selected topic data from js */
+if(isset($_POST["getSelectedTopicDataFromJs"])) {
+    if($selectedTopic = $topicObj->getSelectedTopicBasicData($_SESSION["modifyTopicID"])) {
+        if($attachedFiles = $topicObj->getAttachedFiles($selectedTopic["attachedFilesCode"])) {
+            array_push($selectedTopic, $attachedFiles);
+        }
+        $result["data_type"] = 1;
+        $result["data_value"] = $selectedTopic;
+
+        echo json_encode($selectedTopic);
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+    }
+}
+
+/* modify selected data by admin */
+if(isset($_POST["modifiedTopicData"])) {
+    if($topicObj->modifyTopicData($_POST["modifiedTopicID"], $_POST["modifiedTopicName"], $_POST["modifiedTopicDescription"], $_POST["modifiedTopicCategory"], $_POST["modifiedTopicPeriod"])) {
+
+        $removeAttachedFiles = json_decode( $_POST['removeAttachedFiles'] );
+        if(count($removeAttachedFiles) > 0) {
+            foreach($removeAttachedFiles as $file) {
+                $topicObj->removeFiles($file->attachmentID);
+                $location = "../../public/files/upload/" . $file->attachmentName;
+            }
+        }
+
+        unset($_SESSION["modifyTopicID"]);
+
+        $result["data_type"] = 1;
+        $result["data_value"] = "Success";
+
+        echo json_encode($result);
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+    }
+}
+
+
 ?>

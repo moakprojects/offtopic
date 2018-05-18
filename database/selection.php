@@ -20,6 +20,9 @@ $allPostQuery = $db->prepare("SELECT post.*, topic.topicName, userData.username,
 /* get all posts from sideBarStickyPost table */
 $allSidebarStickyPostQuery = $db->prepare("SELECT * from sidebarStickyPost");
 
+/* get the selected sidebarsticky by sidebarstickyID from sideBarStickyPost table */
+$sidebarStickyPostQuery = $db->prepare("SELECT * from sidebarStickyPost WHERE stickyPostID = :stickyPostID");
+
 /* get attached files from attechment table with postID */
 $attachedFilesQuery = $db->prepare("SELECT * FROM attachment WHERE attachedFileCode = :attachedFileCode");
 
@@ -57,6 +60,9 @@ we change this query for stored procedure
 $allCategoryQuery = $db -> prepare("SELECT category.*, numberOfTopics, numberOfPosts, numberOfLikes FROM category LEFT JOIN ( SELECT categoryID, count(*) as numberOfTopics, topicID FROM topic GROUP BY categoryID) as topics ON topics.categoryID = category.categoryID LEFT JOIN ( SELECT topic.categoryID, topic.topicID, sum(postQuantity) as numberOfPosts FROM `topic` LEFT JOIN ( SELECT topicID, count(*) as postQuantity FROM post GROUP BY topicID) as countPost ON countPost.topicID = topic.topicID GROUP BY topic.categoryID ) as posts ON posts.topicID = topics.topicID LEFT JOIN ( SELECT categoryID, count(*) as numberOfLikes FROM favouritecategory GROUP BY categoryID) as likes ON likes.categoryID = category.categoryID"); */
 $allCategoryQuery = $db->prepare("CALL proc_get_all_category()");
 
+/* get category by categoryID */
+$categoryQuery = $db->prepare("SELECT * FROM category WHERE categoryID = :categoryID");
+
 /* get categories for sidebar category block */
 $sideBarCategoriesQuery = $db->prepare("SELECT category.categoryName, category.categoryID, numberOfTopics FROM category LEFT JOIN (SELECT categoryID, count(*) as numberOfTopics, topicID FROM topic GROUP BY categoryID) as topics ON topics.categoryID = category.categoryID WHERE category.categoryID NOT IN (SELECT categoryID FROM favouritecategory WHERE userID = :userID) LIMIT 5");
 
@@ -77,6 +83,9 @@ $checkFavouriteTopicQuery = $db->prepare("SELECT * FROM favouritetopic WHERE use
 
 /* check if user added the category to favourite or not */
 $checkFavouriteCategoryQuery = $db->prepare("SELECT * FROM favouritecategory WHERE userID = :userID AND categoryID = :categoryID");
+
+/* get general information about the topic based on topicID for modification by admin */
+$selectedTopicBasicDataQuery = $db -> prepare("SELECT * FROM topic WHERE topicID = :topicID");
 
 /* select choosen topic information based on topicId */
 $selectedTopicQuery = $db->prepare("SELECT topic.*, numberOfLikes, numberOfPosts, latestPost, username, profileImage, periodName, rankID, rankColor FROM topic LEFT JOIN (SELECT topicID, count(*) as numberOfLikes FROM favouritetopic GROUP BY topicID) as likes ON likes.topicID = topic.topicID LEFT JOIN (SELECT topicID, count(*) as numberOfPosts, MAX(postedOn) as latestPost FROM post GROUP BY topicID) as posts ON posts.topicID = topic.topicID INNER JOIN (SELECT userID, username, profileImage, rank.rankID, rank.rankColor FROM user INNER JOIN rank ON rank.rankID = user.rankID) as user ON user.userID = topic.createdBy INNER JOIN (SELECT periodID, periodName FROM period) as periods ON periods.periodID = topic.semester WHERE topic.topicID = :topicID");

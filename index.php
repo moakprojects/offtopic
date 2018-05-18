@@ -47,11 +47,20 @@
             case "new-topic":
                 $page = "newTopic";
             break;
+            case "modify-topic":
+                $page = "modifyTopic";
+            break;
             case "new-sticky-post":
                 $page = "newSidebarStickyPost";
             break;
+            case "modify-sticky-post":
+                $page = "modifySideBarStickyPost";
+            break;
             case "new-category":
                 $page = "newCategory";
+            break;
+            case "modify-category":
+                $page = "modifyCategory";
             break;
             case "rules-and-regulations":
                 $page = "terms";

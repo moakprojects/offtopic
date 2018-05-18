@@ -60,6 +60,42 @@ class Post {
         }
     }
 
+     // request the selected sidebar sticky posts data by its id from database
+     function getSidebarSticky($stickyPostID) {
+        global $db;
+        global $sidebarStickyPostQuery;
+
+        if($sidebarStickyPostQuery) {
+            $sidebarStickyPostQuery->bindParam(':stickyPostID', $stickyPostID);
+            $sidebarStickyPostQuery->execute();
+
+            $sidebarStickyPostData = $sidebarStickyPostQuery->fetch(PDO::FETCH_ASSOC);
+            
+            return $sidebarStickyPostData;
+        } else {
+            header("Location: /error");
+            exit;
+        }
+    }
+
+    /* modify the data of the selected sidebar sticky*/
+    function modifySidebarSticky($stickyPostID, $stickyPostTitle, $stickyPostText) {
+        global $db;
+        global $modifySidebarStickyQuery;
+
+        if($modifySidebarStickyQuery) {
+
+            $modifySidebarStickyQuery->bindParam(":stickyPostID", $stickyPostID);
+            $modifySidebarStickyQuery->bindParam(":stickyPostTitle", $stickyPostTitle);
+            $modifySidebarStickyQuery->bindParam(":stickyPostText", $stickyPostText);
+            $modifySidebarStickyQuery ->execute();
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // trim the long text depending on parameters
     function textTrimmer($longText, $length) {
         if(strlen($longText) > $length) {

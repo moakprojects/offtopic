@@ -1,26 +1,27 @@
 <?php
-if(isset($_SESSION["user"])) {
+if(isset($_SESSION["user"]) && isset($_SESSION['user']['isAdmin']) && isset($_SESSION["modifyTopicID"])) {
     $categoryObj = new Category();
     $topicObj = new Topic();
     $categories = $categoryObj->getAllCategoryData();
     $periods = $topicObj->getPeriodInfo();
+    $selectedTopic = $topicObj->getSelectedTopicBasicData($_SESSION["modifyTopicID"]);
 ?>
 <div class="container contentContainer">
     <div class="row noBottomMargin">
         <div class="col s8"> 
-            <h2>Create a new topic</h2>
-            <div class="newTopicContainer">
-                <form class="newTopicForm" action="" method="post" id="newTopicForm">  
+            <h2>Modify a topic</h2>
+            <div class="modifyTopicContainer">
+                <form class="modifyTopicForm" action="" method="post" id="modifyTopicForm">  
                     <div class="row">
-                        <div class="input-field newTopicInput">
-                            <input id="newTopicName" type="text" class="noBottomMargin">
-                            <label class="active" for="newTopicName">Topic name</label>
+                        <div class="input-field modifyTopicInput">
+                            <input id="modifiedTopicName" type="text" class="noBottomMargin" value="<?php echo $selectedTopic["topicName"]; ?>">
+                            <label class="active" for="modifiedTopicName">Topic name</label>
                         </div>
                     </div>
                     <div class="row textareaContainer">
-                        <div class="input-field newTopicInput">
+                        <div class="input-field modifyTopicInput">
                             <p class="desciptrionLabel">Topic Description</p>
-                            <div class="editorContainer"  id="newTopicDescription">
+                            <div class="editorContainer" id="modifiedTopicDescription">
                                 <div id="editor"></div>
                             </div>
                         </div>
@@ -28,35 +29,43 @@ if(isset($_SESSION["user"])) {
                     <div class="row inputContainer">
                         <div class="col s6">
                             <label>Category</label>
-                            <select class="browser-default" id="newTopicCategory">
+                            <select class="browser-default" id="modifiedTopicCategory">
                                 <option value="" disabled selected>Choose a category</option>
                                 <?php 
                                     foreach($categories as $category) {
-                                        echo "<option value='" . $category['categoryID'] . "'>" . $category['categoryName'] . "</option>";
+                                        if($category["categoryID"] == $selectedTopic["categoryID"]) {
+                                            echo "<option selected value='" . $category['categoryID'] . "'>" . $category['categoryName'] . "</option>";
+                                        } else {
+                                            echo "<option value='" . $category['categoryID'] . "'>" . $category['categoryName'] . "</option>";
+                                        }
                                     }
                                 ?>
                             </select> 
                         </div>
                         <div class="col s6">
                             <label>Semester</label>
-                            <select class="browser-default" id="newTopicPeriod">
+                            <select class="browser-default" id="modifiedTopicPeriod">
                                 <option value="" disabled selected>Choose a semester</option>
                                 <?php 
                                     foreach($periods as $period) {
-                                        echo "<option value='" . $period['periodID'] . "'>" . $period['periodName'] . "</option>";
+                                        if($period["periodID"] == $selectedTopic["semester"]) {
+                                            echo "<option selected value='" . $period['periodID'] . "'>" . $period['periodName'] . "</option>";
+                                        } else {
+                                            echo "<option value='" . $period['periodID'] . "'>" . $period['periodName'] . "</option>";
+                                        }
                                     }
                                 ?>
                             </select> 
                         </div>
                     </div>
-                    <div class="row inputContainer createNewTopic">
+                    <div class="row inputContainer createmodifyTopic">
                         <div class="col s6">
                             <p id="errorMsg"></p>
                             <hr id="errorMsgSeparator" class="hide">
                             <ul id="attachFiles"></ul>
                         </div>
                         <div class="col s1 offset-s3">
-                            <div class="preloader-wrapper small active hide newtopicSpinner">
+                            <div class="preloader-wrapper small active hide modifyTopicSpinner">
                                 <div class="spinner-layer spinner-blue-only">
                                     <div class="circle-clipper left">
                                         <div class="circle"></div>
@@ -68,7 +77,7 @@ if(isset($_SESSION["user"])) {
                                 </div>
                             </div>
                         </div> 
-                        <a class="btn waves-effect waves-light blue col s2" id="newTopicSubmit">Create</a>
+                        <a class="btn waves-effect waves-light blue col s2" id="modifyTopicSubmit" onclick="submitModifiedTopicData(<?php echo $selectedTopic["topicID"]; ?>)">Save</a>
                     </div>  
                 </form>
             </div>
@@ -80,7 +89,6 @@ if(isset($_SESSION["user"])) {
                 <div class="helperContent">
                     <p style="font-weight: 900">We prefer questions that can be answered or discussed.</p>
                     <p>Provide details and share things that support your question. </p>
-                    <p>If your question is about this website, please use the contact form. </p>
                 </div>
             </div>
         </div>
