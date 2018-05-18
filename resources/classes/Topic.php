@@ -60,6 +60,47 @@ class Topic {
         }
     }
 
+    // request data from database based on topicID
+    function getSelectedTopicBasicData($topicID) {
+        global $db;
+        global $selectedTopicBasicDataQuery;
+
+        try {
+            $selectedTopicBasicDataQuery->bindParam(':topicID', $topicID);
+            $selectedTopicBasicDataQuery->execute();
+            $selectedTopicBasicData = $selectedTopicBasicDataQuery->fetch(PDO::FETCH_ASSOC);
+            
+            if($selectedTopicBasicData) {
+                return $selectedTopicBasicData;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            header("Location: /error");
+            exit;
+        }
+    }
+
+    /* modify the data of a selected topic */
+    function modifyTopicData($topicID, $topicName, $topicText, $categoryID, $semester) {
+        global $db;
+        global $modifyTopicQuery;
+
+        if($modifyTopicQuery) {
+
+            $modifyTopicQuery->bindParam(":topicID", $topicID);
+            $modifyTopicQuery->bindParam(":topicName", $topicName);
+            $modifyTopicQuery->bindParam(":topicText", $topicText);
+            $modifyTopicQuery->bindParam(":semester", $semester);
+            $modifyTopicQuery->bindParam(":categoryID", $categoryID);
+            $modifyTopicQuery ->execute();
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // trim the long text depending on parameters
     function textTrimmer($longText, $length) {
         if(strlen($longText) > $length) {
@@ -347,6 +388,23 @@ class Topic {
             return false;
         }
     }
+
+    /* remove attached file */
+    function removeFiles($attachmentID) {
+
+        global $db;
+        global $deleteFileQuery;
+
+        if(isset($deleteFileQuery)) {
+            $deleteFileQuery->bindParam(':attachmentID', $attachmentID);
+            $deleteFileQuery->execute();
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
        // delete selected topic
        function deleteTopic($topicID) {

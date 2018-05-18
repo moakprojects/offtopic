@@ -21,8 +21,11 @@ $deleteTopicQuery = $db->prepare("DELETE FROM topic WHERE topicID = :topicID");
 /* delete posts by topic id from database by admin */
 $deletePostByTopicQuery = $db->prepare("DELETE FROM post WHERE topicID = :topicID");
 
-/* delete selected topic from database by admin*/
+/* delete selected post from database by admin*/
 $deletePostQuery = $db->prepare("DELETE FROM post WHERE postID = :postID");
+
+/* delete attachment files from database by admin */
+$deleteFileQuery = $db->prepare("DELETE FROM attachment WHERE attachmentID = :attachmentID");
 
 /* delete selected sticky from database by admin*/
 $deleteStickyPostQuery = $db->prepare("DELETE FROM sidebarStickyPost WHERE stickyPostID = :stickyPostID");

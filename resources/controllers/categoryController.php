@@ -75,7 +75,7 @@ if(isset($_POST["deleteCategory"])) {
 
 /* add the selected category id - which the admin want to modify - to the session */
 if(isset($_POST["modifyCategory"])) {
-    $_SESSION["selectedCategoryID"] = $_POST["categoryID"];
+    $_SESSION["modifyCategoryID"] = $_POST["categoryID"];
     
     $result["data_type"] = 1;
     $result["data_value"] = "Success";
@@ -102,6 +102,8 @@ if(isset($_POST["modifiedCategoryData"])) {
             copy($_FILES["file"]["tmp_name"], $location);
             unlink($previousLocation);
         }
+
+        unset($_SESSION["modifyCategoryID"]);
 
         $result["data_type"] = 1;
         $result["data_value"] = "Success";

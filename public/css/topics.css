@@ -294,6 +294,10 @@
     left: 8px;
 }
 
+.topic .titleIcon {
+    margin-top: 6px !important;
+}
+
 /* Empty category content */
 
 .emptyCategoryCard {

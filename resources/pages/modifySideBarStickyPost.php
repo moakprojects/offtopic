@@ -1,7 +1,7 @@
 <?php
-if(isset($_SESSION["user"]) && isset($_SESSION['user']['isAdmin']) && isset($_SESSION["selectedSidebarStickyID"])) {
+if(isset($_SESSION["user"]) && isset($_SESSION['user']['isAdmin']) && isset($_SESSION["modifySidebarStickyID"])) {
     $postObj = new Post();
-    $selectedSidebarStickyData = $postObj -> getSidebarSticky($_SESSION["selectedSidebarStickyID"]);
+    $selectedSidebarStickyData = $postObj -> getSidebarSticky($_SESSION["modifySidebarStickyID"]);
 ?>
 <div class="container contentContainer">
     <div class="row noBottomMargin">

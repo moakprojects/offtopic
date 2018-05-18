@@ -1,7 +1,7 @@
 <?php
-if(isset($_SESSION["user"]) && isset($_SESSION['user']['isAdmin']) && isset($_SESSION["selectedCategoryID"])) {
+if(isset($_SESSION["user"]) && isset($_SESSION['user']['isAdmin']) && isset($_SESSION["modifyCategoryID"])) {
     $categoryObj = new Category();
-    $selectedCategoryData = $categoryObj -> getCategoryData($_SESSION["selectedCategoryID"]);
+    $selectedCategoryData = $categoryObj -> getCategoryData($_SESSION["modifyCategoryID"]);
 ?>
 <div class="container contentContainer">
     <div class="row noBottomMargin">

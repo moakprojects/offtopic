@@ -266,7 +266,15 @@ function adminModification(type, ID) {
             }
         }); 
     } else if(type === "topic") {
+        $.post('/resources/controllers/topicController.php', {modifyTopic: true, topicID: ID}, function(data) {
 
+            var obj = jQuery.parseJSON(data);
+            if(obj.data_type === 1) {
+                window.location.href = "/modify-topic";
+            } else {
+                Materialize.toast(obj.data_value, 4000);
+            }
+        });
     } else if (type === "post" || type === "sticky") {
         $.post('/resources/controllers/discussionController.php', {modifyPost: true, type: type, postID: ID}, function(data) {
 

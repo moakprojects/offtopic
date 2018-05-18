@@ -217,7 +217,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                 <em><p class="subtitle"> - in <a href="/categories/<?php echo $topic["categoryID"]?>"><?php echo $topic["categoryName"]?></a></p></em>
                             </div>
                             <div class="col s1 noPadding pencilIcon titleIcon center-align">
-                                <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                <a onclick="adminModification('topic', <?php echo $topic['topicID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                     <i class="fas fa-pencil-alt fa-xs"></i>
                                 </a>
                             </div>
@@ -335,7 +335,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                 <em><p class="subtitle"> - in <a href="/categories/<?php echo $topic["categoryID"]?>"><?php echo $topic["categoryName"]?></a></p></em>
                             </div>
                             <div class="col s1 noPadding pencilIcon titleIcon center-align">
-                                <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                <a onclick="adminModification('topic', <?php echo $topic['topicID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                     <i class="fas fa-pencil-alt fa-xs"></i>
                                 </a>
                             </div>

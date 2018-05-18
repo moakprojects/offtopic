@@ -83,7 +83,7 @@ function submitModifiedCategoryData(categoryID, oldImage) {
 
                         if(obj.data_type == 1) {
                             
-                            window.location.href = "/categories";
+                            window.location.href = "/home/#categories";
                         
                         } else {
                             $('.modifyCategorySpinner').addClass('hide');

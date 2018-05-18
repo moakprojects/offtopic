@@ -47,6 +47,9 @@
             case "new-topic":
                 $page = "newTopic";
             break;
+            case "modify-topic":
+                $page = "modifyTopic";
+            break;
             case "new-sticky-post":
                 $page = "newSidebarStickyPost";
             break;

@@ -84,6 +84,9 @@ $checkFavouriteTopicQuery = $db->prepare("SELECT * FROM favouritetopic WHERE use
 /* check if user added the category to favourite or not */
 $checkFavouriteCategoryQuery = $db->prepare("SELECT * FROM favouritecategory WHERE userID = :userID AND categoryID = :categoryID");
 
+/* get general information about the topic based on topicID for modification by admin */
+$selectedTopicBasicDataQuery = $db -> prepare("SELECT * FROM topic WHERE topicID = :topicID");
+
 /* select choosen topic information based on topicId */
 $selectedTopicQuery = $db->prepare("SELECT topic.*, numberOfLikes, numberOfPosts, latestPost, username, profileImage, periodName, rankID, rankColor FROM topic LEFT JOIN (SELECT topicID, count(*) as numberOfLikes FROM favouritetopic GROUP BY topicID) as likes ON likes.topicID = topic.topicID LEFT JOIN (SELECT topicID, count(*) as numberOfPosts, MAX(postedOn) as latestPost FROM post GROUP BY topicID) as posts ON posts.topicID = topic.topicID INNER JOIN (SELECT userID, username, profileImage, rank.rankID, rank.rankColor FROM user INNER JOIN rank ON rank.rankID = user.rankID) as user ON user.userID = topic.createdBy INNER JOIN (SELECT periodID, periodName FROM period) as periods ON periods.periodID = topic.semester WHERE topic.topicID = :topicID");
 
