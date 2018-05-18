@@ -20,6 +20,9 @@ $allPostQuery = $db->prepare("SELECT post.*, topic.topicName, userData.username,
 /* get all posts from sideBarStickyPost table */
 $allSidebarStickyPostQuery = $db->prepare("SELECT * from sidebarStickyPost");
 
+/* get the selected sidebarsticky by sidebarstickyID from sideBarStickyPost table */
+$sidebarStickyPostQuery = $db->prepare("SELECT * from sidebarStickyPost WHERE stickyPostID = :stickyPostID");
+
 /* get attached files from attechment table with postID */
 $attachedFilesQuery = $db->prepare("SELECT * FROM attachment WHERE attachedFileCode = :attachedFileCode");
 

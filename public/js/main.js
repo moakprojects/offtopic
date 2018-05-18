@@ -255,14 +255,11 @@ function adminDelition(page, section, type, ID) {
 }
 
 function adminModification(type, ID) {
-    console.log("type", type);
-    console.log("id", ID)
     if(type === "category") {
         $.post('/resources/controllers/categoryController.php', {modifyCategory: true, categoryID: ID}, function(data) {
 
             var obj = jQuery.parseJSON(data);
             if(obj.data_type === 1) {
-                console.log("ezisjo");
                 window.location.href = "/modify-category";
             } else {
                 Materialize.toast(obj.data_value, 4000);
@@ -271,6 +268,16 @@ function adminModification(type, ID) {
     } else if(type === "topic") {
 
     } else if (type === "post" || type === "sticky") {
+        $.post('/resources/controllers/discussionController.php', {modifyPost: true, type: type, postID: ID}, function(data) {
 
+            var obj = jQuery.parseJSON(data);
+            if(obj.data_type === 1) {
+                if(type === "sticky") {
+                    window.location.href = "/modify-sticky-post";
+                }
+            } else {
+                Materialize.toast(obj.data_value, 4000);
+            }
+        });
     }
 }

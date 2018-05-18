@@ -50,6 +50,9 @@
             case "new-sticky-post":
                 $page = "newSidebarStickyPost";
             break;
+            case "modify-sticky-post":
+                $page = "modifySideBarStickyPost";
+            break;
             case "new-category":
                 $page = "newCategory";
             break;

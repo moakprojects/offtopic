@@ -9,7 +9,7 @@
                     <h4 class="col s9 noPadding"><i class="fas fa-thumbtack"></i> <?php echo $stickyPost["stickyPostTitle"]; ?></h4>
                     <?php if(isset($_SESSION["user"]["isAdmin"])) { ?>
                         <div class="col s1 pencilIcon titleIcon center-align">
-                            <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                            <a onclick="adminModification('sticky', <?php echo $stickyPost['stickyPostID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                 <i class="fas fa-pencil-alt fa-xs"></i>
                             </a>
                         </div>

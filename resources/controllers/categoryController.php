@@ -78,7 +78,7 @@ if(isset($_POST["modifyCategory"])) {
     $_SESSION["selectedCategoryID"] = $_POST["categoryID"];
     
     $result["data_type"] = 1;
-    $result["data_value"] = "The selected category was deleted";
+    $result["data_value"] = "Success";
     echo json_encode($result);
 }
 
@@ -104,7 +104,7 @@ if(isset($_POST["modifiedCategoryData"])) {
         }
 
         $result["data_type"] = 1;
-        $result["data_value"] = "The selected category was deleted";
+        $result["data_value"] = "Success";
 
         echo json_encode($result);
     } else {
