@@ -33,7 +33,7 @@ $(document).ready(function(){
 		var imageExtension = imageName.split('.').pop().toLowerCase();
 		var imageSize = property.size;
 
-		if(jQuery.inArray(imageExtension, ['png', 'jpg', 'jpeg']) == -1) {
+		if(jQuery.inArray(imageExtension, ['png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG']) == -1) {
 			$('#errorMsg').removeClass('hide');
 			$('#errorMsg').html("Invalid file type");
 		} else if(imageSize > 4000000) {

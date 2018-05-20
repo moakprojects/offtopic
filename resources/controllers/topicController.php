@@ -212,6 +212,7 @@ if(isset($_POST["modifiedTopicData"])) {
             foreach($removeAttachedFiles as $file) {
                 $topicObj->removeFiles($file->attachmentID);
                 $location = "../../public/files/upload/" . $file->attachmentName;
+                unlink($location);
             }
         }
 

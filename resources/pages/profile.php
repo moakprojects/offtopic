@@ -31,6 +31,8 @@
             </div>
         </div>
     </div>
+    <div class="tooltipped suspended center-align <?php echo ($selectedUserData['accessLevel'] == 2 ? '' : 'hide'); ?>" data-position="bottom" data-delay="50" data-tooltip="Suspended">
+        <i class="fas fa-gavel fa-2x"></i></div>
     <div class="profileContainer">
         <div class="profileImageContainer textCenter">    
             <div class="image <?php echo ($myprofile ? "changeAvatar" : ""); ?>">
@@ -582,7 +584,7 @@
                         </div>
                     </div>     
                     <?php
-                        if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
+                        if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"]) && $selectedUserData["accessLevel"] == 1) {
                     ?>
                         <div class="row">
                             <a class="waves-effect waves-light btn suspendBtn" onclick="suspendUser('<?php echo $selectedUserData["userID"]; ?>')">Suspend this user</a>
