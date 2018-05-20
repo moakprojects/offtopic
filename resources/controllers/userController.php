@@ -7,7 +7,9 @@ include "../../database/modification.php";
 include "../../database/deletion.php";
 include "../../database/event.php";
 include "../classes/User.php";
+include "../classes/Image.php";
 $userObj = new User();
+$imageObj = new Image();
 
 //if a user wants to registrate we check the email and the username if it is already exist or not, if not we call create user function from persistence layer and we send a verification email
 if(isset($_POST["regEmail"])) {
@@ -259,7 +261,7 @@ if(isset($_FILES["file"])) {
     
     if(!($_FILES["file"]["error"] > 0)) 
     {
-        uploadProfileImage($_FILES["file"]["name"], $_FILES["file"]["tmp_name"]);
+        uploadProfileImage($_FILES["file"]["name"], $_FILES["file"]["tmp_name"], 'own');
     } else {
         $result["data_type"] = 0;
         $result["data_value"] = "An error occured";
@@ -272,14 +274,29 @@ if(isset($_FILES["file"])) {
     
     $currentLocation = "../../public/images/defaultAvatars/" . $_POST["avatarName"];
 
-    uploadProfileImage($_POST["avatarName"], $currentLocation);
+    uploadProfileImage($_POST["avatarName"], $currentLocation, 'default');
 
 }
 
 //add a uniqui id for the image and upload it to database and copy to the storage
-function uploadProfileImage($filename, $tmpLocation) {
+function uploadProfileImage($filename, $tmpLocation, $type) {
 
     global $userObj;
+    global $imageObj;
+
+    if($type === 'own') {
+        $imageObj->load($tmpLocation);
+        $width = $imageObj->getWidth();
+        $height = $imageObj->getHeight();
+
+        if($width < $height) {
+            $imageObj->resizeToWidth(400);
+        } else {
+            $imageObj->resizeToHeight(400);
+        }
+
+        $imageObj->crop(400);
+    }
 
     $imgName = time() . '_' . $filename;
     $newLocation = "../../public/images/upload/" . $imgName;
@@ -292,7 +309,12 @@ function uploadProfileImage($filename, $tmpLocation) {
     }
 
     if($userObj->uploadProfileImage($imgName, $_SESSION["user"]["userID"])) {
-        copy($tmpLocation, $newLocation);
+        
+        if($type === 'own') {
+            $imageObj->save($newLocation, 100);
+        } else {
+            copy($tmpLocation, $newLocation);
+        }
 
         if(isset($previousLocation)) {
             unlink($previousLocation);
