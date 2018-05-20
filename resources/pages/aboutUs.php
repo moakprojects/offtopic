@@ -5,8 +5,8 @@
     <div class="container contentContainer">
         <div class="row noBottomMargin aboutUsTopWrapper">
             <div class="col s5 offset-s1"> 
-                <h2>What is Off-topic?</h2>
-                <p><?php echo $descriptionOfTheSite[0]["aboutUs"]; ?></p>
+                <h2>What is OffTopic?</h2>
+                <p><?php echo $descriptionOfTheSite['description']; ?></p>
             </div>            
         </div>
         <div class="row noBottomMargin meetTheTeamWrapper">

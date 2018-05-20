@@ -925,7 +925,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                             <form class="modifyDescriptionForm" action="" method="post" id="modifyDescriptionForm">  
                                 <div class="row textareaContainer">
                                     <div class="input-field forumInformationInput">
-                                        <textarea id="newDescription" class="materialize-textarea"><?php echo $descriptionOfTheSite[0]["aboutUs"]; ?></textarea>
+                                        <textarea id="newDescription" class="materialize-textarea"><?php echo $descriptionOfTheSite["description"]; ?></textarea>
                                         <label for="newDescription">About Us</label>
                                     </div>
                                 </div>
