@@ -32,6 +32,12 @@ html {
     height: 100%;
 }
 
+.moderated {
+    color: #ffa055 !important;
+    font-size: 10px;
+    font-style: italic;
+}
+
 .noMargin {
     margin: 0 !important;
 }

@@ -1,5 +1,5 @@
 
-/* customization of quill.js for discussion page */
+/* customization of the quill.js */
    var toolbarOptions = [
     [{ 'size': ['small', false, 'large', 'huge'] }, 'bold', 'italic', 'underline', 'strike'],
     [ 'link', 'blockquote'],
@@ -9,7 +9,7 @@
     ['clean'],
 ];
 
-/* inicialize quill.js */
+/* initialize quill.js */
 var quill = new Quill('#editor', {
     modules: {
     toolbar: {
@@ -22,9 +22,11 @@ var quill = new Quill('#editor', {
 
 /* originalAttachment mean the original attachment files of the topic for backup */
 var originalAttachment = [];
-/* newAttachment is an array where we can store only those attachment files which the admin want to keep */
+/* currentAttachment mean the current attachment files of the topic for backup */
+var currentAttachment = [];
+/* newAttachment is an array where we can store only those attachment file names which the admin want to keep */
 var newAttachment = [];
-/* remove attachemnt is just a help array where we store the attachmentnames what the admin want to delete */
+/* remove attachment is just a help array where we store the attachmentnames what the admin want to delete */
 var removeAttachFiles = [];
 
 /* get the topic description and attachment filenames when the page is ready */
@@ -32,10 +34,10 @@ $( document ).ready(function() {
     $.post('/resources/controllers/topicController.php', {getSelectedTopicDataFromJs: true}, function(returnData) {
         var obj = jQuery.parseJSON(returnData);
         if(obj.data_type != 0) {
-            quill.insertText(0, obj.topicText);
             if(obj[0]) {
                 for(i=0; i < obj[0].length; i++) {
                     originalAttachment.push(obj[0][i]);
+                    currentAttachment.push(obj[0][i]);
                     newAttachment.push(obj[0][i].displayName);
                     $('#attachFiles').append("<li><span>" + obj[0][i].displayName + "</span><span onclick='removeAttachFile(" + i + ")'><i class='material-icons'>clear</i></span></li>");
                 }
@@ -47,9 +49,11 @@ $( document ).ready(function() {
 /* remove selected attached file from the list of current files */ 
 function removeAttachFile(index) {
     newAttachment.splice(index, 1);
+    currentAttachment.splice(index, 1);
     $('#attachFiles').html("");
-    for(i=0; i<newAttachment.length;i++) {
-        $('#attachFiles').append("<li><span>" + newAttachment + "</span><span onclick='removeAttachFile(" + i + ")'><i class='material-icons'>clear</i></span></li>");
+
+    for(i=0; i<currentAttachment.length;i++) {
+        $('#attachFiles').append("<li><span>" + currentAttachment[i].displayName + "</span><span onclick='removeAttachFile(" + i + ")'><i class='material-icons'>clear</i></span></li>");
     }
 }
 
@@ -58,13 +62,14 @@ var errorMsg = "";
 
 function submitModifiedTopicData(id) {
     $('.modifyTopicSpinner').removeClass('hide');
-    var modifiedTopicName = $('#modifiedTopicName')["0"].value;
-    var modifiedTopicDescription = quill.getText().trim();
-    var modifiedTopicCategory = $('#modifiedTopicCategory')["0"].value;
-    var modifiedTopicPeriod = $('#modifiedTopicPeriod')["0"].value;
+    if(quill.getText().trim() !== '') {
+        var modifiedTopicName = $('#modifiedTopicName')["0"].value;
+        var modifiedTopicDescription = quill.root.innerHTML;
+        modifiedTopicDescription = modifiedTopicDescription + '<p class="right-align moderated">- moderated by Admin</p>';
+        var modifiedTopicCategory = $('#modifiedTopicCategory')["0"].value;
+        var modifiedTopicPeriod = $('#modifiedTopicPeriod')["0"].value;
 
-    if(modifiedTopicName !== "") {
-        if(modifiedTopicDescription !== "") {
+        if(modifiedTopicName !== "") {
             if(modifiedTopicCategory !== "") {
                 if(modifiedTopicPeriod !== "") {
                     $('#errorMsg').html("");
@@ -99,11 +104,11 @@ function submitModifiedTopicData(id) {
                 $('#errorMsg').removeClass('hide');  
             }
         } else {
-            $('#errorMsg').html("Please enter a valid description of the topic");
+            $('#errorMsg').html("Please enter a valid name of the topic");
             $('#errorMsg').removeClass('hide');
         }
     } else {
-        $('#errorMsg').html("Please enter a valid name of the topic");
+        $('#errorMsg').html("Please enter a valid description of the topic");
         $('#errorMsg').removeClass('hide');
     }
 

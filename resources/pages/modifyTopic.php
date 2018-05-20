@@ -22,7 +22,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION['user']['isAdmin']) && isset($_SE
                         <div class="input-field modifyTopicInput">
                             <p class="desciptrionLabel">Topic Description</p>
                             <div class="editorContainer" id="modifiedTopicDescription">
-                                <div id="editor"></div>
+                                <div id="editor"><?php echo $selectedTopic["topicText"]; ?></div>
                             </div>
                         </div>
                     </div>

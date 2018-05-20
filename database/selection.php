@@ -17,6 +17,9 @@ $postQuery = $db->prepare("SELECT post.*, userData.username, userData.profileIma
 /* get all of the post data from post table*/
 $allPostQuery = $db->prepare("SELECT post.*, topic.topicName, userData.username, userData.profileImage, numberOfLikes, numberOfDislikes, rankID, rankColor FROM post INNER JOIN (SELECT user.username, user.profileImage, user.userID, rank.rankID, rankColor FROM user INNER JOIN rank ON rank.rankID = user.rankID) as userData ON post.userID = userData.userID LEFT JOIN topic ON topic.topicID = post.topicID LEFT JOIN (SELECT postlike.postID, sum(isLike) as numberOfLikes, sum(isDislike) as numberOfDislikes FROM `postlike` GROUP BY postlike.postID) as likes ON likes.postID = post.postID");
 
+/* get general information about the post based on postID for modification by admin */
+$selectedPostBasicDataQuery = $db -> prepare("SELECT * FROM post WHERE postID = :postID");
+
 /* get all posts from sideBarStickyPost table */
 $allSidebarStickyPostQuery = $db->prepare("SELECT * from sidebarStickyPost");
 

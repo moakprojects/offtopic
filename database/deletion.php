@@ -20,9 +20,13 @@ $deletePostByCategoryQuery = $db->prepare("DELETE FROM post WHERE topicID = (SEL
 $deleteTopicQuery = $db->prepare("DELETE FROM topic WHERE topicID = :topicID");
 /* delete posts by topic id from database by admin */
 $deletePostByTopicQuery = $db->prepare("DELETE FROM post WHERE topicID = :topicID");
+/* delete attachment by topicID */
+$deleteAttachmentByTopicQuery = $db->prepare("DELETE FROM attachment WHERE attachedFileCode = (SELECT attachedFilesCode FROM topic WHERE topicID = :topicID)");
 
 /* delete selected post from database by admin*/
 $deletePostQuery = $db->prepare("DELETE FROM post WHERE postID = :postID");
+/* delete attachment by postID */
+$deleteAttachmentByPostQuery = $db->prepare("DELETE FROM attachment WHERE attachedFileCode = (SELECT attachedFilesCode FROM post WHERE postID = :postID)");
 
 /* delete attachment files from database by admin */
 $deleteFileQuery = $db->prepare("DELETE FROM attachment WHERE attachmentID = :attachmentID");

@@ -290,7 +290,7 @@
                         </div>
                         <div class="col s2 offset-s8 right-align adminIcons">
                             <div class="noPadding pencilIcon titleIcon center-align">
-                                <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                <a onclick="adminModification('post', <?php echo $posts[$i]["postID"]; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                     <i class="fas fa-pencil-alt fa-xs"></i>
                                 </a>
                             </div>
@@ -514,7 +514,7 @@
                         </div>
                         <div class="col s2 offset-s8 right-align adminIcons">
                             <div class="noPadding pencilIcon titleIcon center-align">
-                                <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                <a onclick="adminModification('post', <?php echo $posts[$i]["postID"]; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                     <i class="fas fa-pencil-alt fa-xs"></i>
                                 </a>
                             </div>

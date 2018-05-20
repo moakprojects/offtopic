@@ -328,14 +328,6 @@ class Topic {
 
         if(isset($newTopicQuery)) {
 
-            try {
-                $topicName = htmlspecialchars(trim($topicName));
-                $topicText = htmlspecialchars(trim($topicText));
-                $createdBy = htmlspecialchars(trim($createdBy));
-                $period = htmlspecialchars(trim($period));
-                $category = htmlspecialchars(trim($category));
-                $attachedFilesCode = htmlspecialchars(trim($attachedFilesCode));
-
                 try {
                     $db->beginTransaction();
                     
@@ -360,9 +352,6 @@ class Topic {
                     $db->rollback();
                     return false;
                 }
-            } catch (PDOException $e) {
-                return false;
-            }
 
             return true;
         } else {
@@ -405,15 +394,18 @@ class Topic {
         }
     }
 
-
-       // delete selected topic
-       function deleteTopic($topicID) {
+    // delete selected topic
+    function deleteTopic($topicID) {
         global $db;
         global $deleteTopicQuery;
         global $deletePostByTopicQuery;
+        global $deleteAttachmentByTopicQuery;
 
         try {
             $db->beginTransaction();
+
+            $deleteAttachmentByTopicQuery->bindParam(':topicID', $topicID);
+            $deleteAttachmentByTopicQuery->execute();            
 
             $deletePostByTopicQuery->bindParam(':topicID', $topicID);
             $deletePostByTopicQuery->execute();            

@@ -83,8 +83,10 @@ if(isset($_POST["favouriteSelectedTopic"])) {
 
 if(isset($_POST["createNewTopic"])) {
     $attachedFilesCode = "Att" . time();
+    
+    $newTopicName = htmlspecialchars(trim($_POST["newTopicName"]));
 
-    $uploadInfo = $topicObj->uploadNewTopic($_POST["newTopicName"], $_POST["newTopicDescription"], $_SESSION["user"]["userID"], $_POST["newTopicPeriod"], $_POST["newTopicCategory"], $attachedFilesCode);
+    $uploadInfo = $topicObj->uploadNewTopic($newTopicName, $_POST["newTopicDescription"], $_SESSION["user"]["userID"], $_POST["newTopicPeriod"], $_POST["newTopicCategory"], $attachedFilesCode);
 
     if($uploadInfo) {
         
@@ -200,7 +202,10 @@ if(isset($_POST["getSelectedTopicDataFromJs"])) {
 
 /* modify selected data by admin */
 if(isset($_POST["modifiedTopicData"])) {
-    if($topicObj->modifyTopicData($_POST["modifiedTopicID"], $_POST["modifiedTopicName"], $_POST["modifiedTopicDescription"], $_POST["modifiedTopicCategory"], $_POST["modifiedTopicPeriod"])) {
+
+    $modifiedTopicName = htmlspecialchars(trim($_POST["modifiedTopicName"]));
+
+    if($topicObj->modifyTopicData($_POST["modifiedTopicID"], $modifiedTopicName, $_POST["modifiedTopicDescription"], $_POST["modifiedTopicCategory"], $_POST["modifiedTopicPeriod"])) {
 
         $removeAttachedFiles = json_decode( $_POST['removeAttachedFiles'] );
         if(count($removeAttachedFiles) > 0) {

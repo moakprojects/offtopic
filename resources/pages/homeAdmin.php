@@ -470,7 +470,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         ?>  
                                     </div>
                                     <div class="col s1 noPadding pencilIcon titleIcon center-align">
-                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                        <a onclick="adminModification('post', <?php echo $posts[$i]["postID"]; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                             <i class="fas fa-pencil-alt fa-xs"></i>
                                         </a>
                                     </div>
@@ -616,7 +616,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         ?>  
                                     </div>
                                     <div class="col s1 noPadding pencilIcon titleIcon center-align">
-                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                        <a onclick="adminModification('post', <?php echo $posts[$i]["postID"]; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                             <i class="fas fa-pencil-alt fa-xs"></i>
                                         </a>
                                     </div>
@@ -805,7 +805,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                         <a class="waves-effect waves-light btn stickyBtn" onclick="setSticky(<?php echo $posts[$i]["postID"]?>)">Unsticky</a>
                                     </div>
                                     <div class="noPadding pencilIcon titleIcon center-align">
-                                        <a href='#' class="tooltipped" data-position="bottom" data-tooltip="Edit">
+                                        <a onclick="adminModification('post', <?php echo $posts[$i]["postID"]; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                             <i class="fas fa-pencil-alt fa-xs"></i>
                                         </a>
                                     </div>

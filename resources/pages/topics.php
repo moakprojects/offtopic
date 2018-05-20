@@ -73,6 +73,7 @@
                                 <div class="col s10 noPadding">
                                     <h3><?php echo $topic["shortTopicName"]?></h3>
                                 </div>
+                                <?php if(isset($_SESSION["user"]) && isset($_SESSION['user']['isAdmin'])) { ?>
                                 <div class="col s1 noPadding pencilIcon titleIcon center-align">
                                     <a onclick="adminModification('topic', <?php echo $topic['topicID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Edit">
                                         <i class="fas fa-pencil-alt fa-xs"></i>
@@ -83,6 +84,7 @@
                                         <i class="fas fa-trash fa-xs"></i>
                                     </a>
                                 </div>
+                            <?php } ?>
                             </div>
                                 <p class="topicDescription"><?php echo $topic["topicDescription"]; ?></p>
                             <?php 
