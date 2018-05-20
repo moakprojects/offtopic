@@ -99,3 +99,7 @@ h3{
 #errorMsg {
     color: red;
 }
+
+.subjectText {
+    display: none;
+}
