@@ -17,7 +17,7 @@
         $favouriteTopics = $userObj->getFavouriteTopics($selectedUserData["userID"]);
         $likedPosts = $userObj->getLikedPosts($selectedUsername);
         $createdTopics = $userObj->getCreatedTopics($selectedUsername);
-        if($selectedUserData["accessLevel"] != 0) {
+        if($selectedUserData["accessLevel"] !== 0 && $selectedUserData["accessLevel"] != 3) {
 ?>
 <div class="container contentContainer">
     <div class="row breadCrumbContainer">
