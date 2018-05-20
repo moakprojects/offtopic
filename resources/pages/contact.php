@@ -26,14 +26,14 @@
                 <form class="contactForm" action="" method="post" id="contactForm">  
                     <div class="row">
                         <div class="input-field contactInput">
-                            <input id="name" type="text" class="noBottomMargin">
-                            <label class="active" for="name">Your name</label>
+                            <input id="senderName" type="text" class="noBottomMargin">
+                            <label class="active" for="senderName">Your name</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field contactInput">
-                            <input id="email" type="text" class="noBottomMargin">
-                            <label class="active" for="email">Your email</label>
+                            <input id="senderEmail" type="text" class="noBottomMargin">
+                            <label class="active" for="senderEmail">Your email</label>
                         </div>
                     </div>
                     <div class="row textareaContainer">

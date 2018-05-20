@@ -212,7 +212,11 @@ if(isset($_POST["stickyID"])) {
 
 /* upload new sidebar sticky post */
 if(isset($_POST["createNewSticky"])) {
-    if($postObj->uploadnewStickyPost($_POST["newStickyName"], $_POST["newStickyDescription"])) {
+
+    $newStickyName = htmlspecialchars(trim($_POST["newStickyName"]));
+    $newStickyDescription = htmlspecialchars(trim($_POST["newStickyDescription"]));
+
+    if($postObj->uploadnewStickyPost($newStickyName, $newStickyDescription)) {
         $result["data_type"] = 1;
         $result["data_value"] = "New sticky post was created";
 
@@ -444,7 +448,7 @@ if(isset($_POST["reCountID"])) {
 if(isset($_POST["deletePost"])) {
     if($_POST["type"] === "post") {
         if($postObj->deletePost($_POST["postID"])) {
-        
+            
             $result["data_type"] = 1;
             $result["data_value"] = "The selected post was deleted";
     
@@ -480,6 +484,8 @@ if(isset($_POST["deletePost"])) {
 if(isset($_POST["modifyPost"])) {
     if($_POST["type"] == "sticky") {
         $_SESSION["modifySidebarStickyID"] = $_POST["postID"];
+    } else if($_POST["type"] == "post") {
+        $_SESSION["modifyPostID"] = $_POST["postID"];
     }
     
     $result["data_type"] = 1;
@@ -487,15 +493,63 @@ if(isset($_POST["modifyPost"])) {
     echo json_encode($result);
 }
 
-/* modify selected category */
+/* modify selected stickyPost */
 if(isset($_POST["modifiedStickyData"])) {
-    if($postObj->modifySidebarSticky($_POST["modifiedStickyID"], $_POST["modifiedStickyName"], $_POST["modifiedStickyDescription"])) {
+
+    $modifiedStickyName = htmlspecialchars(trim($_POST["modifiedStickyName"]));
+    $modifiedStickyDescription = htmlspecialchars(trim($_POST["modifiedStickyDescription"]));
+
+    if($postObj->modifySidebarSticky($_POST["modifiedStickyID"], $modifiedStickyName, $modifiedStickyDescription)) {
         $result["data_type"] = 1;
         $result["data_value"] = "Success";
 
         unset($_SESSION["modifySidebarStickyID"]);
 
         echo json_encode($result);
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+    }
+}
+
+/* modify selected post */
+if(isset($_POST["modifiedPostData"])) {
+    if($postObj->modifyPostData($_POST["modifiedPostID"], $_POST["modifiedPostText"])) {
+        
+        $removeAttachedFiles = json_decode( $_POST['removeAttachedFiles'] );
+        if(count($removeAttachedFiles) > 0) {
+            foreach($removeAttachedFiles as $file) {
+                $postObj->removeFiles($file->attachmentID);
+                $location = "../../public/files/upload/" . $file->attachmentName;
+            }
+        }
+        
+        unset($_SESSION["modifyPostID"]);
+
+        $result["data_type"] = 1;
+        $result["data_value"] = "Success";
+
+        echo json_encode($result);
+    } else {
+        $result["data_type"] = 0;
+        $result["data_value"] = "An error occured";
+
+        echo json_encode($result);
+    }
+}
+
+/* get selected post data from js */
+if(isset($_POST["getSelectedPostData"])) {
+    if($selectedPost = $postObj->getSelectedPostBasicData($_SESSION["modifyPostID"])) {
+        if($attachedFiles = $postObj->getAttachedFiles($selectedPost["attachedFilesCode"])) {
+            array_push($selectedPost, $attachedFiles);
+        }
+        $result["data_type"] = 1;
+        $result["data_value"] = $selectedPost;
+
+        echo json_encode($selectedPost);
     } else {
         $result["data_type"] = 0;
         $result["data_value"] = "An error occured";

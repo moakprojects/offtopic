@@ -8,7 +8,7 @@ var toolbarOptions = [
   ['clean'],
 ];
 
-/* inicialize quill.js */
+/* initialize quill.js */
 var quill = new Quill('#editor', {
   modules: {
     toolbar: {
@@ -161,47 +161,53 @@ $(document).on('click', '.postReplyBtn', function() {
 
 /* upload a post and attached files into the database and storage */ 
 function uploadPost() {
-  var replyContent = quill.root.innerHTML;
-  $.post('/resources/controllers/discussionController.php', {replyContent: replyContent, replyID: replyId}, function(returnData) {
-    var obj = jQuery.parseJSON(returnData);
-          
-    if(obj.data_type == 0) {
-      $('#errorMsg').removeClass('hide');
-      $('#errorMsg').html(obj.data_value);
-    } else {
-      if(currentFiles.length > 0) {
-    
-        var attachedFiles = new FormData();
-        $.each(currentFiles, function(i, file) {
-            attachedFiles.append('file-'+i, file);
-        });
-        
-        $.ajax({
-          url: '/resources/controllers/discussionController.php',
-          method: 'POST',
-          type: 'POST',
-          data: attachedFiles,
-          contentType: false,
-          cache: false,
-          processData: false,
-          success: function(data) {
-            var fileObj = jQuery.parseJSON(data);
+  if(quill.getText().trim() !== '') {
+    var replyContent = quill.root.innerHTML;
+    $.post('/resources/controllers/discussionController.php', {replyContent: replyContent, replyID: replyId}, function(returnData) {
+      var obj = jQuery.parseJSON(returnData);
             
-            if(fileObj.data_type == 0) {
-              $('#errorMsg').removeClass('hide');
-              $('#errorMsg').html(fileObj.data_value);
-            } else {
-              $('#attachFiles').html("");
-              refreshPostContent(obj.data_value);
-            }
-          }
-        });
+      if(obj.data_type == 0) {
+        $('#errorMsg').removeClass('hide');
+        $('#errorMsg').html(obj.data_value);
       } else {
-        refreshPostContent(obj.data_value);
-      } 
-      replyId = null;
-    }
-  });
+        if(currentFiles.length > 0) {
+      
+          var attachedFiles = new FormData();
+          $.each(currentFiles, function(i, file) {
+              attachedFiles.append('file-'+i, file);
+          });
+          
+          $.ajax({
+            url: '/resources/controllers/discussionController.php',
+            method: 'POST',
+            type: 'POST',
+            data: attachedFiles,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+              var fileObj = jQuery.parseJSON(data);
+              
+              if(fileObj.data_type == 0) {
+                $('#errorMsg').removeClass('hide');
+                $('#errorMsg').html(fileObj.data_value);
+              } else {
+                $('#attachFiles').html("");
+                refreshPostContent(obj.data_value);
+              }
+            }
+          });
+        } else {
+          refreshPostContent(obj.data_value);
+        } 
+        replyId = null;
+      }
+    });
+  } else {
+      $('.replySpinner').addClass('hide');
+      $('#errorMsg').removeClass('hide');
+      $('#errorMsg').html("Please enter a valid post");
+  }
 }
 
 /* refresh posts after backend response to display the new post immediately */

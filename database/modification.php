@@ -47,6 +47,9 @@
     /* change the fields of selected topic by Admin */
     $modifyTopicQuery = $db->prepare("UPDATE topic SET topicName = :topicName, topicText = :topicText, semester = :semester, categoryID = :categoryID WHERE topicID = :topicID");
 
+    /* change the textfield of selected post by Admin */
+    $modifyPostQuery = $db->prepare("UPDATE post SET text = :text WHERE postID = :postID");
+
     /* change the fields of sidebar sticky post by Admin */
     $modifySidebarStickyQuery = $db->prepare("UPDATE sidebarStickyPost SET stickyPostTitle = :stickyPostTitle, stickyPostText = :stickyPostText WHERE stickyPostID = :stickyPostID");
 

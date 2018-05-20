@@ -1,5 +1,5 @@
 
-/* customization of quill.js for discussion page */
+/* customization of the quill.js */
 var toolbarOptions = [
     [{ 'size': ['small', false, 'large', 'huge'] }, 'bold', 'italic', 'underline', 'strike'],
     [ 'link', 'blockquote', 'attachment'],
@@ -9,7 +9,7 @@ var toolbarOptions = [
     ['clean'],
   ];
   
-  /* inicialize quill.js */
+  /* initialize quill.js */
   var quill = new Quill('#editor', {
     modules: {
       toolbar: {
@@ -95,13 +95,13 @@ function removeAttachFile(index) {
 
 $(document).on('click', '#newTopicSubmit', function() {
   $('.newtopicSpinner').removeClass('hide');
-  var newTopicName = $('#newTopicName')["0"].value;
-  var newTopicDescription = quill.getText().trim();
-  var newTopicCategory = $('#newTopicCategory')["0"].value;
-  var newTopicPeriod = $('#newTopicPeriod')["0"].value;
+  if(quill.getText().trim() !== '') {
+    var newTopicName = $('#newTopicName')["0"].value;
+    var newTopicDescription = quill.root.innerHTML;
+    var newTopicCategory = $('#newTopicCategory')["0"].value;
+    var newTopicPeriod = $('#newTopicPeriod')["0"].value;
 
-  if(newTopicName !== "") {
-    if(newTopicDescription !== "") {
+    if(newTopicName !== "") {
       if(newTopicCategory !== "") {
         if(newTopicPeriod !== "") {
           $('#errorMsg').html("");
@@ -172,12 +172,12 @@ $(document).on('click', '#newTopicSubmit', function() {
         $('#errorMsg').removeClass('hide');  
       }
     } else {
-      $('#errorMsg').html("Please enter the description of your new topic");
+      $('#errorMsg').html("Please enter the name of you new topic");
       $('#errorMsg').removeClass('hide');
     }
   } else {
-    $('#errorMsg').html("Please enter the name of you new topic");
-    $('#errorMsg').removeClass('hide');
+        $('#errorMsg').html("Please enter the description of your new topic");
+        $('#errorMsg').removeClass('hide');
   }
 
   $('.newtopicSpinner').addClass('hide');

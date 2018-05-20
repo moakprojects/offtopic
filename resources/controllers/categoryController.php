@@ -43,7 +43,10 @@ if(isset($_POST["createNewCategory"])) {
     $fileName = time() . '_' . $_FILES["file"]["name"];
     $location = "../../public/images/content/categoryThumbnail/" . $fileName;
 
-    if($categoryObj->uploadNewCategory($_POST["newCategoryName"], $_POST["newCategoryDescription"], $fileName)) {
+    $newCategoryName = htmlspecialchars(trim($_POST["newCategoryName"]));
+    $newCategoryDescription = htmlspecialchars(trim($_POST["newCategoryDescription"]));
+
+    if($categoryObj->uploadNewCategory($newCategoryName, $newCategoryDescription, $fileName)) {
         copy($_FILES["file"]["tmp_name"], $location);
         $result["data_type"] = 1;
         $result["data_value"] = "New category was created";
@@ -97,7 +100,10 @@ if(isset($_POST["modifiedCategoryData"])) {
         echo json_encode($result);
     }
 
-    if($categoryObj->modifyCategoryData($_POST["modifiedCategoryID"], $_POST["modifiedCategoryName"], $_POST["modifiedCategoryDescription"], $fileName)) {
+    $modifiedCategoryName = htmlspecialchars(trim($_POST["modifiedCategoryName"]));
+    $modifiedCategoryDescription = htmlspecialchars(trim($_POST["modifiedCategoryDescription"]));
+
+    if($categoryObj->modifyCategoryData($_POST["modifiedCategoryID"], $modifiedCategoryName, $modifiedCategoryDescription, $fileName)) {
         if(isset($_FILES["file"])) {
             copy($_FILES["file"]["tmp_name"], $location);
             unlink($previousLocation);

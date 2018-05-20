@@ -503,15 +503,19 @@
                                     </div>
                                 </div>
                                 <?php } ?>
+                                <?php if($selectedUserData["rankTitle"] != "none") {?>
                                 <div class="row">
                                     <div class="col s5">
                                         <div class="col s1 personalInformationIcon"><i class="fas fa-circle-notch"></i></div>
                                         <div class="col s10 personalInformationLabel">Rank level:</div>
                                     </div>
                                     <div class="col s7 right-align">
-                                    <?php echo $selectedUserData["rankTitle"]; ?>
+                                    <?php 
+                                        echo $selectedUserData["rankTitle"]; 
+                                    ?>
                                     </div>
                                 </div>
+                                <?php } ?>
                                 <div class="row">
                                     <div class="col s5">
                                         <div class="col s1 personalInformationIcon"><i class="fas fa-history"></i></div>

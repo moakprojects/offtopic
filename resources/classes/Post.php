@@ -43,6 +43,44 @@ class Post {
         }
     }
 
+    // request data from database based on postID
+    function getSelectedPostBasicData($postID) {
+        global $db;
+        global $selectedPostBasicDataQuery;
+
+        try {
+            $selectedPostBasicDataQuery->bindParam(':postID', $postID);
+            $selectedPostBasicDataQuery->execute();
+            $selectedPostBasicData = $selectedPostBasicDataQuery->fetch(PDO::FETCH_ASSOC);
+            
+            if($selectedPostBasicData) {
+                return $selectedPostBasicData;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            header("Location: /error");
+            exit;
+        }
+    }
+
+    /* modify the data of a selected post */
+    function modifyPostData($postID, $text) {
+        global $db;
+        global $modifyPostQuery;
+
+        if($modifyPostQuery) {
+
+            $modifyPostQuery->bindParam(":postID", $postID);
+            $modifyPostQuery->bindParam(":text", $text);
+            $modifyPostQuery ->execute();
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // request the sidebar sticky posts data from database
     function getAllSidebarSticky() {
         global $db;
@@ -103,6 +141,22 @@ class Post {
             return $cuttedTopicText = substr($longText, 0, $length) . "...";  
         } else {
             return $longText; 
+        }
+    }
+
+    /* remove attached file */
+    function removeFiles($attachmentID) {
+
+        global $db;
+        global $deleteFileQuery;
+
+        if(isset($deleteFileQuery)) {
+            $deleteFileQuery->bindParam(':attachmentID', $attachmentID);
+            $deleteFileQuery->execute();
+
+            return true;
+        } else {
+            return false;
         }
     }
     
@@ -345,6 +399,7 @@ class Post {
         global $modifyEqualReplyIDQuery;
         global $modifyLargerReplyIDQuery;
         global $deletePostQuery;
+        global $deleteAttachmentByPostQuery;
 
         try {
             $db->beginTransaction();
@@ -360,6 +415,9 @@ class Post {
             $modifyLargerReplyIDQuery->bindParam(':replyID', $orderNumber['orderNumberOfPost'], PDO::PARAM_INT);
             $modifyLargerReplyIDQuery->bindParam(':topicID', $orderNumber['topicID'], PDO::PARAM_INT);
             $modifyLargerReplyIDQuery->execute();
+
+            $deleteAttachmentByPostQuery->bindParam(':postID', $postID, PDO::PARAM_INT);
+            $deleteAttachmentByPostQuery->execute();
 
             $deletePostQuery->bindParam(':postID', $postID);
             $deletePostQuery->execute();

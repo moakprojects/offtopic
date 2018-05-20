@@ -282,6 +282,8 @@ function adminModification(type, ID) {
             if(obj.data_type === 1) {
                 if(type === "sticky") {
                     window.location.href = "/modify-sticky-post";
+                } else if(type === "post") {
+                    window.location.href = "/modify-post";
                 }
             } else {
                 Materialize.toast(obj.data_value, 4000);
