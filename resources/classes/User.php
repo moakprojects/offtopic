@@ -8,20 +8,20 @@
             global $db;
             global $checkUserEmailQuery;
 
-            if(isset($checkUserEmailQuery)) {
+            try {
 
                 $checkUserEmailQuery->bindParam(':email', $regEmail);
                 $checkUserEmailQuery->execute();
 
                 if($checkUserEmailQuery->rowCount() > 0) {
-                   return $checkUserEmailResult = $checkUserEmailQuery->fetch(PDO::FETCH_ASSOC);
+                   return $checkUserEmailQuery->fetch(PDO::FETCH_ASSOC);
                 } else {
-                   return $checkUserEmailResult = "not exist";
+                   return "not exist";
                 }
 
-            } else {
+            } catch(PDOException $e) {
 
-                return $checkUserEmailResult = "error";
+                return "error";
             }
         }
 
@@ -31,19 +31,19 @@
             global $db;
             global $checkUsernameQuery;
 
-            if(isset($checkUsernameQuery)) {
+            try {
 
                 $checkUsernameQuery->bindParam(':username', $regUsername);
                 $checkUsernameQuery->execute();
 
                 if($checkUsernameQuery->rowCount() > 0) {
-                    return $checkUsernameResult = $checkUsernameQuery->fetch(PDO::FETCH_ASSOC);
+                    return "exist";
                 } else {
-                    return $checkUsernameResult = "not exist";
+                    return "not exist";
                 }
 
-            } else {
-                return $checkUsernameResult = "error";
+            } catch(PDOException $e) {
+                return "error";
             }
         }
 
@@ -53,7 +53,7 @@
             global $db;
             global $createUserQuery;
 
-            if(isset($createUserQuery)) {
+            try {
                 
                 $createUserQuery->bindParam(':email', $regEmail);
                 $createUserQuery->bindParam(':username', $regUsername);
@@ -64,7 +64,7 @@
                 $createUserQuery->execute();
 
                 return true;
-            } else {
+            } catch(PDOException $e) {
                 return false;
             }
         }
