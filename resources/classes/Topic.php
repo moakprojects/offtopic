@@ -277,10 +277,9 @@ class Topic {
         global $db;
         global $hotTopicsQuery;
 
-        if(isset($hotTopicsQuery)) {
-
+        try {
             $selectionDate = date('Y-m-d H:i:s', strtotime('-3 days'));
-            
+        
             $hotTopicsQuery->bindParam(":selectionDate", $selectionDate);
             $hotTopicsQuery ->execute();
 
@@ -299,9 +298,8 @@ class Topic {
             } else {
                 return false;
             }
-        } else {
-            header("Location: /error");
-            exit;
+        } catch(PDOException $e) {
+            return false;
         }
     }
 
