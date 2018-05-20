@@ -65,7 +65,11 @@ $generalObj = new General();
     if(isset($_POST["contactFormData"])) {
         $senderName = htmlspecialchars(trim($_POST["senderName"]));
         $senderEmail = htmlspecialchars(trim($_POST["senderEmail"]));
+        $subject = htmlspecialchars(trim($_POST["subject"]));
         $problemDescription = htmlspecialchars(trim($_POST["problemDescription"]));
+
+        $_SESSON["contactUser"]["IP"] = $_SERVER['REMOTE_ADDR'];
+        $_SESSON["contactUser"]["lastSent"] = now();
 
         /* send email to admin with the data from the contact form*/
         $emailTemplate = file_get_contents("../templates/contactResponseEmailTemplate.html");
@@ -78,15 +82,16 @@ $generalObj = new General();
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
         /* headers for the admin */
-        
         $adminHeaders = "FROM: contact@off-topic.tk" . "\r\n";
         $adminHeaders .= "REPLY-TO: $senderEmail" . "\r\n";
         $adminHeaders .= "MIME-Version: 1.0" . "\r\n";
         $adminHeaders .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
         try {
-            //mail($senderEmail, "Thank you for getting in touch", $emailTemplate, $headers);
-            //mail('erik117b@easv365.dk', "You got a mail through the contact form", $problemDescription, $adminHeaders);
+            if($subject === "") {
+                //mail($senderEmail, "Thank you for getting in touch", $emailTemplate, $headers);
+                //mail('erik117b@easv365.dk', "You got a mail through the contact form", $problemDescription, $adminHeaders);
+            }
 
             $result["data_type"] = 1;
             $result["data_value"] = "The message was sent";

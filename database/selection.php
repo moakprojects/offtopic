@@ -193,8 +193,12 @@ $userInfoQuery = $db->prepare("SELECT * FROM user WHERE userID = :userID");
 /* get rules and regulations data */
 $rulesAndRegulationsQuery = $db->prepare("SELECT * FROM rulesAndRegulations");
 
-/* get description of the site */
-$descriptionOfTheSiteQuery = $db->prepare("SELECT * FROM descriptionOfTheSite");
+/* get description of the site
+=======
+we change this query for stored procedure
+=======
+$descriptionOfTheSiteQuery = $db->prepare("SELECT * FROM descriptionOfTheSite");*/
+$descriptionOfTheSiteQuery = $db->exec("CALL proc_get_description_of_the_site(@out)");
 
 /* get contact information */
 $contactInformationQuery = $db->prepare("SELECT * FROM contactInformation");

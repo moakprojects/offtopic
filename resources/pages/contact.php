@@ -36,6 +36,12 @@
                             <label class="active" for="senderEmail">Your email</label>
                         </div>
                     </div>
+                    <div class="row noMargin subjectText">
+                        <div class="input-field contactInput noMargin">
+                            <input id="subjectFroDescription" value="" type="text" class="subjectText" tabindex="-1" autocomplete="off">
+                            <label class="active subjectText" for="subjectFroDescription">Subject</label>
+                        </div>
+                    </div>
                     <div class="row textareaContainer">
                         <div class="input-field contactInput">
                             <textarea id="problemDescription" class="materialize-textarea"></textarea>

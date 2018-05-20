@@ -6,6 +6,7 @@ $(document).on('click', '#contactSubmit', function() {
 
     var senderName = $('#senderName')["0"].value;
     var senderEmail = $('#senderEmail')["0"].value;
+    var subject = $('#subjectFroDescription')["0"].value;
     var problemDescription = $('#problemDescription')["0"].value;
 
     if(senderName !== "") {
@@ -14,7 +15,7 @@ $(document).on('click', '#contactSubmit', function() {
                 $('#errorMsg').html("");
                 $('#errorMsg').addClass('hide');
 
-                $.post('/resources/controllers/generalController.php', {contactFormData: true, senderName: senderName, senderEmail: senderEmail, problemDescription: problemDescription}, function(returnData) {
+                $.post('/resources/controllers/generalController.php', {contactFormData: true, senderName: senderName, senderEmail: senderEmail, subject: subject, problemDescription: problemDescription}, function(returnData) {
                     var obj = jQuery.parseJSON(returnData);
 
                     if(obj.data_type == 1) {

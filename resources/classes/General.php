@@ -40,11 +40,8 @@
             global $descriptionOfTheSiteQuery;
     
             if($descriptionOfTheSiteQuery) {
-                $descriptionOfTheSiteQuery->execute();
-    
-                $descriptionOfTheSiteData = $descriptionOfTheSiteQuery->fetchall(PDO::FETCH_ASSOC);
                 
-                return $descriptionOfTheSiteData;
+                return $db->query('select @out as description')->fetch(PDO::FETCH_ASSOC);
             } else {
                 header("Location: /error");
                 exit;
