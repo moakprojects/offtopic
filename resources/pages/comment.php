@@ -14,11 +14,11 @@
                     <i class="material-icons">chevron_right</i>
                     <a href="/categories">Categories</a>
                     <i class="material-icons">chevron_right</i>
-                    <a href="/topic">Topics</a>
+                    <a href="/categories/<?php echo $postData["categoryID"]; ?>"><?php echo $postData["categoryName"]; ?></a>
                     <i class="material-icons">chevron_right</i>
-                    <a href="/discussion">Discussion</a>
+                    <a href="/topics/<?php echo $postData["topicID"]; ?>"><?php echo $postData["shortTopicName"]; ?></a>
                     <i class="material-icons">chevron_right</i>
-                    <a href="/discussion">Post</a>
+                    <a href="/post/<?php echo $postData["postID"]; ?>">#<?php echo $postData["postIdInTopic"]; ?></a>
                 </div>
             </div>
             <div class="topic container noBottomMargin">

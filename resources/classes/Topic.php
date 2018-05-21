@@ -151,7 +151,11 @@ class Topic {
             $selectedTopicQuery->execute();
 
             if($selectedTopicQuery->rowCount() > 0) {
-                return $selectedTopicQuery->fetch(PDO::FETCH_ASSOC);
+                $topicData = $selectedTopicQuery->fetch(PDO::FETCH_ASSOC);
+
+                $topicData["shortTopicName"] = $this->textTrimmer($topicData["topicName"], 53);
+                
+                return $topicData;
             } else {
                 header("Location: /error");
                 exit;

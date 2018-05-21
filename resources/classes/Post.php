@@ -365,7 +365,11 @@ class Post {
             $selectedPostsQuery->execute();
 
             if($selectedPostsQuery->rowCount() > 0) {
-                return $selectedPostsQuery->fetch(PDO::FETCH_ASSOC);
+
+                $postData = $selectedPostsQuery->fetch(PDO::FETCH_ASSOC);
+
+                $postData["shortTopicName"] = $this->textTrimmer($postData["topicName"], 18);
+                return $postData; 
             } else {
                 header("Location: /error");
                 exit;
