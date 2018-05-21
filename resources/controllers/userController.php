@@ -694,12 +694,16 @@ if(isset($_POST["requestSettingsData"])) {
 
 if(isset($_POST["deleteUserProfile"])) {
     //we need userID because in topic, postlike, favouritetopic tables we just store the userID
-    $userData = $userObj->getUserData($_SESSION["selectedUsername"]);
-    $userID = $userData["userID"];
+    if(isset($_POST["selectedUserID"])) {
+        $userID = $_POST["selectedUserID"];
+    } else {
+        $userData = $userObj->getUserData($_SESSION["selectedUsername"]);
+        $userID = $userData["userID"];
+    }
 
     if($userObj->deleteUser($userID, 'delete')) {
         $result["data_type"] = 1;
-        $result["data_value"] = "Success";
+        $result["data_value"] = "The user was deleted";
 
         echo json_encode($result);
         exit;

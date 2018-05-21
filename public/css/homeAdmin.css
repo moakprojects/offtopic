@@ -54,7 +54,7 @@ h2 {
     left: 58.5%;
     top: 40%;
     z-index: 2;
-    opacity: 0.5;
+    opacity: 0.6;
     border: 2px solid black;
 }
 
@@ -66,6 +66,29 @@ h2 {
 .suspended {
     background-color: rgba(0,0,0,0.3) !important;
  }
+
+.notVerified {
+    background-color: rgba(0,0,0,0.05) !important;
+}
+
+.notVerifiedIcon {
+    height: 50px;
+    width: 50px;
+    background-color: rgb(247,210,50);
+    border-radius: 50%;
+    position: absolute;
+    left: 58.5%;
+    top: 40%;
+    z-index: 2;
+    opacity: 0.6;
+    border: 2px solid black;
+    font-size: 13px;
+}
+
+.notVerifiedIcon svg {
+    margin-top: 10px;
+    margin-left: 1px;
+}
 
 .userCardContainer {
     margin-top: 40px;

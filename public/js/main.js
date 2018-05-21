@@ -245,6 +245,18 @@ function adminDelition(page, section, type, ID) {
                                     Materialize.toast(obj.data_value, 4000);
                                 }
                             }); 
+                        } else if(type === "user") {
+                            $.post('/resources/controllers/userController.php', {deleteUserProfile: true, selectedUserID: ID}, function(data) {
+
+                                var obj = jQuery.parseJSON(data);
+                                if(obj.data_type === 1) {
+                                  $(section).load(reloadSection, function() {
+                                      Materialize.toast(obj.data_value, 4000);
+                                  });
+                                } else {
+                                    Materialize.toast(obj.data_value, 4000);
+                                }
+                            }); 
                         }
                   }
               }
