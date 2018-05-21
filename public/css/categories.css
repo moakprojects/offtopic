@@ -5,6 +5,19 @@ h2 {
     margin-bottom: 12px;
 }
 
+h3 {
+    border-bottom: 2px solid black;
+    padding-bottom: 15px;
+    margin: 0;
+    display: inline-block;
+    font-size: 18px;
+}
+
+hr {
+    margin-top: -1.5px;
+    margin-bottom: 30px;
+}
+
 
 /* Sidebar blocks styling */
 
