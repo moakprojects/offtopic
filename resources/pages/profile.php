@@ -382,6 +382,10 @@
                                     </div>
                             <?php
                                     }
+                                } else { 
+                            ?>
+                                <p>Here you will see the created topics, but none has been created yet.</p>
+                            <?php
                                 }
                             ?>
                         </div>
@@ -454,6 +458,10 @@
                             <?php
                                     }
                                 }
+                            } else {
+                            ?>
+                                <p>Here you will see the written posts, but none has been created yet.</p>
+                            <?php
                             }
                             ?>
                         </div>
