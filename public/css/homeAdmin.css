@@ -45,6 +45,28 @@ h2 {
 
 /* User styling */
 
+.suspendedIcon {
+    height: 50px;
+    width: 50px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    left: 58.5%;
+    top: 40%;
+    z-index: 2;
+    opacity: 0.5;
+    border: 2px solid black;
+}
+
+.suspendedIcon svg {
+    margin-top: 6px;
+    margin-left: 2px;
+}
+
+.suspended {
+    background-color: rgba(0,0,0,0.3) !important;
+ }
+
 .userCardContainer {
     margin-top: 40px;
     position:relative;

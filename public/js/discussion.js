@@ -79,7 +79,7 @@ function validateAttachFile() {
 
     var fileSize = currentFiles[i].size;
 
-    if(jQuery.inArray(fileExtension, ['png', 'jpg', 'jpeg', 'pdf', 'doc', 'docx', 'mp4', 'mpeg', 'txt', 'ppt', 'pptx', 'xls', 'xlsx', 'epub']) == -1) {
+    if(jQuery.inArray(fileExtension, ['png', 'jpg', 'jpeg', 'PNG', 'JPG', 'JPEG', 'pdf', 'doc', 'docx', 'mp4', 'mpeg', 'txt', 'ppt', 'pptx', 'xls', 'xlsx', 'epub']) == -1) {
       errorMsg += "<i>" + fileName + "</i> has invalid file type<br>";
 
       removeAttachFile(i);

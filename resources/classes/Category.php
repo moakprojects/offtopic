@@ -34,12 +34,12 @@ class Category {
     function getCategoryData($categoryID) {
 
         global $db;
-        global $categoryQuery;
+        global $selectedCategoryQuery;
 
         try {
-            $categoryQuery->bindParam(':categoryID', $categoryID);
-            $categoryQuery->execute();
-            $categoryData = $categoryQuery->fetch(PDO::FETCH_ASSOC);
+            $selectedCategoryQuery->bindParam(':categoryID', $categoryID);
+            $selectedCategoryQuery->execute();
+            $categoryData = $selectedCategoryQuery->fetch(PDO::FETCH_ASSOC);
             
             if($categoryData) {
                 return $categoryData;
@@ -115,19 +115,38 @@ class Category {
         }
     }
 
+     // request category data for the sidebar from database
+     function getFurtherCategoryData($userID) {
+
+        global $db;
+        global $categoryQuery;
+
+        if(isset($categoryQuery)) {
+            $categoryQuery -> bindParam(':userID', $userID);
+            $categoryQuery->execute();
+            $categoriesData = $categoryQuery->fetchall(PDO::FETCH_ASSOC);
+            
+            return $categoriesData;
+
+        } else {
+            header("Location: /error");
+            exit;
+        }
+    }
+
     // request favourite categories data from database
     function getFavouriteCategoryData($userID) {
 
         global $db;
-        global $sideBarFavouriteCategoriesQuery;
+        global $favouriteCategoriesQuery;
 
-        if(isset($sideBarFavouriteCategoriesQuery)) {
-            $sideBarFavouriteCategoriesQuery->bindParam(':userID', $userID);
-            $sideBarFavouriteCategoriesQuery->execute();
+        if(isset($favouriteCategoriesQuery)) {
+            $favouriteCategoriesQuery->bindParam(':userID', $userID);
+            $favouriteCategoriesQuery->execute();
 
-            if($sideBarFavouriteCategoriesQuery->rowCount()) {
-                $sideBarFavouriteCategoriesResult = $sideBarFavouriteCategoriesQuery->fetchall(PDO::FETCH_ASSOC);
-                return $sideBarFavouriteCategoriesResult;
+            if($favouriteCategoriesQuery->rowCount()) {
+                $favouriteCategoriesResult = $favouriteCategoriesQuery->fetchall(PDO::FETCH_ASSOC);
+                return $favouriteCategoriesResult;
             } else {
                 return false;
             }

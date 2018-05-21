@@ -37,7 +37,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     ?>
                     <div class="col s5 cardSection">
                         <div class="row noMargin">
-                            <div class="userCard valign-wrapper">
+                            <div class="userCard valign-wrapper <?php echo ($user['accessLevel'] == 2 || $user['accessLevel'] == 3 ? 'suspended' : ''); ?>">
                                 <div class="userCardContent row noMargin">
                                     <div class="col s4">
                                         <?php
@@ -50,7 +50,10 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                             } else {
                                                 echo "<a href='/profile/" . $user["username"] . "'><img src='/public/images/upload/" . $user["profileImage"] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $user["username"] . "'></a>";
                                             }
-                                        ?> 
+                                        ?>
+                                    </div>  
+                                    <div class="tooltipped suspendedIcon center-align <?php echo ($user['accessLevel'] == 2 || $user['accessLevel'] == 3 ? '' : 'hide'); ?>" data-position="bottom" data-delay="50" data-tooltip="Suspended">
+                                        <i class="fas fa-gavel fa-2x"></i>
                                     </div>
                                     <div class="col s8 personalInformation">
                                         <div class="row noMargin">
@@ -65,7 +68,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                                     ?>
                                                 </h3>
                                             </div>
-                                            <div class="col s1 noPadding right-align">
+                                            <div class="col s1 noPadding right-align <?php echo ($user['accessLevel'] == 3 || $user['accessLevel'] == 4 || $user['accessLevel'] == 18 ? 'hide' : ''); ?>">
                                                 <div class="ban center-align">
                                                     <a class="tooltipped" data-position="bottom" data-tooltip="Suspend" onclick="suspendUser('<?php echo $user["userID"]; ?>')">
                                                         <i class="fas fa-ban"></i>

@@ -523,6 +523,7 @@ if(isset($_POST["modifiedPostData"])) {
             foreach($removeAttachedFiles as $file) {
                 $postObj->removeFiles($file->attachmentID);
                 $location = "../../public/files/upload/" . $file->attachmentName;
+                unlink($location);
             }
         }
         

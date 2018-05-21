@@ -17,7 +17,7 @@
         $favouriteTopics = $userObj->getFavouriteTopics($selectedUserData["userID"]);
         $likedPosts = $userObj->getLikedPosts($selectedUsername);
         $createdTopics = $userObj->getCreatedTopics($selectedUsername);
-        if($selectedUserData["accessLevel"] != 0) {
+        if($selectedUserData["accessLevel"] !== 0 && $selectedUserData["accessLevel"] != 3) {
 ?>
 <div class="container contentContainer">
     <div class="row breadCrumbContainer">
@@ -31,6 +31,8 @@
             </div>
         </div>
     </div>
+    <div class="tooltipped suspended center-align <?php echo ($selectedUserData['accessLevel'] == 2 ? '' : 'hide'); ?>" data-position="bottom" data-delay="50" data-tooltip="Suspended">
+        <i class="fas fa-gavel fa-2x"></i></div>
     <div class="profileContainer">
         <div class="profileImageContainer textCenter">    
             <div class="image <?php echo ($myprofile ? "changeAvatar" : ""); ?>">
@@ -380,6 +382,10 @@
                                     </div>
                             <?php
                                     }
+                                } else { 
+                            ?>
+                                <p>Here you will see the created topics, but none has been created yet.</p>
+                            <?php
                                 }
                             ?>
                         </div>
@@ -452,6 +458,10 @@
                             <?php
                                     }
                                 }
+                            } else {
+                            ?>
+                                <p>Here you will see the written posts, but none has been created yet.</p>
+                            <?php
                             }
                             ?>
                         </div>
@@ -582,7 +592,7 @@
                         </div>
                     </div>     
                     <?php
-                        if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
+                        if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"]) && $selectedUserData["accessLevel"] == 1) {
                     ?>
                         <div class="row">
                             <a class="waves-effect waves-light btn suspendBtn" onclick="suspendUser('<?php echo $selectedUserData["userID"]; ?>')">Suspend this user</a>
