@@ -26,7 +26,7 @@
                 <div class="breadCrumb">
                     <a href="/home">Home</a>
                     <i class="material-icons">chevron_right</i>
-                    <a href="/categories">My profile</a>
+                    <a href="/profile/<?php echo $selectedUserData['username']; ?>"><?php echo $selectedUserData['username']; ?></a>
                 </div>
             </div>
         </div>

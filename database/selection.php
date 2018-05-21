@@ -94,7 +94,7 @@ $checkFavouriteCategoryQuery = $db->prepare("SELECT * FROM favouritecategory WHE
 $selectedTopicBasicDataQuery = $db -> prepare("SELECT * FROM topic WHERE topicID = :topicID");
 
 /* select choosen topic information based on topicId */
-$selectedTopicQuery = $db->prepare("SELECT topic.*, numberOfLikes, numberOfPosts, latestPost, username, profileImage, periodName, rankID, rankColor FROM topic LEFT JOIN (SELECT topicID, count(*) as numberOfLikes FROM favouritetopic GROUP BY topicID) as likes ON likes.topicID = topic.topicID LEFT JOIN (SELECT topicID, count(*) as numberOfPosts, MAX(postedOn) as latestPost FROM post GROUP BY topicID) as posts ON posts.topicID = topic.topicID INNER JOIN (SELECT userID, username, profileImage, rank.rankID, rank.rankColor FROM user INNER JOIN rank ON rank.rankID = user.rankID) as user ON user.userID = topic.createdBy INNER JOIN (SELECT periodID, periodName FROM period) as periods ON periods.periodID = topic.semester WHERE topic.topicID = :topicID");
+$selectedTopicQuery = $db->prepare("SELECT topic.*, categoryName, username, profileImage, periodName, rankID, rankColor FROM topic INNER JOIN (SELECT userID, username, profileImage, rank.rankID, rank.rankColor FROM user INNER JOIN rank ON rank.rankID = user.rankID) as user ON user.userID = topic.createdBy INNER JOIN (SELECT periodID, periodName FROM period) as periods ON periods.periodID = topic.semester INNER JOIN category ON category.categoryID = topic.categoryID WHERE topic.topicID = :topicID");
 
 /* get latest topics for what's new */
 $latestTopicsQuery = $db->prepare("SELECT topic.*, categoryName, numberOfPosts, username, profileImage, rankID, rankColor FROM topic INNER JOIN (SELECT categoryID, categoryName FROM category) as categories ON categories.categoryID = topic.categoryID LEFT JOIN (SELECT topicID, count(*) as numberOfPosts FROM post GROUP BY topicID) as posts ON posts.topicID = topic.topicID INNER JOIN (SELECT userID, username, profileImage, rank.rankID, rankColor FROM user INNER JOIN rank ON rank.rankID = user.rankID) as users ON users.userID = topic.createdBy ORDER BY createdAt DESC LIMIT 5");
@@ -139,12 +139,13 @@ $latestTopicsQuery = $db->prepare("SELECT topic.*, categoryName, numberOfPosts, 
  $periodQuery = $db->prepare("SELECT * FROM `period`");
 
  /* get selected post data for comment page */
- $selectedPostsQuery = $db->prepare("SELECT post.postID, post.text, post.postedOn, post.replyID, post.attachedFilesCode as postAttachedFilesCode, topic.topicID, topic.topicName, topic.topicText, topic.createdAt, topic.attachedFilesCode as topicAttachedFilesCode, topicCreatorID, topicCreatorName, topicCreatorImage, topicCreatorRankID, topicCreatorRankColor, post.attachedFilesCode, postWriterID, postWriterName, postWriterImage, postWriterRankColor, postWriterRankID, originalPostID, originalUserID, originalUsername, postIdInTopic
+ $selectedPostsQuery = $db->prepare("SELECT post.postID, post.text, post.postedOn, post.replyID, post.attachedFilesCode as postAttachedFilesCode, topic.topicID, topic.topicName, topic.topicText, topic.createdAt, topic.attachedFilesCode as topicAttachedFilesCode, topic.CategoryID, category.categoryID, category.categoryName, topicCreatorID, topicCreatorName, topicCreatorImage, topicCreatorRankID, topicCreatorRankColor, post.attachedFilesCode, postWriterID, postWriterName, postWriterImage, postWriterRankColor, postWriterRankID, originalPostID, originalUserID, originalUsername, postIdInTopic
  FROM post
  INNER JOIN (
      SELECT userID as postWriterID, username as postWriterName, profileImage as postWriterImage, rank.rankID as postWriterRankID, rankColor as postWriterRankColor
      FROM user INNER JOIN rank ON rank.rankID = user.rankID) as postWriter ON postWriter.postWriterID = post.userID
  INNER JOIN topic ON topic.topicID = post.topicID
+ INNER JOIN category ON category.categoryID = topic.CategoryID
  INNER JOIN (
      SELECT userID as topicCreatorID, username as topicCreatorName, profileImage as topicCreatorImage, rank.rankID as topicCreatorRankID, rankColor as topicCreatorRankColor
      FROM user 

@@ -14,9 +14,9 @@
                     <i class="material-icons">chevron_right</i>
                     <a href="/categories">Categories</a>
                     <i class="material-icons">chevron_right</i>
-                    <a href="/topics">Topics</a>
+                    <a href="/categories/<?php echo $topicData["categoryID"]; ?>"><?php echo $topicData["categoryName"]; ?></a>
                     <i class="material-icons">chevron_right</i>
-                    <a href="/discussion">Discussion</a>
+                    <a href="/topics/<?php echo $topicData["topicID"]; ?>"><?php echo $topicData["shortTopicName"]; ?></a>
                 </div>
             </div>
             <div class="topic container">
