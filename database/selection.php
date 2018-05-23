@@ -138,8 +138,11 @@ $latestTopicsQuery = $db->prepare("SELECT topic.*, categoryName, numberOfPosts, 
  /* get period info */
  $periodQuery = $db->prepare("SELECT * FROM `period`");
 
- /* get selected post data for comment page */
- $selectedPostsQuery = $db->prepare("SELECT post.postID, post.text, post.postedOn, post.replyID, post.attachedFilesCode as postAttachedFilesCode, topic.topicID, topic.topicName, topic.topicText, topic.createdAt, topic.attachedFilesCode as topicAttachedFilesCode, topic.CategoryID, category.categoryID, category.categoryName, topicCreatorID, topicCreatorName, topicCreatorImage, topicCreatorRankID, topicCreatorRankColor, post.attachedFilesCode, postWriterID, postWriterName, postWriterImage, postWriterRankColor, postWriterRankID, originalPostID, originalUserID, originalUsername, postIdInTopic
+ /* get selected post data for comment page
+ =======
+we change this query for stored procedure
+=======*/
+ /*$selectedPostQuery = $db->prepare("SELECT post.postID, post.text, post.postedOn, post.replyID, post.attachedFilesCode as postAttachedFilesCode, topic.topicID, topic.topicName, topic.topicText, topic.createdAt, topic.attachedFilesCode as topicAttachedFilesCode, topic.CategoryID, category.categoryID, category.categoryName, topicCreatorID, topicCreatorName, topicCreatorImage, topicCreatorRankID, topicCreatorRankColor, post.attachedFilesCode, postWriterID, postWriterName, postWriterImage, postWriterRankColor, postWriterRankID, originalPostID, originalUserID, originalUsername, postIdInTopic
  FROM post
  INNER JOIN (
      SELECT userID as postWriterID, username as postWriterName, profileImage as postWriterImage, rank.rankID as postWriterRankID, rankColor as postWriterRankColor
@@ -164,10 +167,15 @@ INNER JOIN (
     WHERE postID <= :postID
     GROUP BY topicID
     ) as postIdInTopic ON postIdInTopic.topicID = topic.topicID
- WHERE postID = :postID");
+ WHERE postID = :postID");*/
+ $selectedPostQuery = $db->prepare("CALL proc_get_selected_post(:postID)");
 
- /* get original post for comment page */
- $getOriginalPostQuery = $db->prepare("SELECT user.userID, user.username, post.postID, post.text FROM post INNER JOIN user ON user.userID = post.userID WHERE topicID = :topicID ORDER BY postID LIMIT :offsetem, 1");
+ /* get original post for comment page
+  =======
+we change this query for stored procedure
+=======
+ $getOriginalPostQuery = $db->prepare("SELECT user.userID, user.username, post.postID, post.text FROM post INNER JOIN user ON user.userID = post.userID WHERE topicID = :topicID ORDER BY postID LIMIT :offset, 1");*/
+ $getOriginalPostQuery = $db->prepare("CALL proc_get_original_post(:topicID, :offset)");
 
 
 /* get the ID of the created new topic */

@@ -314,3 +314,9 @@ function setSticky(postID, selectedTopicID, type) {
       }
     }); 
 }
+
+function getFile(filename) {
+  $.post('/resources/controllers/discussionController.php', {getFile: filename}, function(data) {
+
+  });
+}
