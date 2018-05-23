@@ -3,10 +3,11 @@ function suspendUser(userID) {
 
     $.post("/resources/controllers/userController.php", {suspendUser: true, userID: userID}, function(data) {
         var obj = jQuery.parseJSON(data);
-        Materialize.toast('You suspend ' + obj.data_value + ' user', 4000);
+        Materialize.toast('You suspended this user', 4000);
     });
 }
 
+// if the admin want to delete the sticky mark from the selected post
 function setSticky(postID) {
     $.post('/resources/controllers/discussionController.php', {stickyID: postID, type: "unsticky"}, function(data) {
 

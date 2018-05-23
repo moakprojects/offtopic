@@ -34,33 +34,48 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                         $users = $userObj -> getAllUser();
                         if($users) {
                             foreach($users as $user) {
+                                if($user['accessLevel'] != 18 && $user['accessLevel'] != 4) {
                     ?>
                     <div class="col s5 cardSection">
                         <div class="row noMargin">
-                            <div class="userCard valign-wrapper <?php echo ($user['accessLevel'] == 2 || $user['accessLevel'] == 3 ? 'suspended' : ''); ?>">
+                            <div class="userCard valign-wrapper 
+                                <?php 
+                                    if($user['accessLevel'] == 0 ) {
+                                        echo 'notVerified';
+                                    } else if($user['accessLevel'] == 2 || $user['accessLevel'] == 3 ) {
+                                        echo 'suspended';
+                                    }
+                                ?>">
                                 <div class="userCardContent row noMargin">
                                     <div class="col s4">
                                         <?php
-                                            if($user["profileImage"] == 'defaultAvatar.png') {
-                                                echo "<a href='/profile/" . $user["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $user["username"] . "'></a>";
-                                            } else if ($user["profileImage"] == 'admin.png') {
-                                                echo "<img src='/public/images/content/admin.png' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $user["username"] . "'>";
-                                            } else if ($user["profileImage"] == 'anonymous.png') {
-                                                echo "<img src='/public/images/content/anonymous.png' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $user["username"] . "'>";
+                                            if($user["accessLevel"] == 0 || $user["accessLevel"] == 3) {
+                                                if($user["profileImage"] == 'defaultAvatar.png') {
+                                                    echo "<img src='/public/images/content/defaultAvatar.png' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $user["username"] . "'>";
+                                                } else {
+                                                    echo "<img src='/public/images/upload/" . $user["profileImage"] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $user["username"] . "'>";
+                                                }
                                             } else {
-                                                echo "<a href='/profile/" . $user["username"] . "'><img src='/public/images/upload/" . $user["profileImage"] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $user["username"] . "'></a>";
-                                            }
+                                                if($user["profileImage"] == 'defaultAvatar.png') {
+                                                    echo "<a href='/profile/" . $user["username"] . "'><img src='/public/images/content/defaultAvatar.png' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $user["username"] . "'></a>";
+                                                } else {
+                                                    echo "<a href='/profile/" . $user["username"] . "'><img src='/public/images/upload/" . $user["profileImage"] ."' class='tooltipped' alt='profile picture' data-position='bottom' data-delay='50' data-tooltip='" . $user["username"] . "'></a>";
+                                                }
+                                            }  
                                         ?>
                                     </div>  
-                                    <div class="tooltipped suspendedIcon center-align <?php echo ($user['accessLevel'] == 2 || $user['accessLevel'] == 3 ? '' : 'hide'); ?>" data-position="bottom" data-delay="50" data-tooltip="Suspended">
+                                    <div class="suspendedIcon center-align <?php echo ($user['accessLevel'] == 2 || $user['accessLevel'] == 3 ? '' : 'hide'); ?>">
                                         <i class="fas fa-gavel fa-2x"></i>
+                                    </div>
+                                    <div class="notVerifiedIcon center-align <?php echo ($user['accessLevel'] == 0 ? '' : 'hide'); ?>">
+                                        <i class="far fa-hourglass fa-2x"></i>
                                     </div>
                                     <div class="col s8 personalInformation">
                                         <div class="row noMargin">
                                             <div class="col s11 noPadding">
                                                 <h3 class="noTopMargin">
                                                     <?php 
-                                                         if($user["username"] != 'admin' && $user["username"] != 'Anonymous' ) {
+                                                        if($user["accessLevel"] != 0 && $user["accessLevel"] != 3 ) {
                                                             echo "<a href='/profile/" . $user["username"] . "'>" . $user["username"] . "</a>";
                                                         } else {
                                                             echo $user["username"];
@@ -68,10 +83,17 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                                     ?>
                                                 </h3>
                                             </div>
-                                            <div class="col s1 noPadding right-align <?php echo ($user['accessLevel'] == 3 || $user['accessLevel'] == 4 || $user['accessLevel'] == 18 ? 'hide' : ''); ?>">
+                                            <div class="col s1 noPadding right-align <?php echo ($user['accessLevel'] == 3 || $user['accessLevel'] == 4 || $user['accessLevel'] == 0 ? 'hide' : ''); ?>">
                                                 <div class="ban center-align">
                                                     <a class="tooltipped" data-position="bottom" data-tooltip="Suspend" onclick="suspendUser('<?php echo $user["userID"]; ?>')">
                                                         <i class="fas fa-ban"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col s1 noPadding right-align <?php echo ($user['accessLevel'] == 0 ? '' : 'hide'); ?>">
+                                                <div class="ban center-align">
+                                                    <a class="tooltipped" data-position="bottom" data-tooltip="Delete" onclick="adminDelition('home', '#users', 'user', <?php echo $user["userID"]; ?>)">
+                                                        <i class="fas fa-trash"></i>
                                                     </a>
                                                 </div>
                                             </div>
@@ -80,13 +102,19 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                             <p class="col s5 noMargin noPadding"><i class="far fa-envelope fa-sm"></i> Email:</p>
                                             <p class="col s7 noMargin noPadding right-align"><?php echo $user["email"]; ?></p>    
                                         </div>
+                                        <?php
+                                            if($user["accessLevel"] != 0 && $user["accessLevel"] != 3) {
+                                        ?>
+                                            <div class="row noMargin">
+                                                <p class="col s5 noMargin noPadding"><i class="fas fa-history fa-sm"></i> Member for:</p>
+                                                <p class="col s7 noMargin noPadding right-align"><?php echo $user["memberFor"]; ?></p>    
+                                            </div>
+                                        <?php
+                                            }
+                                        ?>
                                         <div class="row noMargin">
-                                            <p class="col s5 noMargin noPadding"><i class="fas fa-history fa-sm"></i> Member for:</p>
-                                            <p class="col s7 noMargin noPadding right-align"><?php echo $user["memberFor"]; ?></p>    
-                                        </div>
-                                        <div class="row noMargin">
-                                            <p class="col s5 noMargin noPadding"><i class="fas fa-circle-notch fa-sm"></i> Rank level:</p>
-                                            <p class="col s7 noMargin noPadding right-align"><?php echo $user["rankTitle"]; ?></p>    
+                                            <p class="col s5 noMargin noPadding"><i class="fas fa-anchor"></i> Access level:</p>
+                                            <p class="col s7 noMargin noPadding right-align"><?php echo $user["accessLevelTitle"]; ?></p>    
                                         </div>
                                     </div>
                                 </div>
@@ -106,6 +134,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                         </div>
                     </div>
                     <?php
+                            }
                         }
                     } else {
                     ?>
