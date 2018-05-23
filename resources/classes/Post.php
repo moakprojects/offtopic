@@ -17,11 +17,8 @@ class Post {
             $selectedTopicID = htmlspecialchars(trim($selectedTopicID));
             $postQuery -> bindParam(":topicID", $selectedTopicID);
             $postQuery->execute();
-
-            $postData = $postQuery->fetchall(PDO::FETCH_ASSOC);
-            $postQuery->closeCursor();
             
-            return $postData;
+            return $postQuery->fetchall(PDO::FETCH_ASSOC);
         } else {
             header("Location: /error");
             exit;
@@ -37,7 +34,6 @@ class Post {
             $allPostQuery->execute();
 
             $allPostData = $allPostQuery->fetchall(PDO::FETCH_ASSOC);
-            $allPostQuery->closeCursor();
             
             return $allPostData;
         } else {
@@ -54,7 +50,6 @@ class Post {
             $selectedPostBasicDataQuery->bindParam(':postID', $postID);
             $selectedPostBasicDataQuery->execute();
             $selectedPostBasicData = $selectedPostBasicDataQuery->fetch(PDO::FETCH_ASSOC);
-            $selectedPostBasicDataQuery->closeCursor();
             
             if($selectedPostBasicData) {
                 return $selectedPostBasicData;
@@ -77,7 +72,6 @@ class Post {
             $modifyPostQuery->bindParam(":postID", $postID);
             $modifyPostQuery->bindParam(":text", $text);
             $modifyPostQuery ->execute();
-            $modifyPostQuery->closeCursor();
 
             return true;
         } else {
@@ -94,7 +88,6 @@ class Post {
             $allSidebarStickyPostQuery->execute();
 
             $allSidebarStickyPostData = $allSidebarStickyPostQuery->fetchall(PDO::FETCH_ASSOC);
-            $allSidebarStickyPostQuery->closeCursor();
             
             return $allSidebarStickyPostData;
         } else {
@@ -113,7 +106,6 @@ class Post {
             $sidebarStickyPostQuery->execute();
 
             $sidebarStickyPostData = $sidebarStickyPostQuery->fetch(PDO::FETCH_ASSOC);
-            $sidebarStickyPostQuery->closeCursor();
             
             return $sidebarStickyPostData;
         } else {
@@ -133,7 +125,6 @@ class Post {
             $modifySidebarStickyQuery->bindParam(":stickyPostTitle", $stickyPostTitle);
             $modifySidebarStickyQuery->bindParam(":stickyPostText", $stickyPostText);
             $modifySidebarStickyQuery->execute();
-            $modifySidebarStickyQuery->closeCursor();
 
             return true;
         } else {
@@ -160,7 +151,6 @@ class Post {
         if(isset($deleteFileQuery)) {
             $deleteFileQuery->bindParam(':attachmentID', $attachmentID);
             $deleteFileQuery->execute();
-            $deleteFileQuery->closeCursor();
 
             return true;
         } else {
@@ -177,7 +167,6 @@ class Post {
             $latestPostsQuery->execute();
 
             $latestPostsData = $latestPostsQuery->fetchall(PDO::FETCH_ASSOC);
-            $latestPostsQuery->closeCursor();
             
             for($i = 0; $i < count($latestPostsData); $i++) {
 
@@ -214,7 +203,6 @@ class Post {
             $createPostQuery->bindParam(':attachedFilesCode', $attachedFilesCode);
 
             $createPostQuery->execute();
-            $createPostQuery->closeCursor();
 
             return true;
         } else {
@@ -234,7 +222,6 @@ class Post {
             $fileUploadQuery->bindParam(':attachedFileCode', $attachedFileCode);
 
             $fileUploadQuery->execute();
-            $fileUploadQuery->closeCursor();
 
             return true;
         } else {
@@ -254,10 +241,8 @@ class Post {
     
             if($attachedFilesQuery->rowCount() > 0) {
                 $attachedFiles = $attachedFilesQuery->fetchall(PDO::FETCH_ASSOC);
-                $attachedFilesQuery->closeCursor();
                 return $attachedFiles;
             } else {
-                $attachedFilesQuery->closeCursor();
                 return false;
             }
         } else {
@@ -273,7 +258,6 @@ class Post {
         try {
             $reportPostQuery->bindParam(':postID', $postID);
             $reportPostQuery->execute();
-            $reportPostQuery->closeCursor();
 
             return true;
         } catch (PDOException $e) {
@@ -290,7 +274,6 @@ class Post {
             $stickyPostQuery->bindParam(':value', $value);
             $stickyPostQuery->bindParam(':postID', $postID);
             $stickyPostQuery->execute();
-            $stickyPostQuery->closeCursor();
 
             return true;
         } catch (PDOException $e) {
@@ -307,7 +290,6 @@ class Post {
             $newSidebarStickyQuery->bindParam(':postTitle', $postTitle);
             $newSidebarStickyQuery->bindParam(':postDescription', $postDescription);
             $newSidebarStickyQuery->execute();
-            $newSidebarStickyQuery->closeCursor();
 
             return true;
         } catch (PDOException $e) {
@@ -328,7 +310,6 @@ class Post {
             $likePostQuery->bindParam(':isDislike', $dislike);
 
             $likePostQuery->execute();
-            $likePostQuery->closeCursor();
 
             return true;
         } else {
@@ -348,10 +329,8 @@ class Post {
         
         if ($checkPostLikeQuery->rowCount() > 0) {
             $this->isExistInPostLikeTable = true; 
-            $checkPostLikeQuery->closeCursor();
         } else {
             $this->isExistInPostLikeTable = false;
-            $checkPostLikeQuery->closeCursor();
         }
     }
 
@@ -368,10 +347,8 @@ class Post {
 
             if($checkSpecificPostLikeValueQuery->rowCount() > 0) {
                 $checkSpecificPostLikeValueResult = $checkSpecificPostLikeValueQuery->fetch(PDO::FETCH_ASSOC);
-                $checkSpecificPostLikeValueQuery->closeCursor();
                 return  $checkSpecificPostLikeValueResult;
             } else {
-                $checkSpecificPostLikeValueQuery->closeCursor();
                 return false;
             }
         } else {
@@ -437,25 +414,20 @@ class Post {
             $getOrderNumberQuery->bindParam(':postID', $postID);
             $getOrderNumberQuery->execute();
             $orderNumber = $getOrderNumberQuery->fetch(PDO::FETCH_ASSOC);
-            $getOrderNumberQuery->closeCursor();
 
             $modifyEqualReplyIDQuery->bindParam(':replyID', $orderNumber['orderNumberOfPost'], PDO::PARAM_INT);
             $modifyEqualReplyIDQuery->bindParam(':topicID', $orderNumber['topicID'], PDO::PARAM_INT);
             $modifyEqualReplyIDQuery->execute();
-            $modifyEqualReplyIDQuery->closeCursor();
 
             $modifyLargerReplyIDQuery->bindParam(':replyID', $orderNumber['orderNumberOfPost'], PDO::PARAM_INT);
             $modifyLargerReplyIDQuery->bindParam(':topicID', $orderNumber['topicID'], PDO::PARAM_INT);
             $modifyLargerReplyIDQuery->execute();
-            $modifyLargerReplyIDQuery->closeCursor();
 
             $deleteAttachmentByPostQuery->bindParam(':postID', $postID, PDO::PARAM_INT);
             $deleteAttachmentByPostQuery->execute();
-            $deleteAttachmentByPostQuery->closeCursor();
 
             $deletePostQuery->bindParam(':postID', $postID);
             $deletePostQuery->execute();
-            $deletePostQuery->closeCursor();
 
             $db->commit();
             return true;
@@ -473,7 +445,6 @@ class Post {
         try {
             $deleteStickyPostQuery->bindParam(':stickyPostID', $postID);
             $deleteStickyPostQuery->execute();
-            $deleteStickyPostQuery->closeCursor();
 
             return true;
         } catch (PDOException $e) {
