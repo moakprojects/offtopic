@@ -7,8 +7,10 @@ include "../../database/deletion.php";
 include "../../database/modification.php";
 include "../classes/Post.php";
 include "../classes/User.php";
+include "../classes/Image.php";
 $postObj = new Post();
 $userObj = new User();
+$imageObj = new Image();
 
 // if the user send a post call createpost from persistence layer
 if(isset($_POST["replyContent"])) {
@@ -233,6 +235,16 @@ if(isset($_POST["createNewSticky"])) {
 if(count($_FILES) > 0) {
 
     foreach($_FILES as $file) {
+
+        $imageObj->load($file["tmp_name"]);
+        $width = $imageObj->getWidth();
+        $height = $imageObj->getHeight();
+
+        if($width < $height) {
+            $imageObj->resizeToHeight(400);
+        } else {
+            $imageObj->resizeToWidth(400);
+        }
         
         $fileName = time() . '_' . $file["name"];
         $fileExtension = explode(".", $file["name"]);
@@ -245,8 +257,7 @@ if(count($_FILES) > 0) {
         }
         
         if($postObj->uploadFiles($fileName, $displayedFileName, $_SESSION["attachedFileCode"])) {
-            copy($file["tmp_name"], $location);
-
+            $imageObj->save($location, 100);
         } else {
             $result["data_type"] = 0;
             $result["data_value"] = "An error occured";

@@ -7,8 +7,10 @@ include "../../database/deletion.php";
 include "../../database/modification.php";
 include "../classes/Topic.php";
 include "../classes/User.php";
+include "../classes/Image.php";
 $topicObj = new Topic();
 $userObj = new User();
+$imageObj = new Image();
 
 //depending on the action (add or remove) call the right function from persistence layer (what is add or remove the topic from favourites)
 if(isset($_POST["favouriteSelectedTopic"])) {
@@ -112,6 +114,16 @@ if(isset($_POST["createNewTopic"])) {
 if(count($_FILES) > 0) {
 
     foreach($_FILES as $file) {
+
+        $imageObj->load($file["tmp_name"]);
+        $width = $imageObj->getWidth();
+        $height = $imageObj->getHeight();
+
+        if($width < $height) {
+            $imageObj->resizeToHeight(400);
+        } else {
+            $imageObj->resizeToWidth(400);
+        }
         
         $fileName = time() . '_' . $file["name"];
         $fileExtension = explode(".", $file["name"]);
@@ -124,8 +136,7 @@ if(count($_FILES) > 0) {
         }
         
         if($topicObj->uploadFiles($fileName, $displayedFileName, $_SESSION["newTopicAttachedFileCode"])) {
-            copy($file["tmp_name"], $location);
-
+            $imageObj->save($location, 100);
         } else {
             $result["data_type"] = 0;
             $result["data_value"] = "An error occured";
