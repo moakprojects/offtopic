@@ -129,7 +129,7 @@ if(isset($_POST["logID"])) {
             exit;
         } else if(intval($loggedUserData["accessLevel"]) === 3) {
             $result["data_type"] = 0;
-            $result["data_value"] = "Your profile are suspended";    
+            $result["data_value"] = "Your profile is suspended";    
         
             echo json_encode($result);
             exit;

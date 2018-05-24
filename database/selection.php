@@ -206,7 +206,7 @@ $getWellLikedUserQuery = $db->prepare("SELECT post.userID FROM post LEFT JOIN ( 
 $userInfoQuery = $db->prepare("SELECT * FROM user WHERE userID = :userID");
 
 /* get rules and regulations data */
-$rulesAndRegulationsQuery = $db->prepare("SELECT * FROM rulesAndRegulations");
+$rulesAndRegulationsQuery = $db->prepare("SELECT * FROM ruleAndRegulation");
 
 /* get description of the site
 =======
