@@ -524,6 +524,7 @@
             }
         }
 
+        // when a user delete his or her profile we modify related data in the database
         function deleteUser($userID, $type) {
             global $db;
 
@@ -579,6 +580,7 @@
             }
         }
 
+        // if the user earn a badge we save it into database
         function uploadBadge($userID, $badgeID) {
             global $db;
             global $newBadgeQuery;
@@ -594,6 +596,7 @@
             }
         }
 
+        // we check if the user already earned a specific badge or not
         function checkBadgeStatus($userID, $badgeID) {
             global $db;
             global $getBadgeInformationQuery;
@@ -614,6 +617,7 @@
             }
         }
 
+        // we check number of post for badge system
         function getNumberOfPosts($userID) {
             global $db;
             global $getNumberOfPostsQuery;
@@ -628,6 +632,7 @@
             }
         }
 
+        // after login we save the login date into database
         function saveLoginDate($userID) {
             global $db;
             global $saveLastLoginQuery;
@@ -645,6 +650,7 @@
             }
         }
 
+        // if the user login in consecutive days we increase this number for badgy system
         function increaseConsecutiveVisit($userID) {
             global $db;
             global $increaseNumberOfConsecutiveVisitQuery;
@@ -659,6 +665,7 @@
             }
         }
 
+        // if the user miss one day we delete consecutive logins
         function deleteConsecutiveVisit($userID) {
             global $db;
             global $clearNumberOfConsecutiveVisitQuery;
@@ -673,6 +680,7 @@
             }
         }
 
+        // for a badge system we 
         function getReceivedQuestions($topicID) {
             global $db;
             global $getReceivedQuestionsQuery;

@@ -1,5 +1,7 @@
 <?php
     class General {
+
+        // get rules and regulations from the database
         function getRulesAndRegulationsData() {
 
             global $db;
@@ -17,6 +19,7 @@
             }
         }
 
+        // get contact information from the database
         function getContactInformation() {
 
             global $db;
@@ -34,6 +37,7 @@
             }
         }
 
+        // get description of the site from the database
         function getDescriptionOfTheSite() {
 
             global $db;
@@ -48,6 +52,7 @@
             }
         }
 
+        // if the admin modified the description we save it
         function saveDescriptionChanges($aboutUs) {
             global $db;
             global $modifyDescriptionOfTheSiteQuery;
@@ -62,6 +67,7 @@
             }
         }
 
+        // if the admin modified the contact information we save it
         function saveContactChanges($generalText, $phoneNumber, $location) {
             global $db;
             global $modifyContactInformationQuery;
@@ -78,6 +84,7 @@
             }
         }
 
+        // if the admin modified the rules we save it
         function saveRulesChanges($generalTxt, $acceptanceOfTerms, $modificationOfTerms, $rulesAndConduct, $termination, $integration) {
             global $db;
             global $modifyRulesAndRegulationsQuery;

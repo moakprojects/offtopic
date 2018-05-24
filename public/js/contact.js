@@ -1,11 +1,13 @@
 /* error message outside of the functions' scope */
 var errorMsg = "";
 
+/* when the user send the contact form we check data and provide them to the controller */
 $(document).on('click', '#contactSubmit', function() {
     $('.contactSpinner').removeClass('hide');
 
     var senderName = $('#senderName')["0"].value;
     var senderEmail = $('#senderEmail')["0"].value;
+    // the subject field is a honypot, if it has value then we will know not a human filled out the form
     var subject = $('#subjectFroDescription')["0"].value;
     var problemDescription = $('#problemDescription')["0"].value;
 

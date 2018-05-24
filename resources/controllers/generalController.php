@@ -89,8 +89,8 @@ $generalObj = new General();
 
         try {
             if($subject === "") {
-                //mail($senderEmail, "Thank you for getting in touch", $emailTemplate, $headers);
-                //mail('erik117b@easv365.dk', "You got a mail through the contact form", $problemDescription, $adminHeaders);
+                mail($senderEmail, "Thank you for getting in touch", $emailTemplate, $headers);
+                mail('erik117b@easv365.dk', "You got a mail through the contact form", $problemDescription, $adminHeaders);
             }
 
             $result["data_type"] = 1;

@@ -21,6 +21,7 @@ $(document).ready(function(){
         }
     });
 
+    // when a user registrate we check all given data and send forward to the controller to further checks and for account creation
     function registration() {
         
         var email = $('#regForm').find('.email');
@@ -173,6 +174,7 @@ $(document).ready(function(){
     });
 });
 
+// if admin wants to delete something on the page, depending on the element (post, topic, category, user) we send requiest to the right controller
 function adminDelition(page, section, type, ID) {
     var reloadSection = '/' + page + ' ' + section;
     MaterialDialog.dialog(
@@ -266,6 +268,7 @@ function adminDelition(page, section, type, ID) {
   );
 }
 
+// if admin wants to modify something on the page, depending on the element (post, topic, category, user) we send requiest to the right controller
 function adminModification(type, ID) {
     if(type === "category") {
         $.post('/resources/controllers/categoryController.php', {modifyCategory: true, categoryID: ID}, function(data) {

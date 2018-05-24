@@ -60,6 +60,7 @@ function removeAttachFile(index) {
 /* error message outside of the functions' scope */
 var errorMsg = "";
 
+/// if the admin modify a topic we put a sign into it 
 function submitModifiedTopicData(id) {
     $('.modifyTopicSpinner').removeClass('hide');
     if(quill.getText().trim() !== '') {

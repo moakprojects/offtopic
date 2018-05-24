@@ -1,6 +1,7 @@
 /* error message outside of the functions' scope */
 var errorMsg = "";
 
+// send request to create new sidebar sticky
 $(document).on('click', '#newStickySubmit', function() {
     $('.newStickySpinner').removeClass('hide');
     var newStickyName = $('#newStickyName')["0"].value;

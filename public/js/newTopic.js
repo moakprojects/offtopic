@@ -93,6 +93,7 @@ function removeAttachFile(index) {
   validateAttachFile();
 }
 
+// send request to create new topic
 $(document).on('click', '#newTopicSubmit', function() {
   $('.newtopicSpinner').removeClass('hide');
   if(quill.getText().trim() !== '') {

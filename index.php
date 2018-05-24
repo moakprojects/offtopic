@@ -74,9 +74,6 @@
             case "contact":
                 $page = "contact";
             break;
-            case "file":
-                $page = "file";
-            break;
             case "post":
                 if(isset($queryStringParams[1]) && $queryStringParams[1] !== "") {
                     $_SESSION["selectedPost"] = $queryStringParams[1];
@@ -87,10 +84,6 @@
             break;
             case "error":
                 $page = "error";
-            break;
-    
-            case "test":
-                $page = "test";
             break;
             default:
                 $page = "error";

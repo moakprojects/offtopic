@@ -81,6 +81,7 @@ if(isset($_POST["favouriteSelectedTopic"])) {
     }
 }
 
+// when a user create a new topic we create unique attachment id and upload new topic
 if(isset($_POST["createNewTopic"])) {
     $attachedFilesCode = "Att" . time();
     
@@ -107,6 +108,7 @@ if(isset($_POST["createNewTopic"])) {
     }
 }
 
+// if the user wants to upload attachment to the new topic we save this to the server, and the attachment informations into databse
 if(count($_FILES) > 0) {
 
     foreach($_FILES as $file) {

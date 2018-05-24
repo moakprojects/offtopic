@@ -477,7 +477,7 @@
                                                 echo '<a href="/public/files/upload/' . $file["attachmentName"] . '" data-lightbox="attachedImagePost' . $posts[$i]["postID"] . '" data-title="' . $file["displayName"] . '"><img src="/public/files/upload/' . $file["attachmentName"] . '"></a>';
                                                 echo "<p>(To see the original size click on the name of the image)</p>";
                                             } else {
-                                                echo '<li><a href="/file/' . $file["attachmentName"] . '">' . $file["displayName"] . '</a></li>';
+                                                echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
                                             }
                                         }
                                     }

@@ -279,6 +279,7 @@ function likeTopic(userId, topicId, action) {
   });
 }
 
+// depending on that the report related to a post or to the topic we send a request to the right controller
 function report(id, type) {
     if(type == 'topic') {
       $.post('/resources/controllers/topicController.php', {reportedTopic: id}, function(data) {
@@ -299,6 +300,7 @@ function report(id, type) {
     }
 }
 
+// if the admin wants to emphasize a post, they can sign it as sticky post, we send a request to the controller
 function setSticky(postID, selectedTopicID, type) {
     $.post('/resources/controllers/discussionController.php', {stickyID: postID, type: type}, function(data) {
 
@@ -313,10 +315,4 @@ function setSticky(postID, selectedTopicID, type) {
         });
       }
     }); 
-}
-
-function getFile(filename) {
-  $.post('/resources/controllers/discussionController.php', {getFile: filename}, function(data) {
-
-  });
 }

@@ -38,7 +38,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION['user']['isAdmin']) && isset($_SE
                                 </div>
                             </div>
                         </div> 
-                        <a class="btn waves-effect waves-light blue col s2" id="modifyStickySubmit" onclick="submitModifiedCategoryData(<?php echo $selectedSidebarStickyData["stickyPostID"]; ?>)">Save</a>
+                        <a class="btn waves-effect waves-light blue col s2" id="modifyStickySubmit" onclick="submitModifiedSideBarStickyData(<?php echo $selectedSidebarStickyData["stickyPostID"]; ?>)">Save</a>
                     </div>  
                 </form>
             </div>

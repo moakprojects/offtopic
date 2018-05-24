@@ -356,6 +356,7 @@ class Post {
         }
     }
 
+    // when the user click on the id of a post need to get the information of the selected post
     function getSelectedPost($selectedPost) {
         global $db;
         global $selectedPostQuery;
@@ -369,6 +370,7 @@ class Post {
                 $postData = $selectedPostQuery->fetch(PDO::FETCH_ASSOC);
 
                 $postData["shortTopicName"] = $this->textTrimmer($postData["topicName"], 18);
+                // it is important to close connection after stored procedures call
                 $selectedPostQuery->closeCursor();
                 return $postData; 
             } else {

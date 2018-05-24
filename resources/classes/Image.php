@@ -6,6 +6,7 @@
         protected $newWidth;
         protected $newHeight;
         
+        // load uploaded image for resizing
         public function load($filename) {
             $image_info = getimagesize($filename);
             $this -> image_type = $image_info[2];
@@ -16,6 +17,7 @@
             }
         }
 
+        // save image to the server after operations
         public function save($location, $compression = 100) {
             if ($this->image_type == IMAGETYPE_JPEG) {
                 imagejpeg($this -> image, $location, $compression);
@@ -24,26 +26,31 @@
             }
         }
 
+        // get width of the image for the resizing
         public function getWidth() {
             return imagesx($this -> image);
         }
     
+        // get height of the image for the resizing
         public  function getHeight() {
             return imagesy($this -> image);
         }
     
+        // we resize the image based on the smaller side, if it is the height then we resize to height
         public function resizeToHeight($height) {
             $ratio = $height / $this -> getHeight();
             $width = $this -> getWidth() * $ratio;
             $this -> resize($width, $height);
         }
     
+        // we resize the image based on the smaller side, if it is the width then we resize to width
         public function resizeToWidth($width) {
             $ratio = $width / $this -> getWidth();
             $height = $this -> getheight() * $ratio;
             $this -> resize($width, $height);
         }
     
+        // we resize the image based on the given parameters
         public function resize($width, $height) {
             $new_image = imagecreatetruecolor($width, $height);
             imagecopyresampled($new_image, $this -> image, 0, 0, 0, 0, $width, $height, $this -> getWidth(), $this -> getHeight());
@@ -52,6 +59,7 @@
             $this->newHeight = $this->getHeight($this->image);
         }
 
+        // if the image do not has a square shape we crop it
         public function crop($resolution) {
             if($this->newWidth !== 400) {
                 $x = ($this->newWidth - 400) / 2;

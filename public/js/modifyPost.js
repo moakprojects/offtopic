@@ -60,6 +60,7 @@ function removeAttachFile(index) {
 /* error message outside of the functions' scope */
 var errorMsg = "";
 
+// if the admin rewrite a post we put a sign into it
 function submitModifiedPostData(id) {
     $('.modifyPostSpinner').removeClass('hide');
     

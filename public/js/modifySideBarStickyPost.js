@@ -1,7 +1,8 @@
 /* error message outside of the functions' scope */
 var errorMsg = "";
 
-function submitModifiedCategoryData(modifiedStickyID) {
+// if the admin change something in the sticky we save it
+function submitModifiedSideBarStickyData(modifiedStickyID) {
     $('.modifyStickySpinner').removeClass('hide');
     var modifiedStickyName = $('#modifiedStickyName')["0"].value;
     var modifiedStickyDescription = $('#modifiedStickyDescription')["0"].value;

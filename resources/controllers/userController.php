@@ -59,7 +59,7 @@ if(isset($_POST["regEmail"])) {
                 $headers .= "MIME-Version: 1.0" . "\r\n";
                 $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
 
-                //mail($regEmail, "Verify email address for OffTopic", $emailTemplate, $headers);
+                mail($regEmail, "Verify email address for OffTopic", $emailTemplate, $headers);
 
                 $result["data_type"] = 1;
                 $result["data_value"] = "Registration finished";
@@ -692,9 +692,11 @@ if(isset($_POST["requestSettingsData"])) {
     }
 }
 
+// if the user wants to delete his or her profile or the admin delete the profile we delete data from database
 if(isset($_POST["deleteUserProfile"])) {
     //we need userID because in topic, postlike, favouritetopic tables we just store the userID
     if(isset($_POST["selectedUserID"])) {
+        //if the admin delete the profile we have selected user id directly
         $userID = $_POST["selectedUserID"];
     } else {
         $userData = $userObj->getUserData($_SESSION["selectedUsername"]);
@@ -716,6 +718,7 @@ if(isset($_POST["deleteUserProfile"])) {
     }
 }
 
+// when we suspend the user depending on that is the first time or the second we send an email about suspension and we suspend the user or we block the user
 if(isset($_POST["suspendUser"])) {
     
     //check if user had a suspend time already
@@ -734,7 +737,7 @@ if(isset($_POST["suspendUser"])) {
             $headers .= "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=iso-8859-1" . "\r\n";
 
-            //mail($userData["email"], "Suspension on OffTopic website", $suspensionEmailTemplate, $headers);
+            mail($userData["email"], "Suspension on OffTopic website", $suspensionEmailTemplate, $headers);
 
             $result["data_type"] = 1;
             $result["data_value"] = $userData["username"];

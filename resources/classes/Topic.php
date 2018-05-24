@@ -307,6 +307,7 @@ class Topic {
         }
     }
 
+    // to the new topic page we display all type of semesters
     function getPeriodInfo() {
         global $db;
         global $periodQuery;
@@ -323,6 +324,7 @@ class Topic {
         }
     }
 
+    // when a user create a new topic we upload it to the database
     function uploadNewTopic($topicName, $topicText, $createdBy, $period, $category, $attachedFilesCode) {
         global $db;
         global $newTopicQuery;
