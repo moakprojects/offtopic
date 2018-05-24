@@ -1,5 +1,5 @@
 <?php 
-$db_name = "mysql:dbname=offtopic_beta";
+$db_name = "mysql:dbname=offtopic";
 $db_host = "host=localhost";
 $db_charset = "charset=utf8";
 
