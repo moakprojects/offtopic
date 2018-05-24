@@ -180,9 +180,6 @@ $(document).ready(function(){
 	var ac = new google.maps.places.Autocomplete(locationField, locationOptions);
 	google.maps.event.addListener(ac, 'place_changed', function() {
 	var place = ac.getPlace();
-	console.log(place.formatted_address);
-	console.log(place.url);
-	console.log(place.geometry.location);
 	});
 
 });
@@ -603,7 +600,6 @@ $(document).on('click', '#saveAccountSettings', function() {
 			if(obj.data_type == 0) {
 
 				if(Array.isArray(obj.data_value)) {
-					console.log("array", obj.data_value);
 					$('.settingsErrorMsgList').empty();
 					$('.settingsErrorMsgList').removeClass('hide');
 					for(var i=0; i<obj.data_value.length; i++) {
@@ -620,10 +616,7 @@ $(document).on('click', '#saveAccountSettings', function() {
 				$('.settingsErrorMsg').css('color', '#34d034');
 
 				if(obj.data_value.refreshBadges) {
-					console.log('username', obj.data_value.username);
-					console.log('link', '/profile/' + obj.data_value.username + ' .earnedBadgeContainer');
 					$('.earnedBadgeContainer').load('/profile/' + obj.data_value.username + ' .earnedBadgeContainer', function() {
-						console.log("itt vagy?");
 						$('.badgeSystemContainer').load('/profile/' + obj.data_value.username + ' .badgeSystemContainer', '');
 					});
 				}
@@ -641,8 +634,6 @@ $(document).on('click', '#saveAccountSettings', function() {
 	$.post('/resources/controllers/userController.php', {requestSettingsData: true}, function(returnData) {
 		var obj = jQuery.parseJSON(returnData);
 
-		console.log("sett", obj);
-
 		if(obj.data_type === 1) {
 			$('#newUsername').val(obj.data_value.username);
 			$('#newEmail').val(obj.data_value.email);
@@ -656,8 +647,6 @@ $(document).on('click', '#saveAccountSettings', function() {
 			if(obj.data_value.birthdateDay !== "") {
 				var numberOfDays = new Date(2016, obj.data_value.birthdateMonth, 0).getDate();
 				displayDays(numberOfDays, obj.data_value.birthdateDay);
-				console.log("szulcsinapcsi", obj.data_value.birthdateDay);
-				console.log("szulcsi numberofdays", numberOfDays);
 			}
 		}
 	});

@@ -50,7 +50,6 @@ $( document ).ready(function() {
 function removeAttachFile(index) {
     newAttachment.splice(index, 1);
     currentAttachment.splice(index, 1);
-    console.log("newAttachment", newAttachment);
     $('#attachFiles').html("");
     for(i=0; i<currentAttachment.length;i++) {
         $('#attachFiles').append("<li><span>" + currentAttachment[i].displayName + "</span><span onclick='removeAttachFile(" + i + ")'><i class='material-icons'>clear</i></span></li>");
