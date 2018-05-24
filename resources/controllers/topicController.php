@@ -233,8 +233,8 @@ if(isset($_POST["modifiedTopicData"])) {
         $removeAttachedFiles = json_decode( $_POST['removeAttachedFiles'] );
         if(count($removeAttachedFiles) > 0) {
             foreach($removeAttachedFiles as $file) {
-                $topicObj->removeFiles($file->attachmentID);
-                $location = "../../public/files/upload/" . $file->attachmentName;
+                $topicObj->removeFiles($file->topicAttachmentID);
+                $location = "../../public/files/upload/" . $file->topicAttachmentName;
                 unlink($location);
             }
         }

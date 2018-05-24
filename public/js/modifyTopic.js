@@ -38,8 +38,8 @@ $( document ).ready(function() {
                 for(i=0; i < obj[0].length; i++) {
                     originalAttachment.push(obj[0][i]);
                     currentAttachment.push(obj[0][i]);
-                    newAttachment.push(obj[0][i].displayName);
-                    $('#attachFiles').append("<li><span>" + obj[0][i].displayName + "</span><span onclick='removeAttachFile(" + i + ")'><i class='material-icons'>clear</i></span></li>");
+                    newAttachment.push(obj[0][i].topicAttachmentDisplayName);
+                    $('#attachFiles').append("<li><span>" + obj[0][i].topicAttachmentDisplayName + "</span><span onclick='removeAttachFile(" + i + ")'><i class='material-icons'>clear</i></span></li>");
                 }
             }
         }
@@ -53,7 +53,7 @@ function removeAttachFile(index) {
     $('#attachFiles').html("");
 
     for(i=0; i<currentAttachment.length;i++) {
-        $('#attachFiles').append("<li><span>" + currentAttachment[i].displayName + "</span><span onclick='removeAttachFile(" + i + ")'><i class='material-icons'>clear</i></span></li>");
+        $('#attachFiles').append("<li><span>" + currentAttachment[i].topicAttachmentDisplayName + "</span><span onclick='removeAttachFile(" + i + ")'><i class='material-icons'>clear</i></span></li>");
     }
 }
 
@@ -78,7 +78,7 @@ function submitModifiedTopicData(id) {
 
                     if (typeof originalAttachment[0] !== 'undefined' && originalAttachment[0] !== null) {
                         for(i=0; i<originalAttachment.length;i++) {
-                            if(jQuery.inArray(originalAttachment[i].displayName, newAttachment) == -1) {
+                            if(jQuery.inArray(originalAttachment[i].topicAttachmentDisplayName, newAttachment) == -1) {
                                 removeAttachFiles.push(originalAttachment[i]);
                             }
                         }

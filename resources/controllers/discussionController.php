@@ -542,8 +542,8 @@ if(isset($_POST["modifiedPostData"])) {
         $removeAttachedFiles = json_decode( $_POST['removeAttachedFiles'] );
         if(count($removeAttachedFiles) > 0) {
             foreach($removeAttachedFiles as $file) {
-                $postObj->removeFiles($file->attachmentID);
-                $location = "../../public/files/upload/" . $file->attachmentName;
+                $postObj->removeFiles($file->postAttachmentID);
+                $location = "../../public/files/upload/" . $file->postAttachmentName;
                 unlink($location);
             }
         }

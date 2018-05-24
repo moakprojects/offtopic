@@ -38,8 +38,8 @@ $( document ).ready(function() {
                 for(i=0; i < obj[0].length; i++) {
                     originalAttachment.push(obj[0][i]);
                     currentAttachment.push(obj[0][i]);                    
-                    newAttachment.push(obj[0][i].displayName);
-                    $('#attachFiles').append("<li><span>" + obj[0][i].displayName + "</span><span onclick='removeAttachFile(" + i + ")'><i class='material-icons'>clear</i></span></li>");
+                    newAttachment.push(obj[0][i].postAttachmentDisplayName);
+                    $('#attachFiles').append("<li><span>" + obj[0][i].postAttachmentDisplayName + "</span><span onclick='removeAttachFile(" + i + ")'><i class='material-icons'>clear</i></span></li>");
                 }
             }
         }
@@ -52,7 +52,7 @@ function removeAttachFile(index) {
     currentAttachment.splice(index, 1);
     $('#attachFiles').html("");
     for(i=0; i<currentAttachment.length;i++) {
-        $('#attachFiles').append("<li><span>" + currentAttachment[i].displayName + "</span><span onclick='removeAttachFile(" + i + ")'><i class='material-icons'>clear</i></span></li>");
+        $('#attachFiles').append("<li><span>" + currentAttachment[i].postAttachmentDisplayName + "</span><span onclick='removeAttachFile(" + i + ")'><i class='material-icons'>clear</i></span></li>");
     }
 }
 
@@ -72,7 +72,7 @@ function submitModifiedPostData(id) {
 
         if (typeof originalAttachment[0] !== 'undefined' && originalAttachment[0] !== null) {
             for(i=0; i<originalAttachment.length;i++) {
-                if(jQuery.inArray(originalAttachment[i].displayName, newAttachment) == -1) {
+                if(jQuery.inArray(originalAttachment[i].postAttachmentDisplayName, newAttachment) == -1) {
                     removeAttachFiles.push(originalAttachment[i]);
                 }
             }

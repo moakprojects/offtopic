@@ -269,11 +269,11 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                     foreach($topicAttachedFiles as $file) {
                                         $fileExtension = explode(".", $file["topicAttachmentName"]);
                                         if(in_array($fileExtension[1], array('png', 'jpg', 'jpeg'))) {
-                                            echo '<li><a href="/public/files/upload/' . $file["topicAttachmentName"] . '" download="' . $file["topicDisplayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["topicDisplayName"] . '</a></li>';
-                                            echo '<a href="/public/files/upload/' . $file["topicAttachmentName"] . '" data-lightbox="attachedTopicFiles" data-title="' . $file["topicDisplayName"] . '"><img src="/public/files/upload/' . $file["topicAttachmentName"] . '"></a>';
+                                            echo '<li><a href="/public/files/upload/' . $file["topicAttachmentName"] . '" download="' . $file["topicAttachmentDisplayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["topicAttachmentDisplayName"] . '</a></li>';
+                                            echo '<a href="/public/files/upload/' . $file["topicAttachmentName"] . '" data-lightbox="attachedTopicFiles" data-title="' . $file["topicAttachmentDisplayName"] . '"><img src="/public/files/upload/' . $file["topicAttachmentName"] . '"></a>';
                                             echo "<p>(To see the original size click on the name of the image)</p>";
                                         } else {
-                                            echo '<li><a href="/public/files/upload/' . $file["topicAttachmentName"] . '" download="' . $file["topicDisplayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["topicDisplayName"] . '</a></li>';
+                                            echo '<li><a href="/public/files/upload/' . $file["topicAttachmentName"] . '" download="' . $file["topicAttachmentDisplayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["topicAttachmentDisplayName"] . '</a></li>';
                                         }
                                     }
                                 }
@@ -387,11 +387,11 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                     foreach($topicAttachedFiles as $file) {
                                         $fileExtension = explode(".", $file["topicAttachmentName"]);
                                         if(in_array($fileExtension[1], array('png', 'jpg', 'jpeg'))) {
-                                            echo '<li><a href="/public/files/upload/' . $file["topicAttachmentName"] . '" download="' . $file["topicDisplayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["topicDisplayName"] . '</a></li>';
-                                            echo '<a href="/public/files/upload/' . $file["topicAttachmentName"] . '" data-lightbox="attachedTopicFiles" data-title="' . $file["topicDisplayName"] . '"><img src="/public/files/upload/' . $file["topicAttachmentName"] . '"></a>';
+                                            echo '<li><a href="/public/files/upload/' . $file["topicAttachmentName"] . '" download="' . $file["topicAttachmentDisplayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["topicAttachmentDisplayName"] . '</a></li>';
+                                            echo '<a href="/public/files/upload/' . $file["topicAttachmentName"] . '" data-lightbox="attachedTopicFiles" data-title="' . $file["topicAttachmentDisplayName"] . '"><img src="/public/files/upload/' . $file["topicAttachmentName"] . '"></a>';
                                             echo "<p>(To see the original size click on the name of the image)</p>";
                                         } else {
-                                            echo '<li><a href="/public/files/upload/' . $file["topicAttachmentName"] . '" download="' . $file["topicDisplayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["topicDisplayName"] . '</a></li>';
+                                            echo '<li><a href="/public/files/upload/' . $file["topicAttachmentName"] . '" download="' . $file["topicAttachmentDisplayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["topicAttachmentDisplayName"] . '</a></li>';
                                         }
                                     }
                                 }
