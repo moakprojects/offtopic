@@ -6,7 +6,10 @@
     $createPostQuery = $db->prepare("INSERT INTO `post` VALUES (NULL, :text, :postedOn, :replyID, :userID, :topicID, :attachedFilesCode, 0, 0)");
 
     /* upload file to database */
-    $fileUploadQuery = $db->prepare("INSERT INTO `attachment` VALUES (NULL, :attachmentName, :displayName, :attachedFileCode)");
+    $topicFileUploadQuery = $db->prepare("INSERT INTO `topicAttachment` VALUES (NULL, :attachmentName, :displayName, :attachedFileCode)");
+
+    /* upload file to database */
+    $postFileUploadQuery = $db->prepare("INSERT INTO `postAttachment` VALUES (NULL, :attachmentName, :displayName, :attachedFileCode)");
 
     /* create user into user table */
     $createUserQuery = $db->prepare("INSERT INTO user VALUES (NULL, :email, :username, :passwordHash, NULL, 'defaultAvatar.png', 1, 0, :regDate, 0, NULL, NULL, NULL, 0, 0)");

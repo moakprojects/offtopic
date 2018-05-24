@@ -236,19 +236,25 @@ if(count($_FILES) > 0) {
 
     foreach($_FILES as $file) {
 
-        $imageObj->load($file["tmp_name"]);
-        $width = $imageObj->getWidth();
-        $height = $imageObj->getHeight();
-
-        if($width < $height) {
-            $imageObj->resizeToHeight(400);
-        } else {
-            $imageObj->resizeToWidth(400);
-        }
-        
         $fileName = time() . '_' . $file["name"];
         $fileExtension = explode(".", $file["name"]);
         $location = "../../public/files/upload/" . $fileName;
+
+        if($fileExtension[1] == 'jpg' || $fileExtension[1] == 'png' || $fileExtension[1] == 'jpeg') {
+            $fileIsImage = true;
+            
+            $imageObj->load($file["tmp_name"]);
+            $width = $imageObj->getWidth();
+            $height = $imageObj->getHeight();
+
+            if($width < $height) {
+                $imageObj->resizeToHeight(400);
+            } else {
+                $imageObj->resizeToWidth(400);
+            }
+        } else {
+            $fileIsImage = false;
+        }
 
         $displayedFileName = $file["name"];
         if(strlen($file["name"]) > 38 - strlen($fileExtension[0])) {
@@ -257,7 +263,11 @@ if(count($_FILES) > 0) {
         }
         
         if($postObj->uploadFiles($fileName, $displayedFileName, $_SESSION["attachedFileCode"])) {
-            $imageObj->save($location, 100);
+            if($fileIsImage) {
+                $imageObj->save($location, 100);
+            } else {
+                copy($file["tmp_name"], $location);
+            }
         } else {
             $result["data_type"] = 0;
             $result["data_value"] = "An error occured";

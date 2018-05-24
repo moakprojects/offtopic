@@ -27,7 +27,10 @@ $allSidebarStickyPostQuery = $db->prepare("SELECT * from sidebarStickyPost");
 $sidebarStickyPostQuery = $db->prepare("SELECT * from sidebarStickyPost WHERE stickyPostID = :stickyPostID");
 
 /* get attached files from attechment table with postID */
-$attachedFilesQuery = $db->prepare("SELECT * FROM attachment WHERE attachedFileCode = :attachedFileCode");
+$getTopicAttachedFilesQuery = $db->prepare("SELECT * FROM topicAttachment WHERE topicAttachedFileCode = :attachedFileCode");
+
+/* get attached files from attechment table with postID */
+$getPostAttachedFilesQuery = $db->prepare("SELECT * FROM postAttachment WHERE PostAttachedFileCode = :attachedFileCode");
 
 /* select number of likes and dislikes of the posts depends on the topic */
 $numberOfLikesQuery = $db->prepare("SELECT count(isLike) as count FROM `postlike` WHERE islike = 1 AND postID = :postID");

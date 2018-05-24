@@ -146,11 +146,11 @@ class Post {
     function removeFiles($attachmentID) {
 
         global $db;
-        global $deleteFileQuery;
+        global $deletePostAttachmentFileQuery;
 
-        if(isset($deleteFileQuery)) {
-            $deleteFileQuery->bindParam(':attachmentID', $attachmentID);
-            $deleteFileQuery->execute();
+        if(isset($deletePostAttachmentFileQuery)) {
+            $deletePostAttachmentFileQuery->bindParam(':attachmentID', $attachmentID);
+            $deletePostAttachmentFileQuery->execute();
 
             return true;
         } else {
@@ -214,14 +214,14 @@ class Post {
     function uploadFiles($filename, $displayname, $attachedFileCode) {
 
         global $db;
-        global $fileUploadQuery;
+        global $postFileUploadQuery;
 
-        if(isset($fileUploadQuery)) {
-            $fileUploadQuery->bindParam(':attachmentName', $filename);
-            $fileUploadQuery->bindParam(':displayName', $displayname);
-            $fileUploadQuery->bindParam(':attachedFileCode', $attachedFileCode);
+        if(isset($postFileUploadQuery)) {
+            $postFileUploadQuery->bindParam(':attachmentName', $filename);
+            $postFileUploadQuery->bindParam(':displayName', $displayname);
+            $postFileUploadQuery->bindParam(':attachedFileCode', $attachedFileCode);
 
-            $fileUploadQuery->execute();
+            $postFileUploadQuery->execute();
 
             return true;
         } else {
@@ -233,14 +233,14 @@ class Post {
     function getAttachedFiles($attachedFileCode) {
         
         global $db;
-        global $attachedFilesQuery;
+        global $getPostAttachedFilesQuery;
     
-        if(isset($attachedFilesQuery)) {
-            $attachedFilesQuery->bindParam(':attachedFileCode', $attachedFileCode);
-            $attachedFilesQuery->execute();
+        if(isset($getPostAttachedFilesQuery)) {
+            $getPostAttachedFilesQuery->bindParam(':attachedFileCode', $attachedFileCode);
+            $getPostAttachedFilesQuery->execute();
     
-            if($attachedFilesQuery->rowCount() > 0) {
-                $attachedFiles = $attachedFilesQuery->fetchall(PDO::FETCH_ASSOC);
+            if($getPostAttachedFilesQuery->rowCount() > 0) {
+                $attachedFiles = $getPostAttachedFilesQuery->fetchall(PDO::FETCH_ASSOC);
                 return $attachedFiles;
             } else {
                 return false;

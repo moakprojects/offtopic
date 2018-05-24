@@ -169,14 +169,14 @@ class Topic {
     //get attached files for the topic
     function getAttachedFiles($attachedCode) {
         global $db;
-        global $attachedFilesQuery;
+        global $getTopicAttachedFilesQuery;
 
         try {
-            $attachedFilesQuery->bindParam(":attachedFileCode", $attachedCode);
-            $attachedFilesQuery->execute();
+            $getTopicAttachedFilesQuery->bindParam(":attachedFileCode", $attachedCode);
+            $getTopicAttachedFilesQuery->execute();
 
-            if($attachedFilesQuery->rowCount() > 0) {
-                return $attachedFilesQuery->fetchall(PDO::FETCH_ASSOC);
+            if($getTopicAttachedFilesQuery->rowCount() > 0) {
+                return $getTopicAttachedFilesQuery->fetchall(PDO::FETCH_ASSOC);
             } else {
                 return false;
             }
@@ -367,14 +367,14 @@ class Topic {
     function uploadFiles($filename, $displayname, $attachedFileCode) {
 
         global $db;
-        global $fileUploadQuery;
+        global $topicFileUploadQuery;
 
-        if(isset($fileUploadQuery)) {
-            $fileUploadQuery->bindParam(':attachmentName', $filename);
-            $fileUploadQuery->bindParam(':displayName', $displayname);
-            $fileUploadQuery->bindParam(':attachedFileCode', $attachedFileCode);
+        if(isset($topicFileUploadQuery)) {
+            $topicFileUploadQuery->bindParam(':attachmentName', $filename);
+            $topicFileUploadQuery->bindParam(':displayName', $displayname);
+            $topicFileUploadQuery->bindParam(':attachedFileCode', $attachedFileCode);
 
-            $fileUploadQuery->execute();
+            $topicFileUploadQuery->execute();
 
             return true;
         } else {
@@ -386,11 +386,11 @@ class Topic {
     function removeFiles($attachmentID) {
 
         global $db;
-        global $deleteFileQuery;
+        global $deleteTopicAttachmentFileQuery;
 
-        if(isset($deleteFileQuery)) {
-            $deleteFileQuery->bindParam(':attachmentID', $attachmentID);
-            $deleteFileQuery->execute();
+        if(isset($deleteTopicAttachmentFileQuery)) {
+            $deleteTopicAttachmentFileQuery->bindParam(':attachmentID', $attachmentID);
+            $deleteTopicAttachmentFileQuery->execute();
 
             return true;
         } else {

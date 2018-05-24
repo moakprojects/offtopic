@@ -57,13 +57,13 @@
                                 $attachedFiles = $topicObj->getAttachedFiles($postData["topicAttachedFilesCode"]);
                                 if($attachedFiles) {
                                     foreach($attachedFiles as $file) {
-                                        $fileExtension = explode(".", $file["attachmentName"]);
+                                        $fileExtension = explode(".", $file["topicAttachmentName"]);
                                         if(in_array($fileExtension[1], array('png', 'jpg', 'jpeg'))) {
-                                            echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
-                                            echo '<a href="/public/files/upload/' . $file["attachmentName"] . '" data-lightbox="attachedTopicFiles" data-title="' . $file["displayName"] . '"><img src="/public/files/upload/' . $file["attachmentName"] . '"></a>';
+                                            echo '<li><a href="/public/files/upload/' . $file["topicAttachmentName"] . '" download="' . $file["topicDisplayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["topicDisplayName"] . '</a></li>';
+                                            echo '<a href="/public/files/upload/' . $file["topicAttachmentName"] . '" data-lightbox="attachedTopicFiles" data-title="' . $file["topicDisplayName"] . '"><img src="/public/files/upload/' . $file["topicAttachmentName"] . '"></a>';
                                             echo "<p>(To see the original size click on the name of the image)</p>";
                                         } else {
-                                            echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
+                                            echo '<li><a href="/public/files/upload/' . $file["topicAttachmentName"] . '" download="' . $file["topicDisplayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["topicDisplayName"] . '</a></li>';
                                         }
                                     }
                                 }
@@ -183,13 +183,13 @@
                                 $postAttachedFiles = $postObj->getAttachedFiles($postData["postAttachedFilesCode"]);
                                 if($postAttachedFiles) {
                                     foreach($postAttachedFiles as $file) {
-                                        $fileExtension = explode(".", $file["attachmentName"]);
+                                        $fileExtension = explode(".", $file["postAttachmentName"]);
                                         if(in_array($fileExtension[1], array('png', 'jpg', 'jpeg'))) {
-                                            echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
-                                            echo '<a href="/public/files/upload/' . $file["attachmentName"] . '" data-lightbox="attachedTopicFiles" data-title="' . $file["displayName"] . '"><img src="/public/files/upload/' . $file["attachmentName"] . '"></a>';
+                                            echo '<li><a href="/public/files/upload/' . $file["postAttachmentName"] . '" download="' . $file["postAttachmentDisplayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["postAttachmentDisplayName"] . '</a></li>';
+                                            echo '<a href="/public/files/upload/' . $file["postAttachmentName"] . '" data-lightbox="attachedTopicFiles" data-title="' . $file["postAttachmentDisplayName"] . '"><img src="/public/files/upload/' . $file["postAttachmentName"] . '"></a>';
                                             echo "<p>(To see the original size click on the name of the image)</p>";
                                         } else {
-                                            echo '<li><a href="/public/files/upload/' . $file["attachmentName"] . '" download="' . $file["displayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["displayName"] . '</a></li>';
+                                            echo '<li><a href="/public/files/upload/' . $file["postAttachmentName"] . '" download="' . $file["postAttachmentDisplayName"] . '" target="_blank" type="applicatiob/octet-stream">' . $file["postAttachmentDisplayName"] . '</a></li>';
                                         }
                                     }
                                 }
