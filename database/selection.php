@@ -52,9 +52,9 @@ $verifyEmailQuery = $db->prepare("SELECT * FROM user WHERE md5(email) = :emailHa
 /* select user for login 
 =======
 we change this query for stored procedure
-=======
-$loginQuery = $db -> prepare("SELECT * FROM user WHERE email = :logID OR username = :logID"); */
-$loginQuery = $db->prepare("CALL proc_check_login_id(:logID)");
+=======*/
+$loginQuery = $db -> prepare("SELECT * FROM user WHERE email = :logID OR username = :logID");
+//$loginQuery = $db->prepare("CALL proc_check_login_id(:logID)");
 
 /* select user for login by cookie */
 $cookieLoginQuery = $db -> prepare("SELECT * FROM user WHERE md5(email) = :logIDHash OR md5(username) = :logIDHash");
@@ -62,9 +62,9 @@ $cookieLoginQuery = $db -> prepare("SELECT * FROM user WHERE md5(email) = :logID
 /* select information for the category page
 =======
 we change this query for stored procedure
-=======
-$allCategoryQuery = $db -> prepare("SELECT category.*, numberOfTopics, numberOfPosts, numberOfLikes FROM category LEFT JOIN ( SELECT categoryID, count(*) as numberOfTopics, topicID FROM topic GROUP BY categoryID) as topics ON topics.categoryID = category.categoryID LEFT JOIN ( SELECT topic.categoryID, topic.topicID, sum(postQuantity) as numberOfPosts FROM `topic` LEFT JOIN ( SELECT topicID, count(*) as postQuantity FROM post GROUP BY topicID) as countPost ON countPost.topicID = topic.topicID GROUP BY topic.categoryID ) as posts ON posts.topicID = topics.topicID LEFT JOIN ( SELECT categoryID, count(*) as numberOfLikes FROM favouritecategory GROUP BY categoryID) as likes ON likes.categoryID = category.categoryID"); */
-$allCategoryQuery = $db->prepare("CALL proc_get_all_category()");
+=======*/
+$allCategoryQuery = $db -> prepare("SELECT category.*, numberOfTopics, numberOfPosts, numberOfLikes FROM category LEFT JOIN ( SELECT categoryID, count(*) as numberOfTopics, topicID FROM topic GROUP BY categoryID) as topics ON topics.categoryID = category.categoryID LEFT JOIN ( SELECT topic.categoryID, topic.topicID, sum(postQuantity) as numberOfPosts FROM `topic` LEFT JOIN ( SELECT topicID, count(*) as postQuantity FROM post GROUP BY topicID) as countPost ON countPost.topicID = topic.topicID GROUP BY topic.categoryID ) as posts ON posts.topicID = topics.topicID LEFT JOIN ( SELECT categoryID, count(*) as numberOfLikes FROM favouritecategory GROUP BY categoryID) as likes ON likes.categoryID = category.categoryID");
+//$allCategoryQuery = $db->prepare("CALL proc_get_all_category()");
 
 /* get category by categoryID */
 $selectedCategoryQuery = $db->prepare("SELECT * FROM category WHERE categoryID = :categoryID");
@@ -145,7 +145,7 @@ $latestTopicsQuery = $db->prepare("SELECT topic.*, categoryName, numberOfPosts, 
  =======
 we change this query for stored procedure
 =======*/
- /*$selectedPostQuery = $db->prepare("SELECT post.postID, post.text, post.postedOn, post.replyID, post.attachedFilesCode as postAttachedFilesCode, topic.topicID, topic.topicName, topic.topicText, topic.createdAt, topic.attachedFilesCode as topicAttachedFilesCode, topic.CategoryID, category.categoryID, category.categoryName, topicCreatorID, topicCreatorName, topicCreatorImage, topicCreatorRankID, topicCreatorRankColor, post.attachedFilesCode, postWriterID, postWriterName, postWriterImage, postWriterRankColor, postWriterRankID, originalPostID, originalUserID, originalUsername, postIdInTopic
+ $selectedPostQuery = $db->prepare("SELECT post.postID, post.text, post.postedOn, post.replyID, post.attachedFilesCode as postAttachedFilesCode, topic.topicID, topic.topicName, topic.topicText, topic.createdAt, topic.attachedFilesCode as topicAttachedFilesCode, topic.CategoryID, category.categoryID, category.categoryName, topicCreatorID, topicCreatorName, topicCreatorImage, topicCreatorRankID, topicCreatorRankColor, post.attachedFilesCode, postWriterID, postWriterName, postWriterImage, postWriterRankColor, postWriterRankID, originalPostID, originalUserID, originalUsername, postIdInTopic
  FROM post
  INNER JOIN (
      SELECT userID as postWriterID, username as postWriterName, profileImage as postWriterImage, rank.rankID as postWriterRankID, rankColor as postWriterRankColor
@@ -170,15 +170,15 @@ INNER JOIN (
     WHERE postID <= :postID
     GROUP BY topicID
     ) as postIdInTopic ON postIdInTopic.topicID = topic.topicID
- WHERE postID = :postID");*/
- $selectedPostQuery = $db->prepare("CALL proc_get_selected_post(:postID)");
+ WHERE postID = :postID");
+ //$selectedPostQuery = $db->prepare("CALL proc_get_selected_post(:postID)");
 
  /* get original post for comment page
   =======
 we change this query for stored procedure
-=======
- $getOriginalPostQuery = $db->prepare("SELECT user.userID, user.username, post.postID, post.text FROM post INNER JOIN user ON user.userID = post.userID WHERE topicID = :topicID ORDER BY postID LIMIT :offset, 1");*/
- $getOriginalPostQuery = $db->prepare("CALL proc_get_original_post(:topicID, :offset)");
+=======*/
+ $getOriginalPostQuery = $db->prepare("SELECT user.userID, user.username, post.postID, post.text FROM post INNER JOIN user ON user.userID = post.userID WHERE topicID = :topicID ORDER BY postID LIMIT :offset, 1");
+ //$getOriginalPostQuery = $db->prepare("CALL proc_get_original_post(:topicID, :offset)");
 
 
 /* get the ID of the created new topic */
@@ -188,7 +188,7 @@ $getIdOfCreatedTopicQuery = $db->prepare("SELECT topicID FROM topic WHERE create
 $getBadgeInformationQuery = $db->prepare("SELECT * FROM earnedBadge WHERE userID = :userID && badgeID = :badgeID");
 
 /* get all badge what belongs to one of the user */
-$getAllBadges = $db->prepare("SELECT badgeID FROM earnedbadge WHERE userID = :userID");
+$getAllBadgesQuery = $db->prepare("SELECT badgeID FROM earnedbadge WHERE userID = :userID");
 
 /* get number of posts for badge */
 $getNumberOfPostsQuery = $db->prepare("SELECT * FROM post WHERE userID = :userID");
@@ -211,9 +211,9 @@ $rulesAndRegulationsQuery = $db->prepare("SELECT * FROM ruleAndRegulation");
 /* get description of the site
 =======
 we change this query for stored procedure
-=======
-$descriptionOfTheSiteQuery = $db->prepare("SELECT * FROM descriptionOfTheSite");*/
-$descriptionOfTheSiteQuery = $db->exec("CALL proc_get_description_of_the_site(@out)");
+=======*/
+$descriptionOfTheSiteQuery = $db->prepare("SELECT * FROM descriptionOfTheSite");
+//$descriptionOfTheSiteQuery = $db->exec("CALL proc_get_description_of_the_site(@out)");
 
 /* get contact information */
 $contactInformationQuery = $db->prepare("SELECT * FROM contactInformation");

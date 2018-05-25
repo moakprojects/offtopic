@@ -749,8 +749,9 @@
                 $suspendUserFirstTimeQuery->bindParam(":username", $username);
                 $suspendUserFirstTimeQuery->execute();
 
-                $dissolveSuspensionQuery->bindParam(":username", $username);
-                $dissolveSuspensionQuery->execute();
+                // we cannot run stored procedure
+                //$dissolveSuspensionQuery->bindParam(":username", $username);
+                //$dissolveSuspensionQuery->execute();
 
                 $db->commit();
                 return true;
