@@ -84,15 +84,14 @@ class Post {
         global $db;
         global $allSidebarStickyPostQuery;
 
-        if($allSidebarStickyPostQuery) {
+        try {
             $allSidebarStickyPostQuery->execute();
 
             $allSidebarStickyPostData = $allSidebarStickyPostQuery->fetchall(PDO::FETCH_ASSOC);
             
             return $allSidebarStickyPostData;
-        } else {
-            header("Location: /error");
-            exit;
+        } catch(PDOException $e) {
+            return false;
         }
     }
 

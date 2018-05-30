@@ -17,7 +17,7 @@ class Category {
         try {
             $allCategoryQuery->execute();
             $categoryData = $allCategoryQuery->fetchall(PDO::FETCH_ASSOC);
-            $allCategoryQuery->closeCursor();
+            //$allCategoryQuery->closeCursor();
             
             if($categoryData) {
                 return $categoryData;
