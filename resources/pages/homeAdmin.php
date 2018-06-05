@@ -26,6 +26,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                 <li class='tab'><a href='#posts'>Posts</a></li>
                 <li class='tab'><a href='#stickyPosts'>Sticky Posts</a></li>
                 <li class='tab'><a href='#information'>Forum information</a></li>
+                <li class='tab'><a href='#gallery'>Gallery</a></li>
             </ul>
             <div id="users" class="row">
                 <div class="col s12 userCardContainer">
@@ -1083,6 +1084,72 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                             </form>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div id="gallery">
+                <div class="galleryContainer">
+                    <?php
+                    $topicAttachedFiles = $topicObj->getAllAttachedFiles();
+                    $postAttachedFiles = $postObj->getAllAttachedFiles();
+
+                    if($topicAttachedFiles) {
+                        $topicAttachedImages = array();
+                        foreach($topicAttachedFiles as $file) {
+                            $fileExtension = explode(".", $file["topicAttachmentName"]);
+
+                            if($fileExtension[1] == 'jpg' || $fileExtension[1] == 'png' || $fileExtension[1] == 'jpeg') {
+                                array_push($topicAttachedImages, $file);
+                            }
+                        }
+                    ?>
+                        <div class="row">
+                        <?php
+                        foreach($topicAttachedImages as $image) {
+                            ?>
+                            <div class="col s3">
+                                <img src="/public/files/upload/<?php echo $image["topicAttachmentName"]; ?>" alt="attached image" class="attachment">
+                                <div class="col s1 noPadding trashIcon attachmentTrashIcon titleIcon center-align">
+                                    <a onclick="adminDelition('home', '#gallery', 'topicAttachment', <?php echo $image['topicAttachmentID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                        <i class="fas fa-trash fa-xs"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                        </div>
+                    <?php
+                    }
+                    
+                    if($postAttachedFiles) {
+                        $postAttachedImages = array();
+                        foreach($postAttachedFiles as $file) {
+                            $fileExtension = explode(".", $file["postAttachmentName"]);
+
+                            if($fileExtension[1] == 'jpg' || $fileExtension[1] == 'png' || $fileExtension[1] == 'jpeg') {
+                                array_push($postAttachedImages, $file);
+                            }
+                        }
+                    ?>
+                        <div class="row">
+                        <?php
+                        foreach($postAttachedImages as $image) {
+                            ?>
+                            <div class="col s3">
+                                <img src="/public/files/upload/<?php echo $image["postAttachmentName"]; ?>" alt="attached image" class="attachment">
+                                <div class="col s1 noPadding trashIcon attachmentTrashIcon titleIcon center-align">
+                                    <a onclick="adminDelition('home', '#gallery', 'postAttachment', <?php echo $image['postAttachmentID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
+                                        <i class="fas fa-trash fa-xs"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                        </div>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </div>

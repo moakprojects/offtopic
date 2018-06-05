@@ -39,3 +39,6 @@ $deleteStickyPostQuery = $db->prepare("DELETE FROM sidebarStickyPost WHERE stick
 
 /* delete user from earnedbadge after user delete his or her profile */
 $deletedUserFromEarnedBadgeQuery = $db->prepare("DELETE FROM earnedbadge WHERE userID = :userID");
+
+$deletePostAttachmentQuery = $db->prepare("DELETE FROM postattachment WHERE postattachmentid = :selectedID");
+$deleteTopicAttachmentQuery = $db->prepare("DELETE FROM topicattachment WHERE topicAttachmentid = :selectedID");
