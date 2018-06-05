@@ -176,6 +176,7 @@ $(document).ready(function(){
 
 // if admin wants to delete something on the page, depending on the element (post, topic, category, user) we send requiest to the right controller
 function adminDelition(page, section, type, ID) {
+
     var reloadSection = '/' + page + ' ' + section;
     MaterialDialog.dialog(
       "Are you sure you want to delete this " + type + "?",
@@ -259,6 +260,30 @@ function adminDelition(page, section, type, ID) {
                                     Materialize.toast(obj.data_value, 4000);
                                 }
                             }); 
+                        } else if (type === "postAttachment") {
+                            $.post('/resources/controllers/generalController.php', {deletePostAttachmentImage: true, selectedAttachmentID: ID}, function(data) {
+                                var obj = jQuery.parseJSON(data);
+                                if(obj.data_type === 1) {
+                                  $(section).load(reloadSection, function() {
+                                      Materialize.toast(obj.data_value, 4000);
+                                  });
+                                } else {
+                                    Materialize.toast(obj.data_value, 4000);
+                                }
+                            }); 
+                        } else if (type === "topicAttachment") {
+                            
+                            $.post('/resources/controllers/generalController.php', {deleteTopicAttachmentImage: true, selectedAttachmentID: ID}, function(data) {
+
+                                var obj = jQuery.parseJSON(data);
+                                if(obj.data_type === 1) {
+                                  $(section).load(reloadSection, function() {
+                                      Materialize.toast(obj.data_value, 4000);
+                                  });
+                                } else {
+                                    Materialize.toast(obj.data_value, 4000);
+                                }
+                            }); 
                         }
                   }
               }
@@ -304,5 +329,24 @@ function adminModification(type, ID) {
                 Materialize.toast(obj.data_value, 4000);
             }
         });
+    }
+}
+
+$(document).on('click', '.searchIcon', function() {
+    var target = $('#searchField')["0"].value;
+    search(target);
+});
+
+function search(target) {
+    if(target.length >= 3) {
+
+        $.post('/resources/controllers/generalController.php', {searchRequest: true, target: target}, function(data) {
+            var obj = jQuery.parseJSON(data);
+            if(obj.data_type === 1) {
+                window.location.assign('/search');
+            }
+        });
+    } else {
+        //warning, too few letter
     }
 }

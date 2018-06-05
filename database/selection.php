@@ -220,4 +220,16 @@ $contactInformationQuery = $db->prepare("SELECT * FROM contactInformation");
 
 /* get the order number of a post in a specific topic when the admin would like to delete the post */
 $getOrderNumberQuery = $db->prepare("SELECT count(*) as orderNumberOfPost, topicID FROM post WHERE (topicID = (SELECT topicID FROM post WHERE postID = :postID) AND postID <= :postID) ORDER BY postID");
+
+$searchInCategoriesQuery = $db->prepare("SELECT categoryID, categoryName, categoryDescription FROM category WHERE categoryName COLLATE UTF8_GENERAL_CI LIKE :target OR categoryDescription COLLATE UTF8_GENERAL_CI LIKE :target");
+
+$searchInTopicsQuery = $db->prepare("SELECT topicID, topicName, topicText FROM topic WHERE topicName COLLATE UTF8_GENERAL_CI LIKE :target OR topicText COLLATE UTF8_GENERAL_CI LIKE :target");
+
+$searchInPostsQuery = $db->prepare("SELECT postID, text FROM post WHERE text COLLATE UTF8_GENERAL_CI LIKE :target");
+
+$getAllPostAttachedFilesQuery = $db->prepare("SELECT * FROM postattachment");
+$getAllTopicAttachedFilesQuery = $db->prepare("SELECT * FROM topicattachment");
+
+$getPostAttachmentImage = $db->prepare("SELECT postAttachmentName FROM postattachment WHERE postAttachmentID = :selectedID");
+$getTopicAttachmentImage = $db->prepare("SELECT topicAttachmentName FROM topicattachment WHERE topicAttachmentID = :selectedID");
 ?>

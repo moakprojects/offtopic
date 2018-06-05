@@ -425,4 +425,75 @@ class Topic {
             return false;
         }
     }
+
+    function searchInTopics($target) {
+        global $db;
+        global $searchInTopicsQuery;
+
+        try {
+            $target = '%' . $target . '%'; 
+            $searchInTopicsQuery->bindParam(":target", $target, PDO::PARAM_STR);
+            $searchInTopicsQuery->execute();
+
+            if($searchInTopicsQuery->rowCount() > 0) {
+                $resultTopics = $searchInTopicsQuery->fetchall(PDO::FETCH_ASSOC);
+
+                for($i = 0; $i < count($resultTopics); $i++) {
+                    $resultTopics[$i]["topicName"] = $this->textTrimmer($resultTopics[$i]["topicName"], 150);
+                    $resultTopics[$i]["topicText"] = $this->textTrimmer($resultTopics[$i]["topicText"], 300);
+                }
+                
+                return $resultTopics;
+            } else {
+                return false;
+            }
+        } catch(PDOException $e) {
+            return $e;
+        }
+    }
+
+    function getAllAttachedFiles() {
+        global $db;
+        global $getAllTopicAttachedFilesQuery;
+
+        try {
+            $getAllTopicAttachedFilesQuery->execute();
+
+            if($getAllTopicAttachedFilesQuery->rowCount() > 0) {
+                return $getAllTopicAttachedFilesQuery->fetchall(PDO::FETCH_ASSOC);
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    function getAttachmentImage($selectedID) {
+        global $db;
+        global $getTopicAttachmentImage;
+
+        try {
+            $getTopicAttachmentImage->bindParam(":selectedID", $selectedID);
+            $getTopicAttachmentImage->execute();
+
+            return $getTopicAttachmentImage->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    function deleteAttachmentImage($selectedID) {
+        global $db;
+        global $deleteTopicAttachmentQuery;
+
+        try {
+            $deleteTopicAttachmentQuery->bindParam(":selectedID", $selectedID);
+            $deleteTopicAttachmentQuery->execute();
+
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }

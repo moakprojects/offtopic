@@ -1,9 +1,17 @@
 <?php
+session_start();
 include "../../config/connection.php";
 include "../../database/selection.php";
 include "../../database/modification.php";
+include "../../database/deletion.php";
 include "../classes/General.php";
+include "../classes/Category.php";
+include "../classes/Topic.php";
+include "../classes/Post.php";
 $generalObj = new General();
+$categoryObj = new Category();
+$topicObj = new Topic();
+$postObj = new Post();
     /* save new description data */
     if(isset($_POST["changeDescription"])) {
         $newDescription = htmlspecialchars(trim($_POST["newDescription"]));
@@ -106,6 +114,132 @@ $generalObj = new General();
             exit;
         }
         
+    }
+
+    if(isset($_POST["searchRequest"])) {
+        $target = htmlspecialchars(trim($_POST["target"]));
+        $searchResultInCategories = $categoryObj->searchInCategories($target);
+        $searchResultInTopics = $topicObj->searchInTopics($target);
+        $searchResultInPosts = $postObj->searchInPosts($target);
+
+        if($searchResultInCategories) {
+            for($i = 0; $i < count($searchResultInCategories); $i++) {
+                $positionInName = stripos($searchResultInCategories[$i]["categoryName"], $target);
+                if($positionInName !== false) {
+                    $searchResultInCategories[$i]["categoryName"] = str_ireplace($target, '<span style="background: yellow">' . substr($searchResultInCategories[$i]["categoryName"], $positionInName, strlen($target)) . '</span>', $searchResultInCategories[$i]["categoryName"]);
+                }
+
+                $positionInDesc = stripos($searchResultInCategories[$i]["categoryDescription"], $target);
+                if($positionInDesc !== false) {
+                    $searchResultInCategories[$i]["categoryDescription"] = str_ireplace($target, '<span style="background: yellow">' . substr($searchResultInCategories[$i]["categoryDescription"], $positionInDesc, strlen($target)) . '</span>', $searchResultInCategories[$i]["categoryDescription"]);
+                }
+            }
+            
+            $_SESSION["searchResultInCategories"] = $searchResultInCategories;
+        } else {
+            unset($_SESSION["searchResultInCategories"]);
+        }
+
+        if($searchResultInTopics) {
+            for($i = 0; $i < count($searchResultInTopics); $i++) {
+                $positionInName = stripos($searchResultInTopics[$i]["topicName"], $target);
+                if($positionInName !== false) {
+                    $searchResultInTopics[$i]["topicName"] = str_ireplace($target, '<span style="background: yellow">' . substr($searchResultInTopics[$i]["topicName"], $positionInName, strlen($target)) . '</span>', $searchResultInTopics[$i]["topicName"]);
+                }
+
+                $positionInText = stripos($searchResultInTopics[$i]["topicText"], $target);
+                if($positionInText !== false) {
+                    $searchResultInTopics[$i]["topicText"] = str_ireplace($target, '<span style="background: yellow">' . substr($searchResultInTopics[$i]["topicText"], $positionInText, strlen($target)) . '</span>', $searchResultInTopics[$i]["topicText"]);
+                }
+            }
+            
+            $_SESSION["searchResultInTopics"] = $searchResultInTopics;
+        } else {
+            unset($_SESSION["searchResultInTopics"]);
+        }
+
+        if($searchResultInPosts) {
+            for($i = 0; $i < count($searchResultInPosts); $i++) {
+                $positionInText = stripos($searchResultInPosts[$i]["text"], $target);
+                if($positionInText !== false) {
+                    $searchResultInPosts[$i]["text"] = str_ireplace($target, '<span style="background: yellow">' . substr($searchResultInPosts[$i]["text"], $positionInText, strlen($target)) . '</span>', $searchResultInPosts[$i]["text"]);
+                }
+            }
+            
+            $_SESSION["searchResultInPosts"] = $searchResultInPosts;
+        } else {
+            unset($_SESSION["searchResultInPosts"]);
+        }
+
+        $result["data_type"] = 1;
+        $result["data_value"] = "success";
+
+        echo json_encode($result);
+        exit;
+
+        
+    }
+
+    if(isset($_POST["deletePostAttachmentImage"])) {
+        $selectedID = htmlspecialchars(trim($_POST["selectedAttachmentID"]));
+
+        $selectedImageName = $postObj->getAttachmentImage($selectedID);
+
+        if($selectedImageName) {
+            if($postObj->deleteAttachmentImage($selectedID)) {
+                
+                unlink("../../public/files/upload/" . $selectedImageName["postAttachmentName"]);
+                
+                $result["data_type"] = 1;
+                $result["data_value"] = "The selected image was deleted";
+    
+                echo json_encode($result);
+                exit;
+            } else {
+                $result["data_type"] = 0;
+                $result["data_value"] = "An error occured";
+    
+                echo json_encode($result);
+                exit;
+            }
+        } else {
+            $result["data_type"] = 0;
+            $result["data_value"] = "An error occured";
+
+            echo json_encode($result);
+            exit;
+        }
+    }
+
+    if(isset($_POST["deleteTopicAttachmentImage"])) {
+        $selectedID = htmlspecialchars(trim($_POST["selectedAttachmentID"]));
+
+        $selectedImageName = $topicObj->getAttachmentImage($selectedID);
+
+        if($selectedImageName) {
+            if($topicObj->deleteAttachmentImage($selectedID)) {
+                
+                unlink("../../public/files/upload/" . $selectedImageName["topicAttachmentName"]);
+                
+                $result["data_type"] = 1;
+                $result["data_value"] = "The selected image was deleted";
+    
+                echo json_encode($result);
+                exit;
+            } else {
+                $result["data_type"] = 0;
+                $result["data_value"] = "An error occured";
+    
+                echo json_encode($result);
+                exit;
+            }
+        } else {
+            $result["data_type"] = 0;
+            $result["data_value"] = "An error occured";
+
+            echo json_encode($result);
+            exit;
+        }
     }
     
 ?>

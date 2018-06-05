@@ -452,4 +452,74 @@ class Post {
             return false;
         }
     }
+
+    function getAllAttachedFiles() {
+        global $db;
+        global $getAllPostAttachedFilesQuery;
+
+        try {
+            $getAllPostAttachedFilesQuery->execute();
+
+            if($getAllPostAttachedFilesQuery->rowCount() > 0) {
+                return $getAllPostAttachedFilesQuery->fetchall(PDO::FETCH_ASSOC);
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    function getAttachmentImage($selectedID) {
+        global $db;
+        global $getPostAttachmentImage;
+
+        try {
+            $getPostAttachmentImage->bindParam(":selectedID", $selectedID);
+            $getPostAttachmentImage->execute();
+
+            return $getPostAttachmentImage->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    function deleteAttachmentImage($selectedID) {
+        global $db;
+        global $deletePostAttachmentQuery;
+
+        try {
+            $deletePostAttachmentQuery->bindParam(":selectedID", $selectedID);
+            $deletePostAttachmentQuery->execute();
+
+            return true;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    function searchInPosts($target) {
+        global $db;
+        global $searchInPostsQuery;
+
+        try {
+            $target = '%' . $target . '%'; 
+            $searchInPostsQuery->bindParam(":target", $target, PDO::PARAM_STR);
+            $searchInPostsQuery->execute();
+
+            if($searchInPostsQuery->rowCount() > 0) {
+                $resultPosts = $searchInPostsQuery->fetchall(PDO::FETCH_ASSOC);
+
+                for($i = 0; $i < count($resultPosts); $i++) {
+                    $resultPosts[$i]["text"] = $this->textTrimmer($resultPosts[$i]["text"], 400);
+                }
+                
+                return $resultPosts;
+            } else {
+                return false;
+            }
+        } catch(PDOException $e) {
+            return $e;
+        }
+    }
 }

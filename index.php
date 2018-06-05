@@ -3,7 +3,7 @@
     //page switcher
     $page = "";
     if(isset($_GET["page"]) && !empty($_GET["page"])) {
-        //$queryString = htmlspecialchars(trim($_GET["page"]));
+        
         $queryString = $_GET["page"];
         $queryStringParams = explode("/", $queryString);
         switch($queryStringParams[0]) {
@@ -73,6 +73,9 @@
             break;
             case "contact":
                 $page = "contact";
+            break;
+            case "search":
+                $page = "search";
             break;
             case "post":
                 if(isset($queryStringParams[1]) && $queryStringParams[1] !== "") {

@@ -247,4 +247,40 @@ class Category {
             return false;
         }
     }
+
+    // trim the long text depending on parameters
+    function textTrimmer($longText, $length) {
+        if(strlen($longText) > $length) {
+                        
+            return $cuttedTopicText = substr($longText, 0, $length) . "...";  
+        } else {
+            return $longText; 
+        }
+    }
+
+    function searchInCategories($target) {
+        global $db;
+        global $searchInCategoriesQuery;
+
+        try {
+            $target = '%' . $target . '%'; 
+            $searchInCategoriesQuery->bindParam(":target", $target, PDO::PARAM_STR);
+            $searchInCategoriesQuery->execute();
+
+            if($searchInCategoriesQuery->rowCount() > 0) {
+                $resultCategories = $searchInCategoriesQuery->fetchall(PDO::FETCH_ASSOC);
+
+                for($i = 0; $i < count($resultCategories); $i++) {
+                    $resultCategories[$i]["categoryName"] = $this->textTrimmer($resultCategories[$i]["categoryName"], 150);
+                    $resultCategories[$i]["categoryDescription"] = $this->textTrimmer($resultCategories[$i]["categoryDescription"], 300);
+                }
+                
+                return $resultCategories;
+            } else {
+                return false;
+            }
+        } catch(PDOException $e) {
+            return $e;
+        }
+    }
 }
