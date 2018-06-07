@@ -736,6 +736,16 @@ h2 {
     width: 100%;
 }
 
-.attachmentTrashIcon {
+.deleteImgBtn {
+    text-align: center;
+}
+
+.galleryGrid {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+}
+
+.cardContainer {
     margin-bottom: 20px;
 }

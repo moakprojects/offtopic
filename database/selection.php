@@ -212,8 +212,8 @@ $rulesAndRegulationsQuery = $db->prepare("SELECT * FROM ruleAndRegulation");
 =======
 we change this query for stored procedure
 =======*/
-$descriptionOfTheSiteQuery = $db->prepare("SELECT * FROM descriptionOfTheSite");
-//$descriptionOfTheSiteQuery = $db->exec("CALL proc_get_description_of_the_site(@out)");
+//$descriptionOfTheSiteQuery = $db->prepare("SELECT * FROM descriptionofthesite");
+$descriptionOfTheSiteQuery = $db->exec("CALL proc_get_description_of_the_site(@out)");
 
 /* get contact information */
 $contactInformationQuery = $db->prepare("SELECT * FROM contactInformation");

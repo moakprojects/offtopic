@@ -178,10 +178,16 @@ $(document).ready(function(){
 function adminDelition(page, section, type, ID) {
 
     var reloadSection = '/' + page + ' ' + section;
+
+    if(type === "postAttachment" || type === "topicAttachment") {
+        typeInfo = "image";
+    } else {
+        typeInfo = type;
+    }
     MaterialDialog.dialog(
-      "Are you sure you want to delete this " + type + "?",
+      "Are you sure you want to delete this " + typeInfo + "?",
       {
-          title:"Delete " + type,
+          title:"Delete " + typeInfo,
           modalType:"modal", 
           buttons:{
               close:{

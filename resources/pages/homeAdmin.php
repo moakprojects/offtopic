@@ -25,8 +25,8 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                 <li class='tab'><a href='#topics'>Topics</a></li>
                 <li class='tab'><a href='#posts'>Posts</a></li>
                 <li class='tab'><a href='#stickyPosts'>Sticky Posts</a></li>
-                <li class='tab'><a href='#information'>Forum information</a></li>
                 <li class='tab'><a href='#gallery'>Gallery</a></li>
+                <li class='tab'><a href='#information'>Forum information</a></li>
             </ul>
             <div id="users" class="row">
                 <div class="col s12 userCardContainer">
@@ -84,7 +84,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                                     ?>
                                                 </h3>
                                             </div>
-                                            <div class="col s1 noPadding right-align <?php echo ($user['accessLevel'] == 3 || $user['accessLevel'] == 4 || $user['accessLevel'] == 0 ? 'hide' : ''); ?>">
+                                            <div class="col s1 noPadding right-align <?php echo ($user['accessLevel'] == 2 || $user['accessLevel'] == 4 || $user['accessLevel'] == 0 ? 'hide' : ''); ?>">
                                                 <div class="ban center-align">
                                                     <a class="tooltipped" data-position="bottom" data-tooltip="Suspend" onclick="suspendUser('<?php echo $user["userID"]; ?>')">
                                                         <i class="fas fa-ban"></i>
@@ -104,7 +104,7 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                                             <p class="col s7 noMargin noPadding right-align"><?php echo $user["email"]; ?></p>    
                                         </div>
                                         <?php
-                                            if($user["accessLevel"] != 0 && $user["accessLevel"] != 3) {
+                                            if($user["accessLevel"] != 0 && $user["accessLevel"] != 2) {
                                         ?>
                                             <div class="row noMargin">
                                                 <p class="col s5 noMargin noPadding"><i class="fas fa-history fa-sm"></i> Member for:</p>
@@ -1091,65 +1091,57 @@ if(isset($_SESSION["user"]) && isset($_SESSION["user"]["isAdmin"])) {
                     <?php
                     $topicAttachedFiles = $topicObj->getAllAttachedFiles();
                     $postAttachedFiles = $postObj->getAllAttachedFiles();
-
+                    ?>
+                    <div class="row galleryGrid">
+                    <?php
                     if($topicAttachedFiles) {
                         $topicAttachedImages = array();
                         foreach($topicAttachedFiles as $file) {
                             $fileExtension = explode(".", $file["topicAttachmentName"]);
 
-                            if($fileExtension[1] == 'jpg' || $fileExtension[1] == 'png' || $fileExtension[1] == 'jpeg') {
+                            if($fileExtension[1] == 'jpg' || $fileExtension[1] == 'png' || $fileExtension[1] == 'jpeg' || $fileExtension[1] == 'JPG' || $fileExtension[1] == 'PNG' ||$fileExtension[1] == 'JPEG') {
                                 array_push($topicAttachedImages, $file);
                             }
                         }
-                    ?>
-                        <div class="row">
-                        <?php
                         foreach($topicAttachedImages as $image) {
-                            ?>
-                            <div class="col s3">
-                                <img src="/public/files/upload/<?php echo $image["topicAttachmentName"]; ?>" alt="attached image" class="attachment">
-                                <div class="col s1 noPadding trashIcon attachmentTrashIcon titleIcon center-align">
-                                    <a onclick="adminDelition('home', '#gallery', 'topicAttachment', <?php echo $image['topicAttachmentID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
-                                        <i class="fas fa-trash fa-xs"></i>
-                                    </a>
+                    ?>
+                            <div class="col s3 cardContainer">
+                                <div class="card" >
+                                    <div class="card-image">
+                                    <img src="/public/files/upload/<?php echo $image["topicAttachmentName"]; ?>" alt="attached image" class="attachment">
+                                    <a class="btn-floating halfway-fab waves-effect waves-light red tooltipped deleteImgBtn" onclick="adminDelition('home', '#gallery', 'topicAttachment', <?php echo $image['topicAttachmentID']; ?>)" data-position="bottom" data-tooltip="Delete"><i class="fas fa-trash"></i></a>
+                                    </div>
                                 </div>
                             </div>
-                            <?php
-                        }
-                        ?>
-                        </div>
                     <?php
+                        }
                     }
-                    
                     if($postAttachedFiles) {
                         $postAttachedImages = array();
                         foreach($postAttachedFiles as $file) {
                             $fileExtension = explode(".", $file["postAttachmentName"]);
 
-                            if($fileExtension[1] == 'jpg' || $fileExtension[1] == 'png' || $fileExtension[1] == 'jpeg') {
+                            if($fileExtension[1] == 'jpg' || $fileExtension[1] == 'png' || $fileExtension[1] == 'jpeg' || $fileExtension[1] == 'JPG' || $fileExtension[1] == 'PNG' ||$fileExtension[1] == 'JPEG') {
                                 array_push($postAttachedImages, $file);
                             }
                         }
-                    ?>
-                        <div class="row">
-                        <?php
                         foreach($postAttachedImages as $image) {
                             ?>
-                            <div class="col s3">
-                                <img src="/public/files/upload/<?php echo $image["postAttachmentName"]; ?>" alt="attached image" class="attachment">
-                                <div class="col s1 noPadding trashIcon attachmentTrashIcon titleIcon center-align">
-                                    <a onclick="adminDelition('home', '#gallery', 'postAttachment', <?php echo $image['postAttachmentID']; ?>)" class="tooltipped" data-position="bottom" data-tooltip="Delete">
-                                        <i class="fas fa-trash fa-xs"></i>
-                                    </a>
+                    
+                            <div class="col s3 cardContainer">
+                                <div class="card"  >
+                                    <div class="card-image">
+                                    <img src="/public/files/upload/<?php echo $image["postAttachmentName"]; ?>" alt="attached image" class="attachment">
+                                    <a class="btn-floating halfway-fab waves-effect waves-light red tooltipped deleteImgBtn" onclick="adminDelition('home', '#gallery', 'postAttachment', <?php echo $image['postAttachmentID']; ?>)" data-position="bottom" data-tooltip="Delete"><i class="fas fa-trash"></i></a>
+                                    </div>
                                 </div>
                             </div>
+                            
                             <?php
                         }
-                        ?>
-                        </div>
-                    <?php
                     }
                     ?>
+                    </div>
                 </div>
             </div>
         </div>

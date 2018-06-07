@@ -62,9 +62,12 @@ var errorMsg = "";
 // if the admin rewrite a post we put a sign into it
 function submitModifiedPostData(id) {
     $('.modifyPostSpinner').removeClass('hide');
-    
     if(quill.getText().trim() !== '') {
         var modifiedPostText = quill.root.innerHTML;
+        
+        if(modifiedPostText.indexOf("- moderated by Admin") > -1) {
+            modifiedPostText = modifiedPostText.replace("<p>- moderated by Admin</p>", " ");
+        }
         modifiedPostText = modifiedPostText + '<p class="right-align moderated">- moderated by Admin</p>';
         
         $('#errorMsg').html("");
